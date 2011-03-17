@@ -1,0 +1,13 @@
+Bilder werden nach Upload an folgendem Ort gespeichert:
+
+"http://localhost/drupal/sites/default/files/styles/large/public/field/image/100_0127.JPG"
+
+--------------------------------------------------------------------------
+
+Bei Benutzerbildern (Profilbildern) kann man im CMS einstellen auf welche Größe dieses runterskaliert werden sollen:
+
+Standard: 1024x1024 Pixel eingestellt
+
+Man kann eine Maximale Dateigröße der Bilder festlegen:
+
+Standard: 800KB
