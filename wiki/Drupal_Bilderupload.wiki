@@ -2,6 +2,10 @@ Bilder werden nach Upload an folgendem Ort gespeichert:
 
 "http://localhost/drupal/sites/default/files/styles/large/public/field/image/100_0127.JPG"
 
+Es kann immer nur ein Bild pro Artikel hochgeladen werden.
+
+Das Bild darf maximal 128MB groß sein und es werden nur die Formate png, gif, jpg und jpeg unterstützt.
+
 --------------------------------------------------------------------------
 
 Bei Benutzerbildern (Profilbildern) kann man im CMS einstellen auf welche Größe dieses runterskaliert werden sollen:
