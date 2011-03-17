@@ -10,4 +10,5 @@ Man kann jeder Rolle eine beliebige Kombination von Berechtigungen hinzufügen.
 
 Folgende Berechtigungen stehen zur Auswahl:
 
-siehe Bilder berechtigungen1.gif bis berechtigungen5.gif
+siehe Bilder berechtigungen1.gif bis berechtigungen6.gif unter folgendem Link:
+http://code.google.com/p/geo-picture-service/downloads/list
