@@ -5,9 +5,9 @@ package de.hszigr.gpics.gps;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import com.drew.imaging.jpeg.JpegMetadataReader;
 import com.drew.imaging.jpeg.JpegProcessingException;
@@ -15,9 +15,7 @@ import com.drew.metadata.Directory;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.MetadataException;
 import com.drew.metadata.Tag;
-import de.micromata.opengis.kml.v_2_2_0.Document;
-import de.micromata.opengis.kml.v_2_2_0.Kml;
-import de.micromata.opengis.kml.v_2_2_0.Placemark;
+import de.micromata.opengis.kml.v_2_2_0.*;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -35,12 +33,19 @@ public class PositionExtractor {
 	 * @throws MetadataException 
 	 * @throws FileNotFoundException 
 	 */
-	public static void main(String[] args) throws JpegProcessingException, MetadataException, FileNotFoundException, JAXBException {
+	public static void main(String[] args) throws JpegProcessingException, MetadataException, FileNotFoundException {
 		PositionExtractor e = new PositionExtractor();
-		File file = new File("C:/Users/StRadusch/Pictures/DSC00012.JPG");
-		Position pos = e.getPosition(file);
-        Kml kml = e.createKml("Görlitz, Deutschland", "Mensa HS ZI/GR", pos);
-        e.printKml(kml);
+		File file = new File(args[0]);
+
+        try {
+            ImageInformation pos = e.getImageInformation(file);
+            Kml kml = e.createKml("Görlitz, Deutschland", "Mensa HS ZI/GR", pos);
+             e.printKml(kml);
+        } catch (ParseException e1) {
+            e1.printStackTrace();
+        } catch (JAXBException e1) {
+            e1.printStackTrace();
+        }
 //		e.printTags(file);
 	}
 
@@ -51,19 +56,17 @@ public class PositionExtractor {
         m.marshal(kml, System.out);
     }
 
-    public Kml createKml(String name, String description, Position position) {
+    public Kml createKml(String name, String description, ImageInformation position) {
 //        final Kml kml = new Kml();
 //        kml.createAndSetPlacemark().withName(name)
 //                .withOpen(Boolean.TRUE)
 //                .createAndSetPoint()
 //                .addToCoordinates(Double.parseDouble(position.getLongitudeDecimal()), Double.parseDouble(position.getLatitudeDecimal()));
         final Kml kml = new Kml();
-        Document doc = kml.createAndSetDocument();
-        Placemark place = doc.createAndAddPlacemark().withName(name);
-        //place.withOpen(true);
+        Placemark place = kml.createAndSetPlacemark().withName(name).withTimePrimitive(new TimeStamp().withWhen(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(position.getTimeStamp().getTime())));
+        place.withOpen(true);
         place.setDescription(description);
-        place.createAndSetPoint().addToCoordinates(Double.parseDouble(position.getLongitudeDecimal()), Double.parseDouble(position.getLatitudeDecimal()), Double.parseDouble(position.getAltiude()));
-        //doc.addToFeature(place);
+        place.createAndSetPoint().addToCoordinates(Double.parseDouble(position.getLongitudeDecimal()), Double.parseDouble(position.getLatitudeDecimal()), Double.parseDouble(position.getAltitude()));
         return kml;
     }
 
@@ -77,6 +80,18 @@ public class PositionExtractor {
 	public Position getPosition(File file) throws JpegProcessingException, MetadataException{
 		List<Tag> gpsTags = getGPSTags(file);
 		return extractPosition(gpsTags);
+	}
+
+    /**
+	 * Extract the gps information from a jpg-file and return an object with position informations.
+	 * @param file image
+	 * @return Position
+	 * @throws JpegProcessingException
+	 * @throws MetadataException
+	 */
+	public ImageInformation getImageInformation(File file) throws JpegProcessingException, MetadataException, ParseException {
+		List<Tag> gpsTags = getGPSTags(file);
+		return extractImageInformation(gpsTags);
 	}
 	
 	/**
@@ -105,10 +120,53 @@ public class PositionExtractor {
 			}
 		}
 	}
+
+    /**
+	 * @param gpsTags
+	 * @throws MetadataException
+	 */
+	private ImageInformation extractImageInformation(List<Tag> gpsTags) throws MetadataException, ParseException {
+		ImageInformation pos = new ImageInformation();
+        String date = null, time = null;
+		for(Tag tag : gpsTags){
+			if(tag.getTagName().equals("GPS Latitude Ref")){
+				pos.setLatitudeRef(tag.getDescription());
+			}
+			if(tag.getTagName().equals("GPS Latitude")){
+				pos.setLatitude(tag.getDescription());
+				pos.setLatitudeDecimal(getDecimalValue(tag.getDescription()));
+			}
+			if(tag.getTagName().equals("GPS Longitude Ref")){
+				pos.setLongitudeRef(tag.getDescription());
+			}
+			if(tag.getTagName().equals("GPS Longitude")){
+				pos.setLongitude(tag.getDescription());
+				pos.setLongitudeDecimal(getDecimalValue(tag.getDescription()));
+			}
+			if(tag.getTagName().equals("GPS Altitude")){
+				pos.setAltitude(extractDirectionOrAltitude(tag.getDescription()));
+			}
+			if(tag.getTagName().equals("Unknown tag (0x0011)")){
+				pos.setDirection(extractDirectionOrAltitude(tag.getDescription()));
+			}
+            if(tag.getTagName().equals("GPS Time-Stamp")){
+				  time = tag.getDescription().replace(" UTC","");
+			}
+            if(tag.getTagName().equals("Unknown tag (0x001d)")){
+				  date = tag.getDescription();
+			}
+		}
+        if(date != null && time != null){
+                GregorianCalendar calendar = new GregorianCalendar(Locale.getDefault());
+                calendar.setTime(new SimpleDateFormat("yyyy:MM:dd-hh:mm:ss").parse(date + "-" + time));
+                pos.setTimeStamp(calendar);
+        }
+		return pos;
+	}
 	
 	/**
 	 * @param gpsTags
-	 * @throws MetadataException 
+	 * @throws MetadataException
 	 */
 	private Position extractPosition(List<Tag> gpsTags) throws MetadataException {
 		Position pos = new Position();
@@ -128,7 +186,7 @@ public class PositionExtractor {
 				pos.setLongitudeDecimal(getDecimalValue(tag.getDescription()));
 			}
 			if(tag.getTagName().equals("GPS Altitude")){
-				pos.setAltiude(extractDirectionOrAltitude(tag.getDescription()));
+				pos.setAltitude(extractDirectionOrAltitude(tag.getDescription()));
 			}
 			if(tag.getTagName().equals("Unknown tag (0x0011)")){
 				pos.setDirection(extractDirectionOrAltitude(tag.getDescription()));

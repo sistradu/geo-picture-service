@@ -15,7 +15,7 @@ public class Position {
 	private String longitudeRef;
 	private String longitude;
 	private String longitudeDecimal;
-	private String altiude;
+	private String altitude;
 	private String direction;
 	
 	public String getLatitudeRef() {
@@ -54,11 +54,11 @@ public class Position {
 	public void setLongitudeDecimal(String longitudeDecimal) {
 		this.longitudeDecimal = longitudeDecimal;
 	}
-	public void setAltiude(String altiude) {
-		this.altiude = altiude;
+	public void setAltitude(String altitude) {
+		this.altitude = altitude;
 	}
-	public String getAltiude() {
-		return altiude;
+	public String getAltitude() {
+		return altitude;
 	}
 	public void setDirection(String direction) {
 		this.direction = direction;
