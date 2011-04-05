@@ -11,7 +11,16 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://D:/FH/Eclipse/libs/metadata-extractor-2.3.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/metadata-extractor-2.3.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/libs/JavaAPIforKml.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
