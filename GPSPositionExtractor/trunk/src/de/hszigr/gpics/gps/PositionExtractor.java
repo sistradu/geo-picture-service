@@ -58,10 +58,12 @@ public class PositionExtractor {
 //                .createAndSetPoint()
 //                .addToCoordinates(Double.parseDouble(position.getLongitudeDecimal()), Double.parseDouble(position.getLatitudeDecimal()));
         final Kml kml = new Kml();
-        Placemark place = kml.createAndSetPlacemark().withName(name);
-        place.withOpen(true);
+        Document doc = kml.createAndSetDocument();
+        Placemark place = doc.createAndAddPlacemark().withName(name);
+        //place.withOpen(true);
         place.setDescription(description);
         place.createAndSetPoint().addToCoordinates(Double.parseDouble(position.getLongitudeDecimal()), Double.parseDouble(position.getLatitudeDecimal()), Double.parseDouble(position.getAltiude()));
+        //doc.addToFeature(place);
         return kml;
     }
 
