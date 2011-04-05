@@ -15,6 +15,13 @@ import com.drew.metadata.Directory;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.MetadataException;
 import com.drew.metadata.Tag;
+import de.micromata.opengis.kml.v_2_2_0.Document;
+import de.micromata.opengis.kml.v_2_2_0.Kml;
+import de.micromata.opengis.kml.v_2_2_0.Placemark;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 
 /**
  * @author Stefan Radusch
@@ -28,13 +35,36 @@ public class PositionExtractor {
 	 * @throws MetadataException 
 	 * @throws FileNotFoundException 
 	 */
-	public static void main(String[] args) throws JpegProcessingException, MetadataException, FileNotFoundException {
+	public static void main(String[] args) throws JpegProcessingException, MetadataException, FileNotFoundException, JAXBException {
 		PositionExtractor e = new PositionExtractor();
 		File file = new File("C:/Users/StRadusch/Pictures/DSC00012.JPG");
 		Position pos = e.getPosition(file);
-		e.printTags(file);
+        Kml kml = e.createKml("Görlitz, Deutschland", "Mensa HS ZI/GR", pos);
+        e.printKml(kml);
+//		e.printTags(file);
 	}
-	
+
+    public void printKml(Kml kml) throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance( Kml.class );
+        Marshaller m = context.createMarshaller();
+        m.setProperty( Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE );
+        m.marshal(kml, System.out);
+    }
+
+    public Kml createKml(String name, String description, Position position) {
+//        final Kml kml = new Kml();
+//        kml.createAndSetPlacemark().withName(name)
+//                .withOpen(Boolean.TRUE)
+//                .createAndSetPoint()
+//                .addToCoordinates(Double.parseDouble(position.getLongitudeDecimal()), Double.parseDouble(position.getLatitudeDecimal()));
+        final Kml kml = new Kml();
+        Placemark place = kml.createAndSetPlacemark().withName(name);
+        place.withOpen(true);
+        place.setDescription(description);
+        place.createAndSetPoint().addToCoordinates(Double.parseDouble(position.getLongitudeDecimal()), Double.parseDouble(position.getLatitudeDecimal()), Double.parseDouble(position.getAltiude()));
+        return kml;
+    }
+
 	/**
 	 * Extract the gps information from a jpg-file and return an object with position informations.
 	 * @param file image
