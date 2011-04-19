@@ -5,6 +5,7 @@ package de.hszigr.gpics.gps;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -15,6 +16,7 @@ import com.drew.metadata.Directory;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.MetadataException;
 import com.drew.metadata.Tag;
+import com.drew.metadata.exif.ExifDirectory;
 import de.micromata.opengis.kml.v_2_2_0.*;
 
 import javax.xml.bind.JAXBContext;
@@ -200,6 +202,9 @@ public class PositionExtractor {
 	 * @return
 	 */
 	private String extractDirectionOrAltitude(String description) {
+        if(!description.contains("/")){
+            return description.substring(0,description.indexOf(" "));
+        }
 		double direction = Double.parseDouble(description.substring(0, description.indexOf("/")));
 		double divisor = Double.parseDouble(description.substring(description.indexOf("/")+1, description.indexOf(" ")));
 		direction /= divisor;
@@ -232,9 +237,25 @@ public class PositionExtractor {
 				if(tag.getDirectoryName().equals("GPS")){
 					tagList.add(tag);
 				}
+                if(tag.getDirectoryName().equals("Exif")){
+                    extractThumbnail(metadata, file.getAbsolutePath());
+                }
 			}
 		}
 		return tagList;
 	}
+
+    private void extractThumbnail(Metadata metadata, String path) {
+        path = path.substring(0,path.lastIndexOf("."));
+        path = path + "_thumb.jpg";
+        try {
+            ExifDirectory dir = (ExifDirectory)metadata.getDirectory(ExifDirectory.class);
+            dir.writeThumbnail(path);
+        } catch (MetadataException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+    }
 
 }
