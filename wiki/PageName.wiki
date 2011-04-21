@@ -21,6 +21,53 @@ Hier die Tabelle mit der Zuordnung der Themen zum jeweiligen Bearbeiter.
 
 Wer noch etwas ändern möchte, kann das gern hier eintragen. (Bitte vorher absprechen!)
 
-= Details =
+= Details für die Controller =
 
-*TODO*
+*Startseite/Login/Nutzerverwaltung:*
+ * Scope: Session
+ * Attribute:
+   || *Attributname* || *Typ* || *Info* ||
+   || nutzerID || Integer || ||
+   || nutzerName || String || ||
+   || email || String || ||
+   || eingeloggt || boolean || ||
+   || passwort || String || MD5-Hash ||
+*Album erstellen/bearbeiten:*
+ * Scope: Request
+ * Attribute:
+   || *Attributname* || *Typ* || *Info* ||
+   || albumID || Integer || ||
+   || albumName || String || ||
+   || albumDescription || String || maximal 200 Zeichen o.ä. ||
+   || passwort || String || generiert + MD5-Hash ||
+
+*Bild bearbeiten:*
+ * Scope: Request
+ * Attribute:
+   || *Attributname* || *Typ* || *Info* ||
+   || bildID || Integer || ||
+   || bildName || String || ||
+   || beschreibung || String || maximal 200 Zeichen o.ä. ||
+   || öffentlich|| boolean || ||
+   || timestamp || Date/Calendar || Format: yyyy-MM-dd ||
+   || location-file || String || latitude(-decimal)/longitude(-decimal)/altitude/direction ||
+
+*Album Übersicht und Suche:*
+ * Scope: Request
+ * Attribute:
+   || *Attributname* || *Typ* || *Info* ||
+   || sucheNach || String || Was wird gesucht (Benutzer,Name,...) ||
+   || suchString || String || Wert nach dem gesucht wird ||
+   || alben || List<Album> || Alle bzw. gefundene Alben zum anzeigen ||
+
+*Eigene Alben anzeigen:*
+ * Scope: Request
+ * Attribute:
+   || *Attributname* || *Typ* || *Info* ||
+   || alben || List<Album> || Alle Alben des angemeldeten Nutzers (benötigt Login) ||
+
+*Album betrachten:*
+ * Scope: Request
+ * Attribute:
+   || *Attributname* || *Typ* || *Info* ||
+   || bilder || List<Bild> || Alle Bilder des Albums, benötigt Passwort oder eingeloggter Nutzer = Albumbesitzer zum anzeigen privater Bilder ||
