@@ -34,14 +34,17 @@ public class MockNutzerConnectorTest {
     @Test
     public void testGetNutzerByID() throws Exception {
         org.w3c.dom.Document doc = connector.getNutzerByID(0);
+        NodeList idNodes = doc.getElementsByTagName("id");
         NodeList nameNodes = doc.getElementsByTagName("name");
         NodeList passwordNodes = doc.getElementsByTagName("password");
         NodeList emailNodes = doc.getElementsByTagName("email");
         NodeList albumNodes = doc.getElementsByTagName("album");
+        Assert.assertEquals(1,idNodes.getLength());
         Assert.assertEquals(1,nameNodes.getLength());
         Assert.assertEquals(1,passwordNodes.getLength());
         Assert.assertEquals(1,emailNodes.getLength());
         Assert.assertEquals(2,albumNodes.getLength());
+        Assert.assertEquals("0", idNodes.item(0).getTextContent());
         Assert.assertEquals("Karl", nameNodes.item(0).getTextContent());
         Assert.assertEquals("karl@web.de", emailNodes.item(0).getTextContent());
         String password = "test";
@@ -61,14 +64,17 @@ public class MockNutzerConnectorTest {
         Assert.assertEquals("Zittau", albumNodes.item(1).getAttributes().item(0).getTextContent());
 
         doc = connector.getNutzerByID(1);
+        idNodes = doc.getElementsByTagName("id");
         nameNodes = doc.getElementsByTagName("name");
         passwordNodes = doc.getElementsByTagName("password");
         emailNodes = doc.getElementsByTagName("email");
         albumNodes = doc.getElementsByTagName("album");
+        Assert.assertEquals(1,idNodes.getLength());
         Assert.assertEquals(1,nameNodes.getLength());
         Assert.assertEquals(1,passwordNodes.getLength());
         Assert.assertEquals(1,emailNodes.getLength());
         Assert.assertEquals(1,albumNodes.getLength());
+        Assert.assertEquals("1", idNodes.item(0).getTextContent());
         Assert.assertEquals("Günther", nameNodes.item(0).getTextContent());
         Assert.assertEquals("guenther@web.de", emailNodes.item(0).getTextContent());
         password = "password";
@@ -90,14 +96,17 @@ public class MockNutzerConnectorTest {
     @Test
     public void testGetNutzerByName() throws Exception {
         org.w3c.dom.Document doc = connector.getNutzerByName("Karl");
+        NodeList idNodes = doc.getElementsByTagName("id");
         NodeList nameNodes = doc.getElementsByTagName("name");
         NodeList passwordNodes = doc.getElementsByTagName("password");
         NodeList emailNodes = doc.getElementsByTagName("email");
         NodeList albumNodes = doc.getElementsByTagName("album");
+        Assert.assertEquals(1,idNodes.getLength());
         Assert.assertEquals(1,nameNodes.getLength());
         Assert.assertEquals(1,passwordNodes.getLength());
         Assert.assertEquals(1,emailNodes.getLength());
         Assert.assertEquals(2,albumNodes.getLength());
+        Assert.assertEquals("0", idNodes.item(0).getTextContent());
         Assert.assertEquals("Karl", nameNodes.item(0).getTextContent());
         Assert.assertEquals("karl@web.de", emailNodes.item(0).getTextContent());
         String password = "test";
@@ -117,14 +126,17 @@ public class MockNutzerConnectorTest {
         Assert.assertEquals("Zittau", albumNodes.item(1).getAttributes().item(0).getTextContent());
 
         doc = connector.getNutzerByName("Günther");
+        idNodes = doc.getElementsByTagName("id");
         nameNodes = doc.getElementsByTagName("name");
         passwordNodes = doc.getElementsByTagName("password");
         emailNodes = doc.getElementsByTagName("email");
         albumNodes = doc.getElementsByTagName("album");
+        Assert.assertEquals(1,idNodes.getLength());
         Assert.assertEquals(1,nameNodes.getLength());
         Assert.assertEquals(1,passwordNodes.getLength());
         Assert.assertEquals(1,emailNodes.getLength());
         Assert.assertEquals(1,albumNodes.getLength());
+        Assert.assertEquals("1", idNodes.item(0).getTextContent());
         Assert.assertEquals("Günther", nameNodes.item(0).getTextContent());
         Assert.assertEquals("guenther@web.de", emailNodes.item(0).getTextContent());
         password = "password";
@@ -149,14 +161,17 @@ public class MockNutzerConnectorTest {
         NodeList nutzerNodes = doc.getElementsByTagName("benutzer");
         Assert.assertEquals(2,nutzerNodes.getLength());
         Element nutzerNode = (Element) nutzerNodes.item(0);
+        NodeList idNodes = nutzerNode.getElementsByTagName("id");
         NodeList nameNodes = nutzerNode.getElementsByTagName("name");
         NodeList passwordNodes = nutzerNode.getElementsByTagName("password");
         NodeList emailNodes = nutzerNode.getElementsByTagName("email");
         NodeList albumNodes = nutzerNode.getElementsByTagName("album");
+        Assert.assertEquals(1, idNodes.getLength());
         Assert.assertEquals(1,nameNodes.getLength());
         Assert.assertEquals(1,passwordNodes.getLength());
         Assert.assertEquals(1,emailNodes.getLength());
         Assert.assertEquals(2,albumNodes.getLength());
+        Assert.assertEquals("0", idNodes.item(0).getTextContent());
         Assert.assertEquals("Karl", nameNodes.item(0).getTextContent());
         Assert.assertEquals("karl@web.de", emailNodes.item(0).getTextContent());
         String password = "test";
@@ -176,14 +191,17 @@ public class MockNutzerConnectorTest {
         Assert.assertEquals("Zittau", albumNodes.item(1).getAttributes().item(0).getTextContent());
 
         nutzerNode = (Element) nutzerNodes.item(1);
+        idNodes = nutzerNode.getElementsByTagName("id");
         nameNodes = nutzerNode.getElementsByTagName("name");
         passwordNodes = nutzerNode.getElementsByTagName("password");
         emailNodes = nutzerNode.getElementsByTagName("email");
         albumNodes = nutzerNode.getElementsByTagName("album");
+        Assert.assertEquals(1,idNodes.getLength());
         Assert.assertEquals(1,nameNodes.getLength());
         Assert.assertEquals(1,passwordNodes.getLength());
         Assert.assertEquals(1,emailNodes.getLength());
         Assert.assertEquals(1,albumNodes.getLength());
+        Assert.assertEquals("1", idNodes.item(0).getTextContent());
         Assert.assertEquals("Günther", nameNodes.item(0).getTextContent());
         Assert.assertEquals("guenther@web.de", emailNodes.item(0).getTextContent());
         password = "password";
