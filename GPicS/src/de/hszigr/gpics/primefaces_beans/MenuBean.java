@@ -1,4 +1,4 @@
-package de.hszigr.gpics.controller;
+package de.hszigr.gpics.primefaces_beans;
 
 import org.primefaces.component.menuitem.MenuItem;
 import org.primefaces.component.submenu.Submenu;
@@ -6,6 +6,7 @@ import org.primefaces.model.DefaultMenuModel;
 import org.primefaces.model.MenuModel;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 
 
 /**
@@ -19,13 +20,18 @@ import javax.faces.bean.ManagedBean;
 public class MenuBean {
 
 	private MenuModel model;
+    private String site = "index";
 
 	public MenuBean() {
 		model = new DefaultMenuModel();
 
+
+        site = FacesContext.getCurrentInstance().getExternalContext().getRequestServletPath().substring(1,  FacesContext.getCurrentInstance().getExternalContext().getRequestServletPath().indexOf("."));
+
+
 	 	//First submenu
 	 	Submenu submenu = new Submenu();
-	 	submenu.setLabel("Startseite");
+	 	submenu.setLabel("GPicS");
 
 	 	MenuItem item = new MenuItem();
 	 	item.setValue("Startseite");
@@ -36,23 +42,34 @@ public class MenuBean {
 
 	 	//Second submenu
 	 	submenu = new Submenu();
-	 	submenu.setLabel("öffentliche Alben");
-
-	 	item = new MenuItem();
-	 	item.setValue("dsgfs");
-	 	item.setUrl("#");
-	 	submenu.getChildren().add(item);
-
+	 	submenu.setLabel("Alben");
 
         item = new MenuItem();
-	 	item.setValue("v,bgnbhnds");
-	 	item.setUrl("#");
+	 	item.setValue("Albumübersicht");
+	 	item.setUrl("showAlbum");
 	 	submenu.getChildren().add(item);
+
+        if (site.equals("showAlbum")){
+            item = new MenuItem();
+	 	    item.setValue("Album erstellen");
+	 	    item.setUrl("createAlbum");
+	 	    submenu.getChildren().add(item);
+        }
+
 
 
 	 	model.addSubmenu(submenu);
 	 }
+    
 	 public MenuModel getModel() {
 	 	 return model;
 	 }
+
+    public String getSite() {
+        return site;
+    }
+
+    public void setSite(String site) {
+        this.site = site;
+    }
 }
