@@ -2,6 +2,7 @@ package de.hszigr.gpics.controller;
 
 import de.hszigr.gpics.db.MockNutzerConnector;
 import de.hszigr.gpics.db.interfaces.INutzerConnector;
+import de.hszigr.gpics.util.MessagePropertiesBean;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -32,8 +33,6 @@ public class UserController {
     private int nutzerID;
     private String nutzerNamen;
     private String email;
-    //TODO emailPasswort entfernen
-    private String emailPasswort;
     private boolean eingeloggt = false;
     private String passwort;
     private INutzerConnector conn;
@@ -54,47 +53,59 @@ public class UserController {
         }
         if(dbPasswort.equals(passwort)){
             eingeloggt = true;
-            setNutzerID(Integer.parseInt(doc.getElementsByTagName("id").item(0).getTextContent()));
-            setEmail(doc.getElementsByTagName("email").item(0).getTextContent());
+            getNutzerIDAndEmail(doc);
             return "showOwnAlbum";
         }
         return "index";
     }
 
+
+
     public String logout() {
+        resetAll();
+        return "index";
+    }
+
+    private void resetAll() {
         setNutzerID(-1);
         setNutzerNamen(null);
         setPasswort("");
         setEmail(null);
         setEingeloggt(false);
-        return "index";
     }
 
-    //TODO anderen Mail-Client nehmen
-    public void sendPasswortEmail() {
+    public String sendPasswortEmail() {
         String tempPasswort = erzeugeZufallsPasswort();
+
+        try {
+            Document doc = conn.getNutzerByName(nutzerNamen);
+            getNutzerIDAndEmail(doc);
+        } catch (ConnectException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.hs-zigr.de");
+        props.put("mail.smtp.host", "193.174.103.76");
         props.put("mail.smtp.port", 25);
-        props.setProperty("mail.smtp.ssl.trust", "smtp.hs-zigr.de");
+        props.setProperty("mail.smtp.ssl.trust", "193.174.103.76");
         Authenticator aut = new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("sistradu", emailPasswort);    //To change body of overridden methods use File | Settings | File Templates.
+                return new PasswordAuthentication("mailer", "mailer");    //To change body of overridden methods use File | Settings | File Templates.
             }
         };
         Session session = Session.getInstance(props, aut);
         try {
+            MessagePropertiesBean msgPB = new MessagePropertiesBean();
             Message mail = new MimeMessage(session);
-            mail.setFrom(new InternetAddress("sistradu@stud.hs-zigr.de"));
+            mail.setFrom(new InternetAddress("mailer@gpics.de"));
             mail.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse("sistradu@stud.hs-zigr.de"));
-            mail.setSubject("Neues Passwort");
-            mail.setText("Ihr neues Passwort lautet: " +  tempPasswort +
-                    "\n\n Bitte ändern Sie es bei der nächsten Anwendung!");
+                    InternetAddress.parse(email));
+            mail.setSubject(msgPB.getPropertiesMessage("mailSubject"));
+            mail.setText(msgPB.getPropertiesMessage("mailPart1") +  tempPasswort +
+                    msgPB.getPropertiesMessage("mailPart2"));
             Transport.send(mail);
             System.out.println("Done");
         } catch (MessagingException e) {
@@ -106,6 +117,8 @@ public class UserController {
         } catch (ConnectException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
+        resetAll();
+        return "index";
     }
 
     public String erzeugeBenutzer() {
@@ -127,6 +140,11 @@ public class UserController {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
         return "showOwnAlbum";
+    }
+
+    private void getNutzerIDAndEmail(Document doc) {
+        setNutzerID(Integer.parseInt(doc.getElementsByTagName("id").item(0).getTextContent()));
+        setEmail(doc.getElementsByTagName("email").item(0).getTextContent());
     }
 
     private String erzeugeZufallsPasswort() {
@@ -154,8 +172,6 @@ public class UserController {
                 hexString.append(Integer.toHexString(0xFF & digest[i]));
             }
             this.passwort = hexString.toString();
-            //TODO entfernen
-            this.emailPasswort = passwort;
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }

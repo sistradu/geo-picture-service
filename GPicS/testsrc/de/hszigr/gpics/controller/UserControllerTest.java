@@ -5,6 +5,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.faces.context.FacesContext;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Stefan Radusch
@@ -65,13 +67,14 @@ public class UserControllerTest {
     public void testSendPasswortEmail() throws Exception {
 //        UserController controller = new UserController();
 //        controller.setNutzerNamen("Karl");
-//        controller.setPasswort("test");
 //        controller.login();
-//
-//        Assert.assertEquals("98f6bcd4621d373cade4e832627b4f6", controller.getPasswort());
-//
 //        controller.sendPasswortEmail();
 //        Assert.assertNotSame("98f6bcd4621d373cade4e832627b4f6", controller.getPasswort());
+//        Assert.assertEquals(false, controller.isEingeloggt());
+//        Assert.assertEquals(-1, controller.getNutzerID());
+//        Assert.assertEquals(null, controller.getNutzerNamen());
+//        Assert.assertEquals(null, controller.getEmail());
+//        Assert.assertEquals("d41d8cd98f0b24e980998ecf8427e", controller.getPasswort());
     }
 
     @Test
