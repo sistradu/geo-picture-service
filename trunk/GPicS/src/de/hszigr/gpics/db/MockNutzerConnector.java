@@ -12,6 +12,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import java.io.File;
+import java.net.ConnectException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
@@ -93,31 +94,37 @@ public class MockNutzerConnector implements INutzerConnector{
         }
     }
 
-    public void createNutzer(String name, String password, String email) {
+    public void createNutzer(String name, String password, String email) throws ConnectException, IllegalArgumentException{
         //can do nothing...
     }
 
-    public void updateNutzer(int id, String name, String password, String email) {
+    public void updateNutzer(int id, String name, String password, String email) throws ConnectException, IllegalArgumentException {
         //can do nothing...
     }
 
-    public void deleteNutzer(int id) {
+    public void deleteNutzer(int id) throws ConnectException, IllegalArgumentException {
         //can do nothing...
     }
 
-    public void deleteNutzer(String name) {
+    public void deleteNutzer(String name) throws ConnectException, IllegalArgumentException {
         //can do nothing...
     }
 
-    public Document getNutzerByID(int id) {
-        return this.nutzerIDMap.get(id);
+    public Document getNutzerByID(int id) throws ConnectException, IllegalArgumentException {
+        if(this.nutzerIDMap.containsKey(id))
+            return this.nutzerIDMap.get(id);
+        else
+            throw new IllegalArgumentException("Nutzer mit der ID " + id + " existiert nicht!");
     }
 
-    public Document getNutzerByName(String name) {
-        return this.nutzerNameMap.get(name);
+    public Document getNutzerByName(String name) throws ConnectException, IllegalArgumentException {
+        if(this.nutzerNameMap.containsKey(name))
+            return this.nutzerNameMap.get(name);
+        else
+            throw new IllegalArgumentException("Nutzer mit Namen " + name + " existiert nicht!");
     }
 
-    public Document getAllNutzer() {
+    public Document getAllNutzer() throws ConnectException {
         try {
             //TODO mit Hilfe des Schemas erzeugen...
             //Schema schema = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_INSTANCE_NS_URI).newSchema(new File("nutzer.xsd"));
