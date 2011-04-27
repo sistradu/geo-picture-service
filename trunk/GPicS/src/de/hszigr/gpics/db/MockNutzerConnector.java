@@ -12,6 +12,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import java.io.File;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,8 +33,32 @@ public class MockNutzerConnector implements INutzerConnector{
     public MockNutzerConnector(){
         this.nutzerIDMap = new HashMap<Integer,Document>();
         this.nutzerNameMap = new HashMap<String,Document>();
-        this.addNutzer("Karl", "test", "karl@web.de", new String[]{"Görlitz","Zittau"});
-        this.addNutzer("Günther", "passwort", "guenther@web.de", new String[]{"Oberlausitz"});
+        String password = "test";
+        try {
+            MessageDigest md = MessageDigest.getInstance("md5");
+            byte[] digest = md.digest(password.getBytes());
+            StringBuffer hexString = new StringBuffer();
+            for (int i = 0; i < digest.length; i++) {
+                hexString.append(Integer.toHexString(0xFF & digest[i]));
+            }
+            password = hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        this.addNutzer("Karl", password, "karl@web.de", new String[]{"Görlitz","Zittau"});
+        password = "password";
+        try {
+            MessageDigest md = MessageDigest.getInstance("md5");
+            byte[] digest = md.digest(password.getBytes());
+            StringBuffer hexString = new StringBuffer();
+            for (int i = 0; i < digest.length; i++) {
+                hexString.append(Integer.toHexString(0xFF & digest[i]));
+            }
+            password = hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        this.addNutzer("Günther", password, "guenther@web.de", new String[]{"Oberlausitz"});
     }
 
     private void addNutzer(String name, String password, String email, String[] albums){
@@ -44,7 +70,7 @@ public class MockNutzerConnector implements INutzerConnector{
             Element passwordElem = doc.createElement("password");
             Element emailElem = doc.createElement("email");
             nameElem.setTextContent(name);
-            passwordElem.setTextContent(password);//TODO verschlüsseln...
+            passwordElem.setTextContent(password);
             emailElem.setTextContent(email);
             Node nutzerNode = doc.createElement("benutzer");
             nutzerNode.appendChild(nameElem);
@@ -59,7 +85,7 @@ public class MockNutzerConnector implements INutzerConnector{
             this.nutzerIDMap.put(this.id, doc);
             this.nutzerNameMap.put(name, doc);
         } catch (ParserConfigurationException e) {
-            //TODO Logger Ausgabe --> Fehler beim Erstellen von [name]
+            System.out.println("Fehler beim Erstellen des Nutzers " + name + ".");
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
     }
@@ -97,16 +123,16 @@ public class MockNutzerConnector implements INutzerConnector{
             Document doc = factory.newDocumentBuilder().newDocument();
             Node nutzersNode = doc.createElement("benutzers");
             for(Map.Entry<Integer,Document> entry : this.nutzerIDMap.entrySet()){
-                nutzersNode.appendChild(entry.getValue());
+                nutzersNode.appendChild(doc.adoptNode(entry.getValue().getFirstChild()));
             }
             doc.appendChild(nutzersNode);
             return doc;
         } catch (ParserConfigurationException e) {
-            //TODO Logger Ausgabe --> Fehler beim Erstellen des Dokuments
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            System.out.println("Fehler beim Erstellen des Dokuments für alle Nutzer.");
+            e.printStackTrace();
         }// catch (SAXException e) {
-         //   //TODO Logger Ausgabe --> Fehler beim Parsen des Schemas
-         //   e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+         //   System.out.println("Fehler beim Laden des Schemas für alle Nutzer.");
+         //   e.printStackTrace();
         //}
         return null;
     }

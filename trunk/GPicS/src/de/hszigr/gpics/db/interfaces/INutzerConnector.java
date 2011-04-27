@@ -2,6 +2,8 @@ package de.hszigr.gpics.db.interfaces;
 
 import org.w3c.dom.Document;
 
+import java.net.ConnectException;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Markus Ullrich
@@ -11,18 +13,66 @@ import org.w3c.dom.Document;
  */
 public interface INutzerConnector {
 
-    public void createNutzer(String name, String password, String email);
+    /**
+     * Trägt einen Nutzer in die Datenbank ein.
+     * @param name
+     * @param password
+     * @param email
+     * @throws IllegalArgumentException falls der Nutzername bereits existiert oder benötigte Parameter null sind.
+     * @throws ConnectException falls keine Verbindung mit der Datenbank aufgebaut werden konnte.
+     */
+    public void createNutzer(String name, String password, String email) throws IllegalArgumentException, ConnectException;
 
-    public void updateNutzer(int id, String name, String password, String email);
+    /**
+     * Ändert die Daten zu einem Nutzer in der Datenbank.
+     * @param id
+     * @param name
+     * @param password
+     * @param email
+     * @throws IllegalArgumentException falls der Nutzer mit der angegebenen id, bzw. dem Namen nicht existiert oder id und name null sind.
+     * @throws ConnectException falls keine Verbindung mit der Datenbank aufgebaut werden konnte.
+     */
+    public void updateNutzer(int id, String name, String password, String email) throws IllegalArgumentException, ConnectException;
 
-    public void deleteNutzer(int id);
+    /**
+     * Löscht einen Nutzer anhand seiner id in der Datenbank.
+     * @param id
+     * @throws IllegalArgumentException falls der Nutzer mit der angegebenen id nicht existiert.
+     * @throws ConnectException falls keine Verbindung mit der Datenbank aufgebaut werden konnte.
+     */
+    public void deleteNutzer(int id) throws IllegalArgumentException, ConnectException;
 
-    public void deleteNutzer(String name);
+    /**
+     * Löscht den Nutzer mit dem angegebenen Namen.
+     * @param name
+     * @throws IllegalArgumentException falls der Nutzer mit dem angegebenen namen nicht existiert.
+     * @throws ConnectException falls keine Verbindung mit der Datenbank aufgebaut werden konnte.
+     */
+    public void deleteNutzer(String name) throws IllegalArgumentException, ConnectException;
 
-    public Document getNutzerByID(int id);
+    /**
+     * Liefert den Nutzer mit der angegebene id.
+     * @param id
+     * @return
+     * @throws IllegalArgumentException falls der Nutzer mit der angegebenen id nicht existiert.
+     * @throws ConnectException falls keine Verbindung mit der Datenbank aufgebaut werden konnte.
+     */
+    public Document getNutzerByID(int id) throws IllegalArgumentException, ConnectException;
 
-    public Document getNutzerByName(String name);
+    /**
+     * Liefert den Nutzer mit dem angegebenen Namen.
+     * @param name
+     * @return
+     * @throws IllegalArgumentException falls der Nutzer mit dem angegebenen namen nicht existiert.
+     * @throws ConnectException falls keine Verbindung mit der Datenbank aufgebaut werden konnte.
+     */
+    public Document getNutzerByName(String name) throws IllegalArgumentException, ConnectException;
 
-    public Document getAllNutzer();
+    /**
+     * Liefert alle Nutzer.
+     * @return
+     * @throws ConnectException falls keine Verbindung mit der Datenbank aufgebaut werden konnte.
+     */
+    public Document getAllNutzer() throws ConnectException;
 
 }
