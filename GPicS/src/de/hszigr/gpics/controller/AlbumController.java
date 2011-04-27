@@ -21,6 +21,8 @@ public class AlbumController {
     private String sucheNach;
     private String suchString;
     private Document alben;
+    private List<String> albennamen;
+    private int markiertesAlbum;
 
     public String getSucheNach() {
         return sucheNach;
@@ -43,6 +45,23 @@ public class AlbumController {
     }
 
     public void setAlben(Document alben) {
+        
         this.alben = alben;
+    }
+
+    public List<String> getAlbennamen() {
+        return albennamen;
+    }
+
+    public void setAlbennamen(List<String> albennamen) {
+        this.albennamen = albennamen;
+    }
+
+    public int getMarkiertesAlbum() {
+        return markiertesAlbum;
+    }
+
+    public void setMarkiertesAlbum(int markiertesAlbum) {
+        this.markiertesAlbum = markiertesAlbum;
     }
 }
