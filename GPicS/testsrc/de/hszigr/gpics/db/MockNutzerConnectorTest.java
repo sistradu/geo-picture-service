@@ -7,8 +7,11 @@ import org.junit.Test;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import java.net.ConnectException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import static org.junit.Assert.fail;
 
 /**
  * Created by IntelliJ IDEA.
@@ -33,6 +36,12 @@ public class MockNutzerConnectorTest {
 
     @Test
     public void testGetNutzerByID() throws Exception {
+        try{
+            connector.getNutzerByID(2);
+            Assert.fail("Exception should have been thrown!");
+        }catch(Exception ex){
+            //OK!
+        }
         org.w3c.dom.Document doc = connector.getNutzerByID(0);
         NodeList idNodes = doc.getElementsByTagName("id");
         NodeList nameNodes = doc.getElementsByTagName("name");
@@ -95,6 +104,12 @@ public class MockNutzerConnectorTest {
 
     @Test
     public void testGetNutzerByName() throws Exception {
+        try{
+            connector.getNutzerByName("Johnny");
+            Assert.fail("Exception should have been thrown!");
+        }catch(Exception ex){
+            //OK!
+        }
         org.w3c.dom.Document doc = connector.getNutzerByName("Karl");
         NodeList idNodes = doc.getElementsByTagName("id");
         NodeList nameNodes = doc.getElementsByTagName("name");
@@ -156,7 +171,7 @@ public class MockNutzerConnectorTest {
     }
 
     @Test
-    public void testGetAllNutzer(){
+    public void testGetAllNutzer() throws Exception{
         org.w3c.dom.Document doc = connector.getAllNutzer();
         NodeList nutzerNodes = doc.getElementsByTagName("benutzer");
         Assert.assertEquals(2,nutzerNodes.getLength());

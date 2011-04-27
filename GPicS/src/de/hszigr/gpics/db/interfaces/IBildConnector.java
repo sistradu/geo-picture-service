@@ -20,20 +20,14 @@ public interface IBildConnector {
      * @param description
      * @param isPublic
      * @param date
-     * @param location
-     * @throws ConnectException falls keine Verbindung mit der Datenbank aufgebaut werden konnte.
-     */
-    public void createBild(String name, String description, boolean isPublic, GregorianCalendar date, Document location) throws ConnectException;
-
-    /**
-     * Trägt eine neue Location in die Datenbak ein.
      * @param longitude
      * @param latitude
      * @param altitude
      * @param direction
+     * @return Die id des eingetragenen Bildes.
      * @throws ConnectException falls keine Verbindung mit der Datenbank aufgebaut werden konnte.
      */
-    public void createLocation(String longitude, String latitude, String altitude, String direction) throws ConnectException;
+    public int createBild(String name, String description, boolean isPublic, GregorianCalendar date, String longitude, String latitude, String altitude, String direction) throws ConnectException;
 
     /**
      * Ändert das Bild mit der angegebenen id.
@@ -42,23 +36,14 @@ public interface IBildConnector {
      * @param description
      * @param isPublic
      * @param date
-     * @param location
-     * @throws ConnectException falls keine Verbindung mit der Datenbank aufgebaut werden konnte.
-     * @throws IllegalArgumentException falls das Bild mit der angegebenen id nicht existiert.
-     */
-    public void updateBild(int id, String name, String description, boolean isPublic, GregorianCalendar date, Document location) throws ConnectException, IllegalArgumentException;
-
-    /**
-     * Ändert die Location mit der angegebenen id.
-     * @param id
      * @param longitude
      * @param latitude
      * @param altitude
      * @param direction
      * @throws ConnectException falls keine Verbindung mit der Datenbank aufgebaut werden konnte.
-     * @throws IllegalArgumentException  falls die Location mit der angegebenen id nicht existiert.
+     * @throws IllegalArgumentException falls das Bild mit der angegebenen id nicht existiert.
      */
-    public void updateLocation(int id, String longitude, String latitude, String altitude, String direction) throws ConnectException, IllegalArgumentException;
+    public void updateBild(int id, String name, String description, boolean isPublic, GregorianCalendar date, String longitude, String latitude, String altitude, String direction) throws ConnectException, IllegalArgumentException;
 
     /**
      * Löscht das Bild mit der angegebenen id.
