@@ -29,7 +29,10 @@
                 </tr>
                 <tr>
                     <td>
-                        <h:commandLink value="Login" action="#{userController.login}"/>
+                        <h:commandLink value="#{msg.login}" action="#{userController.login}"/>
+                    </td>
+                    <td>
+                        <h:commandLink value="#{msg.newUser}" action="createUser" />
                     </td>
                 </tr>
             </table>

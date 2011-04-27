@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE composition
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+                template="layout.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui">
+    <ui:define name="content">
+        <h:form>
+            <table>
+                <tr>
+                    <td><h:outputLabel value="#{msg.username}" /> </td>
+                    <td><h:inputText value="#{userController.nutzerNamen}"/></td>
+                </tr>
+                <tr>
+                    <td><h:outputLabel value="#{msg.password}" /> </td>
+                    <td><h:inputSecret value="#{userController.passwort}" /> </td>
+                </tr>
+                <tr>
+                    <td><h:outputLabel value="#{msg.repeatPassword} " /> </td>
+                    <td><h:inputSecret /></td>
+                </tr>
+                <tr>
+                    <td><h:outputLabel value="#{msg.email} " /></td>
+                    <td><h:inputText value="#{userController.email}"/></td>
+                </tr>
+                <tr>
+                    <td>
+                        <h:commandButton value="#{msg.save}" action="#{userController.erzeugeBenutzer}" rendered="#{!userController.eingeloggt}" />
+                        <h:commandButton value="#{msg.save}" action="#{userController.updateBenutzer}" rendered="#{userController.eingeloggt}" />
+                    </td>
+                    <td><h:commandButton value="#{msg.abort}" action="index" /></td>
+                </tr>
+            </table>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -120,6 +120,15 @@ public class UserController {
         return "showOwnAlbum";
     }
 
+    public String updateBenutzer(){
+        try {
+            conn.updateNutzer(nutzerID, nutzerNamen, passwort, email);
+        } catch (ConnectException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        return "showOwnAlbum";
+    }
+
     private String erzeugeZufallsPasswort() {
         String allowedChars = "0123456789abcdefghijklmnopqrstuvwxyz";
         Random rand = new Random();
