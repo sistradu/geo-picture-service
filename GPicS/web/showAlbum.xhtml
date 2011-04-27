@@ -14,36 +14,7 @@
     </ui:define>
     <ui:define name="content">
 
-
-        <h:form prependId="false">
-            <h:outputLabel value="#{msg.suchenach} "/>
-            <h:inputText style="width:200px;" value="#{albumController.suchString}"/>
-
-
-            <h:outputLabel value="#{msg.suchein} "/>
-            <h:selectOneMenu style="width:100px;" value="">
-                <f:selectItem id="name" itemLabel="Name" itemValue="1"/>
-                <f:selectItem id="benutzer" itemLabel="Benutzer" itemValue="2"/>
-                <f:selectItem id="album" itemLabel="Album" itemValue="3"/>
-                <f:selectItem id="bild" itemLabel="Bild" itemValue="4"/>
-            </h:selectOneMenu>
-
-
-            <h:commandButton value="suchen"/>
-
-            <p:dataList value="#{albumController.albennamen}" var="alb"
-                        paginator="true" rows="5" effectSpeed="fast"
-                        paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                        rowsPerPageTemplate="10, 25, 50"
-                        paginatorPosition="bottom" >
-
-                <p:column>
-                    <h:commandLink value="#{alb.name}" action="index"/>
-                </p:column>
-            </p:dataList>
-
-
-        </h:form>
+        
 
     </ui:define>
 </ui:composition>

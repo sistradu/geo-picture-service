@@ -18,50 +18,5 @@ import java.util.List;
 @SessionScoped
 public class AlbumController {
 
-    private String sucheNach;
-    private String suchString;
-    private Document alben;
-    private List<String> albennamen;
-    private int markiertesAlbum;
-
-    public String getSucheNach() {
-        return sucheNach;
-    }
-
-    public void setSucheNach(String sucheNach) {
-        this.sucheNach = sucheNach;
-    }
-
-    public String getSuchString() {
-        return suchString;
-    }
-
-    public void setSuchString(String suchString) {
-        this.suchString = suchString;
-    }
-
-    public Document getAlben() {
-        return alben;
-    }
-
-    public void setAlben(Document alben) {
-        
-        this.alben = alben;
-    }
-
-    public List<String> getAlbennamen() {
-        return albennamen;
-    }
-
-    public void setAlbennamen(List<String> albennamen) {
-        this.albennamen = albennamen;
-    }
-
-    public int getMarkiertesAlbum() {
-        return markiertesAlbum;
-    }
-
-    public void setMarkiertesAlbum(int markiertesAlbum) {
-        this.markiertesAlbum = markiertesAlbum;
-    }
+   
 }
