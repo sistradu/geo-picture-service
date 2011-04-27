@@ -27,7 +27,7 @@ public interface IBildConnector {
 
     public Document getBildByID(int id);
 
-    public Document getBildByName(String name);
+    public Document getBilderByName(String name);
 
     public Document getBilderForAlbum(Document album);
 
