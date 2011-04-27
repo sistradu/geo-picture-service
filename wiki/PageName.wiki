@@ -9,7 +9,7 @@ Hier die Tabelle mit der Zuordnung der Themen zum jeweiligen Bearbeiter.
 || Funktionsklassen: LocationManager + ImageDataExtractor || Stefan ||
 || DB-Mock-Klasse || Markus ||
 || YAML || Martin ||
-|| Breadcrumps + Menü || Rico ||
+|| Breadcrumb + Menü || Rico ||
 || *Views und Controller* ||
 || Startseite mit Login und Nutzerverwaltung || Stefan ||
 || Album erstellen/bearbeiten || Stefan ||
