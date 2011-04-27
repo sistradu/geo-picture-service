@@ -18,5 +18,22 @@ import java.util.List;
 @SessionScoped
 public class AlbumController {
 
-   
+    private Document album;
+    private Document bilder;
+
+    public Document getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(Document album) {
+        this.album = album;
+    }
+
+    public Document getBilder() {
+        return bilder;
+    }
+
+    public void setBilder(Document bilder) {
+        this.bilder = bilder;
+    }
 }

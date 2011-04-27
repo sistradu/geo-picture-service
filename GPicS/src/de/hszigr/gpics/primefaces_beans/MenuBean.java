@@ -46,13 +46,13 @@ public class MenuBean {
 
         item = new MenuItem();
 	 	item.setValue("Albumübersicht");
-	 	item.setUrl("showAlbum");
+	 	item.setUrl("showAlbum.xhtml");
 	 	submenu.getChildren().add(item);
 
         if (site.equals("showAlbum")){
             item = new MenuItem();
 	 	    item.setValue("Album erstellen");
-	 	    item.setUrl("createAlbum");
+	 	    item.setUrl("createAlbum.xhtml");
 	 	    submenu.getChildren().add(item);
         }
 
