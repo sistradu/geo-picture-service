@@ -6,7 +6,7 @@
 Hier die Tabelle mit der Zuordnung der Themen zum jeweiligen Bearbeiter.
 
 || *Thema* || *Bearbeiter* ||
-|| Funktionsklassen: LocationManager + ImageDataExtractor || Stefan ||
+|| Funktionsklassen: CoordinateCalculator + ImageDataExtractor || Stefan ||
 || DB-Mock-Klasse || Markus ||
 || YAML || Martin ||
 || Breadcrumb + Menü || Rico ||
