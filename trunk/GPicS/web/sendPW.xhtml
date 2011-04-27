@@ -8,10 +8,17 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.prime.com.tr/ui">
-    <!--<ui:define name="nav">
-
-    </ui:define>-->
     <ui:define name="content">
-        <h:outputLabel value="#{msg.welcometext}" />
+        <h:form>
+            <table>
+                <tr>
+                    <td><h:outputLabel value="#{msg.username} "/></td>
+                    <td><h:inputText value="#{userController.nutzerNamen}"/></td>
+                </tr>
+                <tr>
+                    <td><h:commandButton value="#{msg.sendNewPassword}" action="#{userController.sendPasswortEmail}" /></td>
+                </tr>
+            </table>
+        </h:form>
     </ui:define>
 </ui:composition>

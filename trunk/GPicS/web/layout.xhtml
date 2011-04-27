@@ -2,7 +2,8 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xml:lang="en" lang="en"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.prime.com.tr/ui">
 <h:head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
     <title>GPicS</title>
@@ -14,45 +15,82 @@
     <![endif]-->
 </h:head>
 <h:body>
-<div class="page_margins">
-    <div id="border-top">
-        <div id="edge-tl"></div>
-        <div id="edge-tr"></div>
-    </div>
-    <div class="page">
-        <div id="header">
-            <!--<div id="topnav">-->
-            <!--&lt;!&ndash; start: skip link navigation &ndash;&gt;-->
-            <!--<a class="skip" title="skip link" href="#">Skip to the navigation</a><span class="hideme">.</span>-->
-            <!--<a class="skip" title="skip link" href="#">Skip to the content</a><span class="hideme">.</span>-->
-            <!--&lt;!&ndash; end: skip link navigation &ndash;&gt;<a href="#">Login</a> | <a href="#">Contact</a> | <a href="#">Imprint</a>-->
-            <!--</div>-->
-            <h1>GPicS</h1>
-            <h:outputLabel value="#{msg.headertext}" />
+    <div class="page_margins">
+        <div id="border-top">
+            <div id="edge-tl"></div>
+            <div id="edge-tr"></div>
         </div>
-        <div id="main">
-            <div id="col1">
-                <div id="col1_content" class="clearfix">
-                    <ui:insert name="nav"/>
+        <div class="page">
+            <div id="header">
+                <!--<div id="topnav">-->
+                <!--&lt;!&ndash; start: skip link navigation &ndash;&gt;-->
+                <!--<a class="skip" title="skip link" href="#">Skip to the navigation</a><span class="hideme">.</span>-->
+                <!--<a class="skip" title="skip link" href="#">Skip to the content</a><span class="hideme">.</span>-->
+                <!--&lt;!&ndash; end: skip link navigation &ndash;&gt;<a href="#">Login</a> | <a href="#">Contact</a> | <a href="#">Imprint</a>-->
+                <!--</div>-->
+                <h1>GPicS</h1>
+                <h:outputLabel value="#{msg.headertext}"/>
+            </div>
+            <div id="main">
+                <div id="col1">
+                    <div id="col1_content" class="clearfix">
+                        <h:form rendered="#{!userController.eingeloggt}">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <h:outputLabel value="#{msg.username} "/>
+                                    </td>
+                                    <td>
+                                        <h:inputText value="#{userController.nutzerNamen}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h:outputLabel value="#{msg.password} "/>
+                                    </td>
+                                    <td>
+                                        <h:inputSecret value="#{userController.passwort}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h:commandLink value="#{msg.login}" action="#{userController.login}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h:commandLink value="#{msg.newUser}" action="createUser"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><h:commandLink value="#{msg.forgotPassword}" action="sendPW"/></td>
+                                </tr>
+                            </table>
+                        </h:form>
+                        <h:form rendered="#{userController.eingeloggt}">
+                            <h:commandLink value="#{msg.logout}" action="#{userController.logout}"/>
+                        </h:form>
+                        <p:menu model="#{menuBean.model}" />
+                        <ui:insert name="nav"/>
+                    </div>
+                </div>
+                <div id="col3">
+                    <div id="col3_content" class="clearfix">
+                        <ui:insert name="content"/>
+                    </div>
+                    <!-- IE Column Clearing -->
+                    <div id="ie_clearing"> &#160; </div>
                 </div>
             </div>
-            <div id="col3">
-                <div id="col3_content" class="clearfix">
-                    <ui:insert name="content"/>
-                </div>
-                <!-- IE Column Clearing -->
-                <div id="ie_clearing"> &#160; </div>
+            <!-- begin: #footer -->
+            <div id="footer">Layout based on <a href="http://www.yaml.de/">YAML</a>
+                <ui:insert name="footer"/>
             </div>
         </div>
-        <!-- begin: #footer -->
-        <div id="footer">Layout based on <a href="http://www.yaml.de/">YAML</a>
-            <ui:insert name="footer"/>
+        <div id="border-bottom">
+            <div id="edge-bl"></div>
+            <div id="edge-br"></div>
         </div>
     </div>
-    <div id="border-bottom">
-        <div id="edge-bl"></div>
-        <div id="edge-br"></div>
-    </div>
-</div>
 </h:body>
 </html>
