@@ -66,13 +66,16 @@ public class MockNutzerConnector implements INutzerConnector{
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             Document doc = factory.newDocumentBuilder().newDocument();
+            Element idElem = doc.createElement("id");
             Element nameElem = doc.createElement("name");
             Element passwordElem = doc.createElement("password");
             Element emailElem = doc.createElement("email");
             nameElem.setTextContent(name);
             passwordElem.setTextContent(password);
             emailElem.setTextContent(email);
+            idElem.setTextContent(""+id);
             Node nutzerNode = doc.createElement("benutzer");
+            nutzerNode.appendChild(idElem);
             nutzerNode.appendChild(nameElem);
             nutzerNode.appendChild(passwordElem);
             nutzerNode.appendChild(emailElem);
