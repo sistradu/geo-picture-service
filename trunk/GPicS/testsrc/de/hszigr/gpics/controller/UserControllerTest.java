@@ -98,4 +98,22 @@ public class UserControllerTest {
         controller.setPasswort("");
         Assert.assertEquals("d41d8cd98f0b24e980998ecf8427e", controller.getPasswort());
     }
+
+    @Test
+    public void testUpdateBenutzer() throws Exception{
+        UserController controller = new UserController();
+        controller.setNutzerNamen("Karl");
+        controller.setPasswort("test");
+        controller.login();
+
+        controller.setEmail("sistradu@stud.hs-zigr.de");
+        controller.updateBenutzer();
+
+//        controller.logout();
+//        controller.setNutzerNamen("Karl");
+//        controller.setPasswort("test");
+//        controller.login();
+        Assert.assertNotSame("karl@web.de", controller.getEmail());
+        Assert.assertEquals("sistradu@stud.hs-zigr.de", controller.getEmail());
+    }
 }
