@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE composition
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+                template="layout.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui">
+    <ui:define name="nav">
+       <!-- <p:menu model="#{menuBean.model}" /> -->
+
+    </ui:define>
+    <ui:define name="content">
+
+
+        <h:form prependId="false">
+            <h:outputLabel value="#{msg.suchenach} "/>
+            <h:inputText style="width:200px;" value="#{albumsController.suchString}"/>
+
+
+            <h:outputLabel value="#{msg.suchein} "/>
+            <h:selectOneMenu style="width:100px;" value="">
+                <f:selectItem id="name" itemLabel="Name" itemValue="1"/>
+                <f:selectItem id="benutzer" itemLabel="Benutzer" itemValue="2"/>
+                <f:selectItem id="album" itemLabel="Album" itemValue="3"/>
+                <f:selectItem id="bild" itemLabel="Bild" itemValue="4"/>
+            </h:selectOneMenu>
+
+
+            <h:commandButton value="suchen"/>
+
+            <p:dataList value="#{albumsController.albennamen}" var="alb"
+                        paginator="true" rows="5" effectSpeed="fast"
+                        paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                        rowsPerPageTemplate="10, 25, 50"
+                        paginatorPosition="bottom" >
+
+                <p:column>
+                    <h:commandLink value="#{alb.name}" action="index"/>
+                </p:column>
+            </p:dataList>
+
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>
