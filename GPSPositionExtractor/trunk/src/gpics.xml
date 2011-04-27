@@ -1,0 +1,309 @@
+
+<gpics>
+	<benutzer>
+		<name>Karl</name>
+		<password>f34gh5525cbagh3a</password>
+		<email>karl@web.de</email>
+		<album name="Görlitz"/>
+		<album name="Zittau"/>
+	</benutzer>
+	<benutzer>
+		<name>Günther</name>
+		<password>a11bc91123afh73c</password>
+		<email>guenther@web.de</email>
+		<album name="Oberlausitz"/>
+	</benutzer>
+	<album>
+		<name>Görlitz</name>
+		<description>Bilder über Görlitz.</description>
+		<password>f34gh5525cbagh3a</password>
+		<bild id="1"/>
+		<bild id="2"/>
+		<bild id="3"/>
+		<bild id="4"/>
+	</album>
+	<album>
+		<name>Zittau</name>
+		<description>Bilder über Zittau.</description>
+		<password>f34gh5525cbagh3a</password>
+		<bild id="5"/>
+		<bild id="6"/>
+		<bild id="8"/>
+		<bild id="10"/>
+	</album>
+	<album>
+		<name>Oberlausitz</name>
+		<description>Bilder über die schöne Oberlausitz.</description>
+		<password>a11bc91123afh73c</password>
+		<bild id="7"/>
+		<bild id="9"/>
+		<bild id="11"/>
+		<bild id="12"/>
+	</album>
+	<bild>
+		<id>1</id>
+		<name>Peterskirche</name>
+		<description>Die Peterskirche</description>
+		<ispublic>true</ispublic>
+		<timestamp>2011-02-21 19:00:57</timestamp>
+        <fileposition>/pics/Peterskirche_1.jpg</fileposition>
+		<position id="1"/>
+	</bild>
+	<bild>
+		<id>2</id>
+		<name>Vogtshof</name>
+		<description>Der Vogtshof</description>
+		<ispublic>true</ispublic>
+		<timestamp>2011-02-21 19:01:22</timestamp>
+        <fileposition>/pics/Vogtshof_2.jpg</fileposition>
+		<position id="2"/>
+	</bild>
+	<bild>
+		<id>3</id>
+		<name>Vogtshof Innenhof</name>
+		<description>Studenten beim Grillen.</description>
+		<ispublic>false</ispublic>
+		<timestamp>2011-02-21 19:05:01</timestamp>
+        <fileposition>/pics/Vogtshof_2_3.jpg</fileposition>
+		<position id="3"/>
+	</bild>
+	<bild>
+		<id>4</id>
+		<name>Wohnung Vogtshof</name>
+		<description>Klein aber fein...</description>
+		<ispublic>true</ispublic>
+		<timestamp>2011-02-21 21:37:01</timestamp>
+        <fileposition>/pics/Vogtshof_3_4.jpg</fileposition>
+		<position id="4"/>
+	</bild>
+	<bild>
+		<id>5</id>
+		<name>Blumenuhr</name>
+		<description>Die Blumenuhr</description>
+		<ispublic>true</ispublic>
+		<timestamp>2011-03-21 19:00:57</timestamp>
+        <fileposition>/pics/Blumenuhr_5.jpg</fileposition>
+		<position id="5"/>
+	</bild>
+	<bild>
+		<id>6</id>
+		<name>Bahnhof</name>
+		<description>Der Bahnhof</description>
+		<ispublic>true</ispublic>
+		<timestamp>2011-03-21 19:01:22</timestamp>
+        <fileposition>/pics/Bahnhof_6.jpg</fileposition>
+		<position id="6"/>
+	</bild>
+	<bild>
+		<id>7</id>
+		<name>Nonnenfelsen</name>
+		<description>In Jonsdorf</description>
+		<ispublic>true</ispublic>
+		<timestamp>2011-03-19 13:05:01</timestamp>
+        <fileposition>/pics/Nonnenfelsen_7.jpg</fileposition>
+		<position id="7"/>
+	</bild>
+	<bild>
+		<id>8</id>
+		<name>Die Hochschule</name>
+		<description>Eines von 9 Gebäuden...</description>
+		<ispublic>true</ispublic>
+		<timestamp>2011-03-21 21:37:01</timestamp>
+        <fileposition>/pics/Hochschule_8.jpg</fileposition>
+		<position id="8"/>
+	</bild>
+	<bild>
+		<id>9</id>
+		<name>Gondelfahrt</name>
+		<description>Blick vom Nonnenfelsen auf die Gondelfahrt.</description>
+		<ispublic>true</ispublic>
+		<timestamp>2011-03-19 13:34:57</timestamp>
+        <fileposition>/pics/Gondelfahrt_9.jpg</fileposition>
+		<position id="9"/>
+	</bild>
+	<bild>
+		<id>10</id>
+		<name>Die Mensa</name>
+		<description>Leider nicht mehr offen um die Zeit...</description>
+		<ispublic>true</ispublic>
+		<timestamp>2011-03-21 21:41:22</timestamp>
+        <fileposition>/pics/Mensa_10.jpg</fileposition>
+		<position id="10"/>
+	</bild>
+	<bild>
+		<id>11</id>
+		<name>Hochwald</name>
+		<description>Der Hochwald vom Nonnenfelsen</description>
+		<ispublic>true</ispublic>
+		<timestamp>2011-03-19 13:35:01</timestamp>
+        <fileposition>/pics/Hochwald_11.jpg</fileposition>
+		<position id="11"/>
+	</bild>
+	<bild>
+		<id>12</id>
+		<name>Lausche</name>
+		<description>Die Lausche vom Nonnenfelsen</description>
+		<ispublic>true</ispublic>
+		<timestamp>2011-03-19 13:36:02</timestamp>
+        <fileposition>/pics/Lausche_12.jpg</fileposition>
+		<position id="12"/>
+	</bild>
+	<position>
+		<id>1</id>
+		<latitude>66° 43′ 12″</latitude>
+		<latitudeRef>66° 43′ 12″</latitudeRef>
+		<latitudeDecimal>66.7200°</latitudeDecimal>
+		<longitude>66° 43′ 12″</longitude>
+		<longitudeRef>66° 43′ 12″</longitudeRef>
+		<longitudeDecimal>66.7200°</longitudeDecimal>
+		<altitude>123</altitude>
+		<direction>120</direction>
+	</position>
+	<position>
+		<id>2</id>
+		<latitude>66° 43′ 12″</latitude>
+		<latitudeRef>66° 43′ 12″</latitudeRef>
+		<latitudeDecimal>66.7200°</latitudeDecimal>
+		<longitude>66° 43′ 12″</longitude>
+		<longitudeRef>66° 43′ 12″</longitudeRef>
+		<longitudeDecimal>66.7200°</longitudeDecimal>
+		<altitude>123</altitude>
+		<direction>120</direction>
+	</position>
+	<position>
+		<id>3</id>
+		<latitude>66° 43′ 12″</latitude>
+		<latitudeRef>66° 43′ 12″</latitudeRef>
+		<latitudeDecimal>66.7200°</latitudeDecimal>
+		<longitude>66° 43′ 12″</longitude>
+		<longitudeRef>66° 43′ 12″</longitudeRef>
+		<longitudeDecimal>66.7200°</longitudeDecimal>
+		<altitude>123</altitude>
+		<direction>120</direction>
+	</position>
+	<position>
+		<id>4</id>
+		<latitude>66° 43′ 12″</latitude>
+		<latitudeRef>66° 43′ 12″</latitudeRef>
+		<latitudeDecimal>66.7200°</latitudeDecimal>
+		<longitude>66° 43′ 12″</longitude>
+		<longitudeRef>66° 43′ 12″</longitudeRef>
+		<longitudeDecimal>66.7200°</longitudeDecimal>
+		<altitude>123</altitude>
+		<direction>120</direction>
+	</position>
+	<position>
+		<id>5</id>
+		<latitude>66° 43′ 12″</latitude>
+		<latitudeRef>66° 43′ 12″</latitudeRef>
+		<latitudeDecimal>66.7200°</latitudeDecimal>
+		<longitude>66° 43′ 12″</longitude>
+		<longitudeRef>66° 43′ 12″</longitudeRef>
+		<longitudeDecimal>66.7200°</longitudeDecimal>
+		<altitude>123</altitude>
+		<direction>120</direction>
+	</position>
+	<position>
+		<id>6</id>
+		<latitude>66° 43′ 12″</latitude>
+		<latitudeRef>66° 43′ 12″</latitudeRef>
+		<latitudeDecimal>66.7200°</latitudeDecimal>
+		<longitude>66° 43′ 12″</longitude>
+		<longitudeRef>66° 43′ 12″</longitudeRef>
+		<longitudeDecimal>66.7200°</longitudeDecimal>
+		<altitude>123</altitude>
+		<direction>120</direction>
+	</position>
+	<position>
+		<id>7</id>
+		<latitude>66° 43′ 12″</latitude>
+		<latitudeRef>66° 43′ 12″</latitudeRef>
+		<latitudeDecimal>66.7200°</latitudeDecimal>
+		<longitude>66° 43′ 12″</longitude>
+		<longitudeRef>66° 43′ 12″</longitudeRef>
+		<longitudeDecimal>66.7200°</longitudeDecimal>
+		<altitude>123</altitude>
+		<direction>120</direction>
+	</position>
+	<position>
+		<id>8</id>
+		<latitude>66° 43′ 12″</latitude>
+		<latitudeRef>66° 43′ 12″</latitudeRef>
+		<latitudeDecimal>66.7200°</latitudeDecimal>
+		<longitude>66° 43′ 12″</longitude>
+		<longitudeRef>66° 43′ 12″</longitudeRef>
+		<longitudeDecimal>66.7200°</longitudeDecimal>
+		<altitude>123</altitude>
+		<direction>120</direction>
+	</position>
+	<position>
+		<id>9</id>
+		<latitude>66° 43′ 12″</latitude>
+		<latitudeRef>66° 43′ 12″</latitudeRef>
+		<latitudeDecimal>66.7200°</latitudeDecimal>
+		<longitude>66° 43′ 12″</longitude>
+		<longitudeRef>66° 43′ 12″</longitudeRef>
+		<longitudeDecimal>66.7200°</longitudeDecimal>
+		<altitude>123</altitude>
+		<direction>120</direction>
+	</position>
+	<position>
+		<id>10</id>
+		<latitude>66° 43′ 12″</latitude>
+		<latitudeRef>66° 43′ 12″</latitudeRef>
+		<latitudeDecimal>66.7200°</latitudeDecimal>
+		<longitude>66° 43′ 12″</longitude>
+		<longitudeRef>66° 43′ 12″</longitudeRef>
+		<longitudeDecimal>66.7200°</longitudeDecimal>
+		<altitude>123</altitude>
+		<direction>120</direction>
+	</position>
+	<position>
+		<id>11</id>
+		<latitude>66° 43′ 12″</latitude>
+		<latitudeRef>66° 43′ 12″</latitudeRef>
+		<latitudeDecimal>66.7200°</latitudeDecimal>
+		<longitude>66° 43′ 12″</longitude>
+		<longitudeRef>66° 43′ 12″</longitudeRef>
+		<longitudeDecimal>66.7200°</longitudeDecimal>
+		<altitude>123</altitude>
+		<direction>120</direction>
+	</position>
+	<position>
+		<id>12</id>
+		<latitude>66° 43′ 12″</latitude>
+		<latitudeRef>66° 43′ 12″</latitudeRef>
+		<latitudeDecimal>66.7200°</latitudeDecimal>
+		<longitude>66° 43′ 12″</longitude>
+		<longitudeRef>66° 43′ 12″</longitudeRef>
+		<longitudeDecimal>66.7200°</longitudeDecimal>
+		<altitude>123</altitude>
+		<direction>120</direction>
+	</position>
+	<rundreise>
+		<name>Städtetour</name>
+		<description>Von Zittau nach Görlitz</description>
+		<password>f34gh5525cbagh3a</password>
+		<bild id="1" pos="1"/>
+		<bild id="2" pos="2"/>
+		<bild id="3" pos="3"/>
+		<bild id="4" pos="4"/>
+		<bild id="5" pos="5"/>
+		<bild id="6" pos="6"/>
+		<bild id="8" pos="7"/>
+		<bild id="10" pos="8"/>
+	</rundreise>
+	<rundreise>
+		<name>Städtetour2</name>
+		<description>Nochmal von Zittau nach Görlitz</description>
+		<password>f34gh5525cbagh3a</password>
+		<bild id="1" pos="1"/>
+		<bild id="2" pos="2"/>
+		<bild id="3" pos="3"/>
+		<bild id="4" pos="4"/>
+		<bild id="5" pos="5"/>
+		<bild id="6" pos="6"/>
+		<bild id="8" pos="7"/>
+		<bild id="10" pos="8"/>
+	</rundreise>
+</gpics>
