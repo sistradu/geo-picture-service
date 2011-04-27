@@ -34,7 +34,7 @@
             <div id="main">
                 <div id="col1">
                     <div id="col1_content" class="clearfix">
-                        <h:form rendered="#{!userController.eingeloggt}">
+                        <h:form rendered="#{!userController.eingeloggt}" id="loginMask">
                             <table>
                                 <tr>
                                     <td>
@@ -68,9 +68,15 @@
                             </table>
                         </h:form>
                         <h:form rendered="#{userController.eingeloggt}">
-                            <h:commandLink value="#{msg.logout}" action="#{userController.logout}"/>
+                            <tr>
+                                <td><h:commandLink value="#{msg.logout}" action="#{userController.logout}"/></td>
+                            </tr>
+                            <tr>
+                                <td><h:commandLink value="#{msg.editUser}" action="createUser"/></td>
+                            </tr>
                         </h:form>
-                        <p:menu model="#{menuBean.model}" />
+                        <h:messages for="loginMask" style="color:red;"/>
+                        <p:menu model="#{menuBean.model}"/>
                         <ui:insert name="nav"/>
                     </div>
                 </div>

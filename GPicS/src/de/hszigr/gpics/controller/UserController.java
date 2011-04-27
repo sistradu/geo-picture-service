@@ -2,13 +2,16 @@ package de.hszigr.gpics.controller;
 
 import de.hszigr.gpics.db.MockNutzerConnector;
 import de.hszigr.gpics.db.interfaces.INutzerConnector;
+import de.hszigr.gpics.util.ErrorMessageHandler;
 import de.hszigr.gpics.util.MessagePropertiesBean;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -37,28 +40,33 @@ public class UserController {
     private String passwort;
     private INutzerConnector conn;
 
-    public UserController(){
+    public UserController() {
         conn = new MockNutzerConnector();
     }
 
     public String login() {
-        String dbPasswort = "";
-        Document doc = null;
         try {
-            doc = conn.getNutzerByName(nutzerNamen);
+            String dbPasswort = "";
+            Document doc = conn.getNutzerByName(nutzerNamen);
             NodeList nodes = doc.getElementsByTagName("password");
             dbPasswort = nodes.item(0).getTextContent();
+
+            if (dbPasswort.equals(passwort)) {
+                eingeloggt = true;
+                getNutzerIDAndEmail(doc);
+                return "showOwnAlbum";
+            }
         } catch (ConnectException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
+            ErrorMessageHandler.addErrorMessageToFacesMessage("loginMask", e.getMessage());
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            ErrorMessageHandler.addErrorMessageToFacesMessage("loginMask", e.getMessage());
         }
-        if(dbPasswort.equals(passwort)){
-            eingeloggt = true;
-            getNutzerIDAndEmail(doc);
-            return "showOwnAlbum";
-        }
+        MessagePropertiesBean msgPB = new MessagePropertiesBean();
+        ErrorMessageHandler.addErrorMessageToFacesMessage("loginMask", msgPB.getPropertiesMessage("wrongPassword"));
         return "index";
     }
-
 
 
     public String logout() {
@@ -66,58 +74,52 @@ public class UserController {
         return "index";
     }
 
-    private void resetAll() {
-        setNutzerID(-1);
-        setNutzerNamen(null);
-        setPasswort("");
-        setEmail(null);
-        setEingeloggt(false);
-    }
-
     public String sendPasswortEmail() {
-        String tempPasswort = erzeugeZufallsPasswort();
-
         try {
+            String tempPasswort = erzeugeZufallsPasswort();
+
             Document doc = conn.getNutzerByName(nutzerNamen);
             getNutzerIDAndEmail(doc);
-        } catch (ConnectException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
 
-        Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "193.174.103.76");
-        props.put("mail.smtp.port", 25);
-        props.setProperty("mail.smtp.ssl.trust", "193.174.103.76");
-        Authenticator aut = new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("mailer", "mailer");    //To change body of overridden methods use File | Settings | File Templates.
-            }
-        };
-        Session session = Session.getInstance(props, aut);
-        try {
+            Properties props = new Properties();
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.host", "193.174.103.76");
+            props.put("mail.smtp.port", 25);
+            props.setProperty("mail.smtp.ssl.trust", "193.174.103.76");
+            Authenticator aut = new Authenticator() {
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication("mailer", "mailer");    //To change body of overridden methods use File | Settings | File Templates.
+                }
+            };
+            Session session = Session.getInstance(props, aut);
             MessagePropertiesBean msgPB = new MessagePropertiesBean();
             Message mail = new MimeMessage(session);
             mail.setFrom(new InternetAddress("mailer@gpics.de"));
             mail.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(email));
             mail.setSubject(msgPB.getPropertiesMessage("mailSubject"));
-            mail.setText(msgPB.getPropertiesMessage("mailPart1") +  tempPasswort +
+            mail.setText(msgPB.getPropertiesMessage("mailPart1") + tempPasswort +
                     msgPB.getPropertiesMessage("mailPart2"));
             Transport.send(mail);
             System.out.println("Done");
-        } catch (MessagingException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        setPasswort(tempPasswort);
-        try {
+            setPasswort(tempPasswort);
             conn.updateNutzer(nutzerID, nutzerNamen, passwort, email);
+            resetAll();
         } catch (ConnectException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
+            ErrorMessageHandler.addErrorMessageToFacesMessage("sendPWMask", e.getMessage());
+            return "sendPW";
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            ErrorMessageHandler.addErrorMessageToFacesMessage("sendPWMask", e.getMessage());
+            return "sendPW";
+        } catch (IllegalArgumentException e){
+            e.printStackTrace();
+            ErrorMessageHandler.addErrorMessageToFacesMessage("sendPWMask", e.getMessage());
+            return "sendPW";
         }
-        resetAll();
         return "index";
     }
 
@@ -128,18 +130,38 @@ public class UserController {
             setNutzerID(Integer.parseInt(doc.getElementsByTagName("id").item(0).getTextContent()));
             setEingeloggt(true);
         } catch (ConnectException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
+            ErrorMessageHandler.addErrorMessageToFacesMessage("createUserMask", e.getMessage());
+            return "createUser";
+        }catch (IllegalArgumentException e){
+            e.printStackTrace();
+            ErrorMessageHandler.addErrorMessageToFacesMessage("createUserMask", e.getMessage());
+            return "createUser";
         }
         return "showOwnAlbum";
     }
 
-    public String updateBenutzer(){
+    public String updateBenutzer() {
         try {
             conn.updateNutzer(nutzerID, nutzerNamen, passwort, email);
         } catch (ConnectException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
+            ErrorMessageHandler.addErrorMessageToFacesMessage("createUserMask", e.getMessage());
+            return "createUser";
+        }catch (IllegalArgumentException e){
+            e.printStackTrace();
+            ErrorMessageHandler.addErrorMessageToFacesMessage("createUserMask", e.getMessage());
+            return "createUser";
         }
         return "showOwnAlbum";
+    }
+
+    private void resetAll() {
+        setNutzerID(-1);
+        setNutzerNamen(null);
+        setPasswort("");
+        setEmail(null);
+        setEingeloggt(false);
     }
 
     private void getNutzerIDAndEmail(Document doc) {
