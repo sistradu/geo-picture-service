@@ -9,7 +9,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.prime.com.tr/ui">
     <ui:define name="content">
-        <h:form>
+        <h:form id="sendPWMask">
             <table>
                 <tr>
                     <td><h:outputLabel value="#{msg.username} "/></td>
@@ -20,5 +20,6 @@
                 </tr>
             </table>
         </h:form>
+        <h:messages for="sendPWMask" style="color:red" />
     </ui:define>
 </ui:composition>
