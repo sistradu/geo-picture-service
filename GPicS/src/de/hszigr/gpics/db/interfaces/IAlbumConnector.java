@@ -2,6 +2,8 @@ package de.hszigr.gpics.db.interfaces;
 
 import org.w3c.dom.Document;
 
+import java.net.ConnectException;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Markus Ullrich
@@ -10,25 +12,91 @@ import org.w3c.dom.Document;
  * To change this template use File | Settings | File Templates.
  */
 public interface IAlbumConnector {
+    /**
+     * Trägt ein neues Album in die Datenbank ein.
+     * @param name
+     * @param password
+     * @param description
+     * @throws ConnectException falls keine Verbindung mit der Datenbank hergestellt werden konnte.
+     * @throws IllegalArgumentException falls ein Album mit dem selben Namen bereits exisiert.
+     */
+    public void createAlbum(String name, String password, String description) throws ConnectException, IllegalArgumentException;
 
-    public void createAlbum(String name, String password, String description);
+    /**
+     * Ändert die Daten zu einem Album in der Datenbank.
+     * @param id
+     * @param name
+     * @param password
+     * @param description
+     * @throws ConnectException falls keine Verbindung mit der Datenbank hergestellt werden konnte.
+     * @throws IllegalArgumentException falls kein Album mit der angegebenen id oder dem angegebenen Namen existiert.
+     */
+    public void updateAlbum(int id, String name, String password, String description) throws ConnectException, IllegalArgumentException;
 
-    public void updateAlbum(int id, String name, String password, String description);
+    /**
+     * Löscht das Album in der Datenbank mit der angegebenen id.
+     * @param id
+     * @throws ConnectException falls keine Verbindung mit der Datenbank hergestellt werden konnte.
+     * @throws IllegalArgumentException falls kein Album mit der angegebenen id existiert.
+     */
+    public void deleteAlbum(int id) throws ConnectException, IllegalArgumentException;
 
-    public void deleteAlbum(int id);
+    /**
+     * Löscht das Album in der Datenbank mit dem angegebenen Namen.
+     * @param name
+     * @throws ConnectException falls keine Verbindung mit der Datenbank hergestellt werden konnte.
+     * @throws IllegalArgumentException falls kein Album mit dem angegebenen namen existiert.
+     */
+    public void deleteAlbum(String name) throws ConnectException, IllegalArgumentException;
 
-    public void deleteAlbum(String name);
+    /**
+     * Liefert das Album mit der angegebenen id.
+     * @param id
+     * @return
+     * @throws ConnectException falls keine Verbindung mit der Datenbank hergestellt werden konnte.
+     * @throws IllegalArgumentException falls kein Album mit der angegebenen id existiert.
+     */
+    public Document getAlbum(int id) throws ConnectException, IllegalArgumentException;
 
-    public Document getAlbum(int id);
+    /**
+     * Liefert das Album mit dem angegebenen Namen.
+     * @param name
+     * @return
+     * @throws ConnectException falls keine Verbindung mit der Datenbank hergestellt werden konnte.
+     * @throws IllegalArgumentException falls kein Album mit dem angegebenen namen existiert.
+     */
+    public Document getAlbum(String name) throws ConnectException, IllegalArgumentException;
 
-    public Document getAlbum(String name);
+    /**
+     * Liefert alle Alben.
+     * @return
+     * @throws ConnectException falls keine Verbindung mit der Datenbank hergestellt werden konnte.
+     */
+    public Document getAllAlben() throws ConnectException;
 
-    public Document getAllAlben();
+    /**
+     * Liefert alle Alben des angegebenen Nutzers.
+     * @param nutzer
+     * @return
+     * @throws ConnectException falls keine Verbindung mit der Datenbank hergestellt werden konnte.
+     * @throws IllegalArgumentException falls der angegebene Nutzer nicht existiert.
+     */
+    public Document getAlbenForNutzer(Document nutzer) throws ConnectException, IllegalArgumentException;
 
-    public Document getAlbenForNutzer(Document nutzer);
+    /**
+     * Liefert alle Alben, die im Namen den angegebenen String enthalten.
+     * @param name
+     * @return
+     * @throws ConnectException falls keine Verbindung mit der Datenbank hergestellt werden konnte.
+     */
+    public Document getAlbenWithNameContaining(String name) throws ConnectException;
 
-    public Document getAlbenWithNameContaining(String name);
-
-    public Document getAlbenWithDescriptionContaining(String description);
+    /**
+     * Liefert alle Alben, die in der Beschreibung den angegebenen String enthalten.
+     * @param description
+     * @return
+     * @throws ConnectException falls keine Verbindung mit der Datenbank hergestellt werden konnte.
+     */
+    public Document getAlbenWithDescriptionContaining(String description) throws ConnectException;
 
 }
