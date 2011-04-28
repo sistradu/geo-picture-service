@@ -12,6 +12,11 @@ import javax.faces.context.FacesContext;
  */
 public class FacesMessageHandler {
 
+    /**
+     * generiert eine FacesMessage, die beim h:message-Element mit der id <elementID> angezeigt wird
+     * @param elementID
+     * @param errorMessage
+     */
     public static void createFacesMessageForID(String elementID, String errorMessage){
         FacesMessage message = new FacesMessage(errorMessage);
         FacesContext.getCurrentInstance().addMessage(elementID,  message);
