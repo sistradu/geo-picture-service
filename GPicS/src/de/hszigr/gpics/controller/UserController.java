@@ -4,6 +4,7 @@ import de.hszigr.gpics.db.MockNutzerConnector;
 import de.hszigr.gpics.db.interfaces.INutzerConnector;
 import de.hszigr.gpics.util.FacesMessageHandler;
 import de.hszigr.gpics.util.MessagePropertiesBean;
+import de.hszigr.gpics.util.PasswortUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -70,7 +71,7 @@ public class UserController {
 
     public String sendPasswortEmail() {
         try {
-            String tempPasswort = erzeugeZufallsPasswort();
+            String tempPasswort = new PasswortUtil().erzeugeZufallsPasswort();
 
             Document doc = conn.getNutzerByName(nutzerNamen);
             getNutzerIDAndEmail(doc);
@@ -149,34 +150,12 @@ public class UserController {
         setEmail(doc.getElementsByTagName("email").item(0).getTextContent());
     }
 
-    private String erzeugeZufallsPasswort() {
-        String allowedChars = "0123456789abcdefghijklmnopqrstuvwxyz";
-        Random rand = new Random();
-        int max = allowedChars.length();
-        StringBuffer buffer = new StringBuffer();
-        for (int i = 0; i < 16; i++) {
-            int value = rand.nextInt(max);
-            buffer.append(allowedChars.charAt(value));
-        }
-        return buffer.toString();
-    }
-
     public String getPasswort() {
         return passwort;
     }
 
     public void setPasswort(String passwort) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("md5");
-            byte[] digest = md.digest(passwort.getBytes());
-            StringBuffer hexString = new StringBuffer();
-            for (int i = 0; i < digest.length; i++) {
-                hexString.append(Integer.toHexString(0xFF & digest[i]));
-            }
-            this.passwort = hexString.toString();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
+            this.passwort = new PasswortUtil().encryptWithMD5(passwort);
     }
 
     public int getNutzerID() {
