@@ -2,16 +2,13 @@ package de.hszigr.gpics.controller;
 
 import de.hszigr.gpics.db.MockNutzerConnector;
 import de.hszigr.gpics.db.interfaces.INutzerConnector;
-import de.hszigr.gpics.util.ErrorMessageHandler;
+import de.hszigr.gpics.util.FacesMessageHandler;
 import de.hszigr.gpics.util.MessagePropertiesBean;
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -56,15 +53,12 @@ public class UserController {
                 getNutzerIDAndEmail(doc);
                 return "showOwnAlbum";
             }
-        } catch (ConnectException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            ErrorMessageHandler.addErrorMessageToFacesMessage("loginMask", e.getMessage());
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-            ErrorMessageHandler.addErrorMessageToFacesMessage("loginMask", e.getMessage());
+            FacesMessageHandler.createFacesMessageForID("loginMask", e.getMessage());
         }
         MessagePropertiesBean msgPB = new MessagePropertiesBean();
-        ErrorMessageHandler.addErrorMessageToFacesMessage("loginMask", msgPB.getPropertiesMessage("wrongPassword"));
+        FacesMessageHandler.createFacesMessageForID("loginMask", msgPB.getPropertiesMessage("wrongPassword"));
         return "index";
     }
 
@@ -107,19 +101,13 @@ public class UserController {
             setPasswort(tempPasswort);
             conn.updateNutzer(nutzerID, nutzerNamen, passwort, email);
             resetAll();
-        } catch (ConnectException e) {
+        } catch (Exception e){
             e.printStackTrace();
-            ErrorMessageHandler.addErrorMessageToFacesMessage("sendPWMask", e.getMessage());
-            return "sendPW";
-        } catch (MessagingException e) {
-            e.printStackTrace();
-            ErrorMessageHandler.addErrorMessageToFacesMessage("sendPWMask", e.getMessage());
-            return "sendPW";
-        } catch (IllegalArgumentException e){
-            e.printStackTrace();
-            ErrorMessageHandler.addErrorMessageToFacesMessage("sendPWMask", e.getMessage());
+            FacesMessageHandler.createFacesMessageForID("sendPWMask", e.getMessage());
             return "sendPW";
         }
+        MessagePropertiesBean mPB = new MessagePropertiesBean();
+        FacesMessageHandler.createFacesMessageForID("infoMessages", mPB.getPropertiesMessage("sendMailSuccess"));
         return "index";
     }
 
@@ -129,13 +117,9 @@ public class UserController {
             Document doc = conn.getNutzerByName(nutzerNamen);
             setNutzerID(Integer.parseInt(doc.getElementsByTagName("id").item(0).getTextContent()));
             setEingeloggt(true);
-        } catch (ConnectException e) {
+        }catch (Exception e){
             e.printStackTrace();
-            ErrorMessageHandler.addErrorMessageToFacesMessage("createUserMask", e.getMessage());
-            return "createUser";
-        }catch (IllegalArgumentException e){
-            e.printStackTrace();
-            ErrorMessageHandler.addErrorMessageToFacesMessage("createUserMask", e.getMessage());
+            FacesMessageHandler.createFacesMessageForID("createUserMask", e.getMessage());
             return "createUser";
         }
         return "showOwnAlbum";
@@ -144,13 +128,9 @@ public class UserController {
     public String updateBenutzer() {
         try {
             conn.updateNutzer(nutzerID, nutzerNamen, passwort, email);
-        } catch (ConnectException e) {
+        }catch (Exception e){
             e.printStackTrace();
-            ErrorMessageHandler.addErrorMessageToFacesMessage("createUserMask", e.getMessage());
-            return "createUser";
-        }catch (IllegalArgumentException e){
-            e.printStackTrace();
-            ErrorMessageHandler.addErrorMessageToFacesMessage("createUserMask", e.getMessage());
+            FacesMessageHandler.createFacesMessageForID("createUserMask", e.getMessage());
             return "createUser";
         }
         return "showOwnAlbum";

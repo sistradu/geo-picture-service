@@ -17,6 +17,38 @@ public class ImageDataExtractorTest {
     @Test
     public void testGetPosition() throws Exception {
         ImageDataExtractor extractor = new ImageDataExtractor();
+
+//        File f = new File("D:/Bilder XML/101MSDCF");
+//        File[] files = f.listFiles();
+//        for(File file : files){
+//            Position p = extractor.getPosition(file);
+//            if(p==null){
+//                Assert.fail();
+//            }else{
+//                if(p.getAltitude()==null){
+//                    Assert.fail("Altitude is null, File: " + file.getAbsolutePath());
+//                }
+//                if(p.getDirection()==null){
+//                    Assert.fail("Direction is null, File: " + file.getAbsolutePath());
+//                }
+//                if(p.getLongitude()==null){
+//                    Assert.fail("Longitude is null, File: " + file.getAbsolutePath());
+//                }
+//                if(p.getLongitudeRef()==null){
+//                    Assert.fail("LongitudeRef is null, File: " + file.getAbsolutePath());
+//                }
+//                if(p.getLatitude()==null){
+//                    Assert.fail("Latitude is null, File: " + file.getAbsolutePath());
+//                }
+//                if(p.getLatitudeRef()==null){
+//                    Assert.fail("LatitudeRef is null, File: " + file.getAbsolutePath());
+//                }
+//                if(p.getTimeStamp()==null){
+//                    Assert.fail("TimeStamp is null, File: " + file.getAbsolutePath());
+//                }
+//            }
+//        }
+
         Position pos = extractor.getPosition("C:/Users/StRadusch/Pictures/XML/DSC00012.JPG");
 
         Assert.assertEquals("N",pos.getLatitudeRef());

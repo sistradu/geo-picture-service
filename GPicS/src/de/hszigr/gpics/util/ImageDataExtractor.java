@@ -22,7 +22,9 @@ import com.drew.metadata.exif.ExifDirectory;
 public class ImageDataExtractor {
 
     /**
-     * Extract the gps information from a jpg-file and return an object with position informations.
+     * Extrahiert die GPS-Informationen aus einem jpg-File und gibt ein Positionsobjekt zurück.
+     * Sind einige Tags im Bild nicht vorhanden, wie zum Beispiel Longitude, weil vielleicht kein Signal bei der Kamera
+     * verfügbar war, ist das entsprechende Attribut im Positionsobjekt null.
      *
      * @param file image
      * @return Position
@@ -47,7 +49,9 @@ public class ImageDataExtractor {
 //	}
 
     /**
-     * Extract the gps information from a jpg-file and return an object with position informations.
+     * Extrahiert die GPS-Informationen aus einem jpg-File und gibt ein Positionsobjekt zurück.
+     *Sind einige Tags im Bild nicht vorhanden, wie zum Beispiel Longitude, weil vielleicht kein Signal bei der Kamera
+     * verfügbar war, ist das entsprechende Attribut im Positionsobjekt null.
      *
      * @param file path to image
      * @return Position
