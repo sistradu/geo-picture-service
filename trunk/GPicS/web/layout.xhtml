@@ -68,12 +68,19 @@
                             </table>
                         </h:form>
                         <h:form rendered="#{userController.eingeloggt}">
-                            <tr>
-                                <td><h:commandLink value="#{msg.logout}" action="#{userController.logout}"/></td>
-                            </tr>
-                            <tr>
-                                <td><h:commandLink value="#{msg.editUser}" action="createUser"/></td>
-                            </tr>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <h:commandLink value="#{userController.nutzerNamen} #{msg.logout}"
+                                                       action="#{userController.logout}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h:commandLink value="#{msg.editUser}" action="createUser"/>
+                                    </td>
+                                </tr>
+                            </table>
                         </h:form>
                         <h:messages for="loginMask" style="color:red;"/>
                         <p:menu model="#{menuBean.model}"/>
