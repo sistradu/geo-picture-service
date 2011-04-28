@@ -10,9 +10,9 @@ import javax.faces.context.FacesContext;
  * Time: 21:44
  * To change this template use File | Settings | File Templates.
  */
-public class ErrorMessageHandler {
+public class FacesMessageHandler {
 
-    public static void addErrorMessageToFacesMessage(String elementID, String errorMessage){
+    public static void createFacesMessageForID(String elementID, String errorMessage){
         FacesMessage message = new FacesMessage(errorMessage);
         FacesContext.getCurrentInstance().addMessage(elementID,  message);
     }
