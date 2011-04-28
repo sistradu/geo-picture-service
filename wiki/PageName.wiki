@@ -1,23 +1,23 @@
 #summary Projektplan für die Implementierungsphase
 #labels Phase-Design
 
-= Vorbereitung =
+= Komponentenverantwortlichkeiten =
 
 Hier die Tabelle mit der Zuordnung der Themen zum jeweiligen Bearbeiter.
 
-|| *Thema* || *Bearbeiter* ||
-|| Funktionsklassen: CoordinateCalculator + ImageDataExtractor || Stefan ||
-|| DB-Mock-Klasse || Markus ||
-|| YAML || Martin ||
-|| Breadcrumb + Menü || Rico ||
-|| *Views und Controller* ||
-|| Startseite mit Login und Nutzerverwaltung || Stefan ||
-|| Album erstellen/bearbeiten || Stefan ||
-|| Bild bearbeiten || Martin ||
-|| Album Übersicht || Martin ||
-|| Eigene Alben anzeigen || Rico ||
-|| Album betrachten || Rico ||
-|| DB-Anbindung || Markus ||
+|| *Thema* || *Bearbeiter* || *Fortschritt in %* || *Testabdeckung* || *Kommentar* ||
+|| Funktionsklassen: CoordinateCalculator + ImageDataExtractor || Stefan || || || ||
+|| DB-Mock-Klasse || Markus || || || ||
+|| YAML || Martin || || || ||
+|| Breadcrumb + Menü || Rico || || || ||
+|| *Views und Controller* || || || ||
+|| Startseite mit Login und Nutzerverwaltung || Stefan || || || ||
+|| Album erstellen/bearbeiten || Stefan || || || ||
+|| Bild bearbeiten || Martin || || || ||
+|| Album Übersicht || Martin || || || ||
+|| Eigene Alben anzeigen || Rico || || || ||
+|| Album betrachten || Rico || || || ||
+|| DB-Anbindung || Markus || || || ||
 
 Wer noch etwas ändern möchte, kann das gern hier eintragen. (Bitte vorher absprechen!)
 
