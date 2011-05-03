@@ -13,12 +13,12 @@ import java.util.Random;
  */
 public class PasswortUtil {
 
-    public String erzeugeZufallsPasswort() {
+    public String erzeugeZufallsPasswort(int length) {
         String allowedChars = "0123456789abcdefghijklmnopqrstuvwxyz";
         Random rand = new Random();
         int max = allowedChars.length();
         StringBuffer buffer = new StringBuffer();
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i < length; i++) {
             int value = rand.nextInt(max);
             buffer.append(allowedChars.charAt(value));
         }
