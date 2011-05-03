@@ -21,7 +21,7 @@ public class CreateEditAlbumController {
 
     public void generatePasswort(){
         PasswortUtil util = new PasswortUtil();
-        String randomPasswort = util.erzeugeZufallsPasswort();
+        String randomPasswort = util.erzeugeZufallsPasswort(4);
         this.passwort = util.encryptWithMD5(randomPasswort);
     }
 

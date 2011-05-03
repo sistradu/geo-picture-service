@@ -71,7 +71,7 @@ public class UserController {
 
     public String sendPasswortEmail() {
         try {
-            String tempPasswort = new PasswortUtil().erzeugeZufallsPasswort();
+            String tempPasswort = new PasswortUtil().erzeugeZufallsPasswort(16);
 
             Document doc = conn.getNutzerByName(nutzerNamen);
             getNutzerIDAndEmail(doc);
