@@ -30,6 +30,9 @@
                 <!--</div>-->
                 <h1>GPicS</h1>
                 <h:outputLabel value="#{msg.headertext}"/>
+                <h:form>
+                        <p:breadCrumb model="#{menuBean.breadcrumbMenuModel}"/>
+                </h:form>
             </div>
             <div id="main">
                 <div id="col1">
@@ -83,7 +86,7 @@
                             </table>
                         </h:form>
                         <h:messages for="loginMask" style="color:red;"/>
-                        <p:menu model="#{menuBean.model}"/>
+                        <p:menu model="#{menuBean.menuModel}"/>
                         <ui:insert name="nav"/>
                     </div>
                 </div>
