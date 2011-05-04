@@ -11,7 +11,7 @@ Hier die Tabelle mit der Zuordnung der Themen zum jeweiligen Bearbeiter.
 || YAML || Martin || 50% || manuelle Test || Container in einem xhtml-Template aufgebaut ; CSS-Gestaltung fehlt noch ||
 || Breadcrumb + Menü || Rico || 50% || 0% || Menü ist soweit fertig, Design kann erst nach Seitendesign gemacht werden. Breadcrumb fehlt komplett (TODO 4.5.)  ||
 || *Views und Controller* || || || ||
-|| Startseite mit Login und Nutzerverwaltung || Stefan || 80% || 75% || Tests für Mailversenden leider nicht möglich, da dort der Facescontext verwendet wird. Dieser ist bei JUnit allerdings "null".||
+|| Startseite mit Login und Nutzerverwaltung || Stefan || 80% || 75% || Tests für Mailversenden leider nicht möglich, da dort der Facescontext verwendet wird. Dieser ist bei JUnit allerdings "null". Es fehlen außerdem noch, Validatoren und die Tests dazu. Bisher wird auch nur der MockNutzerConnector verwendet.||
 || Album erstellen/bearbeiten || Stefan || 10% || 0% || ||
 || Bild bearbeiten || Martin || || || ||
 || Album Übersicht || Martin || || || ||
