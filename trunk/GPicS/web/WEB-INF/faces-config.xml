@@ -16,4 +16,22 @@
         </locale-config>
         <message-bundle>bundle.message</message-bundle>
     </application>
+
+    <validator>
+                <validator-id>EmailValidator</validator-id>
+                <validator-class>de.hszigr.gpics.validation.EmailValidator</validator-class>
+     </validator>
+     <validator>
+                <validator-id>NameValidator</validator-id>
+                <validator-class>de.hszigr.gpics.validation.NameValidator</validator-class>
+     </validator>
+     <validator>
+                <validator-id>KoordValidator</validator-id>
+                <validator-class>de.hszigr.gpics.validation.KoordValidator</validator-class>
+     </validator>
+     <validator>
+                <validator-id>KallenderValidator</validator-id>
+                <validator-class>de.hszigr.gpics.validation.EmailValidator</validator-class>
+     </validator>
+
 </faces-config>
