@@ -8,7 +8,7 @@ Hier die Tabelle mit der Zuordnung der Themen zum jeweiligen Bearbeiter.
 || *Thema* || *Bearbeiter* || *Fortschritt in %* || *Testabdeckung* || *Kommentar* ||
 || Funktionsklassen: CoordinateCalculator + ImageDataExtractor || Stefan || || || ||
 || DB-Mock-Klasse || Markus || 66% || 66% || Es fehlt noch der MockBildConnector ||
-|| YAML || Martin || || || ||
+|| YAML || Martin || 50% || manuelle Test || ||
 || Breadcrumb + Menü || Rico || || || ||
 || *Views und Controller* || || || ||
 || Startseite mit Login und Nutzerverwaltung || Stefan || || || ||
