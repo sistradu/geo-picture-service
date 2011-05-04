@@ -13,7 +13,7 @@ public class KallenderValidatorTest {
     @Test
     public void testValidate() throws Exception {
 
-        System.out.println("test");
+
 
     }
 }
