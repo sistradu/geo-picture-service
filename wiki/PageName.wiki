@@ -9,14 +9,14 @@ Hier die Tabelle mit der Zuordnung der Themen zum jeweiligen Bearbeiter.
 || Funktionsklassen: CoordinateCalculator + ImageDataExtractor || Stefan || 100% || 100% || ||
 || DB-Mock-Klasse || Markus || 66% || 66% || Es fehlt noch der MockBildConnector ||
 || YAML || Martin || 50% || manuelle Test || Container in einem xhtml-Template aufgebaut ; CSS-Gestaltung fehlt noch ||
-|| Breadcrumb + Menü || Rico || || || ||
+|| Breadcrumb + Menü || Rico || 50% || 0% || Menü ist soweit fertig, Design kann erst nach Seitendesign gemacht werden. Breadcrumb fehlt komplett (TODO 4.5.)  ||
 || *Views und Controller* || || || ||
 || Startseite mit Login und Nutzerverwaltung || Stefan || 80% || 75% || Tests für Mailversenden leider nicht möglich, da dort der Facescontext verwendet wird. Dieser ist bei JUnit allerdings "null".||
 || Album erstellen/bearbeiten || Stefan || 10% || 0% || ||
 || Bild bearbeiten || Martin || || || ||
 || Album Übersicht || Martin || || || ||
-|| Eigene Alben anzeigen || Rico || || || ||
-|| Album betrachten || Rico || || || ||
+|| Eigene Alben anzeigen || Rico || 0% || 0% || Möglicherweise unnötig, da man es vllt auch bei Album-Übersicht mit reinmachen kann ||
+|| Album betrachten || Rico || 0% || 0% || TODO 4.5. ||
 || DB-Anbindung || Markus || || || ||
 
 Wer noch etwas ändern möchte, kann das gern hier eintragen. (Bitte vorher absprechen!)
