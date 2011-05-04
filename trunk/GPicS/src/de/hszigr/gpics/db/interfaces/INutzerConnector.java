@@ -21,7 +21,7 @@ public interface INutzerConnector {
      * @throws IllegalArgumentException falls der Nutzername bereits existiert oder benötigte Parameter null sind.
      * @throws ConnectException falls keine Verbindung mit der Datenbank aufgebaut werden konnte.
      */
-    public void createNutzer(String name, String password, String email) throws IllegalArgumentException, ConnectException;
+    public int createNutzer(String name, String password, String email) throws IllegalArgumentException, ConnectException;
 
     /**
      * Ändert die Daten zu einem Nutzer in der Datenbank.

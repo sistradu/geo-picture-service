@@ -94,8 +94,8 @@ public class MockNutzerConnector implements INutzerConnector{
         }
     }
 
-    public void createNutzer(String name, String password, String email) throws ConnectException, IllegalArgumentException{
-        //can do nothing...
+    public int createNutzer(String name, String password, String email) throws ConnectException, IllegalArgumentException{
+        return ++this.id;//can do nothing...
     }
 
     public void updateNutzer(int id, String name, String password, String email) throws ConnectException, IllegalArgumentException {

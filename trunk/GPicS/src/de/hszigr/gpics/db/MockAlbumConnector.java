@@ -107,8 +107,8 @@ public class MockAlbumConnector implements IAlbumConnector {
         }
     }
 
-    public void createAlbum(String name, String password, String description) throws ConnectException, IllegalArgumentException {
-        //can do nothing
+    public int createAlbum(String name, String password, String description) throws ConnectException, IllegalArgumentException {
+        return ++this.id;//can do nothing
     }
 
     public void updateAlbum(int id, String name, String password, String description) throws ConnectException, IllegalArgumentException {
