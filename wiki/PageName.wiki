@@ -6,13 +6,13 @@
 Hier die Tabelle mit der Zuordnung der Themen zum jeweiligen Bearbeiter.
 
 || *Thema* || *Bearbeiter* || *Fortschritt in %* || *Testabdeckung* || *Kommentar* ||
-|| Funktionsklassen: CoordinateCalculator + ImageDataExtractor || Stefan || || || ||
+|| Funktionsklassen: CoordinateCalculator + ImageDataExtractor || Stefan || 100% || 100% || ||
 || DB-Mock-Klasse || Markus || 66% || 66% || Es fehlt noch der MockBildConnector ||
 || YAML || Martin || 50% || manuelle Test || Container in einem xhtml-Template aufgebaut ; CSS-Gestaltung fehlt noch ||
 || Breadcrumb + Menü || Rico || || || ||
 || *Views und Controller* || || || ||
-|| Startseite mit Login und Nutzerverwaltung || Stefan || || || ||
-|| Album erstellen/bearbeiten || Stefan || || || ||
+|| Startseite mit Login und Nutzerverwaltung || Stefan || 80% || 75% || Tests für Mailversenden leider nicht möglich, da dort der Facescontext verwendet wird. Dieser ist bei JUnit allerdings "null".||
+|| Album erstellen/bearbeiten || Stefan || 10% || 0% || ||
 || Bild bearbeiten || Martin || || || ||
 || Album Übersicht || Martin || || || ||
 || Eigene Alben anzeigen || Rico || || || ||
