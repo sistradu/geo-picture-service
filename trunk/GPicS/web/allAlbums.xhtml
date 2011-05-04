@@ -9,16 +9,13 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.prime.com.tr/ui">
     <ui:define name="nav">
-       <!-- <p:menu model="#{menuBean.model}" /> -->
 
     </ui:define>
     <ui:define name="content">
 
-
         <h:form prependId="false">
             <h:outputLabel value="#{msg.suchenach} "/>
             <h:inputText style="width:200px;" value="#{albumsController.suchString}"/>
-
 
             <h:outputLabel value="#{msg.suchein} "/>
             <h:selectOneMenu style="width:100px;" value="">
