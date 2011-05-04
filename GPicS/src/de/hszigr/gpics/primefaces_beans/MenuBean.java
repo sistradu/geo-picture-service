@@ -8,6 +8,9 @@ import org.primefaces.model.MenuModel;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.util.Vector;
 
 
 /**
@@ -24,8 +27,29 @@ public class MenuBean {
     private MenuModel breadcrumbModel;
     private String site = "index";
 
+    Vector<String> vec = new Vector<String>();
+
 	public MenuBean() {
+
+
+
+        File dir = new File(System.getenv("CATALINA_HOME")+System.getProperty("file.separator")+"webapps"+System.getProperty("file.separator")+"GPicS");
+        String suffix = "xhtml";
+        getAllFilesEndingWithRecursive(dir, suffix);
+
+        for (int i = 0; i < vec.size(); i++){
+            System.out.println(vec.get(i));
+        }
+
+
+
+
+
+
+
         site = FacesContext.getCurrentInstance().getExternalContext().getRequestServletPath().substring(1,  FacesContext.getCurrentInstance().getExternalContext().getRequestServletPath().indexOf("."));
+
+        System.out.println(site);
 
         MessagePropertiesBean msgPB = new MessagePropertiesBean();
 
@@ -83,4 +107,22 @@ public class MenuBean {
     public void setSite(String site) {
         this.site = site;
     }
+
+
+    private void getAllFilesEndingWithRecursive(File dir, String suffix) {
+
+        if ((dir != null) && dir.exists()) {
+            for (File file : dir.listFiles()) {
+                if (file.isDirectory()) {
+                    getAllFilesEndingWithRecursive(file, suffix);
+                } else {
+                    if (file.getName().endsWith(suffix)) {
+                        vec.add(file.getPath());
+                    }
+                }
+            }
+        }
+    }
+
+    
 }
