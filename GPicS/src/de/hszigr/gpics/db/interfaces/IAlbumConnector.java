@@ -20,7 +20,7 @@ public interface IAlbumConnector {
      * @throws ConnectException falls keine Verbindung mit der Datenbank hergestellt werden konnte.
      * @throws IllegalArgumentException falls ein Album mit dem selben Namen bereits exisiert.
      */
-    public void createAlbum(String name, String password, String description) throws ConnectException, IllegalArgumentException;
+    public int createAlbum(String name, String password, String description) throws ConnectException, IllegalArgumentException;
 
     /**
      * Ändert die Daten zu einem Album in der Datenbank.
