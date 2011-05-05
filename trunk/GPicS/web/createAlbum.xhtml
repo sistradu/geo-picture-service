@@ -2,14 +2,78 @@
 <!DOCTYPE composition
         PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
-        template="layout.xhtml"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:a="http://java.sun.com/jsf/composite" xml:lang="en" lang="en"
+                template="layout.xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.prime.com.tr/ui">
-<ui:define name="content">
-    <h1><h:outputLabel value="#{msg.createAlbum}"/></h1>
-    <h:outputLabel value="#{msg.infoAlbum1}" rendered="#{!userController.eingeloggt}" />
-</ui:define>
+    <ui:define name="content">
+        <h1><h:outputLabel value="#{msg.createAlbum}"/></h1>
+        <h:outputLabel value="#{msg.infoAlbum1}" rendered="#{!userController.eingeloggt}"/>
+        <h:form rendered="#{userController.eingeloggt}" prependId="false">
+            <table>
+                <tr>
+                    <td><h:outputLabel value="#{msg.albumTitle}"/></td>
+                    <td><h:inputText value="#{createEditAlbumController.albumName}"/></td>
+                </tr>
+                <tr>
+                    <td><h:outputLabel value="#{msg.albumDescription}"/></td>
+                    <td><h:inputTextarea value="#{createEditAlbumController.albumBeschreibung}"/></td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:fileUpload widgetVar="uploader" customUI="true" label="#{msg.uploadImage}"
+                                      description="*.jpg;*.JPG"
+                                      allowTypes="*.jpg;*.JPG"
+                                      fileUploadListener="#{createEditAlbumController.handleFileUpload}"
+                                      multiple="true" id="fileUploader" update="messages, cgrid"/>
+                        <h:outputLink value="#" title="Upload"
+                                      onclick="uploader.upload();" >#{msg.upload}</h:outputLink> |
+                        <h:outputLink value="#" title="Cancel" onclick="uploader.clear();">#{msg.abort}</h:outputLink>
+                        <p:growl id="messages" showDetail="true"/>
+                    </td>
+                </tr>
+            </table>
+            <!--<h:commandLink value="123" action="createAlbum2" />-->
+        </h:form>
+        <h:form rendered="#{userController.eingeloggt}" prependId="false" id="cgrid">
+            <p:dataGrid var="b" value="#{createEditAlbumController.bilder}" columns="3"
+                        rows="12" paginator="true" effect="true"
+                        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                        rowsPerPageTemplate="9,12,15">
+
+                <p:column>
+                    <p:panel header="#{b.name}" style="text-align:center">
+                        <h:panelGrid columns="1" style="width:100%">
+                            <p:graphicImage value="#{createEditAlbumController.image}" width="20%" height="20%">
+                                <f:param name="name" value="#{b.name}"/>
+                            </p:graphicImage>
+
+                            <p>
+                                <h:outputText value="#{b.beschreibung}"/>
+                            </p>
+
+                            <p>
+                                <h:selectBooleanCheckbox value="#{b.publicBild}" />
+                            </p>
+
+                            <!--<p:commandLink update="carDetail" oncomplete="carDialog.show()" title="View Detail">
+                                <p:graphicImage value="/images/search.png"/>
+                                <f:setPropertyActionListener value="#{car}"
+                                        target="#{tableBean.selectedCar}" />
+                            </p:commandLink>-->
+                        </h:panelGrid>
+                    </p:panel>
+                </p:column>
+
+            </p:dataGrid>
+            <!--</h:form>-->
+        </h:form>
+        <h:form id="saveAlbum" rendered="#{userController.eingeloggt}">
+            <h:commandButton value="#{msg.save}" action="#{createEditAlbumController.speichern}"/>
+            <h:commandButton value="#{msg.abort}" action="allAlbums"/>
+        </h:form>
+        <h:messages for="saveAlbum" style="color:red;"/>
+    </ui:define>
 </ui:composition>
