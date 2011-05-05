@@ -1,9 +1,7 @@
 package de.hszigr.gpics.controller;
 
-import com.sun.xml.internal.ws.developer.Stateful;
 import org.primefaces.model.StreamedContent;
 
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.GregorianCalendar;
 
@@ -19,7 +17,7 @@ public class Bild implements Serializable{
     private int bildID;
     private String name;
     private String beschreibung;
-    private boolean isPublic;
+    private boolean publicBild;
     private GregorianCalendar date;
     private String longitude;
     private String latitude;
@@ -68,12 +66,12 @@ public class Bild implements Serializable{
         this.beschreibung = beschreibung;
     }
 
-    public boolean isPublic() {
-        return isPublic;
+    public boolean isPublicBild() {
+        return publicBild;
     }
 
-    public void setPublic(boolean aPublic) {
-        isPublic = aPublic;
+    public void setPublicBild(boolean publicBild) {
+        this.publicBild = publicBild;
     }
 
     public GregorianCalendar getDate() {
