@@ -12,7 +12,7 @@ import java.util.GregorianCalendar;
  * Time: 13:31
  * To change this template use File | Settings | File Templates.
  */
-public class Bild implements Serializable{
+public class Bild{
 
     private int bildID;
     private String name;

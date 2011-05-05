@@ -13,11 +13,7 @@ import javax.faces.bean.SessionScoped;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.net.ConnectException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Properties;
-import java.util.Random;
 
 /**
  * Created by IntelliJ IDEA.

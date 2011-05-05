@@ -17,15 +17,24 @@
                 </tr>
                 <tr>
                     <td><h:outputLabel value="#{msg.password}" /> </td>
-                    <td><h:inputSecret value="#{userController.passwort}" /> </td>
+                    <td>
+                        <h:inputSecret id="createUserPasswort" value="#{userController.passwort}" />
+                    </td>
                 </tr>
                 <tr>
                     <td><h:outputLabel value="#{msg.repeatPassword} " /> </td>
-                    <td><h:inputSecret /></td>
+                    <td>
+                        <h:inputSecret />
+                    </td>
                 </tr>
                 <tr>
                     <td><h:outputLabel value="#{msg.email} " /></td>
-                    <td><h:inputText value="#{userController.email}"/></td>
+                    <td>
+                        <h:inputText id="createUserMail" value="#{userController.email}">
+                            <f:validator validatorId="EmailValidator" />
+                        </h:inputText>
+                    </td>
+                    <td><h:message for="createUserMail" style="color:red;"/></td>
                 </tr>
                 <tr>
                     <td>
