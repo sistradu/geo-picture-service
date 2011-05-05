@@ -15,7 +15,12 @@
             <table>
                 <tr>
                     <td><h:outputLabel value="#{msg.albumTitle}"/></td>
-                    <td><h:inputText value="#{createEditAlbumController.albumName}"/></td>
+                    <td>
+                        <!-- TODO required einbauen -->
+                        <h:inputText id="createAlbumName" value="#{createEditAlbumController.albumName}" required="true" requiredMessage="#{msg.forgotAlbumName}">
+                        </h:inputText>
+                    </td>
+                    <td><h:message for="createAlbumName" style="color:red;"/></td>
                 </tr>
                 <tr>
                     <td><h:outputLabel value="#{msg.albumDescription}"/></td>

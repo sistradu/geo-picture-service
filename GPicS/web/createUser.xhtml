@@ -12,39 +12,49 @@
         <h:form id="createUserMask">
             <table>
                 <tr>
-                    <td><h:outputLabel value="#{msg.username}" /> </td>
+                    <td><h:outputLabel value="#{msg.username}"/></td>
                     <td><h:inputText value="#{userController.nutzerNamen}"/></td>
                 </tr>
                 <tr>
-                    <td><h:outputLabel value="#{msg.password}" /> </td>
+                    <td><h:outputLabel value="#{msg.password}"/></td>
                     <td>
-                        <h:inputSecret id="createUserPasswort" value="#{userController.passwort}" />
+                        <h:inputSecret id="createUserPasswort" value="#{userController.passwort}" required="true"
+                                       requiredMessage="#{msg.forgotPasswortRequiredMessage}"/>
                     </td>
+                    <td><h:message for="createUserPasswort" style="color:red;"/></td>
                 </tr>
                 <tr>
-                    <td><h:outputLabel value="#{msg.repeatPassword} " /> </td>
+                    <td><h:outputLabel value="#{msg.repeatPassword} "/></td>
                     <td>
-                        <h:inputSecret />
+                        <h:inputSecret id="createUserRepeatPasswort" required="true"
+                                       requiredMessage="#{msg.forgotPasswortRequiredMessage}"/>
                     </td>
+                    <td><h:message for="createUserRepeatPasswort" style="color:red;"/></td>
                 </tr>
                 <tr>
-                    <td><h:outputLabel value="#{msg.email} " /></td>
+                    <td><h:outputLabel value="#{msg.email} "/></td>
                     <td>
-                        <h:inputText id="createUserMail" value="#{userController.email}">
-                            <f:validator validatorId="EmailValidator" />
+                        <h:inputText id="createUserMail" value="#{userController.email}" required="true"
+                                     requiredMessage="#{msg.forgotEmail}">
+                            <f:validator validatorId="EmailValidator"/>
                         </h:inputText>
                     </td>
                     <td><h:message for="createUserMail" style="color:red;"/></td>
                 </tr>
                 <tr>
                     <td>
-                        <h:commandButton value="#{msg.save}" action="#{userController.erzeugeBenutzer}" rendered="#{!userController.eingeloggt}" />
-                        <h:commandButton value="#{msg.save}" action="#{userController.updateBenutzer}" rendered="#{userController.eingeloggt}" />
+                        <h:commandButton value="#{msg.save}" action="#{userController.erzeugeBenutzer}"
+                                         rendered="#{!userController.eingeloggt}"/>
+                        <h:commandButton value="#{msg.save}" action="#{userController.updateBenutzer}"
+                                         rendered="#{userController.eingeloggt}"/>
                     </td>
-                    <td><h:commandButton value="#{msg.abort}" action="index" /></td>
+
                 </tr>
             </table>
         </h:form>
-        <h:messages for="createUserMask" style="color:red" />
+        <h:form>
+            <h:commandButton value="#{msg.abort}" action="index"/>
+        </h:form>
+        <h:messages for="createUserMask" style="color:red"/>
     </ui:define>
 </ui:composition>
