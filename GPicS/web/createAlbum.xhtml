@@ -29,7 +29,7 @@
                                       fileUploadListener="#{createEditAlbumController.handleFileUpload}"
                                       multiple="true" id="fileUploader" update="messages, cgrid"/>
                         <h:outputLink value="#" title="Upload"
-                                      onclick="uploader.upload();" >#{msg.upload}</h:outputLink> |
+                                      onclick="uploader.upload();">#{msg.upload}</h:outputLink> |
                         <h:outputLink value="#" title="Cancel" onclick="uploader.clear();">#{msg.abort}</h:outputLink>
                         <p:growl id="messages" showDetail="true"/>
                     </td>
@@ -52,10 +52,19 @@
 
                             <p>
                                 <h:outputText value="#{b.beschreibung}"/>
+                                <!-- TODO abklären wie das gemacht wird -->
+                                <h:commandLink value="#{msg.editImage}" action="editPicture">
+                                    <f:param name="bildID" value="#{b.bildID}" />
+                                </h:commandLink>
                             </p>
 
                             <p>
-                                <h:selectBooleanCheckbox value="#{b.publicBild}" />
+                                <h:selectBooleanCheckbox id="selectPublic" value="#{b.publicBild}" label="#{msg.imageIsPublic}">
+                                    <p:ajax event="change" update="selectPublic" action="#{createEditAlbumController.checkboxSelectAction}">
+                                        <f:setPropertyActionListener value="#{b.bildID}"
+                                                                     target="#{createEditAlbumController.selectedBId}"/>
+                                    </p:ajax>
+                                </h:selectBooleanCheckbox>
                             </p>
 
                             <!--<p:commandLink update="carDetail" oncomplete="carDialog.show()" title="View Detail">

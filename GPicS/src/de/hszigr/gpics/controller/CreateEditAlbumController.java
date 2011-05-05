@@ -15,6 +15,7 @@ import org.primefaces.model.UploadedFile;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import java.io.*;
 import java.net.ConnectException;
 import java.text.ParseException;
@@ -40,6 +41,8 @@ public class CreateEditAlbumController {
 
     private String uploadDir = "D:/upload/";
     private List<Bild> bilder;
+
+    private int selectedBId;
 
     public CreateEditAlbumController() {
         bilder = new ArrayList<Bild>();
@@ -69,6 +72,7 @@ public class CreateEditAlbumController {
             StreamedContent image = new DefaultStreamedContent(stream, "image/jpeg", s.substring(s.lastIndexOf("/") + 1));
             bild.setContent(image);
             bild.setPublicBild(false);
+            bild.setBildID(bilder.size());
             bilder.add(bild);
         } catch (FileNotFoundException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
@@ -102,7 +106,7 @@ public class CreateEditAlbumController {
         return image;
     }
 
-    //todo album bearbeiten
+    //TODO album bearbeiten
 
     public String speichern(){
         try {
@@ -126,6 +130,7 @@ public class CreateEditAlbumController {
             String longitudeDecimal = calculator.getDecimalCoordinate(pos.getLongitude(), pos.getLongitudeRef());
             String latitudeDecimal = calculator.getDecimalCoordinate(pos.getLatitude(), pos.getLatitudeRef());
             IBildConnector connector = new MockBildConnector();
+            bilder.indexOf(bild);
             connector.createBild(bild.getName(), bild.getBeschreibung(), bild.isPublicBild(), pos.getTimeStamp(), longitudeDecimal, latitudeDecimal, pos.getAltitude(), pos.getDirection());
         }
     }
@@ -134,6 +139,14 @@ public class CreateEditAlbumController {
         PasswortUtil util = new PasswortUtil();
         String randomPasswort = util.erzeugeZufallsPasswort(4);
         this.passwort = util.encryptWithMD5(randomPasswort);
+    }
+
+    public void checkboxSelectAction(){
+        for(Bild bild : bilder){
+            if(selectedBId==bild.getBildID()){
+                bild.setPublicBild(true);
+            }
+        }
     }
 
     public int getAlbumID() {
@@ -174,5 +187,13 @@ public class CreateEditAlbumController {
 
     public boolean containsImages(){
         return bilder.size()>0;
+    }
+
+    public int getSelectedBId() {
+        return selectedBId;
+    }
+
+    public void setSelectedBId(int selectedBId) {
+        this.selectedBId = selectedBId;
     }
 }

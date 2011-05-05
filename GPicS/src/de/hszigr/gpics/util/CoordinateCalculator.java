@@ -15,14 +15,21 @@ public class CoordinateCalculator {
 	 * @return
 	 */
 	public String getDecimalCoordinate(String position, String ref) {
-		double degree = Double.parseDouble(position.substring(0, position.indexOf("\"")));
-		double minutes = Double.parseDouble(position.substring(position.indexOf("\"")+1, position.indexOf("'")));
-		double seconds = Double.parseDouble(position.substring(position.indexOf("'")+1));
-		degree += minutes/60;
-		degree += seconds/3600;
-        if(ref.equals("S")||ref.equals("W")){
-            degree *= -1;
+        try {
+            double degree = Double.parseDouble(position.substring(0, position.indexOf("\"")));
+            double minutes = Double.parseDouble(position.substring(position.indexOf("\"")+1, position.indexOf("'")));
+            double seconds = Double.parseDouble(position.substring(position.indexOf("'")+1));
+            degree += minutes/60;
+            degree += seconds/3600;
+            if(ref.equals("S")||ref.equals("W")){
+                degree *= -1;
+            }
+            return String.valueOf(degree);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (NullPointerException e){
+            System.err.println("Position or Positionref is null.");
         }
-		return String.valueOf(degree);
-	}
+        return "";
+    }
 }
