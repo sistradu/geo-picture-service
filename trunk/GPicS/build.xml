@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="gpics" default="all">
+  
+  
+  <property file="build.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="128m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/SCCS/**"/>
+    <exclude name="**/RCS/**"/>
+    <exclude name="**/rcs/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/.pyc/**"/>
+    <exclude name="**/.pyo/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/*.lib/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.war"/>
+    <include name="*.ear"/>
+    <include name="*.zip"/>
+    <include name="*.swc"/>
+    <include name="*.egg"/>
+    <include name="*.jar"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <include name="**/?*.properties"/>
+    <include name="**/?*.xml"/>
+    <include name="**/?*.gif"/>
+    <include name="**/?*.png"/>
+    <include name="**/?*.jpeg"/>
+    <include name="**/?*.jpg"/>
+    <include name="**/?*.html"/>
+    <include name="**/?*.dtd"/>
+    <include name="**/?*.tld"/>
+    <include name="**/?*.ftl"/>
+  </patternset>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.2.0.1-fcs.classpath">
+    <pathelement location="${basedir}/lib/commons-fileupload-1.2.2.jar"/>
+    <pathelement location="${basedir}/lib/commons-io-2.0.1.jar"/>
+    <pathelement location="${basedir}/lib/commons-logging-1.1.1.jar"/>
+    <pathelement location="${basedir}/lib/jsf-api.jar"/>
+    <pathelement location="${basedir}/lib/jsf-impl.jar"/>
+    <pathelement location="${basedir}/lib/jstl-1.1.0.jar"/>
+    <pathelement location="${basedir}/lib/log4j-1.2.16.jar"/>
+    <pathelement location="${basedir}/lib/mailapi.jar"/>
+    <pathelement location="${basedir}/lib/metadata-extractor-2.3.1.jar"/>
+    <pathelement location="${basedir}/lib/primefaces-2.2.1.jar"/>
+    <pathelement location="${basedir}/lib/smtp.jar"/>
+  </path>
+  
+  
+  <!-- Application Server Libraries -->
+  
+  <path id="library.tomcat_7.classpath">
+    <pathelement location="C:/Progs/apache-tomcat-7.0.12/lib/annotations-api.jar"/>
+    <pathelement location="C:/Progs/apache-tomcat-7.0.12/lib/catalina-ant.jar"/>
+    <pathelement location="C:/Progs/apache-tomcat-7.0.12/lib/catalina-ha.jar"/>
+    <pathelement location="C:/Progs/apache-tomcat-7.0.12/lib/catalina-tribes.jar"/>
+    <pathelement location="C:/Progs/apache-tomcat-7.0.12/lib/catalina.jar"/>
+    <pathelement location="C:/Progs/apache-tomcat-7.0.12/lib/ecj-3.6.2.jar"/>
+    <pathelement location="C:/Progs/apache-tomcat-7.0.12/lib/el-api.jar"/>
+    <pathelement location="C:/Progs/apache-tomcat-7.0.12/lib/jasper-el.jar"/>
+    <pathelement location="C:/Progs/apache-tomcat-7.0.12/lib/jasper.jar"/>
+    <pathelement location="C:/Progs/apache-tomcat-7.0.12/lib/jsp-api.jar"/>
+    <pathelement location="C:/Progs/apache-tomcat-7.0.12/lib/servlet-api.jar"/>
+    <pathelement location="C:/Progs/apache-tomcat-7.0.12/lib/tomcat-api.jar"/>
+    <pathelement location="C:/Progs/apache-tomcat-7.0.12/lib/tomcat-coyote.jar"/>
+    <pathelement location="C:/Progs/apache-tomcat-7.0.12/lib/tomcat-dbcp.jar"/>
+    <pathelement location="C:/Progs/apache-tomcat-7.0.12/lib/tomcat-i18n-es.jar"/>
+    <pathelement location="C:/Progs/apache-tomcat-7.0.12/lib/tomcat-i18n-fr.jar"/>
+    <pathelement location="C:/Progs/apache-tomcat-7.0.12/lib/tomcat-i18n-ja.jar"/>
+    <pathelement location="C:/Progs/apache-tomcat-7.0.12/lib/tomcat-util.jar"/>
+  </path>
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module GPicS -->
+  
+  <dirname property="module.gpics.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.gpics" value="${compiler.args}"/>
+  
+  <property name="gpics.output.dir" value="${module.gpics.basedir}/out/production/GPicS"/>
+  <property name="gpics.testoutput.dir" value="${module.gpics.basedir}/out/test/GPicS"/>
+  
+  <path id="gpics.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="gpics.module.production.classpath">
+    <path refid="library.tomcat_7.classpath"/>
+    <path refid="library.2.0.1-fcs.classpath"/>
+    <pathelement location="${basedir}/lib/commons-logging-1.1.1.jar"/>
+    <pathelement location="${basedir}/lib/commons-io-2.0.1.jar"/>
+    <pathelement location="${basedir}/lib/commons-fileupload-1.2.2.jar"/>
+    <pathelement location="${basedir}/lib/log4j-1.2.16.jar"/>
+    <pathelement location="${basedir}/lib/primefaces-2.2.1.jar"/>
+    <pathelement location="${basedir}/lib/mailapi.jar"/>
+    <pathelement location="${basedir}/lib/smtp.jar"/>
+    <!--<pathelement location="${idea.home}/lib/junit-4.8.jar"/>-->
+    <pathelement location="${basedir}/lib/metadata-extractor-2.3.1.jar"/>
+  </path>
+  
+  <path id="gpics.runtime.production.module.classpath">
+    <pathelement location="${gpics.output.dir}"/>
+    <path refid="library.2.0.1-fcs.classpath"/>
+    <pathelement location="${basedir}/lib/commons-logging-1.1.1.jar"/>
+    <pathelement location="${basedir}/lib/commons-io-2.0.1.jar"/>
+    <pathelement location="${basedir}/lib/commons-fileupload-1.2.2.jar"/>
+    <pathelement location="${basedir}/lib/log4j-1.2.16.jar"/>
+    <pathelement location="${basedir}/lib/primefaces-2.2.1.jar"/>
+    <pathelement location="${basedir}/lib/mailapi.jar"/>
+    <pathelement location="${basedir}/lib/smtp.jar"/>
+    <pathelement location="${basedir}/lib/junit-4.8.jar"/>
+    <pathelement location="${basedir}/lib/metadata-extractor-2.3.1.jar"/>
+  </path>
+  
+  <path id="gpics.module.classpath">
+    <pathelement location="${gpics.output.dir}"/>
+    <path refid="library.tomcat_7.classpath"/>
+    <path refid="library.2.0.1-fcs.classpath"/>
+    <pathelement location="${basedir}/lib/commons-logging-1.1.1.jar"/>
+    <pathelement location="${basedir}/lib/commons-io-2.0.1.jar"/>
+    <pathelement location="${basedir}/lib/commons-fileupload-1.2.2.jar"/>
+    <pathelement location="${basedir}/lib/log4j-1.2.16.jar"/>
+    <pathelement location="${basedir}/lib/primefaces-2.2.1.jar"/>
+    <pathelement location="${basedir}/lib/mailapi.jar"/>
+    <pathelement location="${basedir}/lib/smtp.jar"/>
+    <pathelement location="${basedir}/lib/junit-4.8.jar"/>
+    <pathelement location="${basedir}/lib/metadata-extractor-2.3.1.jar"/>
+  </path>
+  
+  <path id="gpics.runtime.module.classpath">
+    <pathelement location="${gpics.testoutput.dir}"/>
+    <pathelement location="${gpics.output.dir}"/>
+    <path refid="library.tomcat_7.classpath"/>
+    <path refid="library.2.0.1-fcs.classpath"/>
+    <pathelement location="${basedir}/lib/commons-logging-1.1.1.jar"/>
+    <pathelement location="${basedir}/lib/commons-io-2.0.1.jar"/>
+    <pathelement location="${basedir}/lib/commons-fileupload-1.2.2.jar"/>
+    <pathelement location="${basedir}/lib/log4j-1.2.16.jar"/>
+    <pathelement location="${basedir}/lib/primefaces-2.2.1.jar"/>
+    <pathelement location="${basedir}/lib/mailapi.jar"/>
+    <pathelement location="${basedir}/lib/smtp.jar"/>
+    <pathelement location="${basedir}/lib/junit-4.8.jar"/>
+    <pathelement location="${basedir}/lib/metadata-extractor-2.3.1.jar"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.gpics">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.gpics">
+    <patternset refid="excluded.from.module.gpics"/>
+  </patternset>
+  
+  <path id="gpics.module.sourcepath">
+    <dirset dir="${module.gpics.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  <path id="gpics.module.test.sourcepath">
+    <dirset dir="${module.gpics.basedir}">
+      <include name="testsrc"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.gpics" depends="compile.module.gpics.production,compile.module.gpics.tests" description="Compile module GPicS"/>
+  
+  <target name="compile.module.gpics.production" description="Compile module GPicS; production classes">
+    <mkdir dir="${gpics.output.dir}"/>
+    <javac destdir="${gpics.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.gpics}"/>
+      <bootclasspath refid="gpics.module.bootclasspath"/>
+      <classpath refid="gpics.module.production.classpath"/>
+      <src refid="gpics.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.gpics"/>
+    </javac>
+    
+    <copy todir="${gpics.output.dir}">
+      <fileset dir="${module.gpics.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.gpics.tests" depends="compile.module.gpics.production" description="compile module GPicS; test classes" unless="skip.tests">
+    <mkdir dir="${gpics.testoutput.dir}"/>
+    <javac destdir="${gpics.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.gpics}"/>
+      <bootclasspath refid="gpics.module.bootclasspath"/>
+      <classpath refid="gpics.module.classpath"/>
+      <src refid="gpics.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.gpics"/>
+    </javac>
+    
+    <copy todir="${gpics.testoutput.dir}">
+      <fileset dir="${module.gpics.basedir}/testsrc">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.gpics" description="cleanup module">
+    <delete dir="${gpics.output.dir}"/>
+    <delete dir="${gpics.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.gpics" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.gpics" description="build all modules"/>
+  
+  <target name="init.artifacts">
+    <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
+    <property name="artifact.output.gpics" value="${basedir}/out/artifacts/gpics"/>
+    <mkdir dir="${artifacts.temp.dir}"/>
+    <property name="temp.jar.path.gpics.war" value="${artifacts.temp.dir}/gpics.war"/>
+  </target>
+  
+  <target name="artifact.gpics" depends="init.artifacts, compile.module.gpics" description="Build &apos;gpics&apos; artifact">
+    <property name="artifact.temp.output.gpics" value="${artifacts.temp.dir}/gpics"/>
+    <mkdir dir="${artifact.temp.output.gpics}"/>
+    <zip destfile="${temp.jar.path.gpics.war}">
+      <zipfileset file="${basedir}/META-INF/MANIFEST.MF" prefix="META-INF"/>
+      <zipfileset file="${basedir}/META-INF/application.xml" prefix="META-INF/META-INF"/>
+      <zipfileset file="${basedir}/web/WEB-INF/faces-config.xml" prefix="WEB-INF"/>
+      <zipfileset file="${basedir}/web/WEB-INF/web.xml" prefix="WEB-INF"/>
+      <zipfileset file="${basedir}/lib/commons-fileupload-1.2.2.jar" prefix="WEB-INF/lib"/>
+      <zipfileset file="${basedir}/lib/commons-io-2.0.1.jar" prefix="WEB-INF/lib"/>
+      <zipfileset file="${basedir}/lib/commons-logging-1.1.1.jar" prefix="WEB-INF/lib"/>
+      <zipfileset file="${basedir}/lib/junit-4.8.jar" prefix="WEB-INF/lib"/>
+      <zipfileset file="${basedir}/lib/log4j-1.2.16.jar" prefix="WEB-INF/lib"/>
+      <zipfileset file="${basedir}/lib/mailapi.jar" prefix="WEB-INF/lib"/>
+      <zipfileset file="${basedir}/lib/metadata-extractor-2.3.1.jar" prefix="WEB-INF/lib"/>
+      <zipfileset file="${basedir}/lib/primefaces-2.2.1.jar" prefix="WEB-INF/lib"/>
+      <zipfileset file="${basedir}/lib/smtp.jar" prefix="WEB-INF/lib"/>
+      <zipfileset file="${basedir}/lib/jsf-api.jar" prefix="WEB-INF/lib"/>
+      <zipfileset file="${basedir}/lib/jsf-impl.jar" prefix="WEB-INF/lib"/>
+      <zipfileset file="${basedir}/lib/jstl-1.1.0.jar" prefix="WEB-INF/lib"/>
+      <zipfileset file="${basedir}/lib/commons-logging-1.1.1.jar" prefix="WEB-INF/lib"/>
+      <zipfileset file="${basedir}/lib/commons-io-2.0.1.jar" prefix="WEB-INF/lib"/>
+      <zipfileset file="${basedir}/lib/commons-fileupload-1.2.2.jar" prefix="WEB-INF/lib"/>
+      <zipfileset file="${basedir}/lib/log4j-1.2.16.jar" prefix="WEB-INF/lib"/>
+      <zipfileset file="${basedir}/lib/primefaces-2.2.1.jar" prefix="WEB-INF/lib"/>
+      <zipfileset file="${basedir}/lib/mailapi.jar" prefix="WEB-INF/lib"/>
+      <zipfileset file="${basedir}/lib/smtp.jar" prefix="WEB-INF/lib"/>
+      <zipfileset file="${basedir}/lib/metadata-extractor-2.3.1.jar" prefix="WEB-INF/lib"/>
+      <zipfileset dir="${gpics.output.dir}" prefix="WEB-INF/classes"/>
+      <zipfileset file="${basedir}/web/allAlbums.xhtml"/>
+      <zipfileset file="${basedir}/web/createAlbum.xhtml"/>
+      <zipfileset file="${basedir}/web/createUser.xhtml"/>
+      <zipfileset file="${basedir}/web/editPicture.xhtml"/>
+      <zipfileset file="${basedir}/web/index.xhtml"/>
+      <zipfileset file="${basedir}/web/layout.xhtml"/>
+      <zipfileset file="${basedir}/web/sendPW.xhtml"/>
+      <zipfileset file="${basedir}/web/showAlbum.xhtml"/>
+      <zipfileset file="${basedir}/web/showOwnAlbum.xhtml"/>
+      <zipfileset dir="${basedir}/web/yaml" prefix="yaml"/>
+    </zip>
+    <copy file="${temp.jar.path.gpics.war}" tofile="${artifact.temp.output.gpics}/gpics.war"/>
+  </target>
+  
+  <target name="build.all.artifacts" depends="artifact.gpics" description="Build all artifacts">
+    <mkdir dir="${artifact.output.gpics}"/>
+    <copy todir="${artifact.output.gpics}">
+      <fileset dir="${artifact.temp.output.gpics}"/>
+    </copy>
+    
+    <!-- Delete temporary files -->
+    <delete dir="${artifacts.temp.dir}"/>
+  </target>
+  
+  <target name="all" depends="build.modules, build.all.artifacts" description="build all"/>
+</project>
