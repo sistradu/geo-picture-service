@@ -8,7 +8,6 @@ import org.primefaces.model.MenuModel;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.util.Vector;
 
