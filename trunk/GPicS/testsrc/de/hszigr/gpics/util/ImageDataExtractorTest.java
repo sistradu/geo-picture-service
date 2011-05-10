@@ -1,9 +1,13 @@
 package de.hszigr.gpics.util;
 
+import com.drew.imaging.jpeg.JpegProcessingException;
+import com.drew.metadata.MetadataException;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.text.ParseException;
 import java.util.GregorianCalendar;
 
 /**
@@ -49,7 +53,12 @@ public class ImageDataExtractorTest {
 //            }
 //        }
 
-        Position pos = extractor.getPosition("C:/Users/StRadusch/Pictures/XML/DSC00012.JPG");
+        Position pos = null;
+        try {
+            pos = extractor.getPosition("C:/Users/StRadusch/Pictures/XML/DSC00012.JPG");
+        } catch (Exception e) {
+            pos = extractor.getPosition("/home/test/DSC00012.JPG");
+        }
 
         Assert.assertEquals("N",pos.getLatitudeRef());
         Assert.assertEquals("51\"8'55.8",pos.getLatitude());
@@ -71,7 +80,12 @@ public class ImageDataExtractorTest {
     @Test
     public void testExtractThumbnail() throws Exception {
         ImageDataExtractor extractor = new ImageDataExtractor();
-        byte[] data = extractor.extractThumbnail("C:/Users/StRadusch/Pictures/XML/DSC00012.JPG");
+        byte[] data = new byte[0];
+        try {
+            data = extractor.extractThumbnail("C:/Users/StRadusch/Pictures/XML/DSC00012.JPG");
+        } catch (Exception e) {
+            data = extractor.extractThumbnail("/home/test/DSC00012.JPG");
+        }
         Assert.assertNotSame(0, data.length);
 //        FileOutputStream out = new FileOutputStream("C:/Users/StRadusch/Desktop/DSC00012.JPG");
 //        out.write(data);
