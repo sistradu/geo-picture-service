@@ -138,12 +138,12 @@ public class CreateEditAlbumController {
 
     public String createAlbum() {
         try {
-            if (this.albumName == null) {
-                MessagePropertiesBean msg = new MessagePropertiesBean();
-                FacesMessageHandler.createFacesMessageForID("createAlbumName", msg.getPropertiesMessage("forgotAlbumName"));
-                return null;
-
-            }
+//            if (this.albumName == null) {
+//                MessagePropertiesBean msg = new MessagePropertiesBean();
+//                FacesMessageHandler.createFacesMessageForID("createAlbumName", msg.getPropertiesMessage("forgotAlbumName"));
+//                return null;
+//
+//            }
             //TODO Connector ändern
             IAlbumConnector connector = new MockAlbumConnector();
             generatePasswort();
