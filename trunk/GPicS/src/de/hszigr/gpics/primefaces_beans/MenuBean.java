@@ -1,11 +1,15 @@
 package de.hszigr.gpics.primefaces_beans;
 
+import de.hszigr.gpics.controller.UserController;
 import de.hszigr.gpics.util.MessagePropertiesBean;
 import org.primefaces.component.menuitem.MenuItem;
 import org.primefaces.component.submenu.Submenu;
 import org.primefaces.model.DefaultMenuModel;
 import org.primefaces.model.MenuModel;
 
+import javax.el.ELContext;
+import javax.el.ExpressionFactory;
+import javax.el.ValueExpression;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import java.io.File;
@@ -22,48 +26,40 @@ import java.util.Vector;
 @ManagedBean
 public class MenuBean {
 
-	private MenuModel menuModel;
-    private MenuModel breadcrumbModel;
+	private MenuModel menuModel = new DefaultMenuModel();
+    private MenuModel breadcrumbModel = new DefaultMenuModel();
     private String site = "index";
 
     Vector<String> vec = new Vector<String>();
 
 	public MenuBean() {
 
-
-
-        File dir = new File(System.getenv("CATALINA_HOME")+System.getProperty("file.separator")+"webapps"+System.getProperty("file.separator")+"GPicS");
-        String suffix = "xhtml";
-        getAllFilesEndingWithRecursive(dir, suffix);
-
-        for (int i = 0; i < vec.size(); i++){
-            System.out.println(vec.get(i));
-        }
-
-
-
-
-
-
+        MessagePropertiesBean msgPB = new MessagePropertiesBean();
 
         site = FacesContext.getCurrentInstance().getExternalContext().getRequestServletPath().substring(1,  FacesContext.getCurrentInstance().getExternalContext().getRequestServletPath().indexOf("."));
 
-        System.out.println(site);
+        createMenuModel(msgPB);
+        createBreadcrumbModel(msgPB);
 
-        MessagePropertiesBean msgPB = new MessagePropertiesBean();
 
-		menuModel = new DefaultMenuModel();
-        breadcrumbModel = new DefaultMenuModel();
+//
+//        File dir = new File(System.getenv("CATALINA_HOME")+System.getProperty("file.separator")+"webapps"+System.getProperty("file.separator")+"GPicS");
+//        String suffix = "xhtml";
+//        getAllFilesEndingWithRecursive(dir, suffix);
+//
+//        for (int i = 0; i < vec.size(); i++){
+//            System.out.println(vec.get(i));
+//        }
+//
 
-        MenuItem itemBread = new MenuItem();
-	 	itemBread.setValue(msgPB.getPropertiesMessage("home"));
-        itemBread.setUrl("index.xhtml");
-        breadcrumbModel.addMenuItem(itemBread);
 
-        
+	}
+
+    private void createMenuModel(MessagePropertiesBean msgPB){
+
 	 	//First submenu
 	 	Submenu submenu = new Submenu();
-	 	submenu.setLabel("GPicS");
+	 	submenu.setLabel(msgPB.getPropertiesMessage("gpics"));
 
 	 	MenuItem item = new MenuItem();
 	 	item.setValue(msgPB.getPropertiesMessage("home"));
@@ -74,14 +70,25 @@ public class MenuBean {
 
 	 	//Second submenu
 	 	submenu = new Submenu();
-	 	submenu.setLabel("Alben");
+	 	submenu.setLabel(msgPB.getPropertiesMessage("albums"));
 
         item = new MenuItem();
 	 	item.setValue(msgPB.getPropertiesMessage("allAlbums"));
-	 	item.setUrl("showAlbum.xhtml");
+	 	item.setUrl("allAlbums.xhtml");
 	 	submenu.getChildren().add(item);
 
-        if (site.equals("showAlbum")){
+
+        FacesContext f = FacesContext.getCurrentInstance();
+
+        ELContext elc = f.getELContext();
+        ExpressionFactory ef = ExpressionFactory.newInstance();
+        
+        ValueExpression expr = ef.createValueExpression(elc, "${userController}", UserController.class);
+        UserController uc = (UserController)expr.getValue(elc);
+
+
+
+        if (uc.isEingeloggt()){
             item = new MenuItem();
 	 	    item.setValue(msgPB.getPropertiesMessage("createAlbum"));
 	 	    item.setUrl("createAlbum.xhtml");
@@ -89,7 +96,18 @@ public class MenuBean {
         }
 
 	 	menuModel.addSubmenu(submenu);
-	 }
+    }
+
+    private void createBreadcrumbModel(MessagePropertiesBean msgPB){
+
+
+        MenuItem itemBread = new MenuItem();
+	 	itemBread.setValue(msgPB.getPropertiesMessage("home"));
+        itemBread.setUrl("index.xhtml");
+        breadcrumbModel.addMenuItem(itemBread);
+
+
+    }
     
 	public MenuModel getMenuModel() {
 	    return menuModel;
@@ -106,7 +124,6 @@ public class MenuBean {
     public void setSite(String site) {
         this.site = site;
     }
-
 
     private void getAllFilesEndingWithRecursive(File dir, String suffix) {
 
