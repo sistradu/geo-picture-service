@@ -89,8 +89,8 @@
             <!--</h:form>-->
         </h:form>
         <h:form id="saveAlbum" rendered="#{userController.eingeloggt}">
-            <h:commandButton value="#{msg.save}" action="#{createEditAlbumController.createAlbum}" rendered="#{createEditAlbumController.isNewAlbum}"/>
-            <h:commandButton value="#{msg.save}" action="#{createEditAlbumController.updateAlbum}" rendered="#{!createEditAlbumController.isNewAlbum}"/>
+            <h:commandButton value="#{msg.save}" action="#{createEditAlbumController.createAlbum}" />
+
             <h:commandButton value="#{msg.abort}" action="allAlbums"/>
         </h:form>
         <h:messages for="saveAlbum" style="color:red;"/>
