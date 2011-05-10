@@ -37,6 +37,7 @@ public class UserControllerTest {
         Assert.assertEquals("karl@web.de", controller.getEmail());
         Assert.assertEquals(true, controller.isEingeloggt());
 
+        controller = new UserController();
         controller.setNutzerNamen("Günther");
         controller.setPasswort("password");
         String back2 = controller.login();
