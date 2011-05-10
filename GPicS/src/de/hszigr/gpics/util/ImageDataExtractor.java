@@ -4,6 +4,7 @@
 package de.hszigr.gpics.util;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -31,7 +32,7 @@ public class ImageDataExtractor {
      * @throws JpegProcessingException
      * @throws MetadataException
      */
-    public Position getPosition(File file) throws JpegProcessingException, MetadataException, ParseException {
+    public Position getPosition(File file) throws JpegProcessingException, MetadataException, ParseException, FileNotFoundException {
         List<Tag> gpsTags = getGPSTags(file);
         return extractPosition(gpsTags);
     }
@@ -58,7 +59,7 @@ public class ImageDataExtractor {
      * @throws JpegProcessingException
      * @throws MetadataException
      */
-    public Position getPosition(String file) throws JpegProcessingException, MetadataException, ParseException {
+    public Position getPosition(String file) throws JpegProcessingException, MetadataException, ParseException, FileNotFoundException {
         List<Tag> gpsTags = getGPSTags(new File(file));
         return extractPosition(gpsTags);
     }
