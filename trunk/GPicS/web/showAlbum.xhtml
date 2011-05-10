@@ -6,11 +6,40 @@
                 template="layout.xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.prime.com.tr/ui">
     <ui:define name="content">
-        
-        
 
+        <h2><h:outputLabel value="#{albumController.albumName}"/></h2>
+
+        <h3><h:outputLabel value="#{albumController.albumDescription}"/></h3>
+        <h:form>
+            <p:lightBox width="75%" height="75%" slideshow="true" slideshowSpeed="2000"
+                        slideshowStartText="starte Vorführung" slideshowStopText="stoppe Vorführung"
+                        slideshowAuto="false">
+                <c:forEach items="${albumController.bilder}" var="bilder">
+
+                    <h:outputLink value="${bilder.path}" title="${bilder.name}">
+                        <h:graphicImage value="${bilder.pathThumbnail}"/>
+                    </h:outputLink>
+
+                </c:forEach>
+
+            </p:lightBox>
+
+
+
+            <p:gmap center="51.149879, 14.9973" zoom="13" type="HYBRID" style="width:600px;height:400px"
+                    model="#{GMapsBean.simpleModel}" overlaySelectListener="#{GMapsBean.onMarkerSelect}">
+                <p:gmapInfoWindow>
+                    <p:graphicImage value="#{GMapsBean.image}"/>
+                    <br/>
+                    <h:outputText value="#{GMapsBean.image.name}"/>
+                </p:gmapInfoWindow>
+            </p:gmap>
+
+
+        </h:form>
     </ui:define>
 </ui:composition>

@@ -165,7 +165,7 @@ public class CreateEditAlbumController {
         }
     }
 
-    public boolean isNewAlbum(){
+    public boolean newAlbum(){
         return this.albumID == 0;
     }
 

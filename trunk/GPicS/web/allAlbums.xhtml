@@ -13,7 +13,7 @@
     </ui:define>
     <ui:define name="content">
 
-        <h:form prependId="false">
+      <!--  <h:form prependId="false">
             <h:outputLabel value="#{msg.suchenach} "/>
             <h:inputText style="width:200px;" value="#{albumsController.suchString}"/>
 
@@ -38,6 +38,11 @@
                     <h:commandLink value="#{alb.name}" action="index"/>
                 </p:column>
             </p:dataList>
+
+
+        </h:form>-->
+        <h:form>
+            <h:commandLink value="Görlitz" action="showAlbum"/>
 
 
         </h:form>

@@ -2,7 +2,6 @@ package de.hszigr.gpics.controller;
 
 import org.primefaces.model.StreamedContent;
 
-import java.io.Serializable;
 import java.util.GregorianCalendar;
 
 /**
@@ -24,6 +23,7 @@ public class Bild{
     private String altitude;
     private String direction;
     private String path;
+    private String pathThumbnail;
     private StreamedContent content;
 
     public String getName() {
@@ -40,6 +40,14 @@ public class Bild{
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public String getPathThumbnail() {
+        return pathThumbnail;
+    }
+
+    public void setPathThumbnail(String pathThumbnail) {
+        this.pathThumbnail = pathThumbnail;
     }
 
     public StreamedContent getContent() {

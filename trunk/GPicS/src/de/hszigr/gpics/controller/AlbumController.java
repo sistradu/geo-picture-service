@@ -1,9 +1,14 @@
 package de.hszigr.gpics.controller;
 
+import de.hszigr.gpics.db.MockAlbumConnector;
+import de.hszigr.gpics.db.MockBildConnector;
+import de.hszigr.gpics.db.interfaces.IAlbumConnector;
+import de.hszigr.gpics.db.interfaces.IBildConnector;
 import org.w3c.dom.Document;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,21 +24,52 @@ import java.util.List;
 public class AlbumController {
 
     private Document album;
-    private Document bilder;
+    private String albumName;
+    private String albumDescription;
+    private ArrayList<Bild> bilder = new ArrayList<Bild>();
+
+    public AlbumController() throws Exception{
+        loadAlbum("Görlitz");
+    }
+
+    private void loadAlbum(String name) throws Exception{
+        IAlbumConnector iac = new MockAlbumConnector();
+        album = iac.getAlbum(name);
+
+        IBildConnector ibc = new MockBildConnector();
+        Document bilderXML = ibc.getBilderForAlbum(album);
+
+
+        for (int i = 0; i < bilderXML.getElementsByTagName("fileposition").getLength(); i++){
+            Bild bild  = new Bild();
+            bild.setName(bilderXML.getElementsByTagName("name").item(i).getTextContent());
+
+            String path = (bilderXML.getElementsByTagName("fileposition").item(i).getTextContent().substring(1));
+            bild.setPath(path);
+            path = path.substring(0, path.lastIndexOf(".")) + "_thumb"+path.substring(path.lastIndexOf("."));
+
+            bild.setPathThumbnail(path);
+            
+            bilder.add(bild);
+        }
+
+        
+    }
 
     public Document getAlbum() {
         return album;
     }
 
-    public void setAlbum(Document album) {
-        this.album = album;
-    }
-
-    public Document getBilder() {
+    public List<Bild> getBilder() {
         return bilder;
     }
 
-    public void setBilder(Document bilder) {
-        this.bilder = bilder;
+    public String getAlbumName() {
+
+        return album.getElementsByTagName("name").item(0).getTextContent();
+    }
+
+    public String getAlbumDescription() {
+        return album.getElementsByTagName("description").item(0).getTextContent();
     }
 }
