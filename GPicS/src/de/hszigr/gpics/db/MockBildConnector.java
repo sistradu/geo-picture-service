@@ -136,7 +136,7 @@ public class MockBildConnector implements IBildConnector{
         }
     }
 
-    public int createBild(String name, String description, boolean isPublic, GregorianCalendar date, String longitude, String latitude, String altitude, String direction) throws ConnectException {
+    public int createBild(String name, String description, boolean isPublic, GregorianCalendar date, String filePosition, String longitude, String latitude, String altitude, String direction, Document album) throws ConnectException {
         return ++this.id;
     }
 
