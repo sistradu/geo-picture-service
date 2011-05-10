@@ -237,8 +237,10 @@
     </target>
 
     <target name="test" depends="compile.module.gpics.tests">
-        <junit fork="yes" printsummary="no" haltonfailure="no">
-            <formatter type="brief" usefile="false"/>
+        <delete dir="${gpics.testoutput.dir}/../test-reports" />
+        <mkdir dir="${gpics.testoutput.dir}/../test-reports"/>
+        <junit fork="yes" printsummary="yes" haltonfailure="no">
+            <formatter type="xml"/>
             <classpath>
                 <path refid="library.tomcat_7.classpath"/>
                 <path refid="library.2.0.1-fcs.classpath"/>
@@ -254,12 +256,19 @@
                 <pathelement location="${gpics.testoutput.dir}"/>
                 <pathelement location="${gpics.output.dir}"/>
             </classpath>
-            <batchtest fork="yes">
+            <batchtest fork="yes" todir="${gpics.testoutput.dir}/../test-reports">
                 <fileset dir="${gpics.testoutput.dir}">
                     <include name="**/*Test.class"/>
                 </fileset>
             </batchtest>
         </junit>
+
+        <junitreport todir="${gpics.testoutput.dir}/../test-reports">
+            <fileset dir="${gpics.testoutput.dir}/../test-reports">
+                <include name="TEST-*.xml" />
+            </fileset>
+            <report todir="${gpics.testoutput.dir}/../test-reports"/>
+        </junitreport>
     </target>
 
     <target name="clean.module.gpics" description="cleanup module">
