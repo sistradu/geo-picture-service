@@ -40,7 +40,8 @@ public class CreateEditAlbumController {
     private String albumBeschreibung;
     private String passwort;
 
-    private String uploadDir = "D:/upload/";
+    //TODO uploadDir
+    private String uploadDir = "/home/upload/";
     private List<Bild> bilder;
 
     private int selectedBId;
