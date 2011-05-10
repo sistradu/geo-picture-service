@@ -20,14 +20,16 @@ public interface IBildConnector {
      * @param description
      * @param isPublic
      * @param date
+     * @param filePosition
      * @param longitude
      * @param latitude
      * @param altitude
      * @param direction
+     * @param album
      * @return Die id des eingetragenen Bildes.
      * @throws ConnectException falls keine Verbindung mit der Datenbank aufgebaut werden konnte.
      */
-    public int createBild(String name, String description, boolean isPublic, GregorianCalendar date, String longitude, String latitude, String altitude, String direction) throws ConnectException;
+    public int createBild(String name, String description, boolean isPublic, GregorianCalendar date, String filePosition, String longitude, String latitude, String altitude, String direction, Document album) throws ConnectException;
 
     /**
      * Ändert das Bild mit der angegebenen id.
