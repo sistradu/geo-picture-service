@@ -61,15 +61,19 @@
                                 <h:commandLink value="#{msg.editImage}" action="editPicture">
                                     <f:param name="bildID" value="#{b.bildID}" />
                                 </h:commandLink>
+                                <h:commandLink value="#{msg.deleteImage}" action="#{createEditAlbumController.loescheBild}">
+                                    <f:param name="bildID" value="#{b.bildID}" />
+                                </h:commandLink>
                             </p>
 
                             <p>
-                                <h:selectBooleanCheckbox id="selectPublic" value="#{b.publicBild}" label="#{msg.imageIsPublic}">
+                                <h:selectBooleanCheckbox id="selectPublic" value="#{b.publicBild}" title="#{msg.imageIsPublic}">
                                     <p:ajax event="change" update="selectPublic" action="#{createEditAlbumController.checkboxSelectAction}">
                                         <f:setPropertyActionListener value="#{b.bildID}"
                                                                      target="#{createEditAlbumController.selectedBId}"/>
                                     </p:ajax>
                                 </h:selectBooleanCheckbox>
+                                <h:outputLabel value="#{msg.imageIsPublic}" />
                             </p>
 
                             <!--<p:commandLink update="carDetail" oncomplete="carDialog.show()" title="View Detail">
@@ -85,7 +89,8 @@
             <!--</h:form>-->
         </h:form>
         <h:form id="saveAlbum" rendered="#{userController.eingeloggt}">
-            <h:commandButton value="#{msg.save}" action="#{createEditAlbumController.speichern}"/>
+            <h:commandButton value="#{msg.save}" action="#{createEditAlbumController.createAlbum}" rendered="#{createEditAlbumController.isNewAlbum}"/>
+            <h:commandButton value="#{msg.save}" action="#{createEditAlbumController.updateAlbum}" rendered="#{!createEditAlbumController.isNewAlbum}"/>
             <h:commandButton value="#{msg.abort}" action="allAlbums"/>
         </h:form>
         <h:messages for="saveAlbum" style="color:red;"/>
