@@ -11,6 +11,7 @@ import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
+import org.w3c.dom.Document;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -114,7 +115,8 @@ public class CreateEditAlbumController {
             IAlbumConnector connector = new MockAlbumConnector();
             generatePasswort();
             this.albumID = connector.createAlbum(albumName, passwort, albumBeschreibung);
-            speicherBilder();
+            Document album = connector.getAlbum(albumName);
+            speicherBilder(album);
         } catch (Exception e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             FacesMessageHandler.createFacesMessageForID("saveAlbum", e.getMessage());
@@ -122,7 +124,7 @@ public class CreateEditAlbumController {
         return "showAlbum";
     }
 
-    private void speicherBilder() throws JpegProcessingException, MetadataException, ParseException, ConnectException {
+    private void speicherBilder(Document album) throws JpegProcessingException, MetadataException, ParseException, ConnectException, FileNotFoundException {
         for(Bild bild : bilder){
             ImageDataExtractor extractor = new ImageDataExtractor();
             Position pos = extractor.getPosition(bild.getPath());
@@ -131,7 +133,8 @@ public class CreateEditAlbumController {
             String latitudeDecimal = calculator.getDecimalCoordinate(pos.getLatitude(), pos.getLatitudeRef());
             IBildConnector connector = new MockBildConnector();
             bilder.indexOf(bild);
-            connector.createBild(bild.getName(), bild.getBeschreibung(), bild.isPublicBild(), pos.getTimeStamp(), longitudeDecimal, latitudeDecimal, pos.getAltitude(), pos.getDirection());
+//            connector.createBild(bild.getName(), bild.getBeschreibung(), bild.isPublicBild(), pos.getTimeStamp(), longitudeDecimal, latitudeDecimal, pos.getAltitude(), pos.getDirection());
+            connector.createBild(bild.getName(), bild.getBeschreibung(), bild.isPublicBild(), pos.getTimeStamp(), bild.getPath(), longitudeDecimal, latitudeDecimal, bild.getAltitude(), bild.getDirection(), album);
         }
     }
 
