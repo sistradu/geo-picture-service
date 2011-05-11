@@ -1,15 +1,17 @@
 package de.hszigr.gpics.controller;
 
-import de.hszigr.gpics.util.*;
+import de.hszigr.gpics.util.AlbumControllerDBUtil;
+import de.hszigr.gpics.util.GPicSUtil;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,13 +56,13 @@ public class CreateEditAlbumController {
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-        FacesMessageHandler.createFacesMessageForID("uploader", file.getFileName() + " erfolgreich hochgeladen.");
+        GPicSUtil.createFacesMessageForID("uploader", file.getFileName() + " erfolgreich hochgeladen.");
     }
 
     public StreamedContent getImage() {
         StreamedContent defaultImage = null;
         try {
-            defaultImage = ImageUtil.getStreamContent(uploadDir + "/gpics.jpg");
+            defaultImage = GPicSUtil.getStreamContent(uploadDir + "/gpics.jpg");
             String name = FacesContext.getCurrentInstance()
                     .getExternalContext().getRequestParameterMap().get("name");
             if (name != null && !bilder.isEmpty()) {
@@ -89,7 +91,7 @@ public class CreateEditAlbumController {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            FacesMessageHandler.createFacesMessageForID("saveAlbum", e.getMessage());
+            GPicSUtil.createFacesMessageForID("saveAlbum", e.getMessage());
         }
         return "createAlbum";
     }
@@ -101,7 +103,7 @@ public class CreateEditAlbumController {
             util.loescheBild(this, bildId);
         } catch (Exception e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            FacesMessageHandler.createFacesMessageForID("saveAlbum", e.getMessage());
+            GPicSUtil.createFacesMessageForID("saveAlbum", e.getMessage());
         }
     }
 
@@ -112,7 +114,7 @@ public class CreateEditAlbumController {
             util.updateAlbum(this);
         } catch (ConnectException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            FacesMessageHandler.createFacesMessageForID("saveAlbum", e.getMessage());
+            GPicSUtil.createFacesMessageForID("saveAlbum", e.getMessage());
             return null;
         }
         return "showAlbum";
@@ -130,7 +132,7 @@ public class CreateEditAlbumController {
             util.createAlbum(this);
         } catch (Exception e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            FacesMessageHandler.createFacesMessageForID("saveAlbum", e.getMessage());
+            GPicSUtil.createFacesMessageForID("saveAlbum", e.getMessage());
         }
         return "showAlbum";
     }
@@ -152,7 +154,7 @@ public class CreateEditAlbumController {
             Bild bild = new Bild();
             bild.setName(s.substring(s.lastIndexOf("/") + 1));
             bild.setPath(s);
-            bild.setContent(ImageUtil.getStreamContent(s));
+            bild.setContent(GPicSUtil.getStreamContent(s));
             bild.setPublicBild(false);
             bild.setBildID(bilder.size());
             bilder.add(bild);
