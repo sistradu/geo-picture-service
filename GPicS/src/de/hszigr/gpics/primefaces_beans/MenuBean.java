@@ -1,6 +1,7 @@
 package de.hszigr.gpics.primefaces_beans;
 
 import de.hszigr.gpics.controller.UserController;
+import de.hszigr.gpics.util.GPicSUtil;
 import de.hszigr.gpics.util.MessagePropertiesBean;
 import org.primefaces.component.menuitem.MenuItem;
 import org.primefaces.component.submenu.Submenu;
@@ -75,9 +76,7 @@ public class MenuBean {
 	 	submenu.getChildren().add(item);
 
 
-        FacesContext context = FacesContext.getCurrentInstance();
-        UserController uc = (UserController) context.getApplication()
-            .getVariableResolver().resolveVariable(context, "userController");
+        UserController uc = (UserController) GPicSUtil.getBean("userController");
 
 //        FacesContext f = FacesContext.getCurrentInstance();
 //

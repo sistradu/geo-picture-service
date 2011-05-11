@@ -8,6 +8,10 @@ import javax.faces.context.FacesContext;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.MessageFormat;
+import java.util.Locale;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 
 /**
  * Created by IntelliJ IDEA.
@@ -32,5 +36,50 @@ public class GPicSUtil {
     public static void createFacesMessageForID(String elementID, String errorMessage){
         FacesMessage message = new FacesMessage(errorMessage);
         FacesContext.getCurrentInstance().addMessage(elementID,  message);
+    }
+
+    protected static ClassLoader getCurrentClassLoader(Object defaultObject){
+
+        ClassLoader loader = Thread.currentThread().getContextClassLoader();
+
+        if(loader == null){
+            loader = defaultObject.getClass().getClassLoader();
+        }
+
+        return loader;
+    }
+
+    public static String getMessageResourceString(
+                            String bundleName,
+                            String key,
+                            Object params[],
+                            Locale locale){
+
+        String text = null;
+
+        ResourceBundle bundle =
+                ResourceBundle.getBundle(bundleName, locale,
+                                        getCurrentClassLoader(params));
+
+        try{
+            text = bundle.getString(key);
+        } catch(MissingResourceException e){
+            text = "?? key " + key + " not found ??";
+        }
+
+        if(params != null){
+            MessageFormat mf = new MessageFormat(text, locale);
+            text = mf.format(params, new StringBuffer(), null).toString();
+        }
+
+        return text;
+    }
+
+    public static Object getBean(String beanName){
+        FacesContext context = FacesContext.getCurrentInstance();
+        Object o =  context.getApplication()
+            .getVariableResolver().resolveVariable(context, beanName);
+
+        return o;
     }
 }

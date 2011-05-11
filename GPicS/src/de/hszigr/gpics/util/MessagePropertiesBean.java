@@ -15,7 +15,7 @@ public class MessagePropertiesBean {
 
 		FacesContext context = FacesContext.getCurrentInstance();
 
-		String text = Utils.getMessageResourceString(context.getApplication()
+		String text = GPicSUtil.getMessageResourceString(context.getApplication()
                 .getMessageBundle(), key, null, context.getViewRoot()
                 .getLocale());
 

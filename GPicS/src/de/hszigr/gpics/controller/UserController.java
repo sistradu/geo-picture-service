@@ -2,7 +2,7 @@ package de.hszigr.gpics.controller;
 
 import de.hszigr.gpics.db.MockNutzerConnector;
 import de.hszigr.gpics.db.interfaces.INutzerConnector;
-import de.hszigr.gpics.util.FacesMessageHandler;
+import de.hszigr.gpics.util.GPicSUtil;
 import de.hszigr.gpics.util.MessagePropertiesBean;
 import de.hszigr.gpics.util.PasswortUtil;
 import org.w3c.dom.Document;
@@ -52,10 +52,10 @@ public class UserController {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            FacesMessageHandler.createFacesMessageForID("loginMask", e.getMessage());
+            GPicSUtil.createFacesMessageForID("loginMask", e.getMessage());
         }
         MessagePropertiesBean msgPB = new MessagePropertiesBean();
-        FacesMessageHandler.createFacesMessageForID("loginMask", msgPB.getPropertiesMessage("wrongPassword"));
+        GPicSUtil.createFacesMessageForID("loginMask", msgPB.getPropertiesMessage("wrongPassword"));
         return "index";
     }
 
@@ -102,11 +102,11 @@ public class UserController {
             resetAll();
         } catch (Exception e){
             e.printStackTrace();
-            FacesMessageHandler.createFacesMessageForID("sendPWMask", e.getMessage());
+            GPicSUtil.createFacesMessageForID("sendPWMask", e.getMessage());
             return "sendPW";
         }
         MessagePropertiesBean mPB = new MessagePropertiesBean();
-        FacesMessageHandler.createFacesMessageForID("infoMessages", mPB.getPropertiesMessage("sendMailSuccess"));
+        GPicSUtil.createFacesMessageForID("infoMessages", mPB.getPropertiesMessage("sendMailSuccess"));
         return "index";
     }
 
@@ -118,7 +118,7 @@ public class UserController {
             setEingeloggt(true);
         }catch (Exception e){
             e.printStackTrace();
-            FacesMessageHandler.createFacesMessageForID("createUserMask", e.getMessage());
+            GPicSUtil.createFacesMessageForID("createUserMask", e.getMessage());
             return "createUser";
         }
         return "showOwnAlbum";
@@ -129,7 +129,7 @@ public class UserController {
             conn.updateNutzer(nutzerID, nutzerNamen, passwort, email);
         }catch (Exception e){
             e.printStackTrace();
-            FacesMessageHandler.createFacesMessageForID("createUserMask", e.getMessage());
+            GPicSUtil.createFacesMessageForID("createUserMask", e.getMessage());
             return "createUser";
         }
         return "showOwnAlbum";
