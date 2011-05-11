@@ -10,26 +10,27 @@
                 xmlns:p="http://primefaces.prime.com.tr/ui">
     <ui:define name="content">
         <h:form id="createUserMask">
+            <h:outputLabel value="#{msg.createUserInfo}" rendered="#{!userController.eingeloggt}"/>
             <table>
                 <tr>
                     <td><h:outputLabel value="#{msg.username}"/></td>
                     <td><h:inputText value="#{userController.nutzerNamen}"/></td>
                 </tr>
                 <tr>
-                    <td><h:outputLabel value="#{msg.password}"/></td>
+                    <td><h:outputLabel value="#{msg.password}" rendered="#{userController.eingeloggt}" /></td>
                     <td>
                         <h:inputSecret id="createUserPasswort" value="#{userController.passwort}" required="true"
-                                       requiredMessage="#{msg.forgotPasswortRequiredMessage}"/>
+                                       requiredMessage="#{msg.forgotPasswortRequiredMessage}" rendered="#{userController.eingeloggt}"/>
                     </td>
-                    <td><h:message for="createUserPasswort" style="color:red;"/></td>
+                    <td><h:message for="createUserPasswort" style="color:red;" rendered="#{userController.eingeloggt}"/></td>
                 </tr>
                 <tr>
-                    <td><h:outputLabel value="#{msg.repeatPassword} "/></td>
+                    <td><h:outputLabel value="#{msg.repeatPassword} " rendered="#{userController.eingeloggt}"/></td>
                     <td>
                         <h:inputSecret id="createUserRepeatPasswort" required="true"
-                                       requiredMessage="#{msg.forgotPasswortRequiredMessage}"/>
+                                       requiredMessage="#{msg.forgotPasswortRequiredMessage}" rendered="#{userController.eingeloggt}" value="#{userController.passwortRepeat}" />
                     </td>
-                    <td><h:message for="createUserRepeatPasswort" style="color:red;"/></td>
+                    <td><h:message for="createUserRepeatPasswort" style="color:red;" rendered="#{userController.eingeloggt}"/></td>
                 </tr>
                 <tr>
                     <td><h:outputLabel value="#{msg.email} "/></td>
@@ -53,7 +54,13 @@
             </table>
         </h:form>
         <h:form>
-            <h:commandButton value="#{msg.abort}" action="index"/>
+            <table>
+                <tr>
+                    <td>
+                        <h:commandButton value="#{msg.abort}" action="index"/>
+                    </td>
+                </tr>
+            </table>
         </h:form>
         <h:messages for="createUserMask" style="color:red"/>
     </ui:define>

@@ -19,6 +19,7 @@
                         <!-- TODO required einbauen -->
                         <h:inputText id="createAlbumName" value="#{createEditAlbumController.albumName}" required="true"
                                      requiredMessage="#{msg.forgotAlbumName}">
+                            <f:validateLength minimum="1" />
                         </h:inputText>
                     </td>
                     <td><h:message for="createAlbumName" style="color:red;"/></td>
@@ -43,9 +44,9 @@
                 </tr>
             </table>
             <!--<h:commandLink value="123" action="createAlbum2" />-->
-        </h:form>
-        <h:form rendered="#{userController.eingeloggt}" prependId="false" id="cgrid">
-            <p:dataGrid var="b" value="#{createEditAlbumController.bilder}" columns="3"
+        <!--</h:form>-->
+        <!--<h:form rendered="#{userController.eingeloggt}" prependId="false" id="cgrid">-->
+            <p:dataGrid id="cgrid" var="b" value="#{createEditAlbumController.bilder}" columns="3"
                         rows="12" paginator="true" effect="true"
                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                         rowsPerPageTemplate="9,12,15">
@@ -75,12 +76,12 @@
                 </p:column>
             </p:dataGrid>
             <!--</h:form>-->
-        </h:form>
-        <h:form id="saveAlbum" rendered="#{userController.eingeloggt}">
+        <!--</h:form>-->
+        <!--<h:form id="saveAlbum" rendered="#{userController.eingeloggt}">-->
             <h:commandButton value="#{msg.save}" action="#{createEditAlbumController.createAlbum}"/>
 
             <h:commandButton value="#{msg.abort}" action="allAlbums"/>
         </h:form>
-        <h:messages for="saveAlbum" style="color:red;"/>
+        <!--<h:messages for="saveAlbum" style="color:red;"/>-->
     </ui:define>
 </ui:composition>

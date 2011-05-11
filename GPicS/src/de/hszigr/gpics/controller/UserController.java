@@ -32,6 +32,7 @@ public class UserController {
     private String email;
     private boolean eingeloggt = false;
     private String passwort;
+    private String passwortRepeat;
     private INutzerConnector conn;
 
     public UserController() {
@@ -88,10 +89,11 @@ public class UserController {
             MessagePropertiesBean msgPB = new MessagePropertiesBean();
             Message mail = new MimeMessage(session);
             mail.setFrom(new InternetAddress("mailer@gpics.de"));
-//            mail.setRecipients(Message.RecipientType.TO,
-//                    InternetAddress.parse("sistradu@stud.hs-zigr.de"));
             mail.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse(email));
+                    InternetAddress.parse("sistradu@stud.hs-zigr.de"));
+            //TODO ändern
+//            mail.setRecipients(Message.RecipientType.TO,
+//                    InternetAddress.parse(email));
             mail.setSubject(msgPB.getPropertiesMessage("mailSubject"));
             mail.setText(msgPB.getPropertiesMessage("mailPart1") + tempPasswort +
                     msgPB.getPropertiesMessage("mailPart2"));
@@ -116,6 +118,7 @@ public class UserController {
             Document doc = conn.getNutzerByName(nutzerNamen);
             setNutzerID(Integer.parseInt(doc.getElementsByTagName("id").item(0).getTextContent()));
             setEingeloggt(true);
+            sendPasswortEmail();
         }catch (Exception e){
             e.printStackTrace();
             GPicSUtil.createFacesMessageForID("createUserMask", e.getMessage());
@@ -125,6 +128,11 @@ public class UserController {
     }
 
     public String updateBenutzer() {
+        if(!passwort.equals(passwortRepeat)){
+            MessagePropertiesBean msgPB = new MessagePropertiesBean();
+            GPicSUtil.createFacesMessageForID("createUserMask:createUserRepeatPasswort", msgPB.getPropertiesMessage("passwordDontEqual"));
+            return null;
+        }
         try {
             conn.updateNutzer(nutzerID, nutzerNamen, passwort, email);
         }catch (Exception e){
@@ -154,6 +162,14 @@ public class UserController {
 
     public void setPasswort(String passwort) {
             this.passwort = new PasswortUtil().encryptWithMD5(passwort);
+    }
+
+    public String getPasswortRepeat() {
+        return passwortRepeat;
+    }
+
+    public void setPasswortRepeat(String passwortRepeat) {
+            this.passwortRepeat = new PasswortUtil().encryptWithMD5(passwortRepeat);
     }
 
     public int getNutzerID() {
