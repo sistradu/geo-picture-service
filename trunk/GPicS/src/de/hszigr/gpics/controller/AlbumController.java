@@ -8,6 +8,7 @@ import org.w3c.dom.Document;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +30,9 @@ public class AlbumController {
     private ArrayList<Bild> bilder = new ArrayList<Bild>();
 
     public AlbumController() throws Exception{
-        loadAlbum("Görlitz");
+        albumName = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("AlbumName");
+
+        loadAlbum(albumName);
     }
 
     private void loadAlbum(String name) throws Exception{
@@ -49,6 +52,9 @@ public class AlbumController {
             path = path.substring(0, path.lastIndexOf(".")) + "_thumb"+path.substring(path.lastIndexOf("."));
 
             bild.setPathThumbnail(path);
+
+            bild.setLatitude(bilderXML.getElementsByTagName("latitudedecimal").item(i).getTextContent());
+            bild.setLongitude(bilderXML.getElementsByTagName("longitudedecimal").item(i).getTextContent());
             
             bilder.add(bild);
         }

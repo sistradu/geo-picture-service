@@ -29,8 +29,7 @@
             </p:lightBox>
 
 
-
-            <p:gmap center="51.149879, 14.9973" zoom="13" type="HYBRID" style="width:600px;height:400px"
+            <p:gmap center="#{albumController.bilder[0].latitude}, #{albumController.bilder[0].longitude}" zoom="13" type="HYBRID" style="width:600px;height:400px"
                     model="#{GMapsBean.simpleModel}" overlaySelectListener="#{GMapsBean.onMarkerSelect}">
                 <p:gmapInfoWindow>
                     <p:graphicImage value="#{GMapsBean.image}"/>
@@ -38,7 +37,11 @@
                     <h:outputText value="#{GMapsBean.image.name}"/>
                 </p:gmapInfoWindow>
             </p:gmap>
-
+            <br></br>
+            <!-- TODO Auf Methode ändern ladeAlbum() -->
+            <h:commandLink value="#{msg.editAlbum}" action="createAlbum" rendered="#{userController.eingeloggt}"> <!-- TODO Vergleich BenutzerID mit AlbumErstellerID -->
+                <f:param name="AlbumName" value="#{albumController.albumName}"/>
+            </h:commandLink>
 
         </h:form>
     </ui:define>
