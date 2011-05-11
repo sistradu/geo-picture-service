@@ -1,11 +1,15 @@
 package de.hszigr.gpics.primefaces_beans;
 
+import de.hszigr.gpics.controller.UserController;
 import de.hszigr.gpics.util.MessagePropertiesBean;
 import org.primefaces.component.menuitem.MenuItem;
 import org.primefaces.component.submenu.Submenu;
 import org.primefaces.model.DefaultMenuModel;
 import org.primefaces.model.MenuModel;
 
+import javax.el.ELContext;
+import javax.el.ExpressionFactory;
+import javax.el.ValueExpression;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import java.io.File;
@@ -74,13 +78,13 @@ public class MenuBean {
 	 	submenu.getChildren().add(item);
 
 
-//        FacesContext f = FacesContext.getCurrentInstance();
-//
-//        ELContext elc = f.getELContext();
-//        ExpressionFactory ef = ExpressionFactory.newInstance();
-//
-//        ValueExpression expr = ef.createValueExpression(elc, "${userController}", UserController.class);
-//        UserController uc = (UserController)expr.getValue(elc);
+        FacesContext f = FacesContext.getCurrentInstance();
+
+        ELContext elc = f.getELContext();
+        ExpressionFactory ef = ExpressionFactory.newInstance();
+
+        ValueExpression expr = ef.createValueExpression(elc, "${userController}", UserController.class);
+        UserController uc = (UserController)expr.getValue(elc);
 
 
 //uc.isEingeloggt()
