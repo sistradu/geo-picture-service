@@ -17,7 +17,8 @@
                     <td><h:outputLabel value="#{msg.albumTitle}"/></td>
                     <td>
                         <!-- TODO required einbauen -->
-                        <h:inputText id="createAlbumName" value="#{createEditAlbumController.albumName}" required="true" requiredMessage="#{msg.forgotAlbumName}">
+                        <h:inputText id="createAlbumName" value="#{createEditAlbumController.albumName}" required="true"
+                                     requiredMessage="#{msg.forgotAlbumName}">
                         </h:inputText>
                     </td>
                     <td><h:message for="createAlbumName" style="color:red;"/></td>
@@ -28,14 +29,15 @@
                 </tr>
                 <tr>
                     <td>
+                        <h:outputLink value="#" title="Upload"
+                                      onclick="uploader.upload();">#{msg.upload}</h:outputLink> |
+                        <h:outputLink value="#" title="Cancel" onclick="uploader.clear();">#{msg.abort}</h:outputLink>
+                        <br/>
                         <p:fileUpload widgetVar="uploader" customUI="true" label="#{msg.uploadImage}"
                                       description="*.jpg;*.JPG"
                                       allowTypes="*.jpg;*.JPG"
                                       fileUploadListener="#{createEditAlbumController.handleFileUpload}"
                                       multiple="true" id="fileUploader" update="messages, cgrid"/>
-                        <h:outputLink value="#" title="Upload"
-                                      onclick="uploader.upload();">#{msg.upload}</h:outputLink> |
-                        <h:outputLink value="#" title="Cancel" onclick="uploader.clear();">#{msg.abort}</h:outputLink>
                         <p:growl id="messages" showDetail="true"/>
                     </td>
                 </tr>
@@ -51,45 +53,31 @@
                 <p:column>
                     <p:panel header="#{b.name}" style="text-align:center">
                         <h:panelGrid columns="1" style="width:100%">
-                            <p:graphicImage value="#{createEditAlbumController.image}" width="20%" height="20%">
+                            <p:graphicImage value="#{createEditAlbumController.image}" width="20%"
+                                            height="20%">
                                 <f:param name="name" value="#{b.name}"/>
                             </p:graphicImage>
-
-                            <p>
-                                <h:outputText value="#{b.beschreibung}"/>
-                                <!-- TODO abklären wie das gemacht wird -->
-                                <h:commandLink value="#{msg.editImage}" action="editPicture">
-                                    <f:param name="bildID" value="#{b.bildID}" />
-                                </h:commandLink>
-                                <h:commandLink value="#{msg.deleteImage}" action="#{createEditAlbumController.loescheBild}">
-                                    <f:param name="bildID" value="#{b.bildID}" />
-                                </h:commandLink>
-                            </p>
-
-                            <p>
-                                <h:selectBooleanCheckbox id="selectPublic" value="#{b.publicBild}" title="#{msg.imageIsPublic}">
-                                    <p:ajax event="change" update="selectPublic" action="#{createEditAlbumController.checkboxSelectAction}">
-                                        <f:setPropertyActionListener value="#{b.bildID}"
-                                                                     target="#{createEditAlbumController.selectedBId}"/>
-                                    </p:ajax>
-                                </h:selectBooleanCheckbox>
-                                <h:outputLabel value="#{msg.imageIsPublic}" />
-                            </p>
-
-                            <!--<p:commandLink update="carDetail" oncomplete="carDialog.show()" title="View Detail">
-                                <p:graphicImage value="/images/search.png"/>
-                                <f:setPropertyActionListener value="#{car}"
-                                        target="#{tableBean.selectedCar}" />
-                            </p:commandLink>-->
+                            <h:commandLink value="#{msg.deleteImage}"
+                                           action="#{createEditAlbumController.loescheBild}">
+                                <f:param name="bildID" value="#{b.bildID}"/>
+                            </h:commandLink>
+                            <h:selectBooleanCheckbox id="selectPublic" value="#{b.publicBild}"
+                                                     title="#{msg.imageIsPublic}">
+                                <p:ajax event="change" update="selectPublic"
+                                        action="#{createEditAlbumController.checkboxSelectAction}">
+                                    <f:setPropertyActionListener value="#{b.bildID}"
+                                                                 target="#{createEditAlbumController.selectedBId}"/>
+                                </p:ajax>
+                            </h:selectBooleanCheckbox>
+                            <h:outputLabel value="#{msg.imageIsPublic}"/>
                         </h:panelGrid>
                     </p:panel>
                 </p:column>
-
             </p:dataGrid>
             <!--</h:form>-->
         </h:form>
         <h:form id="saveAlbum" rendered="#{userController.eingeloggt}">
-            <h:commandButton value="#{msg.save}" action="#{createEditAlbumController.createAlbum}" />
+            <h:commandButton value="#{msg.save}" action="#{createEditAlbumController.createAlbum}"/>
 
             <h:commandButton value="#{msg.abort}" action="allAlbums"/>
         </h:form>

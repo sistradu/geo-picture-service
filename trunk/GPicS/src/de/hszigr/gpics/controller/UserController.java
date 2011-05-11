@@ -88,11 +88,10 @@ public class UserController {
             MessagePropertiesBean msgPB = new MessagePropertiesBean();
             Message mail = new MimeMessage(session);
             mail.setFrom(new InternetAddress("mailer@gpics.de"));
+//            mail.setRecipients(Message.RecipientType.TO,
+//                    InternetAddress.parse("sistradu@stud.hs-zigr.de"));
             mail.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse("sistradu@stud.hs-zigr.de"));
-           //TODO
-    //        mail.setRecipients(Message.RecipientType.TO,
-    //                InternetAddress.parse(email));
+                    InternetAddress.parse(email));
             mail.setSubject(msgPB.getPropertiesMessage("mailSubject"));
             mail.setText(msgPB.getPropertiesMessage("mailPart1") + tempPasswort +
                     msgPB.getPropertiesMessage("mailPart2"));
