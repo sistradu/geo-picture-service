@@ -2,6 +2,7 @@ package de.hszigr.gpics.controller;
 
 import de.hszigr.gpics.util.AlbumControllerDBUtil;
 import de.hszigr.gpics.util.GPicSUtil;
+import de.hszigr.gpics.util.MessagePropertiesBean;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
@@ -34,8 +35,8 @@ public class CreateEditAlbumController {
     private String passwort;
 
     //TODO uploadDir
-    private String uploadDir = "/home/pics/";
-//    private String uploadDir = "D:/upload/";
+//    private String uploadDir = "/home/pics/";
+    private String uploadDir = "D:/upload/";
     private List<Bild> bilder;
 
     private int selectedBId;
@@ -124,7 +125,7 @@ public class CreateEditAlbumController {
         try {
 //            if (this.albumName == null) {
 //                MessagePropertiesBean msg = new MessagePropertiesBean();
-//                FacesMessageHandler.createFacesMessageForID("createAlbumName", msg.getPropertiesMessage("forgotAlbumName"));
+//                GPicSUtil.createFacesMessageForID("createAlbumName", msg.getPropertiesMessage("forgotAlbumName"));
 //                return null;
 //
 //            }

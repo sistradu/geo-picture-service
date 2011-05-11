@@ -63,8 +63,8 @@ public class AlbumControllerDBUtil {
             generatePasswort(controller);
             controller.setAlbumID(connector.createAlbum(controller.getAlbumName(), controller.getPasswort(), controller.getAlbumBeschreibung()));
             Document album = connector.getAlbum(controller.getAlbumName());
-            AlbumControllerDBUtil util = new AlbumControllerDBUtil();
-            util.createBilder(album, controller);
+//            AlbumControllerDBUtil util = new AlbumControllerDBUtil();
+            createBilder(album, controller);
     }
 
  @SuppressWarnings("unchecked")
