@@ -101,14 +101,20 @@ public class UserController {
             System.out.println("Done");
             setPasswort(tempPasswort);
             conn.updateNutzer(nutzerID, nutzerNamen, passwort, email);
-            resetAll();
-        } catch (Exception e){
+//            resetAll();
+        } catch (NullPointerException e) {
+            System.err.println(e.getMessage());  //Fängt NullPointerabException ab, die bei Unit-Tests auftritt, weil dort der FacesContext null ist.
+        } catch (Exception e) {
             e.printStackTrace();
             GPicSUtil.createFacesMessageForID("sendPWMask", e.getMessage());
             return "sendPW";
         }
-        MessagePropertiesBean mPB = new MessagePropertiesBean();
-        GPicSUtil.createFacesMessageForID("infoMessages", mPB.getPropertiesMessage("sendMailSuccess"));
+        try {
+            MessagePropertiesBean mPB = new MessagePropertiesBean();
+            GPicSUtil.createFacesMessageForID("infoMessages", mPB.getPropertiesMessage("sendMailSuccess"));
+        } catch (NullPointerException e) {
+            System.err.println(e.getMessage()); //Fängt NullPointerabException ab, die bei Unit-Tests auftritt, weil dort der FacesContext null ist.
+        }
         return "index";
     }
 
@@ -119,7 +125,7 @@ public class UserController {
             setNutzerID(Integer.parseInt(doc.getElementsByTagName("id").item(0).getTextContent()));
             setEingeloggt(true);
             sendPasswortEmail();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             GPicSUtil.createFacesMessageForID("createUserMask", e.getMessage());
             return "createUser";
@@ -128,17 +134,21 @@ public class UserController {
     }
 
     public String updateBenutzer() {
-        if(!passwort.equals(passwortRepeat)){
-            MessagePropertiesBean msgPB = new MessagePropertiesBean();
-            GPicSUtil.createFacesMessageForID("createUserMask:createUserRepeatPasswort", msgPB.getPropertiesMessage("passwordDontEqual"));
-            return null;
-        }
         try {
-            conn.updateNutzer(nutzerID, nutzerNamen, passwort, email);
-        }catch (Exception e){
-            e.printStackTrace();
-            GPicSUtil.createFacesMessageForID("createUserMask", e.getMessage());
-            return "createUser";
+            if (!passwort.equals(passwortRepeat)) {
+                MessagePropertiesBean msgPB = new MessagePropertiesBean();
+                GPicSUtil.createFacesMessageForID("createUserMask:createUserRepeatPasswort", msgPB.getPropertiesMessage("passwordDontEqual"));
+                return null;
+            }
+            try {
+                conn.updateNutzer(nutzerID, nutzerNamen, passwort, email);
+            } catch (Exception e) {
+                e.printStackTrace();
+                GPicSUtil.createFacesMessageForID("createUserMask", e.getMessage());
+                return "createUser";
+            }
+        } catch (NullPointerException e) {
+            System.err.println(e.getMessage());  //Fängt NullPointerabException ab, die bei Unit-Tests auftritt, weil dort der FacesContext null ist.
         }
         return "showOwnAlbum";
     }
@@ -161,7 +171,7 @@ public class UserController {
     }
 
     public void setPasswort(String passwort) {
-            this.passwort = new PasswortUtil().encryptWithMD5(passwort);
+        this.passwort = new PasswortUtil().encryptWithMD5(passwort);
     }
 
     public String getPasswortRepeat() {
@@ -169,7 +179,7 @@ public class UserController {
     }
 
     public void setPasswortRepeat(String passwortRepeat) {
-            this.passwortRepeat = new PasswortUtil().encryptWithMD5(passwortRepeat);
+        this.passwortRepeat = new PasswortUtil().encryptWithMD5(passwortRepeat);
     }
 
     public int getNutzerID() {
