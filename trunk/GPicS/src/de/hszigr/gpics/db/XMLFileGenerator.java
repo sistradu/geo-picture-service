@@ -154,7 +154,7 @@ public class XMLFileGenerator {
         }
         for(int i = 0 ; true ; i++){
             try{
-                Document doc = con.getAlbumByName(i);
+                Document doc = con.getAlbumByID(i);
                 File xmlFile = new File(albenDir + "\\" + doc.getElementsByTagName("id").item(0).getTextContent() + ".xml");
                 if(!xmlFile.exists())
                     xmlFile.createNewFile();
