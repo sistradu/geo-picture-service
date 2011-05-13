@@ -25,11 +25,11 @@ public interface IBildConnector {
      * @param latitude
      * @param altitude
      * @param direction
-     * @param album
+     * @param albumID
      * @return Die id des eingetragenen Bildes.
      * @throws ConnectException falls keine Verbindung mit der Datenbank aufgebaut werden konnte.
      */
-    public int createBild(String name, String description, boolean isPublic, GregorianCalendar date, String filePosition, String longitude, String latitude, String altitude, String direction, Document album) throws ConnectException;
+    public int createBild(String name, String description, boolean isPublic, GregorianCalendar date, String filePosition, String longitude, String latitude, String altitude, String direction, int albumID) throws ConnectException;
 
     /**
      * Ändert das Bild mit der angegebenen id.
@@ -45,7 +45,7 @@ public interface IBildConnector {
      * @throws ConnectException falls keine Verbindung mit der Datenbank aufgebaut werden konnte.
      * @throws IllegalArgumentException falls das Bild mit der angegebenen id nicht existiert.
      */
-    public void updateBild(int id, String name, String description, boolean isPublic, GregorianCalendar date, String longitude, String latitude, String altitude, String direction) throws ConnectException, IllegalArgumentException;
+    public void updateBild(int id, String name, String description, boolean isPublic, GregorianCalendar date, String filePosition, String longitude, String latitude, String altitude, String direction) throws ConnectException, IllegalArgumentException;
 
     /**
      * Löscht das Bild mit der angegebenen id.
@@ -61,7 +61,7 @@ public interface IBildConnector {
      * @throws ConnectException falls keine Verbindung mit der Datenbank aufgebaut werden konnte.
      * @throws IllegalArgumentException  falls das Album nicht existiert.
      */
-    public void deleteBilderFromAlbum(Document album) throws ConnectException, IllegalArgumentException;
+    public void deleteBilderFromAlbum(int albumID) throws ConnectException, IllegalArgumentException;
 
     /**
      * Liefert das Bild mit der angegebenen id.
@@ -87,7 +87,7 @@ public interface IBildConnector {
      * @throws ConnectException falls keine Verbindung mit der Datenbank aufgebaut werden konnte.
      * @throws IllegalArgumentException  falls das Album nicht existiert.
      */
-    public Document getBilderForAlbum(Document album) throws ConnectException, IllegalArgumentException;
+    public Document getBilderForAlbum(int albumID) throws ConnectException, IllegalArgumentException;
 
     /**
      * Liefert alle Bilder für die angegebene Rundreise.
@@ -96,6 +96,6 @@ public interface IBildConnector {
      * @throws ConnectException falls keine Verbindung mit der Datenbank aufgebaut werden konnte.
      * @throws IllegalArgumentException  falls die Rundreise nicht existiert.
      */
-    public Document getBilderForRundreise(Document rundreise) throws ConnectException, IllegalArgumentException;
+    public Document getBilderForRundreise(int rundreiseID) throws ConnectException, IllegalArgumentException;
 
 }

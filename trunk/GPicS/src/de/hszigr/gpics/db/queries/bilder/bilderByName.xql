@@ -3,12 +3,12 @@ xquery version "1.0" encoding "UTF8";
 declare namespace request="http://exist-db.org/xquery/request";
 
 let $name:= request:get-parameter("name","")
-let $collection := collection('/db/alben')//album[contains(name, $name)]
+let $collection := collection('/db/bilder')//bild[contains(name, $name)]
 
 return
-  <alben>
-  {for $album in $collection
+  <bilder>
+  {for $bild in $collection
     return
-      $album
+      $bild
     }
-  </alben>
+  </bilder>

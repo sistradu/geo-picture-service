@@ -4,19 +4,31 @@ declare namespace request="http://exist-db.org/xquery/request";
 
 let $alben:= doc("/db/alben/alben.xml")
 let $id:= request:get-parameter("id",0)
-let $name:= request:get-parameter("name",0)
-let $password:= request:get-parameter("password",0)
-let $description:= request:get-parameter("description",0)
+let $name:= request:get-parameter("name",$alben//album[id=$id]//name/text())
+let $password:= request:get-parameter("password",$alben//album[id=$id]//password/text())
+let $description:= request:get-parameter("description",$alben//album[id=$id]//description/text())
 let $new-album:=
 <album>
     <id>{$id}</id>
     <name>{$name}</name>
     <password>{$password}</password>
     <description>{$description}</description>
-    {for $bild in $alben//album[id=$id]//bild
-      return
-        $bild
-    }
+    {$alben//album[id=$id]//nutzer}
 </album>
-  return
-   (update replace $alben//album[id=$id] with $new-album)
+return
+if (not($id))
+   then (
+      <error>
+        <message>Es wurde keine ID angegeben.</message>
+      </error>)
+    else (
+        if(count($alben//album[id!=$id][name=$name])>0)
+        then(
+          <error>
+            <message>Ein Album mit dem angegebenen Namen existiert bereits!</message>
+          </error>
+        )
+        else(
+          (update replace $alben//album[id=$id] with $new-album)
+        )
+)

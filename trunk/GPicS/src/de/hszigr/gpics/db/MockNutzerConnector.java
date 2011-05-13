@@ -46,7 +46,7 @@ public class MockNutzerConnector implements INutzerConnector{
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-        this.addNutzer("Karl", password, "karl@web.de", new String[]{"Görlitz","Zittau"});
+        this.addNutzer("Karl", password, "karl@web.de");
         password = "password";
         try {
             MessageDigest md = MessageDigest.getInstance("md5");
@@ -59,10 +59,10 @@ public class MockNutzerConnector implements INutzerConnector{
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        this.addNutzer("Günther", password, "guenther@web.de", new String[]{"Oberlausitz"});
+        this.addNutzer("Günther", password, "guenther@web.de");
     }
 
-    private void addNutzer(String name, String password, String email, String[] albums){
+    private void addNutzer(String name, String password, String email){
         this.id++;
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -80,11 +80,6 @@ public class MockNutzerConnector implements INutzerConnector{
             nutzerNode.appendChild(nameElem);
             nutzerNode.appendChild(passwordElem);
             nutzerNode.appendChild(emailElem);
-            for(String album : albums){
-                Element albumElem = doc.createElement("album");
-                albumElem.setAttribute("name", album);
-                nutzerNode.appendChild(albumElem);
-            }
             doc.appendChild(nutzerNode);
             this.nutzerIDMap.put(this.id, doc);
             this.nutzerNameMap.put(name, doc);
