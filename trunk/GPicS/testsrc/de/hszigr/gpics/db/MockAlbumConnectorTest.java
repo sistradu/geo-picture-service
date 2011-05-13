@@ -34,12 +34,12 @@ public class MockAlbumConnectorTest {
     @Test
     public void testGetAlbumByID() throws Exception {
         try{
-            connector.getAlbum(3);
+            connector.getAlbumByID(3);
             Assert.fail("Exception should have been thrown!");
         }catch(Exception ex){
             //OK!
         }
-        org.w3c.dom.Document doc = connector.getAlbum(0);
+        org.w3c.dom.Document doc = connector.getAlbumByID(0);
         NodeList idNodes = doc.getElementsByTagName("id");
         NodeList nameNodes = doc.getElementsByTagName("name");
         NodeList passwordNodes = doc.getElementsByTagName("password");
@@ -71,7 +71,7 @@ public class MockAlbumConnectorTest {
         Assert.assertEquals("3", bilderNodes.item(2).getAttributes().item(0).getTextContent());
         Assert.assertEquals("4", bilderNodes.item(3).getAttributes().item(0).getTextContent());
 
-        doc = connector.getAlbum(1);
+        doc = connector.getAlbumByID(1);
         idNodes = doc.getElementsByTagName("id");
         nameNodes = doc.getElementsByTagName("name");
         passwordNodes = doc.getElementsByTagName("password");
@@ -103,7 +103,7 @@ public class MockAlbumConnectorTest {
         Assert.assertEquals("8", bilderNodes.item(2).getAttributes().item(0).getTextContent());
         Assert.assertEquals("10", bilderNodes.item(3).getAttributes().item(0).getTextContent());
 
-        doc = connector.getAlbum(2);
+        doc = connector.getAlbumByID(2);
         idNodes = doc.getElementsByTagName("id");
         nameNodes = doc.getElementsByTagName("name");
         passwordNodes = doc.getElementsByTagName("password");
@@ -138,7 +138,7 @@ public class MockAlbumConnectorTest {
 
     @Test
     public void testGetAlbumByName() throws Exception {
-        org.w3c.dom.Document doc = connector.getAlbum("Görlitz");
+        org.w3c.dom.Document doc = connector.getAlbumByName("Görlitz");
         NodeList idNodes = doc.getElementsByTagName("id");
         NodeList nameNodes = doc.getElementsByTagName("name");
         NodeList passwordNodes = doc.getElementsByTagName("password");
@@ -170,7 +170,7 @@ public class MockAlbumConnectorTest {
         Assert.assertEquals("3", bilderNodes.item(2).getAttributes().item(0).getTextContent());
         Assert.assertEquals("4", bilderNodes.item(3).getAttributes().item(0).getTextContent());
 
-        doc = connector.getAlbum("Zittau");
+        doc = connector.getAlbumByName("Zittau");
         idNodes = doc.getElementsByTagName("id");
         nameNodes = doc.getElementsByTagName("name");
         passwordNodes = doc.getElementsByTagName("password");
@@ -202,7 +202,7 @@ public class MockAlbumConnectorTest {
         Assert.assertEquals("8", bilderNodes.item(2).getAttributes().item(0).getTextContent());
         Assert.assertEquals("10", bilderNodes.item(3).getAttributes().item(0).getTextContent());
 
-        doc = connector.getAlbum("Oberlausitz");
+        doc = connector.getAlbumByName("Oberlausitz");
         idNodes = doc.getElementsByTagName("id");
         nameNodes = doc.getElementsByTagName("name");
         passwordNodes = doc.getElementsByTagName("password");
@@ -340,7 +340,7 @@ public class MockAlbumConnectorTest {
     @Test
     public void testGetAlbenForNutzer() throws Exception {
         org.w3c.dom.Document nutzerDoc = new MockNutzerConnector().getNutzerByName("Karl");
-        org.w3c.dom.Document doc = connector.getAlbenForNutzer(nutzerDoc);
+        org.w3c.dom.Document doc = connector.getAlbenForNutzer(Integer.parseInt(nutzerDoc.getElementsByTagName("id").item(0).getTextContent()));
         NodeList albenNodes = doc.getElementsByTagName("album");
         Assert.assertEquals(2,albenNodes.getLength());
         Element albumNode = (Element) albenNodes.item(0);
@@ -408,7 +408,7 @@ public class MockAlbumConnectorTest {
         Assert.assertEquals("10", bilderNodes.item(3).getAttributes().item(0).getTextContent());
 
         nutzerDoc = new MockNutzerConnector().getNutzerByName("Günther");
-        doc = connector.getAlbenForNutzer(nutzerDoc);
+        doc = connector.getAlbenForNutzer(Integer.parseInt(nutzerDoc.getElementsByTagName("id").item(0).getTextContent()));
         albenNodes = doc.getElementsByTagName("album");
         Assert.assertEquals(1, albenNodes.getLength());
         albumNode = (Element) albenNodes.item(0);
