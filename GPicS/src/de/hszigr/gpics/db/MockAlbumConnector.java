@@ -23,14 +23,14 @@ public class MockAlbumConnector implements IAlbumConnector {
 
     private final HashMap<Integer, Document> albenIDMap;
     private final HashMap<String, Document> albenNameMap;
-    private final HashMap<String, Document> albenNutzerNameMap;
+    private final HashMap<Integer, Document> albenNutzerIDMap;
     private final HashMap<String, Document> albenDescriptionMap;
     int id = -1;
 
     public MockAlbumConnector(){
         this.albenIDMap = new HashMap<Integer,Document>();
         this.albenNameMap = new HashMap<String,Document>();
-        this.albenNutzerNameMap = new HashMap<String,Document>();
+        this.albenNutzerIDMap = new HashMap<Integer,Document>();
         this.albenDescriptionMap = new HashMap<String,Document>();
         String password = "goerlitz";
         try {
@@ -44,7 +44,7 @@ public class MockAlbumConnector implements IAlbumConnector {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-        this.addAlbum("Görlitz", password, "Bilder über die Stadt Görlitz.", new String[]{"1","2","3","4"}, "Karl");
+        this.addAlbum("Görlitz", password, "Bilder über die Stadt Görlitz.", 0);
         password = "zittau";
         try {
             MessageDigest md = MessageDigest.getInstance("md5");
@@ -57,7 +57,7 @@ public class MockAlbumConnector implements IAlbumConnector {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-        this.addAlbum("Zittau", password, "Bilder über die Stadt Zittau.", new String[]{"5","6","8","10"}, "Karl");
+        this.addAlbum("Zittau", password, "Bilder über die Stadt Zittau.", 0);
         password = "oberlausitz";
         try {
             MessageDigest md = MessageDigest.getInstance("md5");
@@ -70,10 +70,10 @@ public class MockAlbumConnector implements IAlbumConnector {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-        this.addAlbum("Oberlausitz", password, "Bilder über die schöne Oberlausitz.", new String[]{"7","9","11","12"}, "Günther");
+        this.addAlbum("Oberlausitz", password, "Bilder über die schöne Oberlausitz.", 1);
     }
 
-    private void addAlbum(String name, String password, String description, String[] bilder, String nutzername){
+    private void addAlbum(String name, String password, String description, int nutzerID){
         this.id++;
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -82,24 +82,22 @@ public class MockAlbumConnector implements IAlbumConnector {
             Element nameElem = doc.createElement("name");
             Element passwordElem = doc.createElement("password");
             Element descriptionElem = doc.createElement("description");
+            Element nutzerElem = doc.createElement("nutzer");
             idElem.setTextContent(""+this.id);
             nameElem.setTextContent(name);
             passwordElem.setTextContent(password);
             descriptionElem.setTextContent(description);
+            nutzerElem.setTextContent("" + nutzerID);
             Node albumNode = doc.createElement("album");
             albumNode.appendChild(idElem);
             albumNode.appendChild(nameElem);
             albumNode.appendChild(passwordElem);
             albumNode.appendChild(descriptionElem);
-            for(String bild : bilder){
-                Element albumElem = doc.createElement("bild");
-                albumElem.setAttribute("id", bild);
-                albumNode.appendChild(albumElem);
-            }
+            albumNode.appendChild(nutzerElem);
             doc.appendChild(albumNode);
             this.albenIDMap.put(this.id, doc);
             this.albenNameMap.put(name, doc);
-            this.albenNutzerNameMap.put(nutzername + this.id, doc);
+            this.albenNutzerIDMap.put(nutzerID + this.id, doc);
             this.albenDescriptionMap.put(description, doc);
         } catch (ParserConfigurationException e) {
             System.out.println("Fehler beim Erstellen des Albums " + name + ".");
@@ -107,7 +105,7 @@ public class MockAlbumConnector implements IAlbumConnector {
         }
     }
 
-    public int createAlbum(String name, String password, String description) throws ConnectException, IllegalArgumentException {
+    public int createAlbum(String name, String password, String description, int nutzerID) throws ConnectException, IllegalArgumentException {
         return ++this.id;//can do nothing
     }
 
@@ -123,14 +121,14 @@ public class MockAlbumConnector implements IAlbumConnector {
         //can do nothing
     }
 
-    public Document getAlbum(int id) throws ConnectException, IllegalArgumentException {
+    public Document getAlbumByID(int id) throws ConnectException, IllegalArgumentException {
         if(this.albenIDMap.containsKey(id))
             return this.albenIDMap.get(id);
         else
             throw new IllegalArgumentException("");
     }
 
-    public Document getAlbum(String name) throws ConnectException, IllegalArgumentException {
+    public Document getAlbumByName(String name) throws ConnectException, IllegalArgumentException {
         return this.albenNameMap.get(name);
     }
 
@@ -157,7 +155,7 @@ public class MockAlbumConnector implements IAlbumConnector {
         return null;
     }
 
-    public Document getAlbenForNutzer(Document nutzer) throws ConnectException, IllegalArgumentException {
+    public Document getAlbenForNutzer(int nutzerID) throws ConnectException, IllegalArgumentException {
         try {
             //TODO mit Hilfe des Schemas erzeugen...
             //Schema schema = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_INSTANCE_NS_URI).newSchema(new File("nutzer.xsd"));
@@ -165,8 +163,8 @@ public class MockAlbumConnector implements IAlbumConnector {
             //factory.setSchema(schema);
             Document doc = factory.newDocumentBuilder().newDocument();
             Node albenNode = doc.createElement("alben");
-            for(Map.Entry<String,Document> entry : this.albenNutzerNameMap.entrySet()){
-                if(entry.getKey().startsWith(nutzer.getElementsByTagName("name").item(0).getTextContent()))
+            for(Map.Entry<Integer,Document> entry : this.albenNutzerIDMap.entrySet()){
+                if(entry.getKey().equals(nutzerID))
                     albenNode.appendChild(doc.adoptNode(entry.getValue().getFirstChild()));
             }
             doc.appendChild(albenNode);

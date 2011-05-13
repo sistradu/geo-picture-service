@@ -1,8 +1,8 @@
-xquery version "1.0" encoding "UTF8";
+xquery version "1.0";
 
 declare namespace request="http://exist-db.org/xquery/request";
 
-let $alben:= doc("/db/alben/alben.xml")
+let $nutzers:= doc("/db/nutzer/nutzers.xml")
 let $name:= request:get-parameter("name","")
 
 return
@@ -13,7 +13,7 @@ if(not($name))
     </error>
   )
   else(
-    <alben>
-      {$alben//album[name=$name]}
-    </alben>
+    <nutzers>
+      {$nutzers//nutzer[name=$name]}
+    </nutzers>
   )

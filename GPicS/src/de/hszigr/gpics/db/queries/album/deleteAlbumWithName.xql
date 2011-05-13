@@ -3,14 +3,14 @@ xquery version "1.0" encoding "UTF8";
 declare namespace request="http://exist-db.org/xquery/request";
 
 let $alben:= doc("/db/alben/alben.xml")
-let $id:= request:get-parameter("id","")
+let $name:= request:get-parameter("name","")
   return
-   if(not($id))
+   if(not($name))
      then (
         <error>
-            <message>Es wurde keine ID angegeben!</message>
+            <message>Es wurde kein Name angegeben!</message>
         </error>
      )
      else (
-        (update delete $alben//album[id=$id])
+        (update delete $alben//album[name=$name])
      )

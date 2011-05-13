@@ -2,20 +2,18 @@ xquery version "1.0" encoding "UTF8";
 
 declare namespace request="http://exist-db.org/xquery/request";
 
-let $alben:= doc("/db/alben/alben.xml")
+let $nutzers:= doc("/db/nutzer/nutzers.xml")
 let $name:= request:get-parameter("name","")
 let $password:= request:get-parameter("password","")
-let $description:= request:get-parameter("description","")
-let $nutzer:= request:get-parameter("nutzer","")
-let $id:= max($alben//id/text())+1
-let $new-album:=
-<album>
+let $email:= request:get-parameter("email","")
+let $id:= max($nutzers//id/text())+1
+let $new-nutzer:=
+<nutzer>
     <id>{$id}</id>
     <name>{$name}</name>
     <password>{$password}</password>
-    <description>{$description}</description>
-    <nutzer>{$nutzer}</nutzer>
-</album>
+    <email>{$description}</email>
+</nutzer>
 return
   if(not($name))
         then(
@@ -24,10 +22,10 @@ return
           </error>
         )
         else(
-          if(count($alben//album[name=$name])>0)
+          if(count($nutzers//nutzer[name=$name])>0)
           then(
             <error>
-                <message>Ein Album mit dem angegebenen Namen exisiert bereits!</message>
+                <message>Ein Nutzer mit dem angegebenen Namen exisiert bereits!</message>
             </error>
           )
           else(
@@ -38,18 +36,18 @@ return
               </error>
             )
             else(
-              if(not($nutzer))
+              if(not($email))
               then(
                 <error>
-                    <message>Es wurde kein Nutzer angegeben!</message>
+                    <message>Es wurde keine Email-Adresse angegeben!</message>
                 </error>
               )
               else(
                 <result>
                   <id>{$id}</id>
-                  {for $item in $alben//alben
+                  {for $item in $nutzers//nutzers
                     return
-                      (update insert $new-album into $item)}
+                      (update insert $new-nutzer into $item)}
                </result>
               )
             )

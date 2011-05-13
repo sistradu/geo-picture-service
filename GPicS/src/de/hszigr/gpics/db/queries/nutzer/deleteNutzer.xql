@@ -2,7 +2,7 @@ xquery version "1.0" encoding "UTF8";
 
 declare namespace request="http://exist-db.org/xquery/request";
 
-let $alben:= doc("/db/alben/alben.xml")
+let $nutzers:= doc("/db/nutzer/nutzers.xml")
 let $id:= request:get-parameter("id","")
   return
    if(not($id))
@@ -12,5 +12,5 @@ let $id:= request:get-parameter("id","")
         </error>
      )
      else (
-        (update delete $alben//album[id=$id])
+        (update delete $nutzers//nutzer[id=$id])
      )

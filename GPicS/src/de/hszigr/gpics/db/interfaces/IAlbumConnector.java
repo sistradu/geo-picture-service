@@ -14,13 +14,14 @@ import java.net.ConnectException;
 public interface IAlbumConnector {
     /**
      * Trägt ein neues Album in die Datenbank ein.
+     *
      * @param name
      * @param password
      * @param description
      * @throws ConnectException falls keine Verbindung mit der Datenbank hergestellt werden konnte.
      * @throws IllegalArgumentException falls ein Album mit dem selben Namen bereits exisiert.
      */
-    public int createAlbum(String name, String password, String description) throws ConnectException, IllegalArgumentException;
+    public int createAlbum(String name, String password, String description, int NutzerID) throws ConnectException, IllegalArgumentException;
 
     /**
      * Ändert die Daten zu einem Album in der Datenbank.
@@ -56,7 +57,7 @@ public interface IAlbumConnector {
      * @throws ConnectException falls keine Verbindung mit der Datenbank hergestellt werden konnte.
      * @throws IllegalArgumentException falls kein Album mit der angegebenen id existiert.
      */
-    public Document getAlbum(int id) throws ConnectException, IllegalArgumentException;
+    public Document getAlbumByID(int id) throws ConnectException, IllegalArgumentException;
 
     /**
      * Liefert das Album mit dem angegebenen Namen.
@@ -65,7 +66,7 @@ public interface IAlbumConnector {
      * @throws ConnectException falls keine Verbindung mit der Datenbank hergestellt werden konnte.
      * @throws IllegalArgumentException falls kein Album mit dem angegebenen namen existiert.
      */
-    public Document getAlbum(String name) throws ConnectException, IllegalArgumentException;
+    public Document getAlbumByName(String name) throws ConnectException, IllegalArgumentException;
 
     /**
      * Liefert alle Alben.
@@ -76,12 +77,12 @@ public interface IAlbumConnector {
 
     /**
      * Liefert alle Alben des angegebenen Nutzers.
-     * @param nutzer
+     * @param nutzerID
      * @return
      * @throws ConnectException falls keine Verbindung mit der Datenbank hergestellt werden konnte.
      * @throws IllegalArgumentException falls der angegebene Nutzer nicht existiert.
      */
-    public Document getAlbenForNutzer(Document nutzer) throws ConnectException, IllegalArgumentException;
+    public Document getAlbenForNutzer(int nutzerID) throws ConnectException, IllegalArgumentException;
 
     /**
      * Liefert alle Alben, die im Namen den angegebenen String enthalten.
