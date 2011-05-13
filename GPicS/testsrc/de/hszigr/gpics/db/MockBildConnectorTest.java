@@ -7,9 +7,6 @@ import org.junit.Test;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 /**
  * Created by IntelliJ IDEA.
  * User: Markus Ullrich
@@ -214,8 +211,8 @@ public class MockBildConnectorTest {
 
     @Test
     public void testGetBilderForAlbum() throws Exception {
-        org.w3c.dom.Document albenDoc = new MockAlbumConnector().getAlbum("Zittau");
-        org.w3c.dom.Document doc = connector.getBilderForAlbum(albenDoc);
+        org.w3c.dom.Document albenDoc = new MockAlbumConnector().getAlbumByName("Zittau");
+        org.w3c.dom.Document doc = connector.getBilderForAlbum(Integer.parseInt(albenDoc.getElementsByTagName("id").item(0).getTextContent()));
         NodeList bilderNodes = doc.getElementsByTagName("bild");
         Assert.assertEquals(4, bilderNodes.getLength());
         for (int i = 0; i < bilderNodes.getLength(); i++) {
