@@ -95,7 +95,7 @@ public class NutzerConnector implements INutzerConnector{
 
     public Document getNutzerByName(String name) throws IllegalArgumentException, ConnectException {
         Map<String,String> params = new HashMap<String,String>();
-        params.put("name", "name");
+        params.put("name", name);
         try{
         Document doc = DBConnector.getInstance().executeGetRequest("queries/nutzerByName.xql", params, 0);
         if(doc.getElementsByTagName("error").getLength()>0){
