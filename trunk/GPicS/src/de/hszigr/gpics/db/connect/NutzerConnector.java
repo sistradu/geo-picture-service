@@ -41,7 +41,7 @@ public class NutzerConnector implements INutzerConnector{
         Map<String,String> params = new HashMap<String,String>();
         params.put("id", ""+ id);
         params.put("name", name);
-        params.put("pasword", password);
+        params.put("password", password);
         params.put("email", email);
         try{
         Document doc = DBConnector.getInstance().executeGetRequest("queries/updateNutzer.xql", params, 0);
