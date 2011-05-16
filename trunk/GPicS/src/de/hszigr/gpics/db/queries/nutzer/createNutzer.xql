@@ -12,7 +12,7 @@ let $new-nutzer:=
     <id>{$id}</id>
     <name>{$name}</name>
     <password>{$password}</password>
-    <email>{$description}</email>
+    <email>{$email}</email>
 </nutzer>
 return
   if(not($name))
