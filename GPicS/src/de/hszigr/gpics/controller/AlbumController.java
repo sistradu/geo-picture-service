@@ -1,7 +1,7 @@
 package de.hszigr.gpics.controller;
 
-import de.hszigr.gpics.db.MockAlbumConnector;
-import de.hszigr.gpics.db.MockBildConnector;
+import de.hszigr.gpics.db.connect.AlbumConnector;
+import de.hszigr.gpics.db.connect.BildConnector;
 import de.hszigr.gpics.db.interfaces.IAlbumConnector;
 import de.hszigr.gpics.db.interfaces.IBildConnector;
 import org.w3c.dom.Document;
@@ -36,11 +36,11 @@ public class AlbumController {
     }
 
     private void loadAlbum(String name) throws Exception{
-        IAlbumConnector iac = new MockAlbumConnector();
-        album = iac.getAlbum(name);
+        IAlbumConnector iac = new AlbumConnector();
+        album = iac.getAlbumByName(name);
 
-        IBildConnector ibc = new MockBildConnector();
-        Document bilderXML = ibc.getBilderForAlbum(album);
+        IBildConnector ibc = new BildConnector();
+        Document bilderXML = ibc.getBilderByName(name);
 
 
         for (int i = 0; i < bilderXML.getElementsByTagName("fileposition").getLength(); i++){
