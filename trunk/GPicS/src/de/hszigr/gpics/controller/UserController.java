@@ -1,6 +1,6 @@
 package de.hszigr.gpics.controller;
 
-import de.hszigr.gpics.db.MockNutzerConnector;
+import de.hszigr.gpics.db.connect.NutzerConnector;
 import de.hszigr.gpics.db.interfaces.INutzerConnector;
 import de.hszigr.gpics.util.GPicSUtil;
 import de.hszigr.gpics.util.MessagePropertiesBean;
@@ -10,9 +10,11 @@ import org.w3c.dom.NodeList;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.io.IOException;
 import java.util.Properties;
 
 /**
@@ -36,7 +38,7 @@ public class UserController {
     private INutzerConnector conn;
 
     public UserController() {
-        conn = new MockNutzerConnector();
+        conn = new NutzerConnector();
     }
 
     public String login() {
@@ -63,6 +65,12 @@ public class UserController {
 
     public String logout() {
         resetAll();
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+            GPicSUtil.createFacesMessageForID("loginMask", e.getMessage());
+        }
         return "index";
     }
 
@@ -89,11 +97,11 @@ public class UserController {
             MessagePropertiesBean msgPB = new MessagePropertiesBean();
             Message mail = new MimeMessage(session);
             mail.setFrom(new InternetAddress("mailer@gpics.de"));
-            mail.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse("sistradu@stud.hs-zigr.de"));
-            //TODO ändern
 //            mail.setRecipients(Message.RecipientType.TO,
-//                    InternetAddress.parse(email));
+//                    InternetAddress.parse("sistradu@stud.hs-zigr.de"));
+            //TODO ändern
+            mail.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(email));
             mail.setSubject(msgPB.getPropertiesMessage("mailSubject"));
             mail.setText(msgPB.getPropertiesMessage("mailPart1") + tempPasswort +
                     msgPB.getPropertiesMessage("mailPart2"));
@@ -120,6 +128,7 @@ public class UserController {
 
     public String erzeugeBenutzer() {
         try {
+            this.passwort="password";
             conn.createNutzer(nutzerNamen, passwort, email);
             Document doc = conn.getNutzerByName(nutzerNamen);
             setNutzerID(Integer.parseInt(doc.getElementsByTagName("id").item(0).getTextContent()));

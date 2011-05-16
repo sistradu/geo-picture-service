@@ -4,6 +4,7 @@ import com.drew.imaging.jpeg.JpegProcessingException;
 import com.drew.metadata.MetadataException;
 import de.hszigr.gpics.controller.Bild;
 import de.hszigr.gpics.controller.CreateEditAlbumController;
+import de.hszigr.gpics.controller.UserController;
 import de.hszigr.gpics.db.MockAlbumConnector;
 import de.hszigr.gpics.db.MockBildConnector;
 import de.hszigr.gpics.db.interfaces.IAlbumConnector;
@@ -33,45 +34,48 @@ public class AlbumControllerDBUtil {
 
     public void loescheBild(CreateEditAlbumController controller, int bildId) throws IOException {
         List<Bild> bilder = controller.getBilder();
-        for(int i = 0; i<bilder.size();i++){
-                Bild bild = bilder.get(i);
-                if(bildId == bild.getBildID()){
-                    bild.getContent().getStream().close();
-                    File f = new File(bild.getPath());
-                    f.delete();
-                    bilder.remove(bild);
-                    //TODO connector ändern
-                    IBildConnector connector = new MockBildConnector();
-                    connector.deleteBild(bild.getBildID());
-                }
+        for (int i = 0; i < bilder.size(); i++) {
+            Bild bild = bilder.get(i);
+            if (bildId == bild.getBildID()) {
+                bild.getContent().getStream().close();
+                File f = new File(bild.getPath());
+                f.delete();
+                bilder.remove(bild);
+                //TODO connector ändern
+                IBildConnector connector = new MockBildConnector();
+                connector.deleteBild(bild.getBildID());
             }
+        }
     }
 
     public void updateAlbum(CreateEditAlbumController controller) throws ConnectException {
         //TODO connector ändern
-            IAlbumConnector albumConnector = new MockAlbumConnector();
-            albumConnector.updateAlbum(controller.getAlbumID(), controller.getAlbumName(), controller.getPasswort(), controller.getAlbumBeschreibung());
-            for(Bild bild : controller.getBilder()){
-                IBildConnector bildConnector = new MockBildConnector();
-                bildConnector.updateBild(bild.getBildID(), bild.getName(), bild.getBeschreibung(), bild.isPublicBild(), bild.getDate(), bild.getLongitude(), bild.getLatitude(), bild.getAltitude(), bild.getDirection());
-            }
+        IAlbumConnector albumConnector = new MockAlbumConnector();
+        albumConnector.updateAlbum(controller.getAlbumID(), controller.getAlbumName(), controller.getPasswort(), controller.getAlbumBeschreibung());
+        for (Bild bild : controller.getBilder()) {
+            IBildConnector bildConnector = new MockBildConnector();
+            bildConnector.updateBild(bild.getBildID(), bild.getName(), bild.getBeschreibung(), bild.isPublicBild(), bild.getDate(), bild.getPath(), bild.getLongitude(), bild.getLatitude(), bild.getAltitude(), bild.getDirection());
+        }
     }
 
     public void createAlbum(CreateEditAlbumController controller) throws ConnectException, JpegProcessingException, FileNotFoundException, MetadataException, ParseException {
         //TODO Connector ändern
-            IAlbumConnector connector = new MockAlbumConnector();
-            generatePasswort(controller);
-            controller.setAlbumID(connector.createAlbum(controller.getAlbumName(), controller.getPasswort(), controller.getAlbumBeschreibung()));
-            Document album = connector.getAlbum(controller.getAlbumName());
+        IAlbumConnector connector = new MockAlbumConnector();
+        generatePasswort(controller);
+        UserController uc = (UserController) GPicSUtil.getBean("userController");
+        int nutzerID = uc.getNutzerID();
+        controller.setAlbumID(connector.createAlbum(controller.getAlbumName(), controller.getPasswort(), controller.getAlbumBeschreibung(), nutzerID));
+        Document album = connector.getAlbumByName(controller.getAlbumName());
 //            AlbumControllerDBUtil util = new AlbumControllerDBUtil();
-            createBilder(album, controller);
+        int albumID = Integer.parseInt(getTextContentFromElement(album, "id"));
+        createBilder(albumID, controller);
     }
 
- @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     public void ladeAttributeAusDB(String name, CreateEditAlbumController album) throws ConnectException {
         //TODO Connector ändern
         IAlbumConnector albumConnector = new MockAlbumConnector();
-        Document doc = albumConnector.getAlbum(name);
+        Document doc = albumConnector.getAlbumByName(name);
         album.setAlbumID(Integer.parseInt(doc.getElementsByTagName("id").item(0).getTextContent()));
         album.setAlbumName(name);
         album.setPasswort(doc.getElementsByTagName("passwort").item(0).getTextContent());
@@ -85,10 +89,10 @@ public class AlbumControllerDBUtil {
             Bild bild = ladeBildAusDB(bildConnector, node);
             bilder.add(bild);
         }
-     album.setBilder(bilder);
+        album.setBilder(bilder);
     }
 
-    private void createBilder(Document album, CreateEditAlbumController controller) throws JpegProcessingException, MetadataException, ParseException, ConnectException, FileNotFoundException {
+    private void createBilder(int albumID, CreateEditAlbumController controller) throws JpegProcessingException, MetadataException, ParseException, ConnectException, FileNotFoundException {
         for (Bild bild : controller.getBilder()) {
             ImageDataExtractor extractor = new ImageDataExtractor();
             Position pos = extractor.getPosition(bild.getPath());
@@ -101,7 +105,7 @@ public class AlbumControllerDBUtil {
             IBildConnector connector = new MockBildConnector();
 //            bilder.indexOf(bild);
 //            connector.createBild(bild.getName(), bild.getBeschreibung(), bild.isPublicBild(), pos.getTimeStamp(), longitudeDecimal, latitudeDecimal, pos.getAltitude(), pos.getDirection());
-            connector.createBild(bild.getName(), bild.getBeschreibung(), bild.isPublicBild(), bild.getDate(), bild.getPath(), bild.getLongitude(), bild.getLatitude(), bild.getAltitude(), bild.getDirection(), album);
+            connector.createBild(bild.getName(), bild.getBeschreibung(), bild.isPublicBild(), bild.getDate(), bild.getPath(), bild.getLongitude(), bild.getLatitude(), bild.getAltitude(), bild.getDirection(), albumID);
         }
     }
 
@@ -144,8 +148,8 @@ public class AlbumControllerDBUtil {
         return bild;
     }
 
-    private String getTextContentFromElement(Document bildDoc, String tagName) {
-        return bildDoc.getElementsByTagName(tagName).item(0).getTextContent();
+    private String getTextContentFromElement(Document doc, String tagName) {
+        return doc.getElementsByTagName(tagName).item(0).getTextContent();
     }
 
     private void generatePasswort(CreateEditAlbumController controller) {
