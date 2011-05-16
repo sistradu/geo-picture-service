@@ -84,10 +84,15 @@ public class UserControllerTest {
         controller.setNutzerNamen("Karl");
 //        controller.setPasswort("test");
         controller.setEmail("karl@web.de");
-        controller.erzeugeBenutzer();
+        try {
+            controller.erzeugeBenutzer();
+            Assert.fail();
+        } catch (Exception e) {
+            Assert.assertTrue(true);
+        }
 
-        Assert.assertEquals(true, controller.isEingeloggt());
-        Assert.assertNotSame("98f6bcd4621d373cade4e832627b4f6", controller.getPasswort());
+//        Assert.assertEquals(true, controller.isEingeloggt());
+//        Assert.assertNotSame("98f6bcd4621d373cade4e832627b4f6", controller.getPasswort());
     }
 
     @Test
