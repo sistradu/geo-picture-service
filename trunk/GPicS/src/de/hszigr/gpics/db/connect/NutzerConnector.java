@@ -20,7 +20,7 @@ public class NutzerConnector implements INutzerConnector{
      public int createNutzer(String name, String password, String email) throws IllegalArgumentException, ConnectException {
         Map<String,String> params = new HashMap<String,String>();
         params.put("name", name);
-        params.put("pasword", password);
+        params.put("password", password);
         params.put("email", email);
         try{
         Document doc = DBConnector.getInstance().executeGetRequest("queries/createNutzer.xql", params, 0);
