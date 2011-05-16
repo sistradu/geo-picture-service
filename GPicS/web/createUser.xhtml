@@ -28,7 +28,7 @@
                     <td><h:outputLabel value="#{msg.repeatPassword} " rendered="#{userController.eingeloggt}"/></td>
                     <td>
                         <h:inputSecret id="createUserRepeatPasswort" required="true"
-                                       requiredMessage="#{msg.forgotPasswortRequiredMessage}" rendered="#{userController.eingeloggt}" value="#{userController.passwortRepeat}" />
+                                       requiredMessage="#{msg.forgotPasswortRequiredMessage}" rendered="#{userController.eingeloggt}" value="#{userController.passwortRepeat}"/>
                     </td>
                     <td><h:message for="createUserRepeatPasswort" style="color:red;" rendered="#{userController.eingeloggt}"/></td>
                 </tr>
