@@ -56,13 +56,13 @@ public class UserController {
         }catch(NullPointerException e){
             System.err.println("null");
             MessagePropertiesBean msgPB = new MessagePropertiesBean();
-            GPicSUtil.createFacesMessageForID("loginMask", msgPB.getPropertiesMessage("noUserAvailable"));
+            GPicSUtil.createFacesMessageForID("loginMask", msgPB.getPropertiesMessage("noUserAvailable"), true);
         } catch (Exception e) {
             e.printStackTrace();
-            GPicSUtil.createFacesMessageForID("loginMask", e.getMessage());
+            GPicSUtil.createFacesMessageForID("loginMask", e.getMessage(), true);
         }
         MessagePropertiesBean msgPB = new MessagePropertiesBean();
-        GPicSUtil.createFacesMessageForID("loginMask", msgPB.getPropertiesMessage("wrongPassword"));
+        GPicSUtil.createFacesMessageForID("loginMask", msgPB.getPropertiesMessage("wrongPassword"), true);
         return "index";
     }
 
@@ -73,7 +73,7 @@ public class UserController {
             FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
         } catch (IOException e) {
             e.printStackTrace();
-            GPicSUtil.createFacesMessageForID("loginMask", e.getMessage());
+            GPicSUtil.createFacesMessageForID("loginMask", e.getMessage(), true);
         } catch(NullPointerException e){
             System.err.println("null");
         }
@@ -120,12 +120,12 @@ public class UserController {
             System.err.println(e.getMessage());  //Fängt NullPointerabException ab, die bei Unit-Tests auftritt, weil dort der FacesContext null ist.
         } catch (Exception e) {
             e.printStackTrace();
-            GPicSUtil.createFacesMessageForID("sendPWMask", e.getMessage());
+            GPicSUtil.createFacesMessageForID("sendPWMask", e.getMessage(), true);
             return "sendPW";
         }
         try {
             MessagePropertiesBean mPB = new MessagePropertiesBean();
-            GPicSUtil.createFacesMessageForID("infoMessages", mPB.getPropertiesMessage("sendMailSuccess"));
+            GPicSUtil.createFacesMessageForID("infoMessages", mPB.getPropertiesMessage("sendMailSuccess"), false);
         } catch (NullPointerException e) {
             System.err.println(e.getMessage()); //Fängt NullPointerabException ab, die bei Unit-Tests auftritt, weil dort der FacesContext null ist.
         }
@@ -142,7 +142,7 @@ public class UserController {
             sendPasswortEmail();
         } catch (Exception e) {
             e.printStackTrace();
-            GPicSUtil.createFacesMessageForID("createUserMask", e.getMessage());
+            GPicSUtil.createFacesMessageForID("createUserMask", e.getMessage(), true);
             return "createUser";
         }
         return "showOwnAlbum";
@@ -152,14 +152,14 @@ public class UserController {
         try {
             if (!passwort.equals(passwortRepeat)) {
                 MessagePropertiesBean msgPB = new MessagePropertiesBean();
-                GPicSUtil.createFacesMessageForID("createUserMask:createUserRepeatPasswort", msgPB.getPropertiesMessage("passwordDontEqual"));
+                GPicSUtil.createFacesMessageForID("createUserMask:createUserRepeatPasswort", msgPB.getPropertiesMessage("passwordDontEqual"), true);
                 return null;
             }
             try {
                 conn.updateNutzer(nutzerID, nutzerNamen, passwort, email);
             } catch (Exception e) {
                 e.printStackTrace();
-                GPicSUtil.createFacesMessageForID("createUserMask", e.getMessage());
+                GPicSUtil.createFacesMessageForID("createUserMask", e.getMessage(), true);
                 return "createUser";
             }
         } catch (NullPointerException e) {

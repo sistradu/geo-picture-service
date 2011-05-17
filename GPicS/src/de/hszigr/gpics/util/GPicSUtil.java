@@ -33,8 +33,11 @@ public class GPicSUtil {
      * @param elementID
      * @param errorMessage
      */
-    public static void createFacesMessageForID(String elementID, String errorMessage){
+    public static void createFacesMessageForID(String elementID, String errorMessage, boolean isError){
         FacesMessage message = new FacesMessage(errorMessage);
+        if(isError){
+            message.setSeverity(FacesMessage.SEVERITY_ERROR);
+        }
         FacesContext.getCurrentInstance().addMessage(elementID,  message);
     }
 

@@ -34,8 +34,8 @@ public class CreateEditAlbumController {
     private String passwort;
 
     //TODO uploadDir
-    private String uploadDir = "/home/pics/";
-//    private String uploadDir = "D:/upload/";
+//    private String uploadDir = "/home/pics/";
+    private String uploadDir = "D:/upload/";
     private List<Bild> bilder;
 
     private int selectedBId;
@@ -56,7 +56,7 @@ public class CreateEditAlbumController {
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-        GPicSUtil.createFacesMessageForID("uploader", file.getFileName() + " erfolgreich hochgeladen.");
+        GPicSUtil.createFacesMessageForID("uploader", file.getFileName() + " erfolgreich hochgeladen.", false);
     }
 
     public StreamedContent getImage() {
@@ -91,7 +91,7 @@ public class CreateEditAlbumController {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            GPicSUtil.createFacesMessageForID("saveAlbum", e.getMessage());
+            GPicSUtil.createFacesMessageForID("saveAlbum", e.getMessage(),true);
         }
         return "createAlbum";
     }
@@ -103,7 +103,7 @@ public class CreateEditAlbumController {
             util.loescheBild(this, bildId);
         } catch (Exception e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            GPicSUtil.createFacesMessageForID("saveAlbum", e.getMessage());
+            GPicSUtil.createFacesMessageForID("saveAlbum", e.getMessage(), true);
         }
     }
 
@@ -114,7 +114,7 @@ public class CreateEditAlbumController {
             util.updateAlbum(this);
         } catch (ConnectException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            GPicSUtil.createFacesMessageForID("saveAlbum", e.getMessage());
+            GPicSUtil.createFacesMessageForID("saveAlbum", e.getMessage(), true);
             return null;
         }
         return "showAlbum";
@@ -134,7 +134,8 @@ public class CreateEditAlbumController {
             ac.loadAlbum(this.getAlbumName());
         } catch (Exception e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            GPicSUtil.createFacesMessageForID("saveAlbum", e.getMessage());
+            GPicSUtil.createFacesMessageForID("saveAlbum", e.getMessage(), true);
+            return "createAlbum";
         }
         return "showAlbum";
     }
