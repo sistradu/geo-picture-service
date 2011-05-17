@@ -10,6 +10,7 @@ import org.primefaces.model.UploadedFile;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -131,6 +132,8 @@ public class CreateEditAlbumController {
 //            }
             AlbumControllerDBUtil util = new AlbumControllerDBUtil();
             util.createAlbum(this);
+            AlbumController ac = (AlbumController) GPicSUtil.getBean("albumController");
+            ac.loadAlbum(this.getAlbumName());
         } catch (Exception e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             GPicSUtil.createFacesMessageForID("saveAlbum", e.getMessage());

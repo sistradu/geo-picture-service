@@ -5,8 +5,8 @@ import com.drew.metadata.MetadataException;
 import de.hszigr.gpics.controller.Bild;
 import de.hszigr.gpics.controller.CreateEditAlbumController;
 import de.hszigr.gpics.controller.UserController;
-import de.hszigr.gpics.db.MockAlbumConnector;
-import de.hszigr.gpics.db.MockBildConnector;
+import de.hszigr.gpics.db.connect.AlbumConnector;
+import de.hszigr.gpics.db.connect.BildConnector;
 import de.hszigr.gpics.db.interfaces.IAlbumConnector;
 import de.hszigr.gpics.db.interfaces.IBildConnector;
 import org.primefaces.model.DefaultStreamedContent;
@@ -42,7 +42,7 @@ public class AlbumControllerDBUtil {
                 f.delete();
                 bilder.remove(bild);
                 //TODO connector ändern
-                IBildConnector connector = new MockBildConnector();
+                IBildConnector connector = new BildConnector();
                 connector.deleteBild(bild.getBildID());
             }
         }
@@ -50,17 +50,17 @@ public class AlbumControllerDBUtil {
 
     public void updateAlbum(CreateEditAlbumController controller) throws ConnectException {
         //TODO connector ändern
-        IAlbumConnector albumConnector = new MockAlbumConnector();
+        IAlbumConnector albumConnector = new AlbumConnector();
         albumConnector.updateAlbum(controller.getAlbumID(), controller.getAlbumName(), controller.getPasswort(), controller.getAlbumBeschreibung());
         for (Bild bild : controller.getBilder()) {
-            IBildConnector bildConnector = new MockBildConnector();
+            IBildConnector bildConnector = new BildConnector();
             bildConnector.updateBild(bild.getBildID(), bild.getName(), bild.getBeschreibung(), bild.isPublicBild(), bild.getDate(), bild.getPath(), bild.getLongitude(), bild.getLatitude(), bild.getAltitude(), bild.getDirection());
         }
     }
 
     public void createAlbum(CreateEditAlbumController controller) throws ConnectException, JpegProcessingException, FileNotFoundException, MetadataException, ParseException {
         //TODO Connector ändern
-        IAlbumConnector connector = new MockAlbumConnector();
+        IAlbumConnector connector = new AlbumConnector();
         generatePasswort(controller);
         UserController uc = (UserController) GPicSUtil.getBean("userController");
         int nutzerID = uc.getNutzerID();
@@ -74,7 +74,7 @@ public class AlbumControllerDBUtil {
     @SuppressWarnings("unchecked")
     public void ladeAttributeAusDB(String name, CreateEditAlbumController album) throws ConnectException {
         //TODO Connector ändern
-        IAlbumConnector albumConnector = new MockAlbumConnector();
+        IAlbumConnector albumConnector = new AlbumConnector();
         Document doc = albumConnector.getAlbumByName(name);
         album.setAlbumID(Integer.parseInt(doc.getElementsByTagName("id").item(0).getTextContent()));
         album.setAlbumName(name);
@@ -82,7 +82,7 @@ public class AlbumControllerDBUtil {
         album.setAlbumBeschreibung(doc.getElementsByTagName("description").item(0).getTextContent());
 
         //TODO Connector ändern
-        IBildConnector bildConnector = new MockBildConnector();
+        IBildConnector bildConnector = new BildConnector();
         List<Bild> bilder = new ArrayList<Bild>();
         List<Node> nodeList = (List<Node>) doc.getElementsByTagName("bild");
         for (Node node : nodeList) {
@@ -101,8 +101,14 @@ public class AlbumControllerDBUtil {
             bild.setLongitude(longitudeDecimal);
             String latitudeDecimal = calculator.getDecimalCoordinate(pos.getLatitude(), pos.getLatitudeRef());
             bild.setLatitude(latitudeDecimal);
-            bild.setDate(pos.getTimeStamp());
-            IBildConnector connector = new MockBildConnector();
+            if (pos.getTimeStamp() != null) {
+                bild.setDate(pos.getTimeStamp());
+            }else{
+                GregorianCalendar cal = new GregorianCalendar();
+                cal.setTime(new Date(System.currentTimeMillis()));
+                bild.setDate(cal);
+            }
+            IBildConnector connector = new BildConnector();
 //            bilder.indexOf(bild);
 //            connector.createBild(bild.getName(), bild.getBeschreibung(), bild.isPublicBild(), pos.getTimeStamp(), longitudeDecimal, latitudeDecimal, pos.getAltitude(), pos.getDirection());
             connector.createBild(bild.getName(), bild.getBeschreibung(), bild.isPublicBild(), bild.getDate(), bild.getPath(), bild.getLongitude(), bild.getLatitude(), bild.getAltitude(), bild.getDirection(), albumID);

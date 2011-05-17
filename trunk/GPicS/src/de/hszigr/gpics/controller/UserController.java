@@ -53,6 +53,10 @@ public class UserController {
                 getNutzerIDAndEmail(doc);
                 return "showOwnAlbum";
             }
+        }catch(NullPointerException e){
+            System.err.println("null");
+            MessagePropertiesBean msgPB = new MessagePropertiesBean();
+            GPicSUtil.createFacesMessageForID("loginMask", msgPB.getPropertiesMessage("noUserAvailable"));
         } catch (Exception e) {
             e.printStackTrace();
             GPicSUtil.createFacesMessageForID("loginMask", e.getMessage());

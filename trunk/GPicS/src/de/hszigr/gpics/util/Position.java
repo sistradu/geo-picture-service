@@ -12,14 +12,14 @@ import java.util.GregorianCalendar;
  */
 public class Position {
 
-	private String latitudeRef;
-	private String latitude;
+	private String latitudeRef = "";
+	private String latitude = "";
 //	private String latitudeDecimal;
-	private String longitudeRef;
-	private String longitude;
+	private String longitudeRef = "";
+	private String longitude = "";
 //	private String longitudeDecimal;
-	private String altitude;
-	private String direction;
+	private String altitude = "";
+	private String direction = "";
     private GregorianCalendar timeStamp;
 	
 	public String getLatitudeRef() {
