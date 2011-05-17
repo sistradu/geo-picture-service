@@ -5,6 +5,7 @@ import de.hszigr.gpics.util.GPicSUtil;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
+import org.w3c.dom.Document;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -86,8 +87,15 @@ public class CreateEditAlbumController {
         try {
             if (name != null) {
                 AlbumControllerDBUtil util = new AlbumControllerDBUtil();
-                util.ladeAttributeAusDB(name, this);
-
+                Document doc = util.ladeAlbumAusDB(name);
+//                setAlbumID(Integer.parseInt(doc.getElementsByTagName("id").item(0).getTextContent()));
+                setAlbumID(Integer.parseInt(util.getTextContentFromElement(doc, "id")));
+                setAlbumName(name);
+//                setPasswort(doc.getElementsByTagName("passwort").item(0).getTextContent());
+                setPasswort(util.getTextContentFromElement(doc, "passwort"));
+//                setAlbumBeschreibung(doc.getElementsByTagName("description").item(0).getTextContent());
+                setAlbumBeschreibung(util.getTextContentFromElement(doc, "description"));
+                setBilder(util.ladeBilderAusDB(doc));
             }
         } catch (Exception e) {
             e.printStackTrace();
