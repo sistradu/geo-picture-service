@@ -35,7 +35,7 @@ public class AlbumController {
         loadAlbum(albumName);
     }
 
-    private void loadAlbum(String name) throws Exception{
+    public void loadAlbum(String name) throws Exception{
         IAlbumConnector iac = new AlbumConnector();
         album = iac.getAlbumByName(name);
 
