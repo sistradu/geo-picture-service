@@ -163,8 +163,8 @@ public class MockAlbumConnector implements IAlbumConnector {
             //factory.setSchema(schema);
             Document doc = factory.newDocumentBuilder().newDocument();
             Node albenNode = doc.createElement("alben");
-            for(Map.Entry<Integer,Document> entry : this.albenNutzerIDMap.entrySet()){
-                if(entry.getKey().equals(nutzerID))
+            for(Map.Entry<Integer,Document> entry : this.albenIDMap.entrySet()){
+                if(entry.getValue().getElementsByTagName("nutzer").item(0).getTextContent().equals(""+nutzerID))
                     albenNode.appendChild(doc.adoptNode(entry.getValue().getFirstChild()));
             }
             doc.appendChild(albenNode);

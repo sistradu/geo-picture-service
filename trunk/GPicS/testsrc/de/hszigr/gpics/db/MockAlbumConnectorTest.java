@@ -44,12 +44,12 @@ public class MockAlbumConnectorTest {
         NodeList nameNodes = doc.getElementsByTagName("name");
         NodeList passwordNodes = doc.getElementsByTagName("password");
         NodeList descriptionNodes = doc.getElementsByTagName("description");
-        NodeList bilderNodes = doc.getElementsByTagName("bild");
+        NodeList nutzerNodes = doc.getElementsByTagName("nutzer");
         Assert.assertEquals(1,idNodes.getLength());
         Assert.assertEquals(1,nameNodes.getLength());
         Assert.assertEquals(1,passwordNodes.getLength());
         Assert.assertEquals(1,descriptionNodes.getLength());
-        Assert.assertEquals(4,bilderNodes.getLength());
+        Assert.assertEquals(1,nutzerNodes.getLength());
         Assert.assertEquals("0", idNodes.item(0).getTextContent());
         Assert.assertEquals("Görlitz", nameNodes.item(0).getTextContent());
         Assert.assertEquals("Bilder über die Stadt Görlitz.", descriptionNodes.item(0).getTextContent());
@@ -66,22 +66,19 @@ public class MockAlbumConnectorTest {
             e.printStackTrace();
         }
         Assert.assertEquals(password, passwordNodes.item(0).getTextContent());
-        Assert.assertEquals("1", bilderNodes.item(0).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("2", bilderNodes.item(1).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("3", bilderNodes.item(2).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("4", bilderNodes.item(3).getAttributes().item(0).getTextContent());
+        Assert.assertEquals("0", nutzerNodes.item(0).getTextContent());
 
         doc = connector.getAlbumByID(1);
         idNodes = doc.getElementsByTagName("id");
         nameNodes = doc.getElementsByTagName("name");
         passwordNodes = doc.getElementsByTagName("password");
         descriptionNodes = doc.getElementsByTagName("description");
-        bilderNodes = doc.getElementsByTagName("bild");
+        nutzerNodes = doc.getElementsByTagName("nutzer");
         Assert.assertEquals(1,idNodes.getLength());
         Assert.assertEquals(1,nameNodes.getLength());
         Assert.assertEquals(1,passwordNodes.getLength());
         Assert.assertEquals(1,descriptionNodes.getLength());
-        Assert.assertEquals(4,bilderNodes.getLength());
+        Assert.assertEquals(1,nutzerNodes.getLength());
         Assert.assertEquals("1", idNodes.item(0).getTextContent());
         Assert.assertEquals("Zittau", nameNodes.item(0).getTextContent());
         Assert.assertEquals("Bilder über die Stadt Zittau.", descriptionNodes.item(0).getTextContent());
@@ -98,22 +95,19 @@ public class MockAlbumConnectorTest {
             e.printStackTrace();
         }
         Assert.assertEquals(password, passwordNodes.item(0).getTextContent());
-        Assert.assertEquals("5", bilderNodes.item(0).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("6", bilderNodes.item(1).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("8", bilderNodes.item(2).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("10", bilderNodes.item(3).getAttributes().item(0).getTextContent());
+        Assert.assertEquals("0", nutzerNodes.item(0).getTextContent());
 
         doc = connector.getAlbumByID(2);
         idNodes = doc.getElementsByTagName("id");
         nameNodes = doc.getElementsByTagName("name");
         passwordNodes = doc.getElementsByTagName("password");
         descriptionNodes = doc.getElementsByTagName("description");
-        bilderNodes = doc.getElementsByTagName("bild");
+        nutzerNodes = doc.getElementsByTagName("nutzer");
         Assert.assertEquals(1,idNodes.getLength());
         Assert.assertEquals(1,nameNodes.getLength());
         Assert.assertEquals(1,passwordNodes.getLength());
         Assert.assertEquals(1,descriptionNodes.getLength());
-        Assert.assertEquals(4,bilderNodes.getLength());
+        Assert.assertEquals(1,nutzerNodes.getLength());
         Assert.assertEquals("2", idNodes.item(0).getTextContent());
         Assert.assertEquals("Oberlausitz", nameNodes.item(0).getTextContent());
         Assert.assertEquals("Bilder über die schöne Oberlausitz.", descriptionNodes.item(0).getTextContent());
@@ -130,10 +124,7 @@ public class MockAlbumConnectorTest {
             e.printStackTrace();
         }
         Assert.assertEquals(password, passwordNodes.item(0).getTextContent());
-        Assert.assertEquals("7", bilderNodes.item(0).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("9", bilderNodes.item(1).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("11", bilderNodes.item(2).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("12", bilderNodes.item(3).getAttributes().item(0).getTextContent());
+        Assert.assertEquals("1", nutzerNodes.item(0).getTextContent());
     }
 
     @Test
@@ -143,12 +134,12 @@ public class MockAlbumConnectorTest {
         NodeList nameNodes = doc.getElementsByTagName("name");
         NodeList passwordNodes = doc.getElementsByTagName("password");
         NodeList descriptionNodes = doc.getElementsByTagName("description");
-        NodeList bilderNodes = doc.getElementsByTagName("bild");
+        NodeList nutzerNodes = doc.getElementsByTagName("nutzer");
         Assert.assertEquals(1,idNodes.getLength());
         Assert.assertEquals(1,nameNodes.getLength());
         Assert.assertEquals(1,passwordNodes.getLength());
         Assert.assertEquals(1,descriptionNodes.getLength());
-        Assert.assertEquals(4,bilderNodes.getLength());
+        Assert.assertEquals(1,nutzerNodes.getLength());
         Assert.assertEquals("0", idNodes.item(0).getTextContent());
         Assert.assertEquals("Görlitz", nameNodes.item(0).getTextContent());
         Assert.assertEquals("Bilder über die Stadt Görlitz.", descriptionNodes.item(0).getTextContent());
@@ -165,22 +156,19 @@ public class MockAlbumConnectorTest {
             e.printStackTrace();
         }
         Assert.assertEquals(password, passwordNodes.item(0).getTextContent());
-        Assert.assertEquals("1", bilderNodes.item(0).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("2", bilderNodes.item(1).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("3", bilderNodes.item(2).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("4", bilderNodes.item(3).getAttributes().item(0).getTextContent());
+        Assert.assertEquals("0", nutzerNodes.item(0).getTextContent());
 
         doc = connector.getAlbumByName("Zittau");
         idNodes = doc.getElementsByTagName("id");
         nameNodes = doc.getElementsByTagName("name");
         passwordNodes = doc.getElementsByTagName("password");
         descriptionNodes = doc.getElementsByTagName("description");
-        bilderNodes = doc.getElementsByTagName("bild");
+        nutzerNodes = doc.getElementsByTagName("nutzer");
         Assert.assertEquals(1,idNodes.getLength());
         Assert.assertEquals(1,nameNodes.getLength());
         Assert.assertEquals(1,passwordNodes.getLength());
         Assert.assertEquals(1,descriptionNodes.getLength());
-        Assert.assertEquals(4,bilderNodes.getLength());
+        Assert.assertEquals(1,nutzerNodes.getLength());
         Assert.assertEquals("1", idNodes.item(0).getTextContent());
         Assert.assertEquals("Zittau", nameNodes.item(0).getTextContent());
         Assert.assertEquals("Bilder über die Stadt Zittau.", descriptionNodes.item(0).getTextContent());
@@ -197,22 +185,18 @@ public class MockAlbumConnectorTest {
             e.printStackTrace();
         }
         Assert.assertEquals(password, passwordNodes.item(0).getTextContent());
-        Assert.assertEquals("5", bilderNodes.item(0).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("6", bilderNodes.item(1).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("8", bilderNodes.item(2).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("10", bilderNodes.item(3).getAttributes().item(0).getTextContent());
-
+        Assert.assertEquals("0", nutzerNodes.item(0).getTextContent());
         doc = connector.getAlbumByName("Oberlausitz");
         idNodes = doc.getElementsByTagName("id");
         nameNodes = doc.getElementsByTagName("name");
         passwordNodes = doc.getElementsByTagName("password");
         descriptionNodes = doc.getElementsByTagName("description");
-        bilderNodes = doc.getElementsByTagName("bild");
+        nutzerNodes = doc.getElementsByTagName("nutzer");
         Assert.assertEquals(1,idNodes.getLength());
         Assert.assertEquals(1,nameNodes.getLength());
         Assert.assertEquals(1,passwordNodes.getLength());
         Assert.assertEquals(1,descriptionNodes.getLength());
-        Assert.assertEquals(4,bilderNodes.getLength());
+        Assert.assertEquals(1,nutzerNodes.getLength());
         Assert.assertEquals("2", idNodes.item(0).getTextContent());
         Assert.assertEquals("Oberlausitz", nameNodes.item(0).getTextContent());
         Assert.assertEquals("Bilder über die schöne Oberlausitz.", descriptionNodes.item(0).getTextContent());
@@ -229,10 +213,7 @@ public class MockAlbumConnectorTest {
             e.printStackTrace();
         }
         Assert.assertEquals(password, passwordNodes.item(0).getTextContent());
-        Assert.assertEquals("7", bilderNodes.item(0).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("9", bilderNodes.item(1).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("11", bilderNodes.item(2).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("12", bilderNodes.item(3).getAttributes().item(0).getTextContent());
+        Assert.assertEquals("1", nutzerNodes.item(0).getTextContent());
     }
 
     @Test
@@ -245,12 +226,12 @@ public class MockAlbumConnectorTest {
         NodeList nameNodes = albumNode.getElementsByTagName("name");
         NodeList passwordNodes = albumNode.getElementsByTagName("password");
         NodeList descriptionNodes = albumNode.getElementsByTagName("description");
-        NodeList bilderNodes = albumNode.getElementsByTagName("bild");
+        NodeList nutzerNodes = albumNode.getElementsByTagName("nutzer");
         Assert.assertEquals(1,idNodes.getLength());
         Assert.assertEquals(1,nameNodes.getLength());
         Assert.assertEquals(1,passwordNodes.getLength());
         Assert.assertEquals(1,descriptionNodes.getLength());
-        Assert.assertEquals(4,bilderNodes.getLength());
+        Assert.assertEquals(1,nutzerNodes.getLength());
         Assert.assertEquals("0", idNodes.item(0).getTextContent());
         Assert.assertEquals("Görlitz", nameNodes.item(0).getTextContent());
         Assert.assertEquals("Bilder über die Stadt Görlitz.", descriptionNodes.item(0).getTextContent());
@@ -267,22 +248,19 @@ public class MockAlbumConnectorTest {
             e.printStackTrace();
         }
         Assert.assertEquals(password, passwordNodes.item(0).getTextContent());
-        Assert.assertEquals("1", bilderNodes.item(0).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("2", bilderNodes.item(1).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("3", bilderNodes.item(2).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("4", bilderNodes.item(3).getAttributes().item(0).getTextContent());
+        Assert.assertEquals("0", nutzerNodes.item(0).getTextContent());
 
         albumNode = (Element) albenNodes.item(1);
         idNodes = albumNode.getElementsByTagName("id");
         nameNodes = albumNode.getElementsByTagName("name");
         passwordNodes = albumNode.getElementsByTagName("password");
         descriptionNodes = albumNode.getElementsByTagName("description");
-        bilderNodes = albumNode.getElementsByTagName("bild");
+        nutzerNodes = albumNode.getElementsByTagName("nutzer");
         Assert.assertEquals(1,idNodes.getLength());
         Assert.assertEquals(1,nameNodes.getLength());
         Assert.assertEquals(1,passwordNodes.getLength());
         Assert.assertEquals(1,descriptionNodes.getLength());
-        Assert.assertEquals(4,bilderNodes.getLength());
+        Assert.assertEquals(1,nutzerNodes.getLength());
         Assert.assertEquals("1", idNodes.item(0).getTextContent());
         Assert.assertEquals("Zittau", nameNodes.item(0).getTextContent());
         Assert.assertEquals("Bilder über die Stadt Zittau.", descriptionNodes.item(0).getTextContent());
@@ -299,22 +277,19 @@ public class MockAlbumConnectorTest {
             e.printStackTrace();
         }
         Assert.assertEquals(password, passwordNodes.item(0).getTextContent());
-        Assert.assertEquals("5", bilderNodes.item(0).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("6", bilderNodes.item(1).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("8", bilderNodes.item(2).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("10", bilderNodes.item(3).getAttributes().item(0).getTextContent());
+        Assert.assertEquals("0", nutzerNodes.item(0).getTextContent());
 
         albumNode = (Element) albenNodes.item(2);
         idNodes = albumNode.getElementsByTagName("id");
         nameNodes = albumNode.getElementsByTagName("name");
         passwordNodes = albumNode.getElementsByTagName("password");
         descriptionNodes = albumNode.getElementsByTagName("description");
-        bilderNodes = albumNode.getElementsByTagName("bild");
+        nutzerNodes = albumNode.getElementsByTagName("nutzer");
         Assert.assertEquals(1,idNodes.getLength());
         Assert.assertEquals(1,nameNodes.getLength());
         Assert.assertEquals(1,passwordNodes.getLength());
         Assert.assertEquals(1,descriptionNodes.getLength());
-        Assert.assertEquals(4,bilderNodes.getLength());
+        Assert.assertEquals(1,nutzerNodes.getLength());
         Assert.assertEquals("2", idNodes.item(0).getTextContent());
         Assert.assertEquals("Oberlausitz", nameNodes.item(0).getTextContent());
         Assert.assertEquals("Bilder über die schöne Oberlausitz.", descriptionNodes.item(0).getTextContent());
@@ -331,10 +306,7 @@ public class MockAlbumConnectorTest {
             e.printStackTrace();
         }
         Assert.assertEquals(password, passwordNodes.item(0).getTextContent());
-        Assert.assertEquals("7", bilderNodes.item(0).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("9", bilderNodes.item(1).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("11", bilderNodes.item(2).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("12", bilderNodes.item(3).getAttributes().item(0).getTextContent());
+        Assert.assertEquals("1", nutzerNodes.item(0).getTextContent());
     }
 
     @Test
@@ -348,12 +320,12 @@ public class MockAlbumConnectorTest {
         NodeList nameNodes = albumNode.getElementsByTagName("name");
         NodeList passwordNodes = albumNode.getElementsByTagName("password");
         NodeList descriptionNodes = albumNode.getElementsByTagName("description");
-        NodeList bilderNodes = albumNode.getElementsByTagName("bild");
+        NodeList nutzerNodes = albumNode.getElementsByTagName("nutzer");
         Assert.assertEquals(1,idNodes.getLength());
         Assert.assertEquals(1,nameNodes.getLength());
         Assert.assertEquals(1,passwordNodes.getLength());
         Assert.assertEquals(1,descriptionNodes.getLength());
-        Assert.assertEquals(4,bilderNodes.getLength());
+        Assert.assertEquals(1,nutzerNodes.getLength());
         Assert.assertEquals("0", idNodes.item(0).getTextContent());
         Assert.assertEquals("Görlitz", nameNodes.item(0).getTextContent());
         Assert.assertEquals("Bilder über die Stadt Görlitz.", descriptionNodes.item(0).getTextContent());
@@ -370,22 +342,19 @@ public class MockAlbumConnectorTest {
             e.printStackTrace();
         }
         Assert.assertEquals(password, passwordNodes.item(0).getTextContent());
-        Assert.assertEquals("1", bilderNodes.item(0).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("2", bilderNodes.item(1).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("3", bilderNodes.item(2).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("4", bilderNodes.item(3).getAttributes().item(0).getTextContent());
+        Assert.assertEquals("0", nutzerNodes.item(0).getTextContent());
 
         albumNode = (Element) albenNodes.item(1);
         idNodes = albumNode.getElementsByTagName("id");
         nameNodes = albumNode.getElementsByTagName("name");
         passwordNodes = albumNode.getElementsByTagName("password");
         descriptionNodes = albumNode.getElementsByTagName("description");
-        bilderNodes = albumNode.getElementsByTagName("bild");
+        nutzerNodes = albumNode.getElementsByTagName("nutzer");
         Assert.assertEquals(1,idNodes.getLength());
         Assert.assertEquals(1,nameNodes.getLength());
         Assert.assertEquals(1,passwordNodes.getLength());
         Assert.assertEquals(1,descriptionNodes.getLength());
-        Assert.assertEquals(4,bilderNodes.getLength());
+        Assert.assertEquals(1,nutzerNodes.getLength());
         Assert.assertEquals("1", idNodes.item(0).getTextContent());
         Assert.assertEquals("Zittau", nameNodes.item(0).getTextContent());
         Assert.assertEquals("Bilder über die Stadt Zittau.", descriptionNodes.item(0).getTextContent());
@@ -402,13 +371,10 @@ public class MockAlbumConnectorTest {
             e.printStackTrace();
         }
         Assert.assertEquals(password, passwordNodes.item(0).getTextContent());
-        Assert.assertEquals("5", bilderNodes.item(0).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("6", bilderNodes.item(1).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("8", bilderNodes.item(2).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("10", bilderNodes.item(3).getAttributes().item(0).getTextContent());
+        Assert.assertEquals("0", nutzerNodes.item(0).getTextContent());
 
         nutzerDoc = new MockNutzerConnector().getNutzerByName("Günther");
-        doc = connector.getAlbenForNutzer(Integer.parseInt(nutzerDoc.getElementsByTagName("id").item(0).getTextContent()));
+        doc = new MockAlbumConnector().getAlbenForNutzer(Integer.parseInt(nutzerDoc.getElementsByTagName("id").item(0).getTextContent()));
         albenNodes = doc.getElementsByTagName("album");
         Assert.assertEquals(1, albenNodes.getLength());
         albumNode = (Element) albenNodes.item(0);
@@ -416,12 +382,12 @@ public class MockAlbumConnectorTest {
         nameNodes = albumNode.getElementsByTagName("name");
         passwordNodes = albumNode.getElementsByTagName("password");
         descriptionNodes = albumNode.getElementsByTagName("description");
-        bilderNodes = albumNode.getElementsByTagName("bild");
+        nutzerNodes = albumNode.getElementsByTagName("nutzer");
         Assert.assertEquals(1,idNodes.getLength());
         Assert.assertEquals(1,nameNodes.getLength());
         Assert.assertEquals(1,passwordNodes.getLength());
         Assert.assertEquals(1,descriptionNodes.getLength());
-        Assert.assertEquals(4,bilderNodes.getLength());
+        Assert.assertEquals(1,nutzerNodes.getLength());
         Assert.assertEquals("2", idNodes.item(0).getTextContent());
         Assert.assertEquals("Oberlausitz", nameNodes.item(0).getTextContent());
         Assert.assertEquals("Bilder über die schöne Oberlausitz.", descriptionNodes.item(0).getTextContent());
@@ -438,10 +404,7 @@ public class MockAlbumConnectorTest {
             e.printStackTrace();
         }
         Assert.assertEquals(password, passwordNodes.item(0).getTextContent());
-        Assert.assertEquals("7", bilderNodes.item(0).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("9", bilderNodes.item(1).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("11", bilderNodes.item(2).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("12", bilderNodes.item(3).getAttributes().item(0).getTextContent());
+        Assert.assertEquals("1", nutzerNodes.item(0).getTextContent());
     }
 
     @Test
@@ -454,12 +417,12 @@ public class MockAlbumConnectorTest {
         NodeList nameNodes = albumNode.getElementsByTagName("name");
         NodeList passwordNodes = albumNode.getElementsByTagName("password");
         NodeList descriptionNodes = albumNode.getElementsByTagName("description");
-        NodeList bilderNodes = albumNode.getElementsByTagName("bild");
+        NodeList nutzerNodes = albumNode.getElementsByTagName("nutzer");
         Assert.assertEquals(1,idNodes.getLength());
         Assert.assertEquals(1,nameNodes.getLength());
         Assert.assertEquals(1,passwordNodes.getLength());
         Assert.assertEquals(1,descriptionNodes.getLength());
-        Assert.assertEquals(4,bilderNodes.getLength());
+        Assert.assertEquals(1,nutzerNodes.getLength());
         Assert.assertEquals("0", idNodes.item(0).getTextContent());
         Assert.assertEquals("Görlitz", nameNodes.item(0).getTextContent());
         Assert.assertEquals("Bilder über die Stadt Görlitz.", descriptionNodes.item(0).getTextContent());
@@ -476,22 +439,19 @@ public class MockAlbumConnectorTest {
             e.printStackTrace();
         }
         Assert.assertEquals(password, passwordNodes.item(0).getTextContent());
-        Assert.assertEquals("1", bilderNodes.item(0).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("2", bilderNodes.item(1).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("3", bilderNodes.item(2).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("4", bilderNodes.item(3).getAttributes().item(0).getTextContent());
+        Assert.assertEquals("0", nutzerNodes.item(0).getTextContent());
 
         albumNode = (Element) albenNodes.item(0);
         idNodes = albumNode.getElementsByTagName("id");
         nameNodes = albumNode.getElementsByTagName("name");
         passwordNodes = albumNode.getElementsByTagName("password");
         descriptionNodes = albumNode.getElementsByTagName("description");
-        bilderNodes = albumNode.getElementsByTagName("bild");
+        nutzerNodes = albumNode.getElementsByTagName("nutzer");
         Assert.assertEquals(1,idNodes.getLength());
         Assert.assertEquals(1,nameNodes.getLength());
         Assert.assertEquals(1,passwordNodes.getLength());
         Assert.assertEquals(1,descriptionNodes.getLength());
-        Assert.assertEquals(4,bilderNodes.getLength());
+        Assert.assertEquals(1,nutzerNodes.getLength());
         Assert.assertEquals("2", idNodes.item(0).getTextContent());
         Assert.assertEquals("Oberlausitz", nameNodes.item(0).getTextContent());
         Assert.assertEquals("Bilder über die schöne Oberlausitz.", descriptionNodes.item(0).getTextContent());
@@ -508,10 +468,7 @@ public class MockAlbumConnectorTest {
             e.printStackTrace();
         }
         Assert.assertEquals(password, passwordNodes.item(0).getTextContent());
-        Assert.assertEquals("7", bilderNodes.item(0).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("9", bilderNodes.item(1).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("11", bilderNodes.item(2).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("12", bilderNodes.item(3).getAttributes().item(0).getTextContent());
+        Assert.assertEquals("1", nutzerNodes.item(0).getTextContent());
 
         connector = new MockAlbumConnector();
         doc = connector.getAlbenWithNameContaining("Ober");
@@ -522,12 +479,12 @@ public class MockAlbumConnectorTest {
         nameNodes = albumNode.getElementsByTagName("name");
         passwordNodes = albumNode.getElementsByTagName("password");
         descriptionNodes = albumNode.getElementsByTagName("description");
-        bilderNodes = albumNode.getElementsByTagName("bild");
+        nutzerNodes = albumNode.getElementsByTagName("nutzer");
         Assert.assertEquals(1,idNodes.getLength());
         Assert.assertEquals(1,nameNodes.getLength());
         Assert.assertEquals(1,passwordNodes.getLength());
         Assert.assertEquals(1,descriptionNodes.getLength());
-        Assert.assertEquals(4,bilderNodes.getLength());
+        Assert.assertEquals(1,nutzerNodes.getLength());
         Assert.assertEquals("2", idNodes.item(0).getTextContent());
         Assert.assertEquals("Oberlausitz", nameNodes.item(0).getTextContent());
         Assert.assertEquals("Bilder über die schöne Oberlausitz.", descriptionNodes.item(0).getTextContent());
@@ -544,10 +501,7 @@ public class MockAlbumConnectorTest {
             e.printStackTrace();
         }
         Assert.assertEquals(password, passwordNodes.item(0).getTextContent());
-        Assert.assertEquals("7", bilderNodes.item(0).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("9", bilderNodes.item(1).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("11", bilderNodes.item(2).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("12", bilderNodes.item(3).getAttributes().item(0).getTextContent());
+        Assert.assertEquals("1", nutzerNodes.item(0).getTextContent());
     }
 
     @Test
@@ -560,12 +514,12 @@ public class MockAlbumConnectorTest {
         NodeList nameNodes = albumNode.getElementsByTagName("name");
         NodeList passwordNodes = albumNode.getElementsByTagName("password");
         NodeList descriptionNodes = albumNode.getElementsByTagName("description");
-        NodeList bilderNodes = albumNode.getElementsByTagName("bild");
+        NodeList nutzerNodes = albumNode.getElementsByTagName("nutzer");
         Assert.assertEquals(1,idNodes.getLength());
         Assert.assertEquals(1,nameNodes.getLength());
         Assert.assertEquals(1,passwordNodes.getLength());
         Assert.assertEquals(1,descriptionNodes.getLength());
-        Assert.assertEquals(4,bilderNodes.getLength());
+        Assert.assertEquals(1,nutzerNodes.getLength());
         Assert.assertEquals("0", idNodes.item(0).getTextContent());
         Assert.assertEquals("Görlitz", nameNodes.item(0).getTextContent());
         Assert.assertEquals("Bilder über die Stadt Görlitz.", descriptionNodes.item(0).getTextContent());
@@ -582,22 +536,19 @@ public class MockAlbumConnectorTest {
             e.printStackTrace();
         }
         Assert.assertEquals(password, passwordNodes.item(0).getTextContent());
-        Assert.assertEquals("1", bilderNodes.item(0).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("2", bilderNodes.item(1).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("3", bilderNodes.item(2).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("4", bilderNodes.item(3).getAttributes().item(0).getTextContent());
+        Assert.assertEquals("0", nutzerNodes.item(0).getTextContent());
 
         albumNode = (Element) albenNodes.item(0);
         idNodes = albumNode.getElementsByTagName("id");
         nameNodes = albumNode.getElementsByTagName("name");
         passwordNodes = albumNode.getElementsByTagName("password");
         descriptionNodes = albumNode.getElementsByTagName("description");
-        bilderNodes = albumNode.getElementsByTagName("bild");
+        nutzerNodes = albumNode.getElementsByTagName("nutzer");
         Assert.assertEquals(1,idNodes.getLength());
         Assert.assertEquals(1,nameNodes.getLength());
         Assert.assertEquals(1,passwordNodes.getLength());
         Assert.assertEquals(1,descriptionNodes.getLength());
-        Assert.assertEquals(4,bilderNodes.getLength());
+        Assert.assertEquals(1,nutzerNodes.getLength());
         Assert.assertEquals("1", idNodes.item(0).getTextContent());
         Assert.assertEquals("Zittau", nameNodes.item(0).getTextContent());
         Assert.assertEquals("Bilder über die Stadt Zittau.", descriptionNodes.item(0).getTextContent());
@@ -614,22 +565,19 @@ public class MockAlbumConnectorTest {
             e.printStackTrace();
         }
         Assert.assertEquals(password, passwordNodes.item(0).getTextContent());
-        Assert.assertEquals("5", bilderNodes.item(0).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("6", bilderNodes.item(1).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("8", bilderNodes.item(2).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("10", bilderNodes.item(3).getAttributes().item(0).getTextContent());
+        Assert.assertEquals("0", nutzerNodes.item(0).getTextContent());
 
         albumNode = (Element) albenNodes.item(1);
         idNodes = albumNode.getElementsByTagName("id");
         nameNodes = albumNode.getElementsByTagName("name");
         passwordNodes = albumNode.getElementsByTagName("password");
         descriptionNodes = albumNode.getElementsByTagName("description");
-        bilderNodes = albumNode.getElementsByTagName("bild");
+        nutzerNodes = albumNode.getElementsByTagName("nutzer");
         Assert.assertEquals(1,idNodes.getLength());
         Assert.assertEquals(1,nameNodes.getLength());
         Assert.assertEquals(1,passwordNodes.getLength());
         Assert.assertEquals(1,descriptionNodes.getLength());
-        Assert.assertEquals(4,bilderNodes.getLength());
+        Assert.assertEquals(1,nutzerNodes.getLength());
         Assert.assertEquals("2", idNodes.item(0).getTextContent());
         Assert.assertEquals("Oberlausitz", nameNodes.item(0).getTextContent());
         Assert.assertEquals("Bilder über die schöne Oberlausitz.", descriptionNodes.item(0).getTextContent());
@@ -646,10 +594,7 @@ public class MockAlbumConnectorTest {
             e.printStackTrace();
         }
         Assert.assertEquals(password, passwordNodes.item(0).getTextContent());
-        Assert.assertEquals("7", bilderNodes.item(0).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("9", bilderNodes.item(1).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("11", bilderNodes.item(2).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("12", bilderNodes.item(3).getAttributes().item(0).getTextContent());
+        Assert.assertEquals("1", nutzerNodes.item(0).getTextContent());
 
         connector = new MockAlbumConnector();
         doc = connector.getAlbenWithDescriptionContaining("Stadt");
@@ -661,12 +606,12 @@ public class MockAlbumConnectorTest {
         nameNodes = albumNode.getElementsByTagName("name");
         passwordNodes = albumNode.getElementsByTagName("password");
         descriptionNodes = albumNode.getElementsByTagName("description");
-        bilderNodes = albumNode.getElementsByTagName("bild");
+        nutzerNodes = albumNode.getElementsByTagName("nutzer");
         Assert.assertEquals(1,idNodes.getLength());
         Assert.assertEquals(1,nameNodes.getLength());
         Assert.assertEquals(1,passwordNodes.getLength());
         Assert.assertEquals(1,descriptionNodes.getLength());
-        Assert.assertEquals(4,bilderNodes.getLength());
+        Assert.assertEquals(1,nutzerNodes.getLength());
         Assert.assertEquals("0", idNodes.item(0).getTextContent());
         Assert.assertEquals("Görlitz", nameNodes.item(0).getTextContent());
         Assert.assertEquals("Bilder über die Stadt Görlitz.", descriptionNodes.item(0).getTextContent());
@@ -683,22 +628,19 @@ public class MockAlbumConnectorTest {
             e.printStackTrace();
         }
         Assert.assertEquals(password, passwordNodes.item(0).getTextContent());
-        Assert.assertEquals("1", bilderNodes.item(0).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("2", bilderNodes.item(1).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("3", bilderNodes.item(2).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("4", bilderNodes.item(3).getAttributes().item(0).getTextContent());
+        Assert.assertEquals("0", nutzerNodes.item(0).getTextContent());
 
         albumNode = (Element) albenNodes.item(0);
         idNodes = albumNode.getElementsByTagName("id");
         nameNodes = albumNode.getElementsByTagName("name");
         passwordNodes = albumNode.getElementsByTagName("password");
         descriptionNodes = albumNode.getElementsByTagName("description");
-        bilderNodes = albumNode.getElementsByTagName("bild");
+        nutzerNodes = albumNode.getElementsByTagName("nutzer");
         Assert.assertEquals(1,idNodes.getLength());
         Assert.assertEquals(1,nameNodes.getLength());
         Assert.assertEquals(1,passwordNodes.getLength());
         Assert.assertEquals(1,descriptionNodes.getLength());
-        Assert.assertEquals(4,bilderNodes.getLength());
+        Assert.assertEquals(1,nutzerNodes.getLength());
         Assert.assertEquals("1", idNodes.item(0).getTextContent());
         Assert.assertEquals("Zittau", nameNodes.item(0).getTextContent());
         Assert.assertEquals("Bilder über die Stadt Zittau.", descriptionNodes.item(0).getTextContent());
@@ -715,10 +657,7 @@ public class MockAlbumConnectorTest {
             e.printStackTrace();
         }
         Assert.assertEquals(password, passwordNodes.item(0).getTextContent());
-        Assert.assertEquals("5", bilderNodes.item(0).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("6", bilderNodes.item(1).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("8", bilderNodes.item(2).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("10", bilderNodes.item(3).getAttributes().item(0).getTextContent());
+        Assert.assertEquals("0", nutzerNodes.item(0).getTextContent());
 
         connector = new MockAlbumConnector();
         doc = connector.getAlbenWithDescriptionContaining("schön");
@@ -730,12 +669,12 @@ public class MockAlbumConnectorTest {
         nameNodes = albumNode.getElementsByTagName("name");
         passwordNodes = albumNode.getElementsByTagName("password");
         descriptionNodes = albumNode.getElementsByTagName("description");
-        bilderNodes = albumNode.getElementsByTagName("bild");
+        nutzerNodes = albumNode.getElementsByTagName("nutzer");
         Assert.assertEquals(1,idNodes.getLength());
         Assert.assertEquals(1,nameNodes.getLength());
         Assert.assertEquals(1,passwordNodes.getLength());
         Assert.assertEquals(1,descriptionNodes.getLength());
-        Assert.assertEquals(4,bilderNodes.getLength());
+        Assert.assertEquals(1,nutzerNodes.getLength());
         Assert.assertEquals("2", idNodes.item(0).getTextContent());
         Assert.assertEquals("Oberlausitz", nameNodes.item(0).getTextContent());
         Assert.assertEquals("Bilder über die schöne Oberlausitz.", descriptionNodes.item(0).getTextContent());
@@ -752,9 +691,6 @@ public class MockAlbumConnectorTest {
             e.printStackTrace();
         }
         Assert.assertEquals(password, passwordNodes.item(0).getTextContent());
-        Assert.assertEquals("7", bilderNodes.item(0).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("9", bilderNodes.item(1).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("11", bilderNodes.item(2).getAttributes().item(0).getTextContent());
-        Assert.assertEquals("12", bilderNodes.item(3).getAttributes().item(0).getTextContent());
+        Assert.assertEquals("1", nutzerNodes.item(0).getTextContent());
     }
 }

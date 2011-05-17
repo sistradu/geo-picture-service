@@ -194,8 +194,8 @@ public class MockBildConnector implements IBildConnector{
             //factory.setSchema(schema);
             Document doc = factory.newDocumentBuilder().newDocument();
             Node bilderNode = doc.createElement("bilder");
-            for(Map.Entry<Integer,Document> entry : this.bildAlbumIDMap.entrySet()){
-                if(entry.getKey().equals(albumID))
+            for(Map.Entry<Integer,Document> entry : this.bildIDMap.entrySet()){
+                if(entry.getValue().getElementsByTagName("album").item(0).getTextContent().equals(""+albumID))
                     bilderNode.appendChild(doc.adoptNode(entry.getValue().getFirstChild()));
             }
             doc.appendChild(bilderNode);
