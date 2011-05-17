@@ -29,6 +29,8 @@ public class CoordinateCalculator {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         } catch (NullPointerException e){
             System.err.println("Position or Positionref is null.");
+        } catch(StringIndexOutOfBoundsException e){
+            System.err.println("Position or Positionref is null.");
         }
         return "";
     }
