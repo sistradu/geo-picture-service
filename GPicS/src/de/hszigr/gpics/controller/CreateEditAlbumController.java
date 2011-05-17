@@ -2,7 +2,6 @@ package de.hszigr.gpics.controller;
 
 import de.hszigr.gpics.util.AlbumControllerDBUtil;
 import de.hszigr.gpics.util.GPicSUtil;
-import de.hszigr.gpics.util.MessagePropertiesBean;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
@@ -10,7 +9,6 @@ import org.primefaces.model.UploadedFile;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
