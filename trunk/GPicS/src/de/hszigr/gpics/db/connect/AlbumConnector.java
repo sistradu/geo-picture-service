@@ -20,7 +20,7 @@ public class AlbumConnector implements IAlbumConnector{
     public int createAlbum(String name, String password, String description, int nutzerID) throws ConnectException, IllegalArgumentException {
         Map<String,String> params = new HashMap<String,String>();
         params.put("name", name);
-        params.put("pasword", password);
+        params.put("password", password);
         params.put("description", description);
         params.put("nutzer", ""+nutzerID);
         try{
