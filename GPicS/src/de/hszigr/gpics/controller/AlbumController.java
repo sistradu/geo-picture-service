@@ -29,10 +29,16 @@ public class AlbumController {
     private String albumDescription;
     private ArrayList<Bild> bilder = new ArrayList<Bild>();
 
-    public AlbumController() throws Exception{
-        albumName = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("AlbumName");
+    public AlbumController(){
 
-        loadAlbum(albumName);
+        try{
+            albumName = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("AlbumName");
+
+            loadAlbum(albumName);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     public void loadAlbum(String name) throws Exception{
