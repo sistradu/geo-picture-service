@@ -71,25 +71,23 @@ public class AlbumControllerDBUtil {
         createBilder(albumID, controller);
     }
 
-    @SuppressWarnings("unchecked")
-    public void ladeAttributeAusDB(String name, CreateEditAlbumController album) throws ConnectException {
+    public Document ladeAlbumAusDB(String name) throws ConnectException {
         //TODO Connector ändern
         IAlbumConnector albumConnector = new AlbumConnector();
-        Document doc = albumConnector.getAlbumByName(name);
-        album.setAlbumID(Integer.parseInt(doc.getElementsByTagName("id").item(0).getTextContent()));
-        album.setAlbumName(name);
-        album.setPasswort(doc.getElementsByTagName("passwort").item(0).getTextContent());
-        album.setAlbumBeschreibung(doc.getElementsByTagName("description").item(0).getTextContent());
+        return albumConnector.getAlbumByName(name);
+    }
 
+    @SuppressWarnings("unchecked")
+    public List<Bild> ladeBilderAusDB(Document doc) throws ConnectException {
         //TODO Connector ändern
         IBildConnector bildConnector = new BildConnector();
         List<Bild> bilder = new ArrayList<Bild>();
         List<Node> nodeList = (List<Node>) doc.getElementsByTagName("bild");
         for (Node node : nodeList) {
-            Bild bild = ladeBildAusDB(bildConnector, node);
+            Bild bild = ladeEinzelnesBildAusDB(bildConnector, node);
             bilder.add(bild);
         }
-        album.setBilder(bilder);
+        return bilder;
     }
 
     private void createBilder(int albumID, CreateEditAlbumController controller) throws JpegProcessingException, MetadataException, ParseException, ConnectException, FileNotFoundException {
@@ -115,7 +113,7 @@ public class AlbumControllerDBUtil {
         }
     }
 
-    private Bild ladeBildAusDB(IBildConnector bildConnector, Node node) throws ConnectException {
+    private Bild ladeEinzelnesBildAusDB(IBildConnector bildConnector, Node node) throws ConnectException {
         String bildName = node.getAttributes().getNamedItem("id").getTextContent();
         Document bildDoc = bildConnector.getBilderByName(bildName);
         Bild bild = new Bild();
@@ -154,7 +152,7 @@ public class AlbumControllerDBUtil {
         return bild;
     }
 
-    private String getTextContentFromElement(Document doc, String tagName) {
+    public String getTextContentFromElement(Document doc, String tagName) {
         return doc.getElementsByTagName(tagName).item(0).getTextContent();
     }
 

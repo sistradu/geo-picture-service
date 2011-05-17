@@ -32,6 +32,7 @@ public class GPicSUtil {
      * generiert eine FacesMessage, die beim h:message-Element mit der id <elementID> angezeigt wird
      * @param elementID
      * @param errorMessage
+     * @param isError
      */
     public static void createFacesMessageForID(String elementID, String errorMessage, boolean isError){
         FacesMessage message = new FacesMessage(errorMessage);
