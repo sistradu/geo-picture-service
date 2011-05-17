@@ -70,6 +70,8 @@ public class UserController {
         } catch (IOException e) {
             e.printStackTrace();
             GPicSUtil.createFacesMessageForID("loginMask", e.getMessage());
+        } catch(NullPointerException e){
+            System.err.println("null");
         }
         return "index";
     }
