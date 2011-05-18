@@ -10,10 +10,10 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.prime.com.tr/ui">
     <ui:define name="content">
-
+        <h:outputLabel value="#{mapBean.doIt()}"/>
         <h2><h:outputLabel value="#{albumController.albumName}"/></h2>
 
-        <h3><h:outputLabel value="#{albumController.albumDescription}"/></h3>
+        <h3><h:outputLabel value="#{albumController.albumBeschreibung}"/></h3>
         <h:form>
             <p:lightBox width="75%" height="75%" slideshow="true" slideshowSpeed="2000"
                         slideshowStartText="starte Vorführung" slideshowStopText="stoppe Vorführung"
@@ -21,7 +21,7 @@
                 <c:forEach items="${albumController.bilder}" var="bilder">
 
                     <h:outputLink value="${bilder.path}" title="${bilder.name}">
-                        <h:graphicImage value="${bilder.pathThumbnail}"/>
+                        <p:graphicImage value="${bilder.path}"/>
                     </h:outputLink>
 
                 </c:forEach>
@@ -32,14 +32,13 @@
             <p:gmap center="#{albumController.bilder[0].latitude}, #{albumController.bilder[0].longitude}" zoom="13" type="HYBRID" style="width:600px;height:400px"
                     model="#{mapBean.simpleModel}" overlaySelectListener="#{mapBean.onMarkerSelect}">
                 <p:gmapInfoWindow>
-                    <p:graphicImage value="#{mapBean.marker.data}"/>
+                    <p:graphicImage value="#{mapBean.image}" width="200" height="120"/>
                     <br/>
-                    <h:outputText value="#{mapBean.marker.title}"/>
+                    <h:outputText value="#{mapBean.beschreibung}"/>
                 </p:gmapInfoWindow>
             </p:gmap>
             <br/>
-            <!-- TODO Auf Methode ändern ladeAlbum() -->
-            <h:commandLink value="#{msg.editAlbum}" action="#{createEditAlbumController.ladeAlbum}" rendered="#{userController.eingeloggt}"> <!-- TODO Vergleich BenutzerID mit AlbumErstellerID -->
+            <h:commandLink value="#{msg.editAlbum}" action="#{createEditAlbumController.ladeAlbum}" rendered="#{userController.eingeloggt and userController.nutzerID == albumController.erstellerID}">
                 <f:param name="AlbumName" value="#{albumController.albumName}"/>
             </h:commandLink>
 

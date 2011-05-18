@@ -106,8 +106,20 @@
                                 </tr>
                             </table>
                         </h:form>
+
                         <h:messages for="loginMask" style="color:red;"/>
-                        <p:menu model="#{menuBean.menuModel}"/>
+
+                        <h:form>
+
+
+                              <h:commandLink value="#{msg.home}" action="index"/> <br/>
+                              <h:commandLink value="#{msg.ownAlbums}" action="showOwnAlbum" rendered="#{userController.eingeloggt}"/><br/>
+                              <h:commandLink value="#{msg.allAlbums}" action="allAlbums"/><br/>
+                              <h:commandLink value="#{msg.editAlbum}" action="createAlbum" rendered="#{userController.eingeloggt and userController.nutzerID == albumController.erstellerID}"/><br/>
+
+                        </h:form>
+                                                
+
                         <ui:insert name="nav"/>
                     </div>
                 </div>
