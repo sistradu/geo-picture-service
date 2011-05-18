@@ -32,7 +32,7 @@
             <p:gmap center="#{albumController.bilder[0].latitude}, #{albumController.bilder[0].longitude}" zoom="13" type="HYBRID" style="width:600px;height:400px"
                     model="#{mapBean.simpleModel}" overlaySelectListener="#{mapBean.onMarkerSelect}">
                 <p:gmapInfoWindow>
-                    <p:graphicImage value="#{mapBean.image}" width="200" height="120"/>
+                    <p:graphicImage value="#{mapBean.image}" width="200" height="150"/>
                     <br/>
                     <h:outputText value="#{mapBean.beschreibung}"/>
                 </p:gmapInfoWindow>
