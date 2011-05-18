@@ -3,6 +3,7 @@ package de.hszigr.gpics.primefaces_beans;
 import de.hszigr.gpics.controller.AlbumController;
 import de.hszigr.gpics.controller.Bild;
 import de.hszigr.gpics.util.GPicSUtil;
+import de.hszigr.gpics.util.MessagePropertiesBean;
 import org.primefaces.event.map.OverlaySelectEvent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.map.DefaultMapModel;
@@ -48,7 +49,7 @@ public class MapBean implements Serializable {
         AlbumController ac = (AlbumController) GPicSUtil.getBean("albumController");
         bilder = ac.getBilder();
         for (int i = 0; i < ac.getBilder().size(); i++){
-            Bild bild = ac.getBilder().get(i);
+            Bild bild = bilder.get(i);
 
             LatLng coord = new LatLng(Double.parseDouble(bild.getLatitude()), Double.parseDouble(bild.getLongitude()));
             Marker m  = new Marker(coord, bild.getName(), bild.getPath());
@@ -61,7 +62,12 @@ public class MapBean implements Serializable {
         for (int i = 0; i < bilder.size(); i++){
             if (event.getOverlay().getData().equals(bilder.get(i).getPath())){
                 image = bilder.get(i).getContent();
-                beschreibung = bilder.get(i).getBeschreibung();
+                MessagePropertiesBean msgPB = new MessagePropertiesBean();
+                if (bilder.get(i).getPath().equals(msgPB.getPropertiesMessage("defaultPicturePath"))){
+                    beschreibung = msgPB.getPropertiesMessage("pictureNotFound");
+                }else{
+                    beschreibung = bilder.get(i).getBeschreibung();
+                }
             }
         }
 

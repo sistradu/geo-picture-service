@@ -4,6 +4,7 @@ import de.hszigr.gpics.db.connect.AlbumConnector;
 import de.hszigr.gpics.db.connect.BildConnector;
 import de.hszigr.gpics.db.interfaces.IAlbumConnector;
 import de.hszigr.gpics.db.interfaces.IBildConnector;
+import de.hszigr.gpics.util.MessagePropertiesBean;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.w3c.dom.Document;
@@ -78,16 +79,16 @@ public class AlbumController {
         for (int i = 0; i < bilderXML.getElementsByTagName("fileposition").getLength(); i++){
 
             Bild bild  = new Bild();
-            bild.setBildID(Integer.parseInt(getTextContentFromElement(bilderXML, "id")));
-            bild.setName(getTextContentFromElement(bilderXML, "name"));
-            bild.setBeschreibung(getTextContentFromElement(bilderXML, "description"));
-            String isPublic = getTextContentFromElement(bilderXML, "ispublic");
+            bild.setBildID(Integer.parseInt(getTextContentFromElement(bilderXML, "id", i)));
+            bild.setName(getTextContentFromElement(bilderXML, "name", i));
+            bild.setBeschreibung(getTextContentFromElement(bilderXML, "description", i));
+            String isPublic = getTextContentFromElement(bilderXML, "ispublic", i);
             if (isPublic.equals("true")) {
                 bild.setPublicBild(true);
             } else {
                 bild.setPublicBild(false);
             }
-            String timeStamp = getTextContentFromElement(bilderXML, "date");
+            String timeStamp = getTextContentFromElement(bilderXML, "date", i);
             try {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                 Date date = sdf.parse(timeStamp);
@@ -98,19 +99,20 @@ public class AlbumController {
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }
 
-            bild.setLongitude(getTextContentFromElement(bilderXML, "longitude"));
-            bild.setLatitude(getTextContentFromElement(bilderXML, "latitude"));
-            bild.setAltitude(getTextContentFromElement(bilderXML, "altitude"));
-            bild.setDirection(getTextContentFromElement(bilderXML, "direction"));
-            String filePosition = getTextContentFromElement(bilderXML, "fileposition");
+            bild.setLongitude(getTextContentFromElement(bilderXML, "longitude", i));
+            bild.setLatitude(getTextContentFromElement(bilderXML, "latitude", i));
+            bild.setAltitude(getTextContentFromElement(bilderXML, "altitude", i));
+            bild.setDirection(getTextContentFromElement(bilderXML, "direction", i));
+            String filePosition = getTextContentFromElement(bilderXML, "fileposition", i);
             bild.setPath(filePosition);
 
             InputStream stream = null;
             try {
                 stream = new FileInputStream(filePosition);
             } catch (IOException e) {
-                stream = new FileInputStream("D:/upload/gpics.jpg");
-                bild.setPath("D:/upload/gpics.jpg");
+                MessagePropertiesBean msgPB = new MessagePropertiesBean();
+                stream = new FileInputStream(msgPB.getPropertiesMessage("defaultPicturePath"));
+                bild.setPath(msgPB.getPropertiesMessage("defaultPicturePath"));
                 e.printStackTrace();
             }
 
@@ -121,10 +123,10 @@ public class AlbumController {
         }
     }
 
-    public String getTextContentFromElement(Document doc, String tagName){
+    public String getTextContentFromElement(Document doc, String tagName, int index){
         String back = "";
         try{
-            back = doc.getElementsByTagName(tagName).item(0).getTextContent();
+            back = doc.getElementsByTagName(tagName).item(index).getTextContent();
         }catch(NullPointerException npe){
             npe.printStackTrace();
         }
