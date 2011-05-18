@@ -39,7 +39,7 @@
             </p:gmap>
             <br></br>
             <!-- TODO Auf Methode ändern ladeAlbum() -->
-            <h:commandLink value="#{msg.editAlbum}" action="createAlbum" rendered="#{userController.eingeloggt}"> <!-- TODO Vergleich BenutzerID mit AlbumErstellerID -->
+            <h:commandLink value="#{msg.editAlbum}" action="#{createEditAlbumController.ladeAlbum}" rendered="#{userController.eingeloggt}"> <!-- TODO Vergleich BenutzerID mit AlbumErstellerID -->
                 <f:param name="AlbumName" value="#{albumController.albumName}"/>
             </h:commandLink>
 
