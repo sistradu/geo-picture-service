@@ -165,7 +165,6 @@ public class XMLFileGenerator {
                 Source src = new DOMSource(doc);
                 Result dest = new StreamResult(xmlFile);
                 aTransformer.transform(src, dest);
-
             }catch(Exception ex){
                 break;
             }

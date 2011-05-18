@@ -6,7 +6,7 @@ let $bilder:= doc("/db/bilder/bilder.xml")
 let $id:= request:get-parameter("id",0)
 let $name:= request:get-parameter("name",$bilder//bild[id=$id]//name/text())
 let $description:= request:get-parameter("description",$bilder//bild[id=$id]//description/text())
-let $isublic:= request:get-parameter("ispublic",$bilder//bild[id=$id]//ispublic/text())
+let $ispublic:= request:get-parameter("ispublic",$bilder//bild[id=$id]//ispublic/text())
 let $date:= request:get-parameter("date",$bilder//bild[id=$id]//date/text())
 let $fileposition:= request:get-parameter("fileposition",$bilder//bild[id=$id]//fileposition/text())
 let $longitude:= request:get-parameter("longitude",$bilder//bild[id=$id]//longitude/text())
@@ -36,7 +36,7 @@ if (not($id))
         <message>Es wurde keine ID angegeben.</message>
       </error>)
     else (
-        if(count($bilder//bild[id!=$id][album=$album][name=$name])>0)
+        if(count($bilder//bild[id!=$id][album=$bilder//bild[id=$id]//album][name=$name])>0)
         then(
           <error>
             <message>Ein Bild mit dem angegebenen Namen existiert bereits in diesem Album!</message>

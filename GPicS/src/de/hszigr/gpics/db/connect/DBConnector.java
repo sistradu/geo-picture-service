@@ -31,10 +31,18 @@ import java.util.Map;
  */
 public class DBConnector {
 
-    private static final String location = "http://193.174.103.76:8088/exist/rest/db/";
+    private String location;
 
     private DBConnector(){
+        this.location = "http://193.174.103.76:8088/exist/rest/db/";
+    }
 
+    /**
+     * Ändert die Adresse der Datenbank.
+     * @param location - die neue Adresse
+     */
+    public void setLocation(String location){
+        this.location = location;
     }
 
     private static DBConnector INSTANCE = new DBConnector();
@@ -52,14 +60,14 @@ public class DBConnector {
             for(Map.Entry<String,String> entry : params.entrySet()){
                 if(entry.getValue() != null && !entry.getValue().isEmpty()){
                     if(firstSet){
-                        paramString += "&" + entry.getKey() + "=" + entry.getValue();
+                        paramString += "&" + entry.getKey() + "=" + URLEncoder.encode(entry.getValue(), "UTF-8");
                     }else{
-                        paramString += "?" + entry.getKey() + "=" + entry.getValue();
+                        paramString += "?" + entry.getKey() + "=" + URLEncoder.encode(entry.getValue(), "UTF-8");
                         firstSet = true;
                     }
                 }
             }
-            URL url = new URL(DBConnector.location + file + paramString);
+            URL url = new URL(this.location + file + paramString);
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
             doc = db.parse(url.openStream());
