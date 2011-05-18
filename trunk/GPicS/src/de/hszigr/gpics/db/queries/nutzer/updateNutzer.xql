@@ -6,7 +6,7 @@ let $nutzers:= doc("/db/nutzer/nutzers.xml")
 let $id:= request:get-parameter("id",0)
 let $name:= request:get-parameter("name",$nutzers//nutzer[id=$id]//name/text())
 let $password:= request:get-parameter("password",$nutzers//nutzer[id=$id]//password/text())
-let $email:= request:get-parameter("description",$nutzers//nutzer[id=$id]//email/text())
+let $email:= request:get-parameter("email",$nutzers//nutzer[id=$id]//email/text())
 let $new-nutzer:=
 <nutzer>
     <id>{$id}</id>

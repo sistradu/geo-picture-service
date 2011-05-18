@@ -6,7 +6,7 @@ let $nutzer:= request:get-parameter("nutzer","")
 let $collection := collection('/db/alben')//album[nutzer=$nutzer]
 
 return
-  if(not($id))
+  if(not($nutzer))
     then(
       <error>
           <message>Es wurde keine Nutzer ID angegeben.</message>
