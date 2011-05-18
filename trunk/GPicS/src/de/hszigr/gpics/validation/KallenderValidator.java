@@ -1,5 +1,6 @@
 package de.hszigr.gpics.validation;
 
+import de.hszigr.gpics.util.GPicSUtil;
 import de.hszigr.gpics.util.MessagePropertiesBean;
 
 import javax.faces.application.FacesMessage;
@@ -20,14 +21,18 @@ public class KallenderValidator implements Validator {
     MessagePropertiesBean msgPB = new MessagePropertiesBean();
 
  public void validate(FacesContext facesContext, UIComponent uiComponent, Object o) throws ValidatorException {
-        String datum = (String) o;
-         if(!datum.matches("(0[1-9]|[12][0-9]|3[01])[.](0[1-9]|1[012])[.](19|20)\\d\\d")) {
-            FacesMessage message = new FacesMessage();
-            message.setSeverity(FacesMessage.SEVERITY_ERROR);
-            message.setSummary(msgPB.getPropertiesMessage("ungueltigesDatum"));
-            message.setDetail(msgPB.getPropertiesMessage("ungueltigesDatumdetail"));
-            facesContext.addMessage("userForm:Name", message);
-            throw new ValidatorException(message);
+
+        MessagePropertiesBean msgPB = new MessagePropertiesBean();
+        String msg_1 = msgPB.getPropertiesMessage("ungueltigesDatum");
+
+        GPicSUtil.createFacesMessageForID("kalval",msg_1, true);
+        FacesMessage msg = new FacesMessage(msg_1);
+
+        String pattern = "(0[1-9]|[12][0-9]|3[01])[.](0[1-9]|1[012])[.](19|20)\\d\\d";
+
+            if(((String) o).matches(pattern)){
+
+            throw new ValidatorException(msg);
         }
     }
 }
