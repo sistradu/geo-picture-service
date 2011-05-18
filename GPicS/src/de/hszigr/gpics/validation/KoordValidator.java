@@ -1,5 +1,6 @@
 package de.hszigr.gpics.validation;
 
+import de.hszigr.gpics.util.GPicSUtil;
 import de.hszigr.gpics.util.MessagePropertiesBean;
 
 import javax.faces.application.FacesMessage;
@@ -22,12 +23,13 @@ public class KoordValidator implements Validator {
     public void validate(FacesContext facesContext, UIComponent uiComponent, Object o) throws ValidatorException {
         String koord = (String) o;
          if(!koord.matches("-?[0-9]{1,3}°[0-9]{1,2}'[0-9]{1,2}''") && !koord.matches("-?[0-9]{1,3}\\.[0-9]{6}")) {
-            FacesMessage message = new FacesMessage();
-            message.setSeverity(FacesMessage.SEVERITY_ERROR);
-            message.setSummary(msgPB.getPropertiesMessage("ungueltigeKoordinaten"));
-            message.setDetail(msgPB.getPropertiesMessage("nurgueltigeKoordinaten"));
-            facesContext.addMessage("userForm:Koords", message);
-            throw new ValidatorException(message);
+            MessagePropertiesBean msgPB = new MessagePropertiesBean();
+            String msg_1 = msgPB.getPropertiesMessage("ungueltigeKoordinaten");
+            GPicSUtil.createFacesMessageForID("kooval", msg_1, true);
+            FacesMessage msg = new FacesMessage(msg_1);
+            throw new ValidatorException(msg);
         }
     }
+
+
 }
