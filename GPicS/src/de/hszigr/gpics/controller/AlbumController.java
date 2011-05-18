@@ -41,7 +41,13 @@ public class AlbumController {
 
     }
 
-    public String loadAlbum(String name) throws Exception{
+    public String loadAlbumFromXHTML() throws Exception{
+        albumName = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("AlbumName");
+        loadAlbum(albumName);
+        return "showAlbum";
+    }
+    
+    public void loadAlbum(String name) throws Exception{
         albumName = name;
         IAlbumConnector iac = new AlbumConnector();
         IBildConnector ibc = new BildConnector();
@@ -67,8 +73,6 @@ public class AlbumController {
 
             bilder.add(bild);
         }
-
-        return "showAlbum";
     }
 
     public Document getAlbum() {
