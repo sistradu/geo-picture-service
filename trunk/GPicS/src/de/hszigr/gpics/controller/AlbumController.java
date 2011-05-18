@@ -41,13 +41,16 @@ public class AlbumController {
 
     }
 
-    public void loadAlbum(String name) throws Exception{
+    public String loadAlbum(String name) throws Exception{
+        albumName = name;
         IAlbumConnector iac = new AlbumConnector();
-        album = iac.getAlbumByName(name);
-
         IBildConnector ibc = new BildConnector();
-        Document bilderXML = ibc.getBilderByName(name);
 
+        System.out.println(name);
+        album = iac.getAlbumByName(name);
+        int aID = Integer.parseInt(album.getElementsByTagName("id").item(0).getTextContent());
+        albumDescription = album.getElementsByTagName("description").item(0).getTextContent();
+        Document bilderXML = ibc.getBilderForAlbum(aID);
 
         for (int i = 0; i < bilderXML.getElementsByTagName("fileposition").getLength(); i++){
             Bild bild  = new Bild();
@@ -61,11 +64,11 @@ public class AlbumController {
 
             bild.setLatitude(bilderXML.getElementsByTagName("latitudedecimal").item(i).getTextContent());
             bild.setLongitude(bilderXML.getElementsByTagName("longitudedecimal").item(i).getTextContent());
-            
+
             bilder.add(bild);
         }
 
-        
+        return "showAlbum";
     }
 
     public Document getAlbum() {
@@ -78,10 +81,10 @@ public class AlbumController {
 
     public String getAlbumName() {
 
-        return album.getElementsByTagName("name").item(0).getTextContent();
+        return albumName;
     }
 
     public String getAlbumDescription() {
-        return album.getElementsByTagName("description").item(0).getTextContent();
+        return albumDescription;
     }
 }
