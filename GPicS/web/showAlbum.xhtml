@@ -30,14 +30,14 @@
 
 
             <p:gmap center="#{albumController.bilder[0].latitude}, #{albumController.bilder[0].longitude}" zoom="13" type="HYBRID" style="width:600px;height:400px"
-                    model="#{GMapsBean.simpleModel}" overlaySelectListener="#{GMapsBean.onMarkerSelect}">
+                    model="#{mapBean.simpleModel}" overlaySelectListener="#{mapBean.onMarkerSelect}">
                 <p:gmapInfoWindow>
-                    <p:graphicImage value="#{GMapsBean.image}"/>
+                    <p:graphicImage value="#{mapBean.marker.data}"/>
                     <br/>
-                    <h:outputText value="#{GMapsBean.image.name}"/>
+                    <h:outputText value="#{mapBean.marker.title}"/>
                 </p:gmapInfoWindow>
             </p:gmap>
-            <br></br>
+            <br/>
             <!-- TODO Auf Methode ändern ladeAlbum() -->
             <h:commandLink value="#{msg.editAlbum}" action="#{createEditAlbumController.ladeAlbum}" rendered="#{userController.eingeloggt}"> <!-- TODO Vergleich BenutzerID mit AlbumErstellerID -->
                 <f:param name="AlbumName" value="#{albumController.albumName}"/>
