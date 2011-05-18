@@ -48,10 +48,11 @@ public class BildConnector implements IBildConnector{
 
     public void updateBild(int id, String name, String description, boolean isPublic, GregorianCalendar date, String filePosition, String longitude, String latitude, String altitude, String direction) throws ConnectException, IllegalArgumentException {
         Map<String,String> params = new HashMap<String,String>();
+        params.put("id", ""+id);
         params.put("name", name);
         params.put("description", description);
         params.put("ispublic", ""+isPublic);
-        params.put("date", new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(date));
+        params.put("date", new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(date.getTime()));
         params.put("fileposition", filePosition);
         params.put("longitude", longitude);
         params.put("latitude", latitude);
