@@ -9,7 +9,10 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.prime.com.tr/ui">
     <ui:define name="content">
-        <h1><h:outputLabel value="#{msg.createAlbum}"/></h1>
+        <h1>
+            <h:outputLabel value="#{msg.createAlbum}" rendered="#{createEditAlbumController.newAlbum}"/>
+            <h:outputLabel value="#{msg.editAlbum}" rendered="#{!createEditAlbumController.newAlbum}" />
+        </h1>
         <h:outputLabel value="#{msg.infoAlbum1}" rendered="#{!userController.eingeloggt}"/>
         <h:form rendered="#{userController.eingeloggt}" prependId="false">
             <table>
@@ -78,8 +81,8 @@
             <!--</h:form>-->
         <!--</h:form>-->
         <!--<h:form id="saveAlbum" rendered="#{userController.eingeloggt}">-->
-            <h:commandButton value="#{msg.save}" action="#{createEditAlbumController.createAlbum}"/>
-
+            <h:commandButton value="#{msg.save}" action="#{createEditAlbumController.createAlbum}" rendered="#{createEditAlbumController.newAlbum}"/>
+            <h:commandButton value="#{msg.save}" action="#{createEditAlbumController.updateAlbum}" rendered="#{!createEditAlbumController.newAlbum}" />
             <h:commandButton value="#{msg.abort}" action="allAlbums"/>
         </h:form>
         <!--<h:messages for="saveAlbum" style="color:red;"/>-->

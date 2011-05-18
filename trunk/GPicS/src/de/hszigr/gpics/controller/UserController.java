@@ -15,6 +15,7 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
+import java.net.ConnectException;
 import java.util.Properties;
 
 /**
@@ -96,16 +97,13 @@ public class UserController {
             Authenticator aut = new Authenticator() {
                 @Override
                 protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication("mailer", "mailer");    //To change body of overridden methods use File | Settings | File Templates.
+                    return new PasswordAuthentication("mailer", "mailer");
                 }
             };
             Session session = Session.getInstance(props, aut);
             MessagePropertiesBean msgPB = new MessagePropertiesBean();
             Message mail = new MimeMessage(session);
             mail.setFrom(new InternetAddress("mailer@gpics.de"));
-//            mail.setRecipients(Message.RecipientType.TO,
-//                    InternetAddress.parse("sistradu@stud.hs-zigr.de"));
-            //TODO ändern
             mail.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(email));
             mail.setSubject(msgPB.getPropertiesMessage("mailSubject"));
@@ -160,12 +158,25 @@ public class UserController {
             } catch (Exception e) {
                 e.printStackTrace();
                 GPicSUtil.createFacesMessageForID("createUserMask", e.getMessage(), true);
+                resetNutzerInformation(nutzerID);
                 return "createUser";
             }
         } catch (NullPointerException e) {
             System.err.println(e.getMessage());  //Fängt NullPointerabException ab, die bei Unit-Tests auftritt, weil dort der FacesContext null ist.
         }
         return "showOwnAlbum";
+    }
+
+    private void resetNutzerInformation(int nutzerID) {
+        try {
+            Document doc = conn.getNutzerByID(nutzerID);
+            setNutzerNamen(doc.getElementsByTagName("name").item(0).getTextContent());
+            setEmail(doc.getElementsByTagName("email").item(0).getTextContent());
+            setPasswort(doc.getElementsByTagName("password").item(0).getTextContent());
+        } catch (ConnectException e) {
+            e.printStackTrace();
+            GPicSUtil.createFacesMessageForID("createUserMask", e.getMessage(), true);
+        }
     }
 
     private void resetAll() {
