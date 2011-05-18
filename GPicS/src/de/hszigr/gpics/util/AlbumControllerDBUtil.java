@@ -13,6 +13,7 @@ import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import java.io.*;
 import java.net.ConnectException;
@@ -48,13 +49,18 @@ public class AlbumControllerDBUtil {
         }
     }
 
-    public void updateAlbum(CreateEditAlbumController controller) throws ConnectException {
+    public void updateAlbum(CreateEditAlbumController controller) throws ConnectException, JpegProcessingException, FileNotFoundException, MetadataException, ParseException {
         //TODO connector ändern
         IAlbumConnector albumConnector = new AlbumConnector();
         albumConnector.updateAlbum(controller.getAlbumID(), controller.getAlbumName(), controller.getPasswort(), controller.getAlbumBeschreibung());
         for (Bild bild : controller.getBilder()) {
             IBildConnector bildConnector = new BildConnector();
-            bildConnector.updateBild(bild.getBildID(), bild.getName(), bild.getBeschreibung(), bild.isPublicBild(), bild.getDate(), bild.getPath(), bild.getLongitude(), bild.getLatitude(), bild.getAltitude(), bild.getDirection());
+            if(bild.getBildID()==-1){
+//                bildConnector.createBild(bild.getName(), bild.getBeschreibung(), bild.isPublicBild(), bild.getDate(), bild.getPath(), bild.getLongitude(), bild.getLatitude(), bild.getAltitude(), bild.getDirection(), controller.getAlbumID());
+                createBild(controller.getAlbumID(), bild);
+            }else{
+                bildConnector.updateBild(bild.getBildID(), bild.getName(), bild.getBeschreibung(), bild.isPublicBild(), bild.getDate(), bild.getPath(), bild.getLongitude(), bild.getLatitude(), bild.getAltitude(), bild.getDirection());
+            }
         }
     }
 
@@ -77,14 +83,16 @@ public class AlbumControllerDBUtil {
         return albumConnector.getAlbumByName(name);
     }
 
-    @SuppressWarnings("unchecked")
-    public List<Bild> ladeBilderAusDB(Document doc) throws ConnectException {
+    public List<Bild> ladeBilderAusDB(int albumID) throws ConnectException {
         //TODO Connector ändern
         IBildConnector bildConnector = new BildConnector();
         List<Bild> bilder = new ArrayList<Bild>();
-        List<Node> nodeList = (List<Node>) doc.getElementsByTagName("bild");
-        for (Node node : nodeList) {
-            Bild bild = ladeEinzelnesBildAusDB(bildConnector, node);
+        Document doc = bildConnector.getBilderForAlbum(albumID);
+        NodeList nodeList = doc.getElementsByTagName("bild");
+        for (int i = 0; i<nodeList.getLength();i++) {
+            Node node = nodeList.item(i);
+            String name = node.getChildNodes().item(3).getTextContent();
+            Bild bild = ladeEinzelnesBildAusDB(bildConnector, name);
             bilder.add(bild);
         }
         return bilder;
@@ -113,9 +121,31 @@ public class AlbumControllerDBUtil {
         }
     }
 
-    private Bild ladeEinzelnesBildAusDB(IBildConnector bildConnector, Node node) throws ConnectException {
-        String bildName = node.getAttributes().getNamedItem("id").getTextContent();
-        Document bildDoc = bildConnector.getBilderByName(bildName);
+     private void createBild(int albumID, Bild bild) throws JpegProcessingException, MetadataException, ParseException, ConnectException, FileNotFoundException {
+            ImageDataExtractor extractor = new ImageDataExtractor();
+            Position pos = extractor.getPosition(bild.getPath());
+            CoordinateCalculator calculator = new CoordinateCalculator();
+            String longitudeDecimal = calculator.getDecimalCoordinate(pos.getLongitude(), pos.getLongitudeRef());
+            bild.setLongitude(longitudeDecimal);
+            String latitudeDecimal = calculator.getDecimalCoordinate(pos.getLatitude(), pos.getLatitudeRef());
+            bild.setLatitude(latitudeDecimal);
+            if (pos.getTimeStamp() != null) {
+                bild.setDate(pos.getTimeStamp());
+            }else{
+                GregorianCalendar cal = new GregorianCalendar();
+                cal.setTime(new Date(System.currentTimeMillis()));
+                bild.setDate(cal);
+            }
+            IBildConnector connector = new BildConnector();
+//            bilder.indexOf(bild);
+//            connector.createBild(bild.getName(), bild.getBeschreibung(), bild.isPublicBild(), pos.getTimeStamp(), longitudeDecimal, latitudeDecimal, pos.getAltitude(), pos.getDirection());
+            connector.createBild(bild.getName(), bild.getBeschreibung(), bild.isPublicBild(), bild.getDate(), bild.getPath(), bild.getLongitude(), bild.getLatitude(), bild.getAltitude(), bild.getDirection(), albumID);
+    }
+
+    private Bild ladeEinzelnesBildAusDB(IBildConnector bildConnector, String name) throws ConnectException {
+//        String bildName = node.getAttributes().getNamedItem("id").getTextContent();
+//        Document bildDoc = bildConnector.getBilderByName(bildName);
+        Document bildDoc = bildConnector.getBilderByName(name);
         Bild bild = new Bild();
         bild.setBildID(Integer.parseInt(getTextContentFromElement(bildDoc, "id")));
         bild.setName(getTextContentFromElement(bildDoc, "name"));
@@ -126,9 +156,9 @@ public class AlbumControllerDBUtil {
         } else {
             bild.setPublicBild(false);
         }
-        String timeStamp = getTextContentFromElement(bildDoc, "timestamp");
+        String timeStamp = getTextContentFromElement(bildDoc, "date");
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             Date date = sdf.parse(timeStamp);
             GregorianCalendar cal = new GregorianCalendar();
             cal.setTime(date);

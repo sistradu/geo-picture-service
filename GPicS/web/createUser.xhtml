@@ -10,7 +10,7 @@
                 xmlns:p="http://primefaces.prime.com.tr/ui">
     <ui:define name="content">
         <h:form id="createUserMask">
-            <h:outputLabel value="#{msg.createUserInfo}" rendered="#{!userController.eingeloggt}"/>
+            <h:outputLabel value="#{msg.createUserInfo}" rendered="#{!userController.eingeloggt}" style="color:green;"/>
             <table>
                 <tr>
                     <td><h:outputLabel value="#{msg.username}"/></td>

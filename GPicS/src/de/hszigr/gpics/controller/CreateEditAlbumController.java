@@ -40,6 +40,7 @@ public class CreateEditAlbumController {
     private List<Bild> bilder;
 
     private int selectedBId;
+    private boolean isNewAlbum = true;
 
     public CreateEditAlbumController() {
         bilder = new ArrayList<Bild>();
@@ -83,6 +84,7 @@ public class CreateEditAlbumController {
 
     //TODO einstieg für bearbeiten
     public String ladeAlbum() {
+        isNewAlbum = false;
         String name = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("AlbumName");
         try {
             if (name != null) {
@@ -92,10 +94,10 @@ public class CreateEditAlbumController {
                 setAlbumID(Integer.parseInt(util.getTextContentFromElement(doc, "id")));
                 setAlbumName(name);
 //                setPasswort(doc.getElementsByTagName("passwort").item(0).getTextContent());
-                setPasswort(util.getTextContentFromElement(doc, "passwort"));
+                setPasswort(util.getTextContentFromElement(doc, "password"));
 //                setAlbumBeschreibung(doc.getElementsByTagName("description").item(0).getTextContent());
                 setAlbumBeschreibung(util.getTextContentFromElement(doc, "description"));
-                setBilder(util.ladeBilderAusDB(doc));
+                setBilder(util.ladeBilderAusDB(albumID));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -120,11 +122,12 @@ public class CreateEditAlbumController {
         try {
             AlbumControllerDBUtil util = new AlbumControllerDBUtil();
             util.updateAlbum(this);
-        } catch (ConnectException e) {
+        } catch (Exception e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             GPicSUtil.createFacesMessageForID("saveAlbum", e.getMessage(), true);
             return null;
         }
+        isNewAlbum = true;
         return "showAlbum";
     }
 
@@ -156,9 +159,9 @@ public class CreateEditAlbumController {
         }
     }
 
-    public boolean newAlbum(){
-        return this.albumID == 0;
-    }
+//    public boolean newAlbum(){
+//        return this.albumID == 0;
+//    }
 
     private void updateBilderListe(String s) throws IOException {
         try {
@@ -167,7 +170,7 @@ public class CreateEditAlbumController {
             bild.setPath(s);
             bild.setContent(GPicSUtil.getStreamContent(s));
             bild.setPublicBild(false);
-            bild.setBildID(bilder.size());
+            bild.setBildID(-1);
             bilder.add(bild);
         } catch (FileNotFoundException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
@@ -225,5 +228,13 @@ public class CreateEditAlbumController {
 
     public void setSelectedBId(int selectedBId) {
         this.selectedBId = selectedBId;
+    }
+
+    public boolean isNewAlbum() {
+        return isNewAlbum;
+    }
+
+    public void setNewAlbum(boolean newAlbum) {
+        isNewAlbum = newAlbum;
     }
 }
