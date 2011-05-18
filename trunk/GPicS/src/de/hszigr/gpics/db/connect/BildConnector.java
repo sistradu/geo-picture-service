@@ -24,7 +24,7 @@ public class BildConnector implements IBildConnector{
         params.put("name", name);
         params.put("description", description);
         params.put("ispublic", ""+isPublic);
-        params.put("date", new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(date.getTime()));
+        if(date!=null) params.put("date", new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(date.getTime()));
         params.put("fileposition", filePosition);
         params.put("longitude", longitude);
         params.put("latitude", latitude);
@@ -52,7 +52,7 @@ public class BildConnector implements IBildConnector{
         params.put("name", name);
         params.put("description", description);
         params.put("ispublic", ""+isPublic);
-        params.put("date", new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(date.getTime()));
+        if(date!=null) params.put("date", new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(date.getTime()));
         params.put("fileposition", filePosition);
         params.put("longitude", longitude);
         params.put("latitude", latitude);
