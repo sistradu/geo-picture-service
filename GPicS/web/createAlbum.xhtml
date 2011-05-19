@@ -7,8 +7,10 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
                 xmlns:p="http://primefaces.prime.com.tr/ui">
     <ui:define name="content">
+        <f:view contentType="text/html">
         <h1>
             <h:outputLabel value="#{msg.createAlbum}" rendered="#{createEditAlbumController.newAlbum}"/>
             <h:outputLabel value="#{msg.editAlbum}" rendered="#{!createEditAlbumController.newAlbum}" />
@@ -50,17 +52,19 @@
         <!--</h:form>-->
         <!--<h:form rendered="#{userController.eingeloggt}" prependId="false" id="cgrid">-->
             <p:dataGrid id="cgrid" var="b" value="#{createEditAlbumController.bilder}" columns="3"
-                        rows="12" paginator="true" effect="true"
+                        rows="12" paginator="false" effect="true"
                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                         rowsPerPageTemplate="9,12,15">
 
                 <p:column>
                     <p:panel header="#{b.name}" style="text-align:center">
                         <h:panelGrid columns="1" style="width:100%">
+                            <h:form>
                             <p:graphicImage value="#{createEditAlbumController.image}" width="20%"
                                             height="20%">
                                 <f:param name="name" value="#{b.name}"/>
                             </p:graphicImage>
+                            </h:form>
                             <h:commandLink value="#{msg.deleteImage}"
                                            action="#{createEditAlbumController.loescheBild}">
                                 <f:param name="bildID" value="#{b.bildID}"/>
@@ -83,8 +87,10 @@
         <!--<h:form id="saveAlbum" rendered="#{userController.eingeloggt}">-->
             <h:commandButton value="#{msg.save}" action="#{createEditAlbumController.createAlbum}" rendered="#{createEditAlbumController.newAlbum}"/>
             <h:commandButton value="#{msg.save}" action="#{createEditAlbumController.updateAlbum}" rendered="#{!createEditAlbumController.newAlbum}" />
-            <h:commandButton value="#{msg.abort}" action="allAlbums"/>
+            <h:commandButton value="#{msg.abort}" action="allAlbums" rendered="#{createEditAlbumController.newAlbum}"/>
+            <h:commandButton value="#{msg.abort}" action="#{createEditAlbumController.abortEdit}" rendered="#{!createEditAlbumController.newAlbum}" />
         </h:form>
         <!--<h:messages for="saveAlbum" style="color:red;"/>-->
+        </f:view>
     </ui:define>
 </ui:composition>

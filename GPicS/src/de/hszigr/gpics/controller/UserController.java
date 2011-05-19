@@ -103,7 +103,7 @@ public class UserController {
             Session session = Session.getInstance(props, aut);
             MessagePropertiesBean msgPB = new MessagePropertiesBean();
             Message mail = new MimeMessage(session);
-            mail.setFrom(new InternetAddress("mailer@gpics.de"));
+            mail.setFrom(new InternetAddress("mailer@ux-i-xml11a.inf.hs-zigr.de"));
             mail.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(email));
             mail.setSubject(msgPB.getPropertiesMessage("mailSubject"));
