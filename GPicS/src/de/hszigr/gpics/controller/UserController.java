@@ -36,6 +36,8 @@ public class UserController {
     private boolean eingeloggt = false;
     private String passwort;
     private String passwortRepeat;
+    private String oldPasswort;
+    private String newPasswort;
     private INutzerConnector conn;
 
     public UserController() {
@@ -138,21 +140,28 @@ public class UserController {
             setNutzerID(Integer.parseInt(doc.getElementsByTagName("id").item(0).getTextContent()));
             setEingeloggt(true);
             sendPasswortEmail();
+            resetAll();
         } catch (Exception e) {
             e.printStackTrace();
             GPicSUtil.createFacesMessageForID("createUserMask", e.getMessage(), true);
             return "createUser";
         }
-        return "showOwnAlbum";
+        return "index";
     }
 
     public String updateBenutzer() {
         try {
-            if (!passwort.equals(passwortRepeat)) {
+            if(!passwort.equals(oldPasswort)){
+                MessagePropertiesBean msgPB = new MessagePropertiesBean();
+                GPicSUtil.createFacesMessageForID("createUserMask:createUserOldPasswort", msgPB.getPropertiesMessage("oldPasswortDontEqual"), true);
+                return null;
+            }
+            if (!newPasswort.equals(passwortRepeat)) {
                 MessagePropertiesBean msgPB = new MessagePropertiesBean();
                 GPicSUtil.createFacesMessageForID("createUserMask:createUserRepeatPasswort", msgPB.getPropertiesMessage("passwordDontEqual"), true);
                 return null;
             }
+            passwort = newPasswort;
             try {
                 conn.updateNutzer(nutzerID, nutzerNamen, passwort, email);
             } catch (Exception e) {
@@ -238,5 +247,23 @@ public class UserController {
 
     public void setEingeloggt(boolean eingeloggt) {
         this.eingeloggt = eingeloggt;
+    }
+
+    public String getOldPasswort() {
+        return oldPasswort;
+    }
+
+    public void setOldPasswort(String oldPasswort) {
+        PasswortUtil util = new PasswortUtil();
+        this.oldPasswort = util.encryptWithMD5(oldPasswort);
+    }
+
+    public String getNewPasswort() {
+        return newPasswort;
+    }
+
+    public void setNewPasswort(String newPasswort) {
+        PasswortUtil util = new PasswortUtil();
+        this.newPasswort = util.encryptWithMD5(newPasswort);
     }
 }
