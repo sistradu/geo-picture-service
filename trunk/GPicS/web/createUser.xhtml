@@ -17,9 +17,17 @@
                     <td><h:inputText value="#{userController.nutzerNamen}"/></td>
                 </tr>
                 <tr>
+                    <td><h:outputLabel value="#{msg.oldPassword}" rendered="#{userController.eingeloggt}" /></td>
+                    <td>
+                        <h:inputSecret id="createUserOldPasswort" value="#{userController.oldPasswort}" required="true"
+                                       requiredMessage="#{msg.oldPasswortRequiredMessage}" rendered="#{userController.eingeloggt}"/>
+                    </td>
+                    <td><h:message for="createUserOldPasswort" style="color:red;" rendered="#{userController.eingeloggt}"/></td>
+                </tr>
+                <tr>
                     <td><h:outputLabel value="#{msg.password}" rendered="#{userController.eingeloggt}" /></td>
                     <td>
-                        <h:inputSecret id="createUserPasswort" value="#{userController.passwort}" required="true"
+                        <h:inputSecret id="createUserPasswort" value="#{userController.newPasswort}" required="true"
                                        requiredMessage="#{msg.forgotPasswortRequiredMessage}" rendered="#{userController.eingeloggt}"/>
                     </td>
                     <td><h:message for="createUserPasswort" style="color:red;" rendered="#{userController.eingeloggt}"/></td>
