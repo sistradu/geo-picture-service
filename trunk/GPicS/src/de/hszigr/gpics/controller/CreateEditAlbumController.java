@@ -1,5 +1,7 @@
 package de.hszigr.gpics.controller;
 
+import com.drew.imaging.jpeg.JpegProcessingException;
+import com.drew.metadata.MetadataException;
 import de.hszigr.gpics.util.AlbumControllerDBUtil;
 import de.hszigr.gpics.util.GPicSUtil;
 import org.primefaces.event.FileUploadEvent;
@@ -13,7 +15,7 @@ import javax.faces.context.FacesContext;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.ConnectException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,27 +37,37 @@ public class CreateEditAlbumController {
     private String passwort;
 
     //TODO uploadDir
-//    private String uploadDir = "/home/pics/";
-    private String uploadDir = "D:/upload/";
+    private String uploadDir = "/home/pics/";
+//    private String uploadDir = "D:/upload/";
     private List<Bild> bilder;
+    private List<Bild> deleteList;
 
     private int selectedBId;
     private boolean isNewAlbum = true;
 
     public CreateEditAlbumController() {
         bilder = new ArrayList<Bild>();
+        deleteList = new ArrayList<Bild>();
     }
 
     public void handleFileUpload(FileUploadEvent event) {
         UploadedFile file = event.getFile();
 
         try {
-            FileOutputStream out = new FileOutputStream(uploadDir + file.getFileName());
+            UserController uc = (UserController) GPicSUtil.getBean("userController");
+            String username = uc.getNutzerNamen();
+            FileOutputStream out = new FileOutputStream(uploadDir + username + "_" + file.getFileName());
             out.write(file.getContents());
             out.flush();
             out.close();
-            updateBilderListe(uploadDir + file.getFileName());
-        } catch (IOException e) {
+            updateBilderListe(uploadDir + username + "_" + file.getFileName());
+            if (!isNewAlbum) {
+                //TODO aufruf von ladeAlbum probieren
+                AlbumControllerDBUtil util = new AlbumControllerDBUtil();
+                setBilder(util.ladeBilderAusDB(albumID));
+//            FacesContext.getCurrentInstance().getExternalContext().redirect("createAlbum.xhtml");
+            }
+        } catch (Exception e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
         GPicSUtil.createFacesMessageForID("uploader", file.getFileName() + " erfolgreich hochgeladen.", false);
@@ -82,9 +94,22 @@ public class CreateEditAlbumController {
         return defaultImage;
     }
 
+    public String initCreateEditAlbumController() {
+        albumID = -1;
+        albumName = "";
+        albumBeschreibung = "";
+        passwort = "";
+        bilder = new ArrayList<Bild>();
+        deleteList = new ArrayList<Bild>();
+        selectedBId = -1;
+        isNewAlbum = true;
+        return "createAlbum";
+    }
+
     //TODO einstieg für bearbeiten
     public String ladeAlbum() {
         isNewAlbum = false;
+        deleteList = new ArrayList<Bild>();
         String name = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("AlbumName");
         try {
             if (name != null) {
@@ -97,11 +122,12 @@ public class CreateEditAlbumController {
                 setPasswort(util.getTextContentFromElement(doc, "password"));
 //                setAlbumBeschreibung(doc.getElementsByTagName("description").item(0).getTextContent());
                 setAlbumBeschreibung(util.getTextContentFromElement(doc, "description"));
+                bilder = null;
                 setBilder(util.ladeBilderAusDB(albumID));
             }
         } catch (Exception e) {
             e.printStackTrace();
-            GPicSUtil.createFacesMessageForID("saveAlbum", e.getMessage(),true);
+            GPicSUtil.createFacesMessageForID("saveAlbum", e.getMessage(), true);
         }
         return "createAlbum";
     }
@@ -109,6 +135,11 @@ public class CreateEditAlbumController {
     public void loescheBild() {
         try {
             int bildId = Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("bildID"));
+            for (Bild bild : deleteList) {
+                if (bildId == bild.getBildID()) {
+                    bild.getContent().getStream().close();
+                }
+            }
             AlbumControllerDBUtil util = new AlbumControllerDBUtil();
             util.loescheBild(this, bildId);
         } catch (Exception e) {
@@ -118,10 +149,12 @@ public class CreateEditAlbumController {
     }
 
     //TODO aufruf zum speichern des bearbeiteten album
-    public String updateAlbum(){
+    public String updateAlbum() {
         try {
             AlbumControllerDBUtil util = new AlbumControllerDBUtil();
             util.updateAlbum(this);
+            AlbumController ac = (AlbumController) GPicSUtil.getBean("albumController");
+            ac.loadAlbum(this.getAlbumName());
         } catch (Exception e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             GPicSUtil.createFacesMessageForID("saveAlbum", e.getMessage(), true);
@@ -159,19 +192,38 @@ public class CreateEditAlbumController {
         }
     }
 
-//    public boolean newAlbum(){
-//        return this.albumID == 0;
-//    }
+    public String abortEdit() {
+        try {
+            for (Bild bild : deleteList) {
+                bild.getContent().getStream().close();
+                AlbumControllerDBUtil util = new AlbumControllerDBUtil();
+                util.loescheBild(this, bild.getBildID());
 
-    private void updateBilderListe(String s) throws IOException {
+            }
+        } catch (Exception e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            GPicSUtil.createFacesMessageForID("saveAlbum", e.getMessage(), true);
+            return "createAlbum";
+        }
+        return "showAlbum";
+    }
+
+    private void updateBilderListe(String s) throws IOException, JpegProcessingException, MetadataException, ParseException {
         try {
             Bild bild = new Bild();
             bild.setName(s.substring(s.lastIndexOf("/") + 1));
             bild.setPath(s);
+            StreamedContent c = GPicSUtil.getStreamContent(s);
             bild.setContent(GPicSUtil.getStreamContent(s));
             bild.setPublicBild(false);
             bild.setBildID(-1);
             bilder.add(bild);
+            if (!isNewAlbum) {
+                AlbumControllerDBUtil util = new AlbumControllerDBUtil();
+                int bildID = util.createBild(this.albumID, bild);
+                bild.setBildID(bildID);
+                deleteList.add(bild);
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
@@ -202,8 +254,8 @@ public class CreateEditAlbumController {
         this.albumBeschreibung = albumBeschreibung;
     }
 
-    public void setPasswort(String passwort){
-        this.passwort=passwort;
+    public void setPasswort(String passwort) {
+        this.passwort = passwort;
     }
 
     public String getPasswort() {

@@ -43,8 +43,10 @@ public class AlbumControllerDBUtil {
                 f.delete();
                 bilder.remove(bild);
                 //TODO connector ändern
-                IBildConnector connector = new BildConnector();
-                connector.deleteBild(bild.getBildID());
+                if (!controller.isNewAlbum()) {
+                    IBildConnector connector = new BildConnector();
+                    connector.deleteBild(bild.getBildID());
+                }
             }
         }
     }
@@ -121,7 +123,7 @@ public class AlbumControllerDBUtil {
         }
     }
 
-     private void createBild(int albumID, Bild bild) throws JpegProcessingException, MetadataException, ParseException, ConnectException, FileNotFoundException {
+     public int createBild(int albumID, Bild bild) throws JpegProcessingException, MetadataException, ParseException, ConnectException, FileNotFoundException {
             ImageDataExtractor extractor = new ImageDataExtractor();
             Position pos = extractor.getPosition(bild.getPath());
             CoordinateCalculator calculator = new CoordinateCalculator();
@@ -139,7 +141,8 @@ public class AlbumControllerDBUtil {
             IBildConnector connector = new BildConnector();
 //            bilder.indexOf(bild);
 //            connector.createBild(bild.getName(), bild.getBeschreibung(), bild.isPublicBild(), pos.getTimeStamp(), longitudeDecimal, latitudeDecimal, pos.getAltitude(), pos.getDirection());
-            connector.createBild(bild.getName(), bild.getBeschreibung(), bild.isPublicBild(), bild.getDate(), bild.getPath(), bild.getLongitude(), bild.getLatitude(), bild.getAltitude(), bild.getDirection(), albumID);
+            int bildID = connector.createBild(bild.getName(), bild.getBeschreibung(), bild.isPublicBild(), bild.getDate(), bild.getPath(), bild.getLongitude(), bild.getLatitude(), bild.getAltitude(), bild.getDirection(), albumID);
+         return bildID;
     }
 
     private Bild ladeEinzelnesBildAusDB(IBildConnector bildConnector, String name) throws ConnectException {
