@@ -4,6 +4,7 @@ import de.hszigr.gpics.db.connect.AlbumConnector;
 import de.hszigr.gpics.db.connect.BildConnector;
 import de.hszigr.gpics.db.interfaces.IAlbumConnector;
 import de.hszigr.gpics.db.interfaces.IBildConnector;
+import de.hszigr.gpics.util.GPicSUtil;
 import de.hszigr.gpics.util.MessagePropertiesBean;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -41,6 +42,7 @@ public class AlbumController {
     private String passwort;
     private int erstellerID;
     private ArrayList<Bild> bilder = new ArrayList<Bild>();
+    private StreamedContent picture;
 
     public AlbumController(){
 
@@ -131,6 +133,36 @@ public class AlbumController {
             npe.printStackTrace();
         }
         return back;
+    }
+
+    public String getImage(String name) {
+        StreamedContent defaultImage = null;
+        try {
+            MessagePropertiesBean msgPB = new MessagePropertiesBean();
+            String pfad = "D:/upload/gpics.jpg";// msgPB.getPropertiesMessage("defaultPicturePath");
+            defaultImage = GPicSUtil.getStreamContent(pfad);
+            FacesContext fc = FacesContext.getCurrentInstance();
+        //    String name = fc.getExternalContext().getRequestParameterMap().get("name");
+            if (name != null && !bilder.isEmpty()) {
+                StreamedContent content = null;
+                for (Bild b : bilder) {
+                    if (b.getName().equals(name)) {
+                        content = b.getContent();
+                    }
+                }
+                picture = content;
+                return "";
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        picture = defaultImage;
+        return "";
+    }
+
+    public StreamedContent getPicture(){
+        return picture;
     }
 
     public Document getAlbum() {

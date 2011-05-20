@@ -1,16 +1,23 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="GPicS:war exploded">
+  <artifact type="exploded-war" build-on-make="true" name="GPicS:war exploded">
     <output-path>$PROJECT_DIR$/out/artifacts/GPicS_war_exploded</output-path>
     <root id="root">
-      <element id="javaee-facet-resources" facet="GPicS/web/Web" />
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="GPicS" />
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="2.0.1-FCS" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/commons-logging-1.1.1.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/commons-io-2.0.1.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/commons-fileupload-1.2.2.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/log4j-1.2.16.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/primefaces-2.2.1.jar" />
+          <element id="file-copy" path="$APPLICATION_HOME_DIR$/lib/junit-4.8.jar" />
         </element>
       </element>
+      <element id="javaee-facet-resources" facet="GPicS/web/Web" />
+      <element id="javaee-facet-resources" facet="GPicS/javaeeApplication/javaEEApplication" />
     </root>
   </artifact>
 </component>
