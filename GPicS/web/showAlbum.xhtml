@@ -15,19 +15,14 @@
 
         <h3><h:outputLabel value="#{albumController.albumBeschreibung}"/></h3>
         <h:form>
-            <p:lightBox width="75%" height="75%" slideshow="true" slideshowSpeed="2000"
-                        slideshowStartText="starte Vorführung" slideshowStopText="stoppe Vorführung"
-                        slideshowAuto="false">
-                <c:forEach items="${albumController.bilder}" var="bilder">
 
-                    <h:outputLink value="${bilder.path}" title="${bilder.name}">
-                        <p:graphicImage value="${bilder.path}"/>
-                    </h:outputLink>
-
-                </c:forEach>
-
-            </p:lightBox>
-
+            <p:galleria effect="fade" effectSpeed="1000">
+                <ui:repeat value="#{albumController.bilder}" var="image">
+                    <h:outputLabel value="#{albumController.getImage(image.name)}"/>
+                    <p:graphicImage value="#{albumController.picture}"
+                        title="#{image.name}" alt="Description goes here"/>
+                </ui:repeat>
+            </p:galleria>
 
             <p:gmap center="#{albumController.bilder[0].latitude}, #{albumController.bilder[0].longitude}" zoom="13" type="HYBRID" style="width:600px;height:400px"
                     model="#{mapBean.simpleModel}" overlaySelectListener="#{mapBean.onMarkerSelect}">
@@ -37,6 +32,7 @@
                     <h:outputText value="#{mapBean.beschreibung}"/>
                 </p:gmapInfoWindow>
             </p:gmap>
+
             <br/>
             <h:commandLink value="#{msg.editAlbum}" action="#{createEditAlbumController.ladeAlbum}" rendered="#{userController.eingeloggt and userController.nutzerID == albumController.erstellerID}">
                 <f:param name="AlbumName" value="#{albumController.albumName}"/>
