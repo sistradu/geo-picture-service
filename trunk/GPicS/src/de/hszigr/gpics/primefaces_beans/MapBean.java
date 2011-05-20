@@ -5,6 +5,7 @@ import de.hszigr.gpics.controller.Bild;
 import de.hszigr.gpics.util.GPicSUtil;
 import de.hszigr.gpics.util.MessagePropertiesBean;
 import org.primefaces.event.map.OverlaySelectEvent;
+import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
@@ -13,6 +14,9 @@ import org.primefaces.model.map.Marker;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +65,7 @@ public class MapBean implements Serializable {
     public void onMarkerSelect(OverlaySelectEvent event) {
         for (int i = 0; i < bilder.size(); i++){
             if (event.getOverlay().getData().equals(bilder.get(i).getPath())){
-                image = bilder.get(i).getContent();
+                image = readContent(bilder.get(i).getPath());
                 MessagePropertiesBean msgPB = new MessagePropertiesBean();
                 if (bilder.get(i).getPath().equals(msgPB.getPropertiesMessage("defaultPicturePath"))){
                     beschreibung = msgPB.getPropertiesMessage("pictureNotFound");
@@ -72,6 +76,17 @@ public class MapBean implements Serializable {
         }
 
         this.marker = (Marker) event.getOverlay();
+    }
+
+    private StreamedContent readContent(String path) {
+        StreamedContent back = new DefaultStreamedContent();
+        try {
+            InputStream stream = new FileInputStream(path);
+            back = new DefaultStreamedContent(stream, "image/jpeg");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        return back;  //To change body of created methods use File | Settings | File Templates.
     }
 
     public MapModel getSimpleModel() {

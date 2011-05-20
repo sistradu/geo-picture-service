@@ -20,7 +20,7 @@
                 <ui:repeat value="#{albumController.bilder}" var="image">
                     <h:outputLabel value="#{albumController.getImage(image.name)}"/>
                     <p:graphicImage value="#{albumController.picture}"
-                        title="#{image.name}" alt="Description goes here"/>
+                        title="#{image.name}" alt="#{image.beschreibung}"/>
                 </ui:repeat>
             </p:galleria>
 
