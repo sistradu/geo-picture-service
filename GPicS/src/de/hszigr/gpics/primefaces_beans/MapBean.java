@@ -7,10 +7,7 @@ import de.hszigr.gpics.util.MessagePropertiesBean;
 import org.primefaces.event.map.OverlaySelectEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
-import org.primefaces.model.map.DefaultMapModel;
-import org.primefaces.model.map.LatLng;
-import org.primefaces.model.map.MapModel;
-import org.primefaces.model.map.Marker;
+import org.primefaces.model.map.*;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -52,14 +49,24 @@ public class MapBean implements Serializable {
         simpleModel = new DefaultMapModel();
         AlbumController ac = (AlbumController) GPicSUtil.getBean("albumController");
         bilder = ac.getBilder();
+        Polyline polyline = new Polyline();
         for (int i = 0; i < ac.getBilder().size(); i++){
             Bild bild = bilder.get(i);
 
             LatLng coord = new LatLng(Double.parseDouble(bild.getLatitude()), Double.parseDouble(bild.getLongitude()));
+
+            polyline.getPaths().add(coord);
+
             Marker m  = new Marker(coord, bild.getName(), bild.getPath());
 
             simpleModel.addOverlay(m);
         }
+
+        polyline.setStrokeWeight(5);
+        polyline.setStrokeColor("#FF9900");
+        polyline.setStrokeOpacity(0.7);
+
+        simpleModel.addOverlay(polyline);
     }
 
     public void onMarkerSelect(OverlaySelectEvent event) {

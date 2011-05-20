@@ -121,7 +121,11 @@ public class AlbumController {
             StreamedContent image = new DefaultStreamedContent(stream, "image/jpeg");
             bild.setContent(image);
 
-            bilder.add(bild);
+            UserController uc = (UserController) GPicSUtil.getBean("userController");
+            if ((uc.isEingeloggt() && uc.getNutzerID() == this.erstellerID) || bild.isPublicBild()){
+                bilder.add(bild);
+            }
+
         }
     }
 
