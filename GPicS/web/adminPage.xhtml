@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE composition
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+                template="layout.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <ui:define name="content">
+        <h:outputLabel value="#{msg.noAdmin}" rendered="#{!userController.admin}" />
+        <h:form rendered="#{userController.admin}">
+            <h:outputLabel value="#{msg.username}" />
+            <table>
+            <c:forEach items="#{adminPageController.user}" var="user">
+
+                    <tr>
+                        <td>
+                            <h:commandLink value="#{user}" action="#{adminPageController.loadALben}">
+                                <f:param name="username" value="#{user}" />
+                            </h:commandLink>
+                        </td>
+                        <td>
+                            <h:commandLink value="#{msg.deleteUser}" action="#{adminPageController.deleteUser}">
+                                <f:param name="username" value="#{user}" />
+                            </h:commandLink>
+                        </td>
+                    </tr>
+
+            </c:forEach>
+            </table>
+            <h:outputLabel value="#{msg.alben}"/>
+             <table>
+            <c:forEach items="#{adminPageController.alben}" var="album">
+
+                    <tr>
+                        <td>
+                            <h:commandLink value="#{album}" action="#{adminPageController.loadBilder}">
+                                <f:param name="albumname" value="#{album}" />
+                            </h:commandLink>
+                        </td>
+                        <td>
+                            <h:commandLink value="#{msg.deleteAlbum}" action="#{adminPageController.deleteAlbum}">
+                                <f:param name="albumname" value="#{album}" />
+                            </h:commandLink>
+                        </td>
+                    </tr>
+
+            </c:forEach>
+            </table>
+            <h:outputLabel value="#{msg.pics}" />
+            <table>
+            <c:forEach items="#{adminPageController.bilder}" var="bild">
+
+                    <tr>
+                        <td>
+                            <h:outputLabel value="#{bild}" />
+                        </td>
+                        <td>
+                            <h:commandLink value="#{msg.deletePic}" action="#{adminPageController.deleteBild}">
+                                <f:param name="bildname" value="#{bild}" />
+                            </h:commandLink>
+                        </td>
+                    </tr>
+
+            </c:forEach>
+            </table>
+        </h:form>
+    </ui:define>
+</ui:composition>

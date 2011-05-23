@@ -39,6 +39,7 @@ public class UserController {
     private String oldPasswort;
     private String newPasswort;
     private INutzerConnector conn;
+    private boolean admin = false;
 
     public UserController() {
         conn = new NutzerConnector();
@@ -54,6 +55,11 @@ public class UserController {
             if (dbPasswort.equals(passwort)) {
                 eingeloggt = true;
                 getNutzerIDAndEmail(doc);
+                if(nutzerNamen.equals("Admin")){
+                    admin = true;
+                    AdminPageController ac = (AdminPageController) GPicSUtil.getBean("adminPageController");
+                    return ac.loadPage();
+                }
                 return "showOwnAlbum";
             }
         }catch(NullPointerException e){
@@ -194,6 +200,7 @@ public class UserController {
         setPasswort("");
         setEmail(null);
         setEingeloggt(false);
+        admin = false;
     }
 
     private void getNutzerIDAndEmail(Document doc) {
@@ -265,5 +272,13 @@ public class UserController {
     public void setNewPasswort(String newPasswort) {
         PasswortUtil util = new PasswortUtil();
         this.newPasswort = util.encryptWithMD5(newPasswort);
+    }
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
 }
