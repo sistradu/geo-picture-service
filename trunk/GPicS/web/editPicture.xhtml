@@ -12,7 +12,18 @@
 
     <ui:define name="content">
         <h:form>
+            <!-- <h:commandButton value="testbild laden" action="#{bildController.bild_bearbeiten}"/>     -->
             <table>
+                <tr>
+                    <td>
+                           <p:graphicImage value="#{bildController.data}" width="200" height="150"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+
+                    </td>
+                </tr>
                 <tr>
                     <td>
                         <h:outputLabel value="#{msg.bildname} "/>
@@ -42,7 +53,9 @@
                         <h:outputLabel value="#{msg.bildtimestamp} "/>
                     </td>
                     <td>
-                        <p:calendar value="#{calendarBean.date1}" showOn="button" />
+
+                       <!-- <p:calendar id="kalval" value="#{calendarBean.date1}" pattern="dd.MM.yyyy" showOn="button"/> -->
+                        <p:calendar value="#{bildController.timestamp}" pattern="dd.MM.yyyy" showOn="button"/>
                     </td>
                 </tr>
 
@@ -52,7 +65,10 @@
                         <h:outputLabel value="#{msg.bildlatitude} "/>
                     </td>
                     <td>
-                        <h:inputText style="width:300px;" value="#{bildController.latitude}"/>
+                        <h:inputText id="kooval" style="width:300px;" value="#{bildController.latitude}">
+                        <f:validator validatorId="KoordValidator" />
+                        </h:inputText>
+                       <!-- <h:message for="kooval"></h:message>      -->
                     </td>
                 </tr>
                 <tr>
@@ -60,7 +76,10 @@
                         <h:outputLabel value="#{msg.bildlongitude} "/>
                     </td>
                     <td>
-                        <h:inputText style="width:300px;" value="#{bildController.longitude}"/>
+                        <h:inputText id="kooval2" style="width:300px;" value="#{bildController.longitude}">
+                        <f:validator validatorId="KoordValidator" />
+                        </h:inputText>
+                        <h:message for="kooval2"></h:message>
                     </td>
                 </tr>
                 <tr>
@@ -81,7 +100,7 @@
                 </tr>
                  <tr>
                     <td>
-                        <h:commandButton value="Änderungen speichern"/>
+                        <h:commandButton value="Änderungen speichern" action="#{bildController.bild_aendern}"/>
                     </td>
                 </tr>
             </table>
