@@ -40,9 +40,11 @@ public class AlbumController {
     private String albumName;
     private String albumBeschreibung;
     private String passwort;
+    private String passwortEingabe;
     private int erstellerID;
     private ArrayList<Bild> bilder = new ArrayList<Bild>();
     private StreamedContent picture;
+    private boolean isFriend = false;
 
     public AlbumController(){
 
@@ -58,6 +60,9 @@ public class AlbumController {
 
     public String loadAlbumFromXHTML() throws Exception{
         albumName = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("AlbumName");
+
+
+
         loadAlbum(albumName);
         return "showAlbum";
     }
@@ -73,6 +78,7 @@ public class AlbumController {
         album = iac.getAlbumByName(name);
         int aID = Integer.parseInt(album.getElementsByTagName("id").item(0).getTextContent());
         erstellerID = Integer.parseInt(album.getElementsByTagName("nutzer").item(0).getTextContent());
+        passwort = album.getElementsByTagName("password").item(0).getTextContent();
 
         albumBeschreibung = album.getElementsByTagName("description").item(0).getTextContent();
         Document bilderXML = ibc.getBilderForAlbum(aID);
@@ -122,7 +128,7 @@ public class AlbumController {
             bild.setContent(image);
 
             UserController uc = (UserController) GPicSUtil.getBean("userController");
-            if ((uc.isEingeloggt() && uc.getNutzerID() == this.erstellerID) || bild.isPublicBild()){
+            if ((uc.isEingeloggt() && uc.getNutzerID() == this.erstellerID) || bild.isPublicBild() || this.isFriend()){
                 bilder.add(bild);
             }
 
@@ -141,6 +147,7 @@ public class AlbumController {
 
     public String getImage(String name) {
         StreamedContent defaultImage = null;
+
         try {
             MessagePropertiesBean msgPB = new MessagePropertiesBean();
             String pfad = "D:/upload/gpics.jpg";// msgPB.getPropertiesMessage("defaultPicturePath");
@@ -149,13 +156,15 @@ public class AlbumController {
         //    String name = fc.getExternalContext().getRequestParameterMap().get("name");
             if (name != null && !bilder.isEmpty()) {
                 StreamedContent content = null;
+                String bildID = "";
                 for (Bild b : bilder) {
                     if (b.getName().equals(name)) {
                         content = b.getContent();
+                        bildID = String.valueOf(b.getBildID());
                     }
                 }
                 picture = content;
-                return "";
+                return bildID;
             }
 
         } catch (IOException e) {
@@ -163,6 +172,17 @@ public class AlbumController {
         }
         picture = defaultImage;
         return "";
+    }
+
+    public String showAllPictures()throws Exception{
+        String back = "showAlbum";
+        if (passwort.equals(passwortEingabe)){
+            isFriend = true;
+            loadAlbum(this.albumName);
+            isFriend = false;
+        }
+
+        return back;
     }
 
     public StreamedContent getPicture(){
@@ -212,5 +232,21 @@ public class AlbumController {
 
     public void setPasswort(String passwort) {
         this.passwort = passwort;
+    }
+
+    public String getPasswortEingabe() {
+        return passwortEingabe;
+    }
+
+    public void setPasswortEingabe(String passwortEingabe) {
+        this.passwortEingabe = passwortEingabe;
+    }
+
+    public boolean isFriend() {
+        return isFriend;
+    }
+
+    public void setFriend(boolean friend) {
+        isFriend = friend;
     }
 }
