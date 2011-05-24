@@ -127,10 +127,10 @@ public class BildController {
       ibild = new BildConnector();
         String id  = FacesContext.getCurrentInstance()
                     .getExternalContext().getRequestParameterMap().get("id");
-        //int id_b = Integer.parseInt(id);
+        int id_b = Integer.parseInt(id);
      //   calbean = new CalendarBean();
         try {
-               int id_b=13;
+              //
             bild = ibild.getBildByID(id_b);
             bildID=id_b;
             bildName=bild.getElementsByTagName("name").item(0).getTextContent();
