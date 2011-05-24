@@ -1,8 +1,22 @@
 package de.hszigr.gpics.controller;
 
+import de.hszigr.gpics.db.connect.BildConnector;
+import de.hszigr.gpics.db.interfaces.IBildConnector;
+import de.hszigr.gpics.primefaces_beans.CalendarBean;
+import de.hszigr.gpics.util.GPicSUtil;
+import org.primefaces.model.StreamedContent;
+import org.w3c.dom.Document;
+
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import java.io.IOException;
+import java.net.ConnectException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 
 /**
  * Created by IntelliJ IDEA.
@@ -13,7 +27,7 @@ import java.util.Date;
  */
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class BildController {
 
     private int bildID;
@@ -25,6 +39,11 @@ public class BildController {
     private String longitude;
     private String altitude;
     private String direction;
+    private IBildConnector ibild;
+    private CalendarBean calbean = new CalendarBean();
+    private Document bild;
+    private String fileposition;
+    private StreamedContent data;
 
 
     public int getBildID() {
@@ -99,4 +118,70 @@ public class BildController {
     public void setDirection(String direction) {
         this.direction = direction;
     }
+
+    public CalendarBean getCalbean() {
+        return calbean;
+    }
+
+    public void bild_bearbeiten(){
+      ibild = new BildConnector();
+        String id  = FacesContext.getCurrentInstance()
+                    .getExternalContext().getRequestParameterMap().get("id");
+        //int id_b = Integer.parseInt(id);
+     //   calbean = new CalendarBean();
+        try {
+               int id_b=13;
+            bild = ibild.getBildByID(id_b);
+            bildID=id_b;
+            bildName=bild.getElementsByTagName("name").item(0).getTextContent();
+            beschreibung=bild.getElementsByTagName("description").item(0).getTextContent();
+            oeffentlich=Boolean.parseBoolean(bild.getElementsByTagName("ispublic").item(0).getTextContent());
+            timestamp=new SimpleDateFormat("yyyy-MM-dd").parse(bild.getElementsByTagName("date").item(0).getTextContent());
+            latitude=bild.getElementsByTagName("latitude").item(0).getTextContent();
+            longitude=bild.getElementsByTagName("longitude").item(0).getTextContent();
+            altitude=bild.getElementsByTagName("altitude").item(0).getTextContent();
+            direction=bild.getElementsByTagName("direction").item(0).getTextContent();
+            fileposition=bild.getElementsByTagName("fileposition").item(0).getTextContent();
+            data= GPicSUtil.getStreamContent(fileposition);
+
+        } catch (ConnectException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (ParseException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+    }
+
+    public void bild_aendern(){
+      ibild = new BildConnector();
+  //  calbean = new CalendarBean();
+      GregorianCalendar cal = new GregorianCalendar(Locale.getDefault());
+     cal.setTime(timestamp);
+        try {
+            ibild.updateBild(bildID,bildName,beschreibung,oeffentlich,cal,null,longitude,latitude,altitude,direction);
+        } catch (ConnectException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+    }
+
+
+    public String getFileposition() {
+        return fileposition;
+    }
+
+    public void setFileposition(String fileposition) {
+        this.fileposition = fileposition;
+    }
+
+    public StreamedContent getData() {
+        return data;
+    }
+
+    public void setData(StreamedContent data) {
+        this.data = data;
+    }
 }
+
