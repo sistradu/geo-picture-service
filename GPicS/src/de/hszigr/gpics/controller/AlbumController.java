@@ -164,6 +164,10 @@ public class AlbumController {
                     }
                 }
                 picture = content;
+
+                BildController bc = (BildController) GPicSUtil.getBean("bildController");
+                bc.setBildID(Integer.parseInt(bildID));
+
                 return bildID;
             }
 
@@ -171,7 +175,7 @@ public class AlbumController {
             e.printStackTrace();
         }
         picture = defaultImage;
-        return "";
+        return "0";
     }
 
     public String showAllPictures()throws Exception{

@@ -9,7 +9,6 @@ import org.w3c.dom.Document;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.text.ParseException;
@@ -45,6 +44,36 @@ public class BildController {
     private String fileposition;
     private StreamedContent data;
 
+    public void loadBilddaten(){
+      ibild = new BildConnector();
+//        String id  = FacesContext.getCurrentInstance()
+//                    .getExternalContext().getRequestParameterMap().get("id");
+//        int id_b = Integer.parseInt(id);
+     //   calbean = new CalendarBean();
+        try {
+              //
+//            bild = ibild.getBildByID(id_b);
+            bild = ibild.getBildByID(bildID);
+//            bildID=id_b;
+            bildName=bild.getElementsByTagName("name").item(0).getTextContent();
+            beschreibung=bild.getElementsByTagName("description").item(0).getTextContent();
+            oeffentlich=Boolean.parseBoolean(bild.getElementsByTagName("ispublic").item(0).getTextContent());
+            timestamp=new SimpleDateFormat("yyyy-MM-dd").parse(bild.getElementsByTagName("date").item(0).getTextContent());
+            latitude=bild.getElementsByTagName("latitude").item(0).getTextContent();
+            longitude=bild.getElementsByTagName("longitude").item(0).getTextContent();
+            altitude=bild.getElementsByTagName("altitude").item(0).getTextContent();
+            direction=bild.getElementsByTagName("direction").item(0).getTextContent();
+            fileposition=bild.getElementsByTagName("fileposition").item(0).getTextContent();
+            data= GPicSUtil.getStreamContent(fileposition);
+
+        } catch (ConnectException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (ParseException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+    }
 
     public int getBildID() {
         return bildID;
@@ -123,37 +152,6 @@ public class BildController {
         return calbean;
     }
 
-    public void bild_bearbeiten(){
-      ibild = new BildConnector();
-        String id  = FacesContext.getCurrentInstance()
-                    .getExternalContext().getRequestParameterMap().get("id");
-        int id_b = Integer.parseInt(id);
-     //   calbean = new CalendarBean();
-        try {
-              //
-            bild = ibild.getBildByID(id_b);
-            bildID=id_b;
-            bildName=bild.getElementsByTagName("name").item(0).getTextContent();
-            beschreibung=bild.getElementsByTagName("description").item(0).getTextContent();
-            oeffentlich=Boolean.parseBoolean(bild.getElementsByTagName("ispublic").item(0).getTextContent());
-            timestamp=new SimpleDateFormat("yyyy-MM-dd").parse(bild.getElementsByTagName("date").item(0).getTextContent());
-            latitude=bild.getElementsByTagName("latitude").item(0).getTextContent();
-            longitude=bild.getElementsByTagName("longitude").item(0).getTextContent();
-            altitude=bild.getElementsByTagName("altitude").item(0).getTextContent();
-            direction=bild.getElementsByTagName("direction").item(0).getTextContent();
-            fileposition=bild.getElementsByTagName("fileposition").item(0).getTextContent();
-            data= GPicSUtil.getStreamContent(fileposition);
-
-        } catch (ConnectException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        } catch (ParseException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-
-    }
-
     public void bild_aendern(){
       ibild = new BildConnector();
   //  calbean = new CalendarBean();
@@ -177,6 +175,7 @@ public class BildController {
     }
 
     public StreamedContent getData() {
+        loadBilddaten();
         return data;
     }
 
