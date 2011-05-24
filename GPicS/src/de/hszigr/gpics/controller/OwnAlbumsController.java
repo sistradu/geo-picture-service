@@ -2,9 +2,13 @@ package de.hszigr.gpics.controller;
 
 import de.hszigr.gpics.db.connect.AlbumConnector;
 import de.hszigr.gpics.db.interfaces.IAlbumConnector;
+import de.hszigr.gpics.util.GPicSUtil;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
 import java.net.ConnectException;
 import java.util.ArrayList;
@@ -17,6 +21,9 @@ import java.util.List;
  * Time: 18:42
  * To change this template use File | Settings | File Templates.
  */
+
+@ManagedBean
+@SessionScoped
 public class OwnAlbumsController {
     private String suchString;
     private Document alben;
@@ -35,10 +42,14 @@ public class OwnAlbumsController {
         ialb = new AlbumConnector();
         try {
             alben = ialb.getAllAlben();
+            UserController uc = (UserController) GPicSUtil.getBean("userController");
             NodeList nodeliste = alben.getElementsByTagName("name");
+            NodeList ownerListe = alben.getElementsByTagName("nutzer");
             for (int i = 0; i<nodeliste.getLength();i++) {
-            this.albenliste.add(nodeliste.item(i).getTextContent());
-        }
+                if (Integer.parseInt(ownerListe.item(i).getTextContent()) == uc.getNutzerID()){
+                    this.albenliste.add(nodeliste.item(i).getTextContent());
+                }
+            }
         } catch (ConnectException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
@@ -68,10 +79,12 @@ public class OwnAlbumsController {
            ialb = new AlbumConnector();
                try {
                    alben = ialb.getAlbenWithNameContaining(suchString);
-                   NodeList nodeliste = alben.getElementsByTagName("name");
+                   UserController uc = (UserController) GPicSUtil.getBean("userController");
+                    NodeList nodeliste = alben.getElementsByTagName("name");
+                    NodeList ownerListe = alben.getElementsByTagName("nutzer");
                    albenliste.clear();
                    for(int k=0; k<nodeliste.getLength();k++){
-                        if (true){
+                        if (Integer.parseInt(ownerListe.item(k).getTextContent()) == uc.getNutzerID()){
                             this.albenliste.add(nodeliste.item(k).getTextContent());
                         }
 
