@@ -14,9 +14,12 @@
         <h2><h:outputLabel value="#{albumController.albumName}"/></h2>
 
         <h3><h:outputLabel value="#{albumController.albumBeschreibung}"/></h3>
+        <h:outputLabel value="Das Passwort für Freunde lautet: #{albumController.passwort}" rendered="#{userController.eingeloggt and userController.nutzerID == albumController.erstellerID}"/>
+        <br/>
+        <h:outputLabel value="#{msg.rightClickToEdit}"/>
         <h:form>
 
-            <p:galleria effect="fade" effectSpeed="1000">
+            <p:galleria id="images" effect="fade" effectSpeed="1000">
                 <ui:repeat value="#{albumController.bilder}" var="image">
                     <h:outputLabel value="#{albumController.getImage(image.name)}"/>
                     <p:graphicImage value="#{albumController.picture}"
@@ -24,7 +27,15 @@
                 </ui:repeat>
             </p:galleria>
 
-            <p:gmap center="#{albumController.bilder[0].latitude}, #{albumController.bilder[0].longitude}" zoom="13" type="HYBRID" style="width:600px;height:400px"
+            <p:contextMenu for="images" zindex="5">
+                <p:menuitem value="#{msg.editImage}" url="editPicture.xhtml">
+                    <f:param name="id" value="#{albumController.getImage(image.name)}"/>
+                </p:menuitem>
+            </p:contextMenu>
+
+            <br/><br/>
+            <p align="center">
+                <p:gmap center="#{albumController.bilder[0].latitude}, #{albumController.bilder[0].longitude}" zoom="13" type="HYBRID" style="width:600px;height:400px"
                     model="#{mapBean.simpleModel}" overlaySelectListener="#{mapBean.onMarkerSelect}">
                 <p:gmapInfoWindow>
                     <p:graphicImage value="#{mapBean.image}" width="200" height="150"/>
@@ -32,8 +43,11 @@
                     <h:outputText value="#{mapBean.beschreibung}"/>
                 </p:gmapInfoWindow>
             </p:gmap>
+            </p>
 
-            <br/>
+            <br/><br/>
+            <h:inputText value="#{albumController.passwortEingabe}" rendered="#{userController.nutzerID != albumController.erstellerID}"/><h:commandButton value="#{msg.showAllPictures}" action="#{albumController.showAllPictures}" rendered="#{userController.nutzerID != albumController.erstellerID}"/>
+            <br/><br/>
             <h:commandLink value="#{msg.editAlbum}" action="#{createEditAlbumController.ladeAlbum}" rendered="#{userController.eingeloggt and userController.nutzerID == albumController.erstellerID}">
                 <f:param name="AlbumName" value="#{albumController.albumName}"/>
             </h:commandLink>

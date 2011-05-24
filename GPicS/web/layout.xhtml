@@ -113,14 +113,15 @@
                         <h:form>
 
 
-                            <h:commandLink value="#{msg.home}" action="index"/> <br/>
-                            <h:commandLink value="#{msg.ownAlbums}" action="showOwnAlbum" rendered="#{userController.eingeloggt}"/><br/>
-                            <h:commandLink value="#{msg.allAlbums}" action="allAlbums"/><br/>
-                            <h:commandLink value="#{msg.createAlbum}" action="#{createEditAlbumController.initCreateEditAlbumController}" rendered="#{userController.eingeloggt}"/><br/>
+                            <h:commandLink value="#{msg.home}" action="index"/> <br/><br/>
+                            <h:commandLink value="#{msg.ownAlbums}" action="showOwnAlbum" rendered="#{userController.eingeloggt}">
+                                <br/><br/>
+                            </h:commandLink>
+                            <h:commandLink value="#{msg.allAlbums}" action="allAlbums"/><br/><br/>
+                            <h:commandLink value="#{msg.createAlbum}" action="#{createEditAlbumController.initCreateEditAlbumController}" rendered="#{userController.eingeloggt}"/><br/><br/>
                             <h:commandLink value="#{msg.editAlbum}" action="createAlbum" rendered="#{userController.eingeloggt and userController.nutzerID == albumController.erstellerID}">
                                 <f:param name="AlbumName" value="#{albumController.albumName}"/>
                             </h:commandLink>
-                            <br/>
 
                         </h:form>
                                                 
@@ -137,8 +138,7 @@
                 </div>
             </div>
             <!-- begin: #footer -->
-            <div id="footer">Layout based on <a href="http://www.yaml.de/">YAML</a>
-                <ui:insert name="footer"/>
+            <div id="footer">&copy; by Stefan Radusch, Martin Schicht, Rico Scholz, Markus Ullrich <ui:insert name="footer"/>
             </div>
         </div>
         <div id="border-bottom">
