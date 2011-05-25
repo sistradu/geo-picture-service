@@ -45,6 +45,7 @@ public class AlbumController {
     private ArrayList<Bild> bilder = new ArrayList<Bild>();
     private StreamedContent picture;
     private boolean isFriend = false;
+    private String image;
 
     public AlbumController(){
 
@@ -145,12 +146,18 @@ public class AlbumController {
         return back;
     }
 
-    public String getImage(String name) {
+    public String getImage() {
         StreamedContent defaultImage = null;
+        String name = "";
+        try{
+            name = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("name");
+        }catch(Exception e){
+
+        }
 
         try {
             MessagePropertiesBean msgPB = new MessagePropertiesBean();
-            String pfad = "D:/upload/gpics.jpg";// msgPB.getPropertiesMessage("defaultPicturePath");
+            String pfad = msgPB.getPropertiesMessage("defaultPicturePath");
             defaultImage = GPicSUtil.getStreamContent(pfad);
             FacesContext fc = FacesContext.getCurrentInstance();
         //    String name = fc.getExternalContext().getRequestParameterMap().get("name");
@@ -168,14 +175,16 @@ public class AlbumController {
                 BildController bc = (BildController) GPicSUtil.getBean("bildController");
                 bc.setBildID(Integer.parseInt(bildID));
 
-                return bildID;
+                this.image = bildID;
+                return this.image;
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
         picture = defaultImage;
-        return "0";
+        this.image = "0";
+        return this.image;
     }
 
     public String showAllPictures()throws Exception{
