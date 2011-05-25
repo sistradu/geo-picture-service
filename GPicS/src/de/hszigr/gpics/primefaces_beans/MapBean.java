@@ -35,14 +35,16 @@ public class MapBean implements Serializable {
 
     private StreamedContent image;
     private String beschreibung;
+    private String doIt = "";
 
     public MapBean() {
 
         makeMarker();
     }
 
-    public void doIt(){
+    public String getDoIt(){
         makeMarker();
+        return this.doIt;
     }
 
     public void makeMarker() {

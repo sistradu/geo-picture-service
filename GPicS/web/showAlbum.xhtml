@@ -21,15 +21,18 @@
 
             <p:galleria id="images" effect="fade" effectSpeed="1000">
                 <ui:repeat value="#{albumController.bilder}" var="image">
-                    <h:outputLabel value="#{albumController.getImage(image.name)}"/>
+                    <h:outputLabel value="#{albumController.image}">
+                        <f:param name="name" value="#{image.name}"/>
+                    </h:outputLabel>
                     <p:graphicImage value="#{albumController.picture}"
                         title="#{image.name}" alt="#{image.beschreibung}"/>
                 </ui:repeat>
             </p:galleria>
 
-            <p:contextMenu for="images" zindex="5">
+            <p:contextMenu for="images" zindex="-50">
                 <p:menuitem value="#{msg.editImage}" url="editPicture.xhtml">
-                    <f:param name="id" value="#{albumController.getImage(image.name)}"/>
+                    <f:param name="name" value="#{image.name}"/>
+                    <f:param name="id" value="#{albumController.image}"/>
                 </p:menuitem>
             </p:contextMenu>
 
