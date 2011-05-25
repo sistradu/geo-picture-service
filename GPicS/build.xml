@@ -330,6 +330,7 @@
             <zipfileset file="${basedir}/web/sendPW.xhtml"/>
             <zipfileset file="${basedir}/web/showAlbum.xhtml"/>
             <zipfileset file="${basedir}/web/showOwnAlbum.xhtml"/>
+            <zipfileset file="${basedir}/web/adminPage.xhtml"/>
             <zipfileset dir="${basedir}/web/yaml" prefix="yaml"/>
         </zip>
         <copy file="${temp.jar.path.gpics.war}" tofile="${artifact.temp.output.gpics}/gpics.war"/>
