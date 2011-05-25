@@ -108,11 +108,29 @@ public class AlbumController {
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }
 
-            bild.setLongitude(getTextContentFromElement(bilderXML, "longitude", i));
-            bild.setLatitude(getTextContentFromElement(bilderXML, "latitude", i));
-            bild.setAltitude(getTextContentFromElement(bilderXML, "altitude", i));
-            bild.setDirection(getTextContentFromElement(bilderXML, "direction", i));
-            String filePosition = getTextContentFromElement(bilderXML, "fileposition", i);
+            try{
+                bild.setLongitude(getTextContentFromElement(bilderXML, "longitude", i));
+                bild.setLatitude(getTextContentFromElement(bilderXML, "latitude", i));
+                bild.setAltitude(getTextContentFromElement(bilderXML, "altitude", i));
+                bild.setDirection(getTextContentFromElement(bilderXML, "direction", i));
+
+            }catch (Exception e){
+
+            }finally {
+                if (bild.getLongitude().equals("")){
+                    bild.setLongitude("0");
+                }
+                if (bild.getLatitude().equals("")){
+                    bild.setLatitude("0");
+                }
+                if (bild.getAltitude().equals("")){
+                    bild.setAltitude("0");
+                }
+                if (bild.getDirection().equals("")){
+                    bild.setDirection("0");
+                }
+            }
+           String filePosition = getTextContentFromElement(bilderXML, "fileposition", i);
             bild.setPath(filePosition);
 
             InputStream stream = null;
