@@ -46,7 +46,9 @@ public class AdminPageController {
                 Node userNode = nodeListName.item(i);
                 int userID = Integer.parseInt(nodeListID.item(i).getTextContent());
                 String userName  = userNode.getTextContent();
-                user.add(userName);
+                if (!userName.equals("Admin")) {
+                    user.add(userName);
+                }
                 IAlbumConnector albumConnector = new AlbumConnector();
                 Document albenDoc = albumConnector.getAlbenForNutzer(userID);
                 NodeList nodeListAlbenID = albenDoc.getElementsByTagName("id");
@@ -82,6 +84,8 @@ public class AdminPageController {
 
     public String loadALben(){
         try {
+            alben.clear();
+            bilder.clear();
             String name = FacesContext.getCurrentInstance()
                         .getExternalContext().getRequestParameterMap().get("username");
             INutzerConnector nutzerConnector = new NutzerConnector();
@@ -104,6 +108,7 @@ public class AdminPageController {
 
      public String loadBilder(){
         try {
+            bilder.clear();
             String name = FacesContext.getCurrentInstance()
                         .getExternalContext().getRequestParameterMap().get("albumname");
             IAlbumConnector albumConnector = new AlbumConnector();
