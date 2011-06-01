@@ -173,7 +173,7 @@ public class BildController {
 //            CreateEditAlbumController c = (CreateEditAlbumController) GPicSUtil.getBean("createEditAlbumController");
 //            return c.ladeAlbum();
 //            return "editPicture";
-        } catch (ConnectException e) {
+        } catch (Exception e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
 //        return "editPicture";
