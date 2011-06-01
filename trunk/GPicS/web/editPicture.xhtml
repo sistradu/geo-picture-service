@@ -67,6 +67,7 @@
                         <h:inputText id="kooval" style="width:300px;" value="#{bildController.latitude}">
                         <f:validator validatorId="KoordValidator" />
                         </h:inputText>
+                        <h:message for="kooval"></h:message>
                        <!-- <h:message for="kooval"></h:message>      -->
                     </td>
                 </tr>
@@ -78,7 +79,7 @@
                         <h:inputText id="kooval2" style="width:300px;" value="#{bildController.longitude}">
                         <f:validator validatorId="KoordValidator" />
                         </h:inputText>
-                        <h:message for="kooval2"></h:message>
+                        <h:message for="kooval"></h:message>
                     </td>
                 </tr>
                 <tr>
@@ -99,7 +100,7 @@
                 </tr>
                  <tr>
                     <td>
-                        <h:commandButton value="Änderungen speichern" action="#{bildController.bild_aendern}"/>
+                        <h:commandButton value="#{msg.save}" action="#{bildController.bild_aendern}"/>
                     </td>
                 </tr>
             </table>
