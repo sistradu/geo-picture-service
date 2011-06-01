@@ -14,9 +14,7 @@ import org.w3c.dom.Document;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +37,8 @@ public class CreateEditAlbumController {
     private String passwort;
 
     //TODO uploadDir
-//    private String uploadDir = "/home/pics/";
-    private String uploadDir = "D:/upload/";
+    private String uploadDir = "/home/pics/";
+//    private String uploadDir = "D:/upload/";
     private List<Bild> bilder;
     private List<Bild> deleteList;
 
@@ -108,10 +106,10 @@ public class CreateEditAlbumController {
         return "createAlbum";
     }
 
-    public String ladeAlbum(int albumID){
+    public String ladeAlbum(int albumID) {
         isNewAlbum = false;
         deleteList = new ArrayList<Bild>();
-        try{
+        try {
             AlbumControllerDBUtil util = new AlbumControllerDBUtil();
             IAlbumConnector conn = new AlbumConnector();
             Document doc = conn.getAlbumByID(albumID);
@@ -121,7 +119,7 @@ public class CreateEditAlbumController {
             setAlbumBeschreibung(util.getTextContentFromElement(doc, "description"));
             bilder = null;
             setBilder(util.ladeBilderAusDB(albumID));
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             GPicSUtil.createFacesMessageForID("saveAlbum", e.getMessage(), true);
         }
@@ -156,12 +154,12 @@ public class CreateEditAlbumController {
     }
 
 
-
     public void loescheBild() {
         try {
             int bildId = Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("bildID"));
             for (Bild bild : deleteList) {
                 if (bildId == bild.getBildID()) {
+                    bild.getContent();
                     bild.getContent().getStream().close();
                 }
             }
@@ -197,6 +195,21 @@ public class CreateEditAlbumController {
 //                return null;
 //
 //            }
+            for(Bild bild : bilder){
+                String oldPath = bild.getPath();
+                File f = new File(oldPath);
+                String fileName = oldPath.substring(oldPath.lastIndexOf("/")+1);
+                fileName = albumName + "_" + fileName;
+                String tempPath = oldPath.substring(0,oldPath.lastIndexOf("/")+1);
+                String newPath = tempPath + fileName;
+                copyImageFiles(oldPath, newPath);
+                bild.getContent();
+                bild.getContent().getStream().close();
+                boolean r = f.delete();
+                bild.setPath(newPath);
+                bild.setContent(GPicSUtil.getStreamContent(newPath));
+            }
+
             AlbumControllerDBUtil util = new AlbumControllerDBUtil();
             util.createAlbum(this);
             AlbumController ac = (AlbumController) GPicSUtil.getBean("albumController");
@@ -231,6 +244,16 @@ public class CreateEditAlbumController {
             return "createAlbum";
         }
         return "showAlbum";
+    }
+
+    private void copyImageFiles(String oldPath, String newPath) throws IOException {
+        FileInputStream fin = new FileInputStream(oldPath);
+        FileOutputStream fout = new FileOutputStream(newPath);
+        byte[] b = new byte[(int) new File(oldPath).length()];
+        fin.read(b);
+        fout.write(b);
+        fin.close();
+        fout.close();
     }
 
     private void reset() {

@@ -10,62 +10,91 @@
                 xmlns:p="http://primefaces.prime.com.tr/ui"
                 xmlns:c="http://java.sun.com/jsp/jstl/core">
     <ui:define name="content">
-        <h:outputLabel value="#{msg.noAdmin}" rendered="#{!userController.admin}" />
+        <h:outputLabel value="#{msg.noAdmin}" rendered="#{!userController.admin}"/>
         <h:form rendered="#{userController.admin}">
-            <h:outputLabel value="#{msg.username}" />
+            <h:outputLabel value="#{msg.adminInfo}" style="color:green;"/>
+            <br/>
+            <br/>
+            <h:outputLabel value="#{msg.username}"/>
             <table>
-            <c:forEach items="#{adminPageController.user}" var="user">
+                <c:forEach items="#{adminPageController.user}" var="user">
 
                     <tr>
                         <td>
                             <h:commandLink value="#{user}" action="#{adminPageController.loadALben}">
-                                <f:param name="username" value="#{user}" />
+                                <f:param name="username" value="#{user}"/>
                             </h:commandLink>
                         </td>
                         <td>
-                            <h:commandLink value="#{msg.deleteUser}" action="#{adminPageController.deleteUser}">
-                                <f:param name="username" value="#{user}" />
-                            </h:commandLink>
+                            <p:commandLink value="#{msg.deleteUser}" onclick="dialogDeleteUser.show();"/>
+                            <p:dialog header="#{msg.deleteUser}" widgetVar="dialogDeleteUser" modal="true" height="200">
+                                <h:outputText value="#{msg.deleteUserQuestion}"/>
+                                <br/>
+                                <br/>
+                                <h:commandButton value="#{msg.yes}" action="#{adminPageController.deleteUser}">
+                                    <f:param name="username" value="#{user}"/>
+                                </h:commandButton>
+                                <h:commandButton value="#{msg.no}" action="adminPage"/>
+                            </p:dialog>
                         </td>
                     </tr>
 
-            </c:forEach>
+                </c:forEach>
             </table>
-            <h:outputLabel value="#{msg.alben}"/>
-             <table>
-            <c:forEach items="#{adminPageController.alben}" var="album">
+            <h:outputLabel value="#{msg.alben} #{adminPageController.selectedUser}"
+                           rendered="#{!adminPageController.albenEmpty}"/>
+            <table>
+                <c:forEach items="#{adminPageController.alben}" var="album">
 
                     <tr>
                         <td>
                             <h:commandLink value="#{album}" action="#{adminPageController.loadBilder}">
-                                <f:param name="albumname" value="#{album}" />
+                                <f:param name="albumname" value="#{album}"/>
                             </h:commandLink>
                         </td>
                         <td>
-                            <h:commandLink value="#{msg.deleteAlbum}" action="#{adminPageController.deleteAlbum}">
-                                <f:param name="albumname" value="#{album}" />
-                            </h:commandLink>
+                            <p:commandLink value="#{msg.deleteAlbum}" onclick="dialogDeleteAlbum.show();"/>
+                            <p:dialog header="#{msg.deleteAlbum}" widgetVar="dialogDeleteAlbum" modal="true"
+                                      height="200">
+                                <h:outputText value="#{msg.deleteAlbumQuestion}"/>
+                                <br/>
+                                <br/>
+                                <h:commandButton value="#{msg.yes}" action="#{adminPageController.deleteAlbum}">
+                                    <f:param name="albumname" value="#{album}"/>
+                                </h:commandButton>
+                                <h:commandButton value="#{msg.no}" action="adminPage"/>
+                            </p:dialog>
                         </td>
                     </tr>
 
-            </c:forEach>
+                </c:forEach>
             </table>
-            <h:outputLabel value="#{msg.pics}" />
+            <h:outputLabel value="#{msg.pics} #{adminPageController.selectedAlbum}"
+                           rendered="#{!adminPageController.bilderEmpty}"/>
             <table>
-            <c:forEach items="#{adminPageController.bilder}" var="bild">
+                <c:forEach items="#{adminPageController.bilder}" var="bild">
 
                     <tr>
                         <td>
-                            <h:outputLabel value="#{bild}" />
+                            <h:outputLabel value="#{bild}"/>
                         </td>
                         <td>
-                            <h:commandLink value="#{msg.deletePic}" action="#{adminPageController.deleteBild}">
-                                <f:param name="bildname" value="#{bild}" />
-                            </h:commandLink>
+
+                            <p:commandLink value="#{msg.deletePic}" onclick="dialogDeleteBild.show();"/>
+                            <p:dialog header="#{msg.deletePic}" widgetVar="dialogDeleteBild" modal="true"
+                                      height="200">
+                                <h:outputText value="#{msg.deletePicQuestion}"/>
+                                <br/>
+                                <br/>
+                                <h:commandButton value="#{msg.yes}" action="#{adminPageController.deleteBild}">
+                                    <f:param name="bildname" value="#{bild}"/>
+                                </h:commandButton>
+                                <h:commandButton value="#{msg.no}" action="adminPage"/>
+                            </p:dialog>
                         </td>
                     </tr>
 
-            </c:forEach>
+                </c:forEach>
             </table>
         </h:form>
     </ui:define>
