@@ -1,0 +1,131 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Optionen zum Layout des Buchs                                     %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[
+a4paper,							% alle weiteren Papierformat einstellbar
+%landscape,						% Querformat
+11pt,								% Schriftgröße (12pt, 11pt (Standard))
+%BCOR1cm,							% Bindekorrektur, bspw. 1 cm
+%DIVcalc,							% führt die Satzspiegelberechnung neu aus
+%											  s. scrguide 2.4
+%oneside,							% einseitiges Layout
+%twocolumn,						% zweispaltiger Satz
+%openany,							% Kapitel können auch auf linken Seiten beginnen
+%halfparskip*,				% Absatzformatierung s. scrguide 3.1
+%headsepline,					% Trennline zum Seitenkopf	
+%footsepline,					% Trennline zum Seitenfuß
+%notitlepage,					% in-page-Titel, keine eigene Titelseite
+%chapterprefix,				% vor Kapitelüberschrift wird "Kapitel Nummer" gesetzt
+%appendixprefix,				% Anhang wird "Anhang" vor die Überschrift gesetzt 
+%normalheadings,			% Überschriften etwas kleiner (smallheadings)
+%idxtotoc,						% Index im Inhaltsverzeichnis
+%liststotoc,					% Abb.- und Tab.verzeichnis im Inhalt
+%bibtotoc,						% Literaturverzeichnis im Inhalt
+%bibtotocnumbered,			% Nummerierstes Literaturverzeichnis im Inhalt 
+%leqno,								% Nummerierung von Gleichungen links
+%fleqn,								% Ausgabe von Gleichungen linksbündig
+%draft,								% überlangen Zeilen in Ausgabe gekennzeichnet
+titlepage,
+pdftex
+]
+{scrreprt}
+%{scrartcl}
+
+
+\newcommand{\todo}[1]{    
+	\addcontentsline{tdo}{todo}{\protect{#1}}    
+	\marginpar{\textbf{\textcolor{red}{#1}}}
+	}
+\makeatletter \newcommand \listoftodos{\section*{Todo Liste} \@starttoc{tdo}}  \newcommand\l@todo[2]    {\par\noindent \textit{#2}, \parbox{10cm}{#1}\par} 
+
+
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+
+\usepackage[ngerman, final]{hyperref}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}       
+\usepackage[latin1]{inputenc}
+%\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{amsmath}
+%\usepackage[mediumspace,mediumqspace,Grey,squaren]{SIunits}
+%\usepackage{multirow}
+\usepackage{color,listings}
+\usepackage{ltxtable}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{lscape}
+\usepackage{pdfpages}
+\usepackage{array}
+
+
+\lstset{language=Java, % Grundsprache ist C und Dialekt ist Sharp (C#)
+captionpos=b, % Beschriftung ist unterhalb
+frame=lines, % Oberhalb und unterhalb des Listings ist eine Linie
+%basicstyle=\ttfamily, % Schriftart
+basicstyle=\small, % Schriftart
+keywordstyle=\color{blue}, % Farbe für die Keywords wie public, void, object u.s.w.
+commentstyle=\color{green}, % Farbe der Kommentare
+stringstyle=\color{red}, % Farbe der Zeichenketten
+numbers=none, % Zeilennummern links vom Code
+numberstyle=\tiny, % kleine Zeilennummern
+numbersep=5pt,
+breaklines=true, % Wordwrap a.k.a. Zeilenumbruch aktiviert
+showstringspaces=false,
+% emph legt Farben für bestimmte Wörter manuell fest
+emph={double,bool,int,unsigned,char,true,false,void},
+emphstyle=\color{blue},
+emph={Assert,Test},
+emphstyle=\color{red},
+emph={[2]\using,\#define,\#ifdef,\#endif}, emphstyle={[2]\color{blue}}
+}
+
+\hypersetup
+{
+pdftitle = {GPicS},
+pdfsubject = {GPicS},
+pdfauthor = {Rico Scholz,Stefan Radusch,Martin Schicht,Markus Ullrich},
+pdfkeywords = {XML,GPicS,Fotoarchiv},
+colorlinks = {false},
+pdfborder = 0 0 0
+}
+\urlstyle{same}
+\title{GPicS}
+\subtitle{Entwicklung eines XML basierten Fotoarchiv}
+\author{Rico Scholz\\IIAm10 \\ Fachbereich Informatik \\
+Hochschule Zittau / Görlitz
+\and Stefan Radusch\\IIAm10 \\ Fachbereich Informatik \\
+Hochschule Zittau / Görlitz
+\and Martin Schicht\\IIAm10 \\ Fachbereich Informatik \\
+Hochschule Zittau / Görlitz
+\and Markus Ullrich\\IIAm10 \\ Fachbereich Informatik \\
+Hochschule Zittau / Görlitz}
+\date{Lehrveranstaltungsleiter:\\
+Prof. Dr. rer. nat. Cristian Wagenknecht\\
+\bigskip\today}
+	
+\begin{document}
+	\newcommand{\markiert}{\bf\emph}
+	\renewcommand{\figurename}{Abbildung}
+	\renewcommand{\refname}{Bücher}
+%	\addto\captionsngerman{\renewcommand{\abstractname}{\Large{Zusammenfassung}}}
+	\newenvironment{nosepitemize}{\begin{itemize}\itemsep 0pt}{\end{itemize}}
+	\newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}}
+	\maketitle
+
+	\tableofcontents
+	\listoffigures
+	\listoftables
+	\lstlistoflistings
+	\listoftodos
+	\newpage
+	\input{Abstract}
+	\newpage
+	\input{Eidesstattliche-Erklärung}
+	
+	\input{Quellen}
+	\chapter{Anhang}
+	\input{Anhang}
+\end{document}
