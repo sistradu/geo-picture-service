@@ -12,16 +12,15 @@
 
     </ui:define>
     <ui:define name="content">
-
         <h:form prependId="false">
             <h:outputLabel value="#{msg.suchenach} "/>
             <h:inputText style="width:200px;" value="#{ownAlbumsController.suchString}"/>
 
                     <h:commandButton value="#{msg.suchbutton}"  actionListener="#{ownAlbumsController.loadSearched}"/>
-                    <h:commandButton value="#{msg.allealbenbutton}" actionListener="#{ownAlbumsController.loadAll}"/>
+                    <h:commandButton value="#{msg.alleEigeneAlbenButton}" actionListener="#{ownAlbumsController.loadAll}"/>
 
            <p:dataList value="#{ownAlbumsController.albenliste}" var="alb"
-                        paginator="true" effectSpeed="fast"
+                        paginator="true" effectSpeed="fast" rows="10"
                         paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                         rowsPerPageTemplate="10, 25, 50"
                         paginatorPosition="bottom" >

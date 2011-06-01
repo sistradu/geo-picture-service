@@ -114,10 +114,10 @@
 
 
                             <h:commandLink value="#{msg.home}" action="index"/> <br/><br/>
-                            <h:commandLink value="#{msg.ownAlbums}" action="showOwnAlbum" rendered="#{userController.eingeloggt}">
+                            <h:commandLink value="#{msg.ownAlbums}" action="#{ownAlbumsController.initAllAlbums}" rendered="#{userController.eingeloggt}">
                                 <br/><br/>
                             </h:commandLink>
-                            <h:commandLink value="#{msg.allAlbums}" action="allAlbums"/><br/><br/>
+                            <h:commandLink value="#{msg.allAlbums}" action="#{albumsController.initAllAlbums}"/><br/><br/>
                             <h:commandLink value="#{msg.createAlbum}" action="#{createEditAlbumController.initCreateEditAlbumController}" rendered="#{userController.eingeloggt}"/><br/><br/>
                             <h:commandLink value="#{msg.adminPageText}" action="#{adminPageController.loadPage}" rendered="#{userController.admin}"/>
                         </h:form>

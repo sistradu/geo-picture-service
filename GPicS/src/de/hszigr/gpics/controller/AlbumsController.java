@@ -38,21 +38,20 @@ public class AlbumsController {
 
     }
 
-
-
-    @SuppressWarnings("unchecked")
-    private void initAllAlbums()
+    public String initAllAlbums()
     {
         ialb = new AlbumConnector();
         try {
             alben = ialb.getAllAlben();
             NodeList nodeliste = alben.getElementsByTagName("name");
+            albenliste.clear();
             for (int i = 0; i<nodeliste.getLength();i++) {
             this.albenliste.add(nodeliste.item(i).getTextContent());
         }
         } catch (ConnectException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
+        return "allAlbums";
     }
 
     public String getAllAlbums()
