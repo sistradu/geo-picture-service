@@ -5,6 +5,7 @@ import de.hszigr.gpics.db.connect.BildConnector;
 import de.hszigr.gpics.db.interfaces.IAlbumConnector;
 import de.hszigr.gpics.db.interfaces.IBildConnector;
 import de.hszigr.gpics.primefaces_beans.CalendarBean;
+import de.hszigr.gpics.util.AlbumControllerDBUtil;
 import de.hszigr.gpics.util.GPicSUtil;
 import org.primefaces.model.StreamedContent;
 import org.w3c.dom.Document;
@@ -177,7 +178,17 @@ public class BildController {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
 //        return "editPicture";
-         return "createAlbum";
+        CreateEditAlbumController ce = (CreateEditAlbumController) GPicSUtil.getBean("createEditAlbumController");
+        AlbumControllerDBUtil util = new AlbumControllerDBUtil();
+        int albumID = Integer.parseInt(util.getTextContentFromElement(bild, "album"));
+        return ce.ladeAlbum(albumID);
+    }
+
+    public String abort(){
+        CreateEditAlbumController ce = (CreateEditAlbumController) GPicSUtil.getBean("createEditAlbumController");
+        AlbumControllerDBUtil util = new AlbumControllerDBUtil();
+        int albumID = Integer.parseInt(util.getTextContentFromElement(bild, "album"));
+        return ce.ladeAlbum(albumID);
     }
 
 

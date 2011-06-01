@@ -2,6 +2,8 @@ package de.hszigr.gpics.controller;
 
 import com.drew.imaging.jpeg.JpegProcessingException;
 import com.drew.metadata.MetadataException;
+import de.hszigr.gpics.db.connect.AlbumConnector;
+import de.hszigr.gpics.db.interfaces.IAlbumConnector;
 import de.hszigr.gpics.util.AlbumControllerDBUtil;
 import de.hszigr.gpics.util.GPicSUtil;
 import org.primefaces.event.FileUploadEvent;
@@ -37,8 +39,8 @@ public class CreateEditAlbumController {
     private String passwort;
 
     //TODO uploadDir
-    private String uploadDir = "/home/pics/";
-//    private String uploadDir = "D:/upload/";
+//    private String uploadDir = "/home/pics/";
+    private String uploadDir = "D:/upload/";
     private List<Bild> bilder;
     private List<Bild> deleteList;
 
@@ -103,6 +105,26 @@ public class CreateEditAlbumController {
         deleteList = new ArrayList<Bild>();
         selectedBId = -1;
         isNewAlbum = true;
+        return "createAlbum";
+    }
+
+    public String ladeAlbum(int albumID){
+        isNewAlbum = false;
+        deleteList = new ArrayList<Bild>();
+        try{
+            AlbumControllerDBUtil util = new AlbumControllerDBUtil();
+            IAlbumConnector conn = new AlbumConnector();
+            Document doc = conn.getAlbumByID(albumID);
+            setAlbumID(Integer.parseInt(util.getTextContentFromElement(doc, "id")));
+            setAlbumName(util.getTextContentFromElement(doc, "name"));
+            setPasswort(util.getTextContentFromElement(doc, "password"));
+            setAlbumBeschreibung(util.getTextContentFromElement(doc, "description"));
+            bilder = null;
+            setBilder(util.ladeBilderAusDB(albumID));
+        }catch(Exception e){
+            e.printStackTrace();
+            GPicSUtil.createFacesMessageForID("saveAlbum", e.getMessage(), true);
+        }
         return "createAlbum";
     }
 
