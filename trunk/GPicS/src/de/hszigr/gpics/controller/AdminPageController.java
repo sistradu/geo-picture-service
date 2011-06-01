@@ -152,7 +152,7 @@ public class AdminPageController {
     public String deleteAlbum(){
         String albumName = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("albumname");
         for(int i = 0; i<alben.size();i++){
-            String album = bilder.get(i);
+            String album = alben.get(i);
             if(album.equals(albumName)){
                 alben.remove(i);
             }
