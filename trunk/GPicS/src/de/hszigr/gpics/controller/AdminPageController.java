@@ -34,6 +34,8 @@ public class AdminPageController {
     private List<String> user;
     private List<String> alben;
     private List<String> bilder;
+    private String selectedAlbum;
+    private String selectedUser;
 
     public String loadPage(){
         reset();
@@ -88,6 +90,7 @@ public class AdminPageController {
             bilder.clear();
             String name = FacesContext.getCurrentInstance()
                         .getExternalContext().getRequestParameterMap().get("username");
+            this.selectedUser = name;
             INutzerConnector nutzerConnector = new NutzerConnector();
             Document doc = nutzerConnector.getNutzerByName(name);
             int id = Integer.parseInt(doc.getElementsByTagName("id").item(0).getTextContent());
@@ -111,6 +114,7 @@ public class AdminPageController {
             bilder.clear();
             String name = FacesContext.getCurrentInstance()
                         .getExternalContext().getRequestParameterMap().get("albumname");
+            this.selectedAlbum = name;
             IAlbumConnector albumConnector = new AlbumConnector();
             Document doc = albumConnector.getAlbumByName(name);
             int id = Integer.parseInt(doc.getElementsByTagName("id").item(0).getTextContent());
@@ -254,5 +258,29 @@ public class AdminPageController {
 
     public void setBilder(List<String> bilder) {
         this.bilder = bilder;
+    }
+
+    public String getSelectedAlbum() {
+        return selectedAlbum;
+    }
+
+    public void setSelectedAlbum(String selectedAlbum) {
+        this.selectedAlbum = selectedAlbum;
+    }
+
+    public String getSelectedUser() {
+        return selectedUser;
+    }
+
+    public void setSelectedUser(String selectedUser) {
+        this.selectedUser = selectedUser;
+    }
+
+    public boolean isAlbenEmpty(){
+        return alben.isEmpty();
+    }
+
+    public boolean isBilderEmpty(){
+        return bilder.isEmpty();
     }
 }
