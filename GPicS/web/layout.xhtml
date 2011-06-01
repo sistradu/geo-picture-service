@@ -119,9 +119,6 @@
                             </h:commandLink>
                             <h:commandLink value="#{msg.allAlbums}" action="allAlbums"/><br/><br/>
                             <h:commandLink value="#{msg.createAlbum}" action="#{createEditAlbumController.initCreateEditAlbumController}" rendered="#{userController.eingeloggt}"/><br/><br/>
-                            <h:commandLink value="#{msg.editAlbum}" action="createAlbum" rendered="#{userController.eingeloggt and userController.nutzerID == albumController.erstellerID}">
-                                <f:param name="AlbumName" value="#{albumController.albumName}"/>
-                            </h:commandLink>
                             <h:commandLink value="#{msg.adminPageText}" action="#{adminPageController.loadPage}" rendered="#{userController.admin}"/>
                         </h:form>
                                                 

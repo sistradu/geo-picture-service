@@ -45,7 +45,8 @@ public class AlbumController {
     private ArrayList<Bild> bilder = new ArrayList<Bild>();
     private StreamedContent picture;
     private boolean isFriend = false;
-    private String image;
+    private String image = "";
+    private int lastPasswordTry = 0;
 
     public AlbumController(){
 
@@ -61,9 +62,6 @@ public class AlbumController {
 
     public String loadAlbumFromXHTML() throws Exception{
         albumName = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("AlbumName");
-
-
-
         loadAlbum(albumName);
         return "showAlbum";
     }
@@ -166,12 +164,8 @@ public class AlbumController {
 
     public String getImage() {
         StreamedContent defaultImage = null;
-        String name = "";
-        try{
-            name = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("name");
-        }catch(Exception e){
 
-        }
+        String name = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("bildname");
 
         try {
             MessagePropertiesBean msgPB = new MessagePropertiesBean();
@@ -189,11 +183,6 @@ public class AlbumController {
                     }
                 }
                 picture = content;
-
-                BildController bc = (BildController) GPicSUtil.getBean("bildController");
-                bc.setBildID(Integer.parseInt(bildID));
-
-                this.image = bildID;
                 return this.image;
             }
 
@@ -201,17 +190,22 @@ public class AlbumController {
             e.printStackTrace();
         }
         picture = defaultImage;
-        this.image = "0";
         return this.image;
     }
 
     public String showAllPictures()throws Exception{
         String back = "showAlbum";
-        if (passwort.equals(passwortEingabe)){
-            isFriend = true;
-            loadAlbum(this.albumName);
-            isFriend = false;
+        if (lastPasswordTry + 3000 < (int) System.currentTimeMillis()){
+            if (passwort.equals(passwortEingabe)){
+                isFriend = true;
+                loadAlbum(this.albumName);
+                isFriend = false;
+            }
+        }else{
+            MessagePropertiesBean msgPB = new MessagePropertiesBean();
+            GPicSUtil.createFacesMessageForID("albumInfos:passwordInput", msgPB.getPropertiesMessage("passwordInputNotAllowed"), true);
         }
+        lastPasswordTry = (int) System.currentTimeMillis();
 
         return back;
     }
