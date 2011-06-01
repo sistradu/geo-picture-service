@@ -60,7 +60,8 @@ public class UserController {
                     AdminPageController ac = (AdminPageController) GPicSUtil.getBean("adminPageController");
                     return ac.loadPage();
                 }
-                return "showOwnAlbum";
+                OwnAlbumsController oac = (OwnAlbumsController) GPicSUtil.getBean("ownAlbumsController");
+                return oac.initAllAlbums();
             }
         } catch (NullPointerException e) {
             System.err.println("null");
@@ -182,7 +183,8 @@ public class UserController {
         } catch (NullPointerException e) {
             System.err.println(e.getMessage());  //Fängt NullPointerabException ab, die bei Unit-Tests auftritt, weil dort der FacesContext null ist.
         }
-        return "showOwnAlbum";
+        OwnAlbumsController oac = (OwnAlbumsController) GPicSUtil.getBean("ownAlbumsController");
+        return oac.initAllAlbums();
     }
 
     private void resetNutzerInformation(int nutzerID) {

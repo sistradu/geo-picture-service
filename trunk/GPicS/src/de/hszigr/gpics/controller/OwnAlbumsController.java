@@ -37,7 +37,7 @@ public class OwnAlbumsController {
          initAllAlbums();
     }
 
-    private void initAllAlbums()
+    public String initAllAlbums()
     {
         ialb = new AlbumConnector();
         try {
@@ -45,6 +45,7 @@ public class OwnAlbumsController {
             UserController uc = (UserController) GPicSUtil.getBean("userController");
             NodeList nodeliste = alben.getElementsByTagName("name");
             NodeList ownerListe = alben.getElementsByTagName("nutzer");
+            albenliste.clear();
             for (int i = 0; i<nodeliste.getLength();i++) {
                 if (Integer.parseInt(ownerListe.item(i).getTextContent()) == uc.getNutzerID()){
                     this.albenliste.add(nodeliste.item(i).getTextContent());
@@ -53,6 +54,8 @@ public class OwnAlbumsController {
         } catch (ConnectException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
+
+        return "showOwnAlbum";
     }
 
     public String getAllAlbums()
