@@ -22,7 +22,7 @@ public class KoordValidator implements Validator {
 
     public void validate(FacesContext facesContext, UIComponent uiComponent, Object o) throws ValidatorException {
         String koord = (String) o;
-         if(!koord.matches("-?[0-9]{1,3}°[0-9]{1,2}'[0-9]{1,2}''") && !koord.matches("-?[0-9]{1,3}\\.[0-9]{6}")) {
+         if(!koord.matches("-?[0-9]{1,3}.[0-9]{1,20}") && !koord.matches("-?[0-9]{1,3}\\.[0-9]{20}")) {
             MessagePropertiesBean msgPB = new MessagePropertiesBean();
             String msg_1 = msgPB.getPropertiesMessage("ungueltigeKoordinaten");
             GPicSUtil.createFacesMessageForID("kooval", msg_1, true);
