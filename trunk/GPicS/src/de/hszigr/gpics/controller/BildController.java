@@ -56,10 +56,10 @@ public class BildController {
      //   calbean = new CalendarBean();
         try {
               //
-//            bild = ibild.getBildByID(id_b);
+
             int bildId = Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("bildid"));
             bild = ibild.getBildByID(bildId);
-//            bildID=id_b;
+            this.setBildID(bildId);
 //            int albumID = Integer.parseInt(bild.getElementsByTagName("album").item(0).getTextContent());
 //            IAlbumConnector album = new AlbumConnector();
 //            Document doc = album.getAlbumByID(albumID);
@@ -163,7 +163,7 @@ public class BildController {
         return calbean;
     }
 
-    public void bild_aendern(){
+    public String bild_aendern(){
       ibild = new BildConnector();
   //  calbean = new CalendarBean();
       GregorianCalendar cal = new GregorianCalendar(Locale.getDefault());
@@ -177,6 +177,7 @@ public class BildController {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
 //        return "editPicture";
+         return "createAlbum";
     }
 
 
