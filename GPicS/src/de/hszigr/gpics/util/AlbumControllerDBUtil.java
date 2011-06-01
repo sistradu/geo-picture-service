@@ -191,7 +191,7 @@ public class AlbumControllerDBUtil {
 
     private void generatePasswort(CreateEditAlbumController controller) {
         PasswortUtil util = new PasswortUtil();
-        String randomPasswort = util.erzeugeZufallsPasswort(4);
+        String randomPasswort = util.erzeugeZufallsPasswort(6);
         //Passwort unverschlüsselt, damit es angezeigt werden kann
         controller.setPasswort(randomPasswort);
     }
