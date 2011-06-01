@@ -55,14 +55,14 @@ public class UserController {
             if (dbPasswort.equals(passwort)) {
                 eingeloggt = true;
                 getNutzerIDAndEmail(doc);
-                if(nutzerNamen.equals("Admin")){
+                if (nutzerNamen.equals("Admin")) {
                     admin = true;
                     AdminPageController ac = (AdminPageController) GPicSUtil.getBean("adminPageController");
                     return ac.loadPage();
                 }
                 return "showOwnAlbum";
             }
-        }catch(NullPointerException e){
+        } catch (NullPointerException e) {
             System.err.println("null");
             MessagePropertiesBean msgPB = new MessagePropertiesBean();
             GPicSUtil.createFacesMessageForID("loginMask", msgPB.getPropertiesMessage("noUserAvailable"), true);
@@ -83,7 +83,7 @@ public class UserController {
         } catch (IOException e) {
             e.printStackTrace();
             GPicSUtil.createFacesMessageForID("loginMask", e.getMessage(), true);
-        } catch(NullPointerException e){
+        } catch (NullPointerException e) {
             System.err.println("null");
         }
         return "index";
@@ -98,20 +98,23 @@ public class UserController {
 
             Properties props = new Properties();
             props.put("mail.smtp.auth", "true");
-            props.put("mail.smtp.starttls.enable", "true");
-            props.put("mail.smtp.host", "193.174.103.76");
-            props.put("mail.smtp.port", 25);
-            props.setProperty("mail.smtp.ssl.trust", "193.174.103.76");
+//            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.host", "mail.gmx.de");
+            props.put("mail.smtp.socketFactory.port", "465");
+            props.put("mail.smtp.socketFactory.class",
+                    "javax.net.ssl.SSLSocketFactory");
+            props.put("mail.smtp.port", 465);
+            props.setProperty("mail.smtp.ssl.trust", "mail.gmx.de");
             Authenticator aut = new Authenticator() {
                 @Override
                 protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication("mailer", "mailer");
+                    return new PasswordAuthentication("gpics@gmx.de", "gpics4XML");
                 }
             };
             Session session = Session.getInstance(props, aut);
             MessagePropertiesBean msgPB = new MessagePropertiesBean();
             Message mail = new MimeMessage(session);
-            mail.setFrom(new InternetAddress("mailer@ux-i-xml11a.inf.hs-zigr.de"));
+            mail.setFrom(new InternetAddress("gpics@gmx.de"));
             mail.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(email));
             mail.setSubject(msgPB.getPropertiesMessage("mailSubject"));
@@ -140,7 +143,7 @@ public class UserController {
 
     public String erzeugeBenutzer() {
         try {
-            this.passwort="password";
+            this.passwort = "password";
             conn.createNutzer(nutzerNamen, passwort, email);
             Document doc = conn.getNutzerByName(nutzerNamen);
             setNutzerID(Integer.parseInt(doc.getElementsByTagName("id").item(0).getTextContent()));
@@ -157,7 +160,7 @@ public class UserController {
 
     public String updateBenutzer() {
         try {
-            if(!passwort.equals(oldPasswort)){
+            if (!passwort.equals(oldPasswort)) {
                 MessagePropertiesBean msgPB = new MessagePropertiesBean();
                 GPicSUtil.createFacesMessageForID("createUserMask:createUserOldPasswort", msgPB.getPropertiesMessage("oldPasswortDontEqual"), true);
                 return null;
