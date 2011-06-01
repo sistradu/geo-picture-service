@@ -1,6 +1,8 @@
 package de.hszigr.gpics.controller;
 
+import de.hszigr.gpics.db.connect.AlbumConnector;
 import de.hszigr.gpics.db.connect.BildConnector;
+import de.hszigr.gpics.db.interfaces.IAlbumConnector;
 import de.hszigr.gpics.db.interfaces.IBildConnector;
 import de.hszigr.gpics.primefaces_beans.CalendarBean;
 import de.hszigr.gpics.util.GPicSUtil;
@@ -9,6 +11,7 @@ import org.w3c.dom.Document;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.text.ParseException;
@@ -43,8 +46,9 @@ public class BildController {
     private Document bild;
     private String fileposition;
     private StreamedContent data;
+//    private String albumName;
 
-    public void loadBilddaten(){
+    public String loadBilddaten(){
       ibild = new BildConnector();
 //        String id  = FacesContext.getCurrentInstance()
 //                    .getExternalContext().getRequestParameterMap().get("id");
@@ -53,8 +57,14 @@ public class BildController {
         try {
               //
 //            bild = ibild.getBildByID(id_b);
-            bild = ibild.getBildByID(bildID);
+            int bildId = Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("bildid"));
+            bild = ibild.getBildByID(bildId);
 //            bildID=id_b;
+//            int albumID = Integer.parseInt(bild.getElementsByTagName("album").item(0).getTextContent());
+//            IAlbumConnector album = new AlbumConnector();
+//            Document doc = album.getAlbumByID(albumID);
+//            albumName = doc.getElementsByTagName("name").item(0).getTextContent();
+
             bildName=bild.getElementsByTagName("name").item(0).getTextContent();
             beschreibung=bild.getElementsByTagName("description").item(0).getTextContent();
             oeffentlich=Boolean.parseBoolean(bild.getElementsByTagName("ispublic").item(0).getTextContent());
@@ -65,7 +75,7 @@ public class BildController {
             direction=bild.getElementsByTagName("direction").item(0).getTextContent();
             fileposition=bild.getElementsByTagName("fileposition").item(0).getTextContent();
             data= GPicSUtil.getStreamContent(fileposition);
-
+            return "editPicture";
         } catch (ConnectException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         } catch (ParseException e) {
@@ -73,6 +83,7 @@ public class BildController {
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
+        return "showAlbum";
     }
 
     public int getBildID() {
@@ -159,10 +170,13 @@ public class BildController {
      cal.setTime(timestamp);
         try {
             ibild.updateBild(bildID,bildName,beschreibung,oeffentlich,cal,null,longitude,latitude,altitude,direction);
+//            CreateEditAlbumController c = (CreateEditAlbumController) GPicSUtil.getBean("createEditAlbumController");
+//            return c.ladeAlbum();
+//            return "editPicture";
         } catch (ConnectException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-
+//        return "editPicture";
     }
 
 
@@ -175,12 +189,20 @@ public class BildController {
     }
 
     public StreamedContent getData() {
-        loadBilddaten();
+//        loadBilddaten();
         return data;
     }
 
     public void setData(StreamedContent data) {
         this.data = data;
     }
+
+//    public String getAlbumName() {
+//        return albumName;
+//    }
+//
+//    public void setAlbumName(String albumName) {
+//        this.albumName = albumName;
+//    }
 }
 

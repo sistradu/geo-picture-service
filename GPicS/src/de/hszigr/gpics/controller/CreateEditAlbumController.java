@@ -37,8 +37,8 @@ public class CreateEditAlbumController {
     private String passwort;
 
     //TODO uploadDir
-    private String uploadDir = "/home/pics/";
-//    private String uploadDir = "D:/upload/";
+//    private String uploadDir = "/home/pics/";
+    private String uploadDir = "D:/upload/";
     private List<Bild> bilder;
     private List<Bild> deleteList;
 
@@ -108,6 +108,7 @@ public class CreateEditAlbumController {
 
     //TODO einstieg für bearbeiten
     public String ladeAlbum() {
+//        reset();
         isNewAlbum = false;
         deleteList = new ArrayList<Bild>();
         String name = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("AlbumName");
@@ -131,6 +132,8 @@ public class CreateEditAlbumController {
         }
         return "createAlbum";
     }
+
+
 
     public void loescheBild() {
         try {
@@ -206,6 +209,15 @@ public class CreateEditAlbumController {
             return "createAlbum";
         }
         return "showAlbum";
+    }
+
+    private void reset() {
+        albumID = -1;
+        albumName = "";
+        albumBeschreibung = "";
+        passwort = "";
+        bilder = new ArrayList<Bild>();
+        deleteList = new ArrayList<Bild>();
     }
 
     private void updateBilderListe(String s) throws IOException, JpegProcessingException, MetadataException, ParseException {

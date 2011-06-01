@@ -78,6 +78,9 @@
                                 </p:ajax>
                             </h:selectBooleanCheckbox>
                             <h:outputLabel value="#{msg.imageIsPublic}"/>
+                            <h:commandLink value="#{msg.editImage}" action="#{bildController.loadBilddaten}">
+                                <f:param name="bildid" value="#{b.bildID}" />
+                            </h:commandLink>
                         </h:panelGrid>
                     </p:panel>
                 </p:column>
