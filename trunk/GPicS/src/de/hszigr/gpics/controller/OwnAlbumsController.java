@@ -4,7 +4,6 @@ import de.hszigr.gpics.db.connect.AlbumConnector;
 import de.hszigr.gpics.db.interfaces.IAlbumConnector;
 import de.hszigr.gpics.util.GPicSUtil;
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.faces.bean.ManagedBean;
@@ -12,6 +11,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
 import java.net.ConnectException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -80,8 +80,8 @@ public class OwnAlbumsController {
                try {
                    alben = ialb.getAlbenWithNameContaining(suchString);
                    UserController uc = (UserController) GPicSUtil.getBean("userController");
-                    NodeList nodeliste = alben.getElementsByTagName("name");
-                    NodeList ownerListe = alben.getElementsByTagName("nutzer");
+                   NodeList nodeliste = alben.getElementsByTagName("name");
+                   NodeList ownerListe = alben.getElementsByTagName("nutzer");
                    albenliste.clear();
                    for(int k=0; k<nodeliste.getLength();k++){
                         if (Integer.parseInt(ownerListe.item(k).getTextContent()) == uc.getNutzerID()){
@@ -125,6 +125,7 @@ public class OwnAlbumsController {
     }
 
     public List<String> getAlbenliste() {
+        Collections.reverse(albenliste);
         return albenliste;
     }
 

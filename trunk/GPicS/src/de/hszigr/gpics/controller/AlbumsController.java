@@ -10,6 +10,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
 import java.net.ConnectException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -121,6 +122,7 @@ public class AlbumsController {
     }
 
     public List<String> getAlbenliste() {
+        Collections.reverse(albenliste);
         return albenliste;
     }
 
