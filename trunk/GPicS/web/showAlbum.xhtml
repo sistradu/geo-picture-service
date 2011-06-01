@@ -11,30 +11,30 @@
                 xmlns:p="http://primefaces.prime.com.tr/ui">
     <ui:define name="content">
         <h:outputLabel value="#{mapBean.doIt}"/>
+        <h:form id="albumInfos">
         <h2><h:outputLabel value="#{albumController.albumName}"/></h2>
-
+            <h:commandLink value="#{msg.editAlbum}" action="#{createEditAlbumController.ladeAlbum}" rendered="#{userController.eingeloggt and userController.nutzerID == albumController.erstellerID}">
+                <f:param name="AlbumName" value="#{albumController.albumName}"/>
+            </h:commandLink>
+        <br/><br/>
         <h3><h:outputLabel value="#{albumController.albumBeschreibung}"/></h3>
-        <h:outputLabel value="Das Passwort für Freunde lautet: #{albumController.passwort}" rendered="#{userController.eingeloggt and userController.nutzerID == albumController.erstellerID}"/>
+        <h:outputLabel value="#{msg.passwordInput}" rendered="#{userController.nutzerID != albumController.erstellerID}"/> <h:inputText id="passwordInput" value="#{albumController.passwortEingabe}" rendered="#{userController.nutzerID != albumController.erstellerID}"/><h:commandButton value="#{msg.showAllPictures}" action="#{albumController.showAllPictures}" rendered="#{userController.nutzerID != albumController.erstellerID}"/>
         <br/>
-        <h:outputLabel value="#{msg.rightClickToEdit}"/>
-        <h:form>
-
+        <h:message for="passwordInput" style="color:red;"/>
+        <h:outputLabel value="#{msg.passwordForFriends} #{albumController.passwort}" rendered="#{userController.eingeloggt and userController.nutzerID == albumController.erstellerID}"/>
+        <br/>
             <p:galleria id="images" effect="fade" effectSpeed="1000">
                 <ui:repeat value="#{albumController.bilder}" var="image">
-                    <h:outputLabel value="#{albumController.image}">
-                        <f:param name="name" value="#{image.name}"/>
-                    </h:outputLabel>
-                    <p:graphicImage value="#{albumController.picture}"
-                        title="#{image.name}" alt="#{image.beschreibung}"/>
+                        <!--<h:outputLabel value="#{albumController.image}">-->
+                            <!--<f:param name="bildname" value="#{image.name}"/>-->
+                        <!--</h:outputLabel>-->
+                    <p:graphicImage value="#{image.content}"
+                        title="#{image.name}" alt="#{image.beschreibung}">
+
+                    </p:graphicImage>
                 </ui:repeat>
             </p:galleria>
 
-            <p:contextMenu for="images" zindex="-50">
-                <p:menuitem value="#{msg.editImage}" url="editPicture.xhtml">
-                    <f:param name="name" value="#{image.name}"/>
-                    <f:param name="id" value="#{albumController.image}"/>
-                </p:menuitem>
-            </p:contextMenu>
 
             <br/><br/>
             <p align="center">
@@ -47,14 +47,6 @@
                 </p:gmapInfoWindow>
             </p:gmap>
             </p>
-
-            <br/><br/>
-            <h:inputText value="#{albumController.passwortEingabe}" rendered="#{userController.nutzerID != albumController.erstellerID}"/><h:commandButton value="#{msg.showAllPictures}" action="#{albumController.showAllPictures}" rendered="#{userController.nutzerID != albumController.erstellerID}"/>
-            <br/><br/>
-            <h:commandLink value="#{msg.editAlbum}" action="#{createEditAlbumController.ladeAlbum}" rendered="#{userController.eingeloggt and userController.nutzerID == albumController.erstellerID}">
-                <f:param name="AlbumName" value="#{albumController.albumName}"/>
-            </h:commandLink>
-
         </h:form>
     </ui:define>
 </ui:composition>
