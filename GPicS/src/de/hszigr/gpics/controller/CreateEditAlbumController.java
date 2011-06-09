@@ -165,6 +165,10 @@ public class CreateEditAlbumController {
             }
             AlbumControllerDBUtil util = new AlbumControllerDBUtil();
             util.loescheBild(this, bildId);
+
+            for(Bild bild : bilder){
+                bild.setContent(GPicSUtil.getStreamContent(bild.getPath()));
+            }
         } catch (Exception e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             GPicSUtil.createFacesMessageForID("saveAlbum", e.getMessage(), true);

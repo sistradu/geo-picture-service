@@ -65,10 +65,24 @@
                                 <f:param name="name" value="#{b.name}"/>
                             </p:graphicImage>
                             </h:form>
-                            <h:commandLink value="#{msg.deleteImage}"
-                                           action="#{createEditAlbumController.loescheBild}">
-                                <f:param name="bildID" value="#{b.bildID}"/>
-                            </h:commandLink>
+
+
+
+                            <p:commandLink value="#{msg.deleteImage}" onclick="dialogDeleteBildInfo.show();"/>
+                            <p:dialog header="#{msg.deletePic}" widgetVar="dialogDeleteBildInfo" modal="true"
+                                      height="200">
+                                <h:outputText value="#{msg.deletePicInfo}"/>
+                                <br/>
+                                <br/>
+                                <h:commandButton value="#{msg.yes}" action="#{createEditAlbumController.loescheBild}">
+                                    <f:param name="bildID" value="#{b.bildID}"/>
+                                </h:commandButton>
+                                <h:commandButton value="#{msg.no}" action="#{createEditAlbumController.ladeAlbum}">
+                                    <f:param name="AlbumName" value="#{albumController.albumName}"/>
+                                </h:commandButton>
+                            </p:dialog>
+
+
                             <h:selectBooleanCheckbox id="selectPublic" value="#{b.publicBild}"
                                                      title="#{msg.imageIsPublic}">
                                 <p:ajax event="change" update="selectPublic"
