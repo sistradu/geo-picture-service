@@ -53,7 +53,7 @@ public class AlbumController {
         try{
             albumName = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("AlbumName");
 
-            loadAlbum(albumName);
+       //     loadAlbum(albumName);
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -162,6 +162,36 @@ public class AlbumController {
         return back;
     }
 
+    public String getImage(String name) {
+        StreamedContent defaultImage = null;
+
+        try {
+            MessagePropertiesBean msgPB = new MessagePropertiesBean();
+            String pfad = "D:/upload/gpics.jpg";// msgPB.getPropertiesMessage("defaultPicturePath");
+            defaultImage = GPicSUtil.getStreamContent(pfad);
+            FacesContext fc = FacesContext.getCurrentInstance();
+        //    String name = fc.getExternalContext().getRequestParameterMap().get("name");
+            if (name != null && !bilder.isEmpty()) {
+                StreamedContent content = null;
+                String bildID = "";
+                for (Bild b : bilder) {
+                    if (b.getName().equals(name)) {
+                        content = b.getContent();
+                        bildID = String.valueOf(b.getBildID());
+                    }
+                }
+                picture = content;
+                return bildID;
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        picture = defaultImage;
+        return "";
+    }
+    
+
     public String getImage() {
         StreamedContent defaultImage = null;
 
@@ -219,6 +249,11 @@ public class AlbumController {
     }
 
     public List<Bild> getBilder() {
+        try {
+            loadAlbum(albumName);
+        } catch (Exception e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
         return bilder;
     }
 
