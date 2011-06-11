@@ -10,7 +10,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.prime.com.tr/ui">
     <ui:define name="content">
-        <h:outputLabel value="#{mapBean.doIt}"/>
+        <h:outputLabel value="#{mapBean.doIt()}"/>
         <h:form id="albumInfos">
         <h2><h:outputLabel value="#{albumController.albumName}"/></h2>
             <h:commandLink value="#{msg.editAlbum}" action="#{createEditAlbumController.ladeAlbum}" rendered="#{userController.eingeloggt and userController.nutzerID == albumController.erstellerID}">
@@ -23,15 +23,22 @@
         <h:message for="passwordInput" style="color:red;"/>
         <h:outputLabel value="#{msg.passwordForFriends} #{albumController.passwort}" rendered="#{userController.eingeloggt and userController.nutzerID == albumController.erstellerID}"/>
         <br/>
+     <!--       <p:galleria id="images" effect="fade" effectSpeed="1000">
+                <ui:repeat value="#{albumController.bilder}" var="image">
+                    <p:panel header="#{albumController.image}">
+                        <p:graphicImage value="#{albumController.picture}"
+                        title="#{image.name}" alt="#{image.beschreibung}">
+                        </p:graphicImage>
+                    </p:panel>
+
+                </ui:repeat>
+            </p:galleria>
+            -->
             <p:galleria id="images" effect="fade" effectSpeed="1000">
                 <ui:repeat value="#{albumController.bilder}" var="image">
-                        <!--<h:outputLabel value="#{albumController.image}">-->
-                            <!--<f:param name="bildname" value="#{image.name}"/>-->
-                        <!--</h:outputLabel>-->
-                    <p:graphicImage value="#{image.content}"
-                        title="#{image.name}" alt="#{image.beschreibung}">
-
-                    </p:graphicImage>
+                    <h:outputLabel value="#{albumController.getImage(image.name)}"/>
+                    <p:graphicImage value="#{albumController.picture}"
+                        title="#{image.name}" alt="#{image.beschreibung}"/>
                 </ui:repeat>
             </p:galleria>
 
