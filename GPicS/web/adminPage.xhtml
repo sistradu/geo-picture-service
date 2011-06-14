@@ -53,17 +53,9 @@
                             </h:commandLink>
                         </td>
                         <td>
-                            <p:commandLink value="#{msg.deleteAlbum}" onclick="dialogDeleteAlbum.show();"/>
-                            <p:dialog header="#{msg.deleteAlbum}" widgetVar="dialogDeleteAlbum" modal="true"
-                                      height="200">
-                                <h:outputText value="#{msg.deleteAlbumQuestion}"/>
-                                <br/>
-                                <br/>
-                                <h:commandButton value="#{msg.yes}" action="#{adminPageController.deleteAlbum}">
-                                    <f:param name="albumname" value="#{album}"/>
-                                </h:commandButton>
-                                <h:commandButton value="#{msg.no}" action="adminPage"/>
-                            </p:dialog>
+                            <h:commandLink value="#{msg.deleteAlbum}" action="#{adminPageController.deleteAlbum}">
+                                <f:param name="albumname" value="#{album}"/>
+                            </h:commandLink>
                         </td>
                     </tr>
 
@@ -79,18 +71,9 @@
                             <h:outputLabel value="#{bild}"/>
                         </td>
                         <td>
-
-                            <p:commandLink value="#{msg.deletePic}" onclick="dialogDeleteBild.show();"/>
-                            <p:dialog header="#{msg.deletePic}" widgetVar="dialogDeleteBild" modal="true"
-                                      height="200">
-                                <h:outputText value="#{msg.deletePicQuestion}"/>
-                                <br/>
-                                <br/>
-                                <h:commandButton value="#{msg.yes}" action="#{adminPageController.deleteBild}">
-                                    <f:param name="bildname" value="#{bild}"/>
-                                </h:commandButton>
-                                <h:commandButton value="#{msg.no}" action="adminPage"/>
-                            </p:dialog>
+                            <h:commandLink value="#{msg.deletePic}" action="#{adminPageController.deleteBild}">
+                                   <f:param name="bildname" value="#{bild}"/>
+                            </h:commandLink>
                         </td>
                     </tr>
 
