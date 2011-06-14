@@ -81,7 +81,6 @@ public class MapBean implements Serializable {
                 }
             }
         }
-
         this.marker = (Marker) event.getOverlay();
     }
 

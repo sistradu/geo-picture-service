@@ -6,16 +6,13 @@ import de.hszigr.gpics.db.interfaces.IAlbumConnector;
 import de.hszigr.gpics.db.interfaces.IBildConnector;
 import de.hszigr.gpics.util.GPicSUtil;
 import de.hszigr.gpics.util.MessagePropertiesBean;
-import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.w3c.dom.Document;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,7 +42,7 @@ public class AlbumController {
     private ArrayList<Bild> bilder = new ArrayList<Bild>();
     private StreamedContent picture;
     private boolean isFriend = false;
-    private String image = "";
+    private StreamedContent image;
     private int lastPasswordTry = 0;
 
     public AlbumController(){
@@ -73,7 +70,6 @@ public class AlbumController {
         IAlbumConnector iac = new AlbumConnector();
         IBildConnector ibc = new BildConnector();
 
-        System.out.println(name);
         album = iac.getAlbumByName(name);
         int aID = Integer.parseInt(album.getElementsByTagName("id").item(0).getTextContent());
         erstellerID = Integer.parseInt(album.getElementsByTagName("nutzer").item(0).getTextContent());
@@ -128,21 +124,23 @@ public class AlbumController {
                     bild.setDirection("0");
                 }
             }
-           String filePosition = getTextContentFromElement(bilderXML, "fileposition", i);
+            String filePosition = getTextContentFromElement(bilderXML, "fileposition", i);
             bild.setPath(filePosition);
 
-            InputStream stream = null;
-            try {
-                stream = new FileInputStream(filePosition);
-            } catch (IOException e) {
-                MessagePropertiesBean msgPB = new MessagePropertiesBean();
-                stream = new FileInputStream(msgPB.getPropertiesMessage("defaultPicturePath"));
-                bild.setPath(msgPB.getPropertiesMessage("defaultPicturePath"));
-                e.printStackTrace();
-            }
+//            InputStream stream = null;
+//            try {
+//                stream = new FileInputStream(filePosition);
+//            } catch (IOException e) {
+//                MessagePropertiesBean msgPB = new MessagePropertiesBean();
+//                stream = new FileInputStream(msgPB.getPropertiesMessage("defaultPicturePath"));
+//                bild.setPath(msgPB.getPropertiesMessage("defaultPicturePath"));
+//                e.printStackTrace();
+//            }
+//
+//            StreamedContent image = new DefaultStreamedContent(stream, "image/jpeg");
+//            bild.setContent(image);
 
-            StreamedContent image = new DefaultStreamedContent(stream, "image/jpeg");
-            bild.setContent(image);
+            bild.setContent(GPicSUtil.getStreamContent(filePosition));
 
             UserController uc = (UserController) GPicSUtil.getBean("userController");
             if ((uc.isEingeloggt() && uc.getNutzerID() == this.erstellerID) || bild.isPublicBild() || this.isFriend()){
@@ -162,7 +160,7 @@ public class AlbumController {
         return back;
     }
 
-    public String getImage(String name) {
+    public StreamedContent getImage(String name) {
         StreamedContent defaultImage = null;
 
         try {
@@ -173,54 +171,93 @@ public class AlbumController {
         //    String name = fc.getExternalContext().getRequestParameterMap().get("name");
             if (name != null && !bilder.isEmpty()) {
                 StreamedContent content = null;
-                String bildID = "";
                 for (Bild b : bilder) {
                     if (b.getName().equals(name)) {
                         content = b.getContent();
-                        bildID = String.valueOf(b.getBildID());
                     }
                 }
                 picture = content;
-                return bildID;
+                return content;
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
         picture = defaultImage;
-        return "";
+        return null;
+ //       return defaultImage;
+    }
+
+    public Byte[] getByteArray(){
+        return null;
     }
     
 
-    public String getImage() {
+    public StreamedContent getImage() {
         StreamedContent defaultImage = null;
-
-        String name = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("bildname");
-
         try {
             MessagePropertiesBean msgPB = new MessagePropertiesBean();
             String pfad = msgPB.getPropertiesMessage("defaultPicturePath");
             defaultImage = GPicSUtil.getStreamContent(pfad);
-            FacesContext fc = FacesContext.getCurrentInstance();
-        //    String name = fc.getExternalContext().getRequestParameterMap().get("name");
+            String name = FacesContext.getCurrentInstance()
+                    .getExternalContext().getRequestParameterMap().get("bildname");
             if (name != null && !bilder.isEmpty()) {
                 StreamedContent content = null;
-                String bildID = "";
                 for (Bild b : bilder) {
                     if (b.getName().equals(name)) {
                         content = b.getContent();
-                        bildID = String.valueOf(b.getBildID());
                     }
                 }
-                picture = content;
+                this.image = content;
                 return this.image;
             }
-
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-        picture = defaultImage;
+        this.image = defaultImage;
         return this.image;
+//        StreamedContent defaultImage = null;
+//
+//        String name = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("bildname");
+//
+//        try {
+//            MessagePropertiesBean msgPB = new MessagePropertiesBean();
+//            String pfad = msgPB.getPropertiesMessage("defaultPicturePath");
+//            defaultImage = GPicSUtil.getStreamContent(pfad);
+//            StreamedContent defaultImage = null;
+//        try {
+//            defaultImage = GPicSUtil.getStreamContent(uploadDir + "/gpics.jpg");
+//            String name = FacesContext.getCurrentInstance()
+//                    .getExternalContext().getRequestParameterMap().get("name");
+//            if (name != null && !bilder.isEmpty()) {
+//                StreamedContent content = null;
+//                for (Bild b : bilder) {
+//                    if (b.getName().equals(name)) {
+//                        content = b.getContent();
+//                    }
+//                }
+//                return content;
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+//        }
+//        return defaultImage;
+//            if (name != null && !bilder.isEmpty()) {
+//                StreamedContent content = null;
+//                for (Bild b : bilder) {
+//                    if (b.getName().equals(name)) {
+//                        content = b.getContent();
+//                    }
+//                }
+//                picture = content;
+//                return content;
+//            }
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        picture = defaultImage;
+//        return defaultImage;
     }
 
     public String showAllPictures()throws Exception{
