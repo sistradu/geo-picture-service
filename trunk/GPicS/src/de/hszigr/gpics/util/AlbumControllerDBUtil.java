@@ -51,7 +51,7 @@ public class AlbumControllerDBUtil {
         }
     }
 
-    public void updateAlbum(CreateEditAlbumController controller) throws ConnectException, JpegProcessingException, FileNotFoundException, MetadataException, ParseException {
+    public void updateAlbum(CreateEditAlbumController controller) throws IOException, JpegProcessingException, FileNotFoundException, MetadataException, ParseException {
         //TODO connector ändern
         IAlbumConnector albumConnector = new AlbumConnector();
         albumConnector.updateAlbum(controller.getAlbumID(), controller.getAlbumName(), controller.getPasswort(), controller.getAlbumBeschreibung());
@@ -59,6 +59,19 @@ public class AlbumControllerDBUtil {
             IBildConnector bildConnector = new BildConnector();
             if(bild.getBildID()==-1){
 //                bildConnector.createBild(bild.getName(), bild.getBeschreibung(), bild.isPublicBild(), bild.getDate(), bild.getPath(), bild.getLongitude(), bild.getLatitude(), bild.getAltitude(), bild.getDirection(), controller.getAlbumID());
+//                String oldPath = bild.getPath();
+//                File f = new File(oldPath);
+//                String fileName = oldPath.substring(oldPath.lastIndexOf("/")+1);
+//                fileName = controller.getAlbumName() + "_" + fileName;
+//                bild.setName(fileName);
+//                String tempPath = oldPath.substring(0,oldPath.lastIndexOf("/")+1);
+//                String newPath = tempPath + fileName;
+//                controller.copyImageFiles(oldPath, newPath);
+//                bild.getContent();
+//                bild.getContent().getStream().close();
+//                boolean r = f.delete();
+//                bild.setPath(newPath);
+//                bild.setContent(GPicSUtil.getStreamContent(newPath));
                 createBild(controller.getAlbumID(), bild);
             }else{
                 bildConnector.updateBild(bild.getBildID(), bild.getName(), bild.getBeschreibung(), bild.isPublicBild(), bild.getDate(), bild.getPath(), bild.getLongitude(), bild.getLatitude(), bild.getAltitude(), bild.getDirection());

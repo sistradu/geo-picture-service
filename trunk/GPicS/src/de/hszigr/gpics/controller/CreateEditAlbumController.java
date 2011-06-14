@@ -56,11 +56,22 @@ public class CreateEditAlbumController {
         try {
             UserController uc = (UserController) GPicSUtil.getBean("userController");
             String username = uc.getNutzerNamen();
-            FileOutputStream out = new FileOutputStream(uploadDir + username + "_" + file.getFileName());
+            FileOutputStream out = null;
+            if(!isNewAlbum){
+                out = new FileOutputStream(uploadDir + albumName + "_" + username + "_" + file.getFileName());
+            }else{
+                out = new FileOutputStream(uploadDir + username + "_" + file.getFileName());
+            }
+//            FileOutputStream
             out.write(file.getContents());
             out.flush();
             out.close();
-            updateBilderListe(uploadDir + username + "_" + file.getFileName());
+            if(!isNewAlbum){
+                updateBilderListe(uploadDir + albumName + "_" + username + "_" + file.getFileName());
+            }else{
+                updateBilderListe(uploadDir + username + "_" + file.getFileName());
+            }
+
             if (!isNewAlbum) {
                 //TODO aufruf von ladeAlbum probieren
                 AlbumControllerDBUtil util = new AlbumControllerDBUtil();
@@ -204,6 +215,7 @@ public class CreateEditAlbumController {
                 File f = new File(oldPath);
                 String fileName = oldPath.substring(oldPath.lastIndexOf("/")+1);
                 fileName = albumName + "_" + fileName;
+                bild.setName(fileName);
                 String tempPath = oldPath.substring(0,oldPath.lastIndexOf("/")+1);
                 String newPath = tempPath + fileName;
                 copyImageFiles(oldPath, newPath);
@@ -250,7 +262,7 @@ public class CreateEditAlbumController {
         return "showAlbum";
     }
 
-    private void copyImageFiles(String oldPath, String newPath) throws IOException {
+    public void copyImageFiles(String oldPath, String newPath) throws IOException {
         FileInputStream fin = new FileInputStream(oldPath);
         FileOutputStream fout = new FileOutputStream(newPath);
         byte[] b = new byte[(int) new File(oldPath).length()];
