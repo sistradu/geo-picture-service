@@ -16,6 +16,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import java.io.File;
 import java.net.ConnectException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -155,6 +156,23 @@ public class AdminPageController {
 
     public String deleteAlbum(){
         String albumName = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("albumname");
+        for(int i = 0; i<alben.size();i++){
+            String album = alben.get(i);
+            if(album.equals(albumName)){
+                alben.remove(i);
+            }
+        }
+        try{
+            if(albumName!=null){
+                deleteAlbum(albumName);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "adminPage";
+    }
+
+    public String deleteA(String albumName){
         for(int i = 0; i<alben.size();i++){
             String album = alben.get(i);
             if(album.equals(albumName)){
