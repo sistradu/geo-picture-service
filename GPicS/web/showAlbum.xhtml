@@ -11,6 +11,7 @@
                 xmlns:p="http://primefaces.prime.com.tr/ui">
     <ui:define name="content">
         <h:outputLabel value="#{mapBean.doIt()}"/>
+        <f:view contentType="text/html">
         <h:form id="albumInfos">
         <h2><h:outputLabel value="#{albumController.albumName}"/></h2>
             <h:commandLink value="#{msg.editAlbum}" action="#{createEditAlbumController.ladeAlbum}" rendered="#{userController.eingeloggt and userController.nutzerID == albumController.erstellerID}">
@@ -23,37 +24,28 @@
         <h:message for="passwordInput" style="color:red;"/>
         <h:outputLabel value="#{msg.passwordForFriends} #{albumController.passwort}" rendered="#{userController.eingeloggt and userController.nutzerID == albumController.erstellerID}"/>
         <br/>
-     <!--       <p:galleria id="images" effect="fade" effectSpeed="1000">
-                <ui:repeat value="#{albumController.bilder}" var="image">
-                    <p:panel header="#{albumController.image}">
-                        <p:graphicImage value="#{albumController.picture}"
-                        title="#{image.name}" alt="#{image.beschreibung}">
-                        </p:graphicImage>
-                    </p:panel>
-
-                </ui:repeat>
-            </p:galleria>
-            -->
-            <p:galleria id="images" effect="fade" effectSpeed="1000">
-                <ui:repeat value="#{albumController.bilder}" var="image">
-                    <h:outputLabel value="#{albumController.getImage(image.name)}"/>
+             <p:galleria id="images" effect="fade" effectSpeed="1000">
+                <ui:repeat value="#{albumController.bilder}" var="pics">
+                    <h:outputLabel value="#{albumController.getImage(pics.name)}"/>
                     <p:graphicImage value="#{albumController.picture}"
-                        title="#{image.name}" alt="#{image.beschreibung}"/>
+                        title="#{pics.name}" alt="#{pics.beschreibung}">
+                    </p:graphicImage>
                 </ui:repeat>
-            </p:galleria>
+             </p:galleria>
 
 
             <br/><br/>
             <p align="center">
                 <p:gmap center="#{albumController.bilder[0].latitude}, #{albumController.bilder[0].longitude}" zoom="13" type="HYBRID" style="width:600px;height:400px"
                     model="#{mapBean.simpleModel}" overlaySelectListener="#{mapBean.onMarkerSelect}">
-                <p:gmapInfoWindow>
-                    <p:graphicImage value="#{mapBean.image}" width="200" height="150"/>
-                    <br/>
-                    <h:outputText value="#{mapBean.beschreibung}"/>
-                </p:gmapInfoWindow>
-            </p:gmap>
+                    <p:gmapInfoWindow>
+                        <p:graphicImage value="#{mapBean.image}" width="200" height="150"/>
+                        <br/>
+                        <h:outputText value="#{mapBean.beschreibung}"/>
+                    </p:gmapInfoWindow>
+                </p:gmap>
             </p>
         </h:form>
+        </f:view>
     </ui:define>
 </ui:composition>
