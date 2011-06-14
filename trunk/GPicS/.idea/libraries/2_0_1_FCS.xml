@@ -8,12 +8,11 @@
       <root url="jar://$PROJECT_DIR$/lib/commons-io-2.0.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/commons-fileupload-1.2.2.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/log4j-1.2.16.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/primefaces-2.2.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/mailapi.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/smtp.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/metadata-extractor-2.3.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/junit-4.8.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/el-api.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/primefaces-2.2.1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
