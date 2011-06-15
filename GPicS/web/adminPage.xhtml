@@ -26,16 +26,9 @@
                             </h:commandLink>
                         </td>
                         <td>
-                            <p:commandLink value="#{msg.deleteUser}" onclick="dialogDeleteUser.show();"/>
-                            <p:dialog header="#{msg.deleteUser}" widgetVar="dialogDeleteUser" modal="true" height="200">
-                                <h:outputText value="#{msg.deleteUserQuestion}"/>
-                                <br/>
-                                <br/>
-                                <h:commandButton value="#{msg.yes}" action="#{adminPageController.deleteUser}">
+                            <h:commandLink value="#{msg.deleteUser}" action="#{adminPageController.deleteUser}">
                                     <f:param name="username" value="#{user}"/>
-                                </h:commandButton>
-                                <h:commandButton value="#{msg.no}" action="adminPage"/>
-                            </p:dialog>
+                            </h:commandLink>
                         </td>
                     </tr>
 
