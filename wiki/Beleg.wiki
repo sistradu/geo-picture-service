@@ -4,7 +4,7 @@
 
 || *Datei* || *Abschnitt* || *Bearbeiter* ||
 ||Exif.tex||Analysierte Technologien/Metadatenextraktion/Exif||Stefan||
-||Webservices.tex||Analysierte Technologien/Webservices||-||
+||Webservices.tex||Analysierte Technologien/Webservices||Stefan||
 ||KML.tex||Analysierte Technologien/KML||Martin||
 ||Tomcat.tex||Entwicklungsumgebung/Tomcat||-||
 ||IntelliJ.tex||Entwicklungsumgebung/IntelliJ||Jeder||
