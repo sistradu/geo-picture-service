@@ -1,0 +1,11 @@
+#summary One-sentence summary of this page.
+
+= Restliche Belegaufteilung =
+
+|| *Datei* || *Abschnitt* || *Bearbeiter* ||
+||Exif.tex||Analysierte Technologien/Metadatenextraktion/Exif||Stefan||
+||Webservices.tex||Analysierte Technologien/Webservices||-||
+||KML.tex||Analysierte Technologien/KML||Martin||
+||Tomcat.tex||Entwicklungsumgebung/Tomcat||-||
+||IntelliJ.tex||Entwicklungsumgebung/IntelliJ||Jeder||
+||Googlecode.tex||Entwicklungsumgebung/Googlecode||-||
