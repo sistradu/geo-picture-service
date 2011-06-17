@@ -6,6 +6,6 @@
 ||Exif.tex||Analysierte Technologien/Metadatenextraktion/Exif||Stefan||
 ||Webservices.tex||Analysierte Technologien/Webservices||Stefan||
 ||KML.tex||Analysierte Technologien/KML||Martin||
-||Tomcat.tex||Entwicklungsumgebung/Tomcat||-||
+||Tomcat.tex||Entwicklungsumgebung/Tomcat||Martin||
 ||IntelliJ.tex||Entwicklungsumgebung/IntelliJ||Jeder||
 ||Googlecode.tex||Entwicklungsumgebung/Googlecode||-||
