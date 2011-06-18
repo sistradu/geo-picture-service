@@ -1,2 +1,45 @@
 \section{eXist}
 \label{JumpeXist}
+%eXist ist einfach und unkompliziert --> Daten hochladen, Ausführen von Abfragen --> keine Einbindung zusätzlicher Frameworks für DB-Zugriff!!!
+%Schnell eingerichtet, einfaches Prinzip.
+%Schnelle Abfragen.
+%Relationale DB-Systeme bestechen durch referentielle Integrität, gut durchdachtes Konzept, Jahrelanger Praxiseinsatz. Doch aufwänfige Transformationen machen die VErwendung unhandlich, oder nur bestimmtes Format der XML-Dateien zulässig für universelle TRansformation, physische Struktur der XML-Dokumente wird zerstört (Kommentare auch, aber das macht uns nichts aus) --> physische Struktur schon wichtig, da z.B. Reihenfolge der Bilder in DB wichtig --> bereits sortiert, nach Zeitpunkt des Eintragens, Alben auch
+%Ein zentraler Bestandteil unseres Fotoarchivs ist die Datenbank. Hier werden alle wichtigen Informationen zu Nutzern, Bildern und Alben gespeichert.
+%Bei der Auswahl einer passenden Datenbank zur Verwaltung von XML-Dateien, gibt es zunächst, wie unter \url{http://dbs.uni-leipzig.de/files/projekte/XML/paper/XMLDB\_IAOforum.pdf} nachzulesen ist, 2 große Kategorien. Zum Einen gibt es klassische relationale Datenbanksysteme, die mit einer XML-Erweiterung ausgestattet sind. Das heißt, sie sind in der Lage, XML-Dokumente in ihre interne Datenstruktur und umgekehrt zu transformieren. Da diese Systeme nicht vorrangig für die Speicherung von XML-Dokumenten konzipiert wurden, ergeben sich aus ihrem Einsatz verschiedene Nachteile: (Siehe: \url{http://wwwlgis.informatik.uni-kl.de/archiv/wwwdvs.informatik.uni-kl.de/courses/seminar/WS0203/folien5.pdf} und \url{http://www.markwiesemann.eu/download/proseminar-folien.pdf})
+%\begin{itemize}
+%	\item Die XML-Dokumente müssen ein bestimmtes Format besitzen
+%	\item Verlust von physikalischer Struktur und Kommentaren
+%	\item aufwändige Transformation der Daten
+%\end{itemize}
+%Das heißt, relationale Datenbanksysteme sind für unseren Anwendungsfall eher ungeeignet.
+%\begin{enumerate}
+%	\item Native XML-Datenbanken
+%	\item XML-enabled Datenbanken
+%\end{enumerate}
+%Bei XML-enabled Datenbanken handelt es sich um klassische realationale Datenbanksysteme, die ein Mapping der Daten ins XML-Format erlauben. Man spricht auch von einem datenorientiertem Ansatz.
+Ein zentraler Bestandteil unseres Fotoarchivs ist die Datenbank. Hier werden alle wichtigen Informationen zu Nutzern, Bildern und Alben gespeichert.
+Da wir XML-Dokumente verarbeiten, liegt es nahe, eine native XML-Datenbank zum Speichern der Daten zu verwenden. Dabei haben wir uns für eXist entschieden, was wir im Folgenden begründen wollen.
+\subsection{Warum eXist?}
+Und warum kein relationales Datenbank-Managementsystem?
+Relationale Datenbanken basieren auf einem gut durchdachtem Konzept, das sich jahrelang bewährt hat und bieten wichtige Vorzüge, die man bei einer nativen XML-Datenbank wie eXist nicht vorfindet:
+\begin{enumerate}
+	\item Referentielle Integrität:
+	\item[] In eXist kann dieser Punkt leider nicht garantiert werden. Hier muss von Hand sichergestellt werden, dass alle Referenzen auf ein gelöschtes Objekt ebenfalls gelöscht werden. Da unser Datenmodell aber überschaubar ist, stellt dieser Punkt kein großes Problem dar.
+	%\item automatische Indizierung von Inhalten beherscht eXist --> Vorteil gegenüber anderen nativen XML-DBs
+	\item Sequenzen zur Vergabe eindeutiger Primary Keys:
+	\item[] Gerade bei einem Multinutzersystem ist dieser Punkt klar von Vorteil. Bei der Verwendung von eXist, muss dieses Problem auf eine andere Art und Weise gelöst werden. Näheres dazu unter \autoref{JumpDatenbank}.
+\end{enumerate}
+Da relationale Datenbanken aber nicht primär für die Speicherung von XML-Dateien geeignet sind, können sich eine Reihe von Problemen ergeben. Zum Einen können aufwändige Transformationen notwendig sein, um XML-Dokumente in die internen Strukturen zu übersetzen. Mit der Angabe des passenden Schemas, lässt sich dieser Prozess zwar beschleunigen, was aber dazu führt, dass nur noch Dateien mit einer bestimmten Struktur akzeptiert werden...
+
+Weitere wichtige Eigenschaften relationaler Datenbanksysteme beherrscht eXist jedoch, unter anderem:
+\begin{enumerate}
+	\item Effiziente und strukturierte Speicherung:
+	\item[] Wie viele native XML-Datenbanken, verwendet eXist einen modellbasierten Ansatz zur Speicherung der Daten, was eine schnellere und effizientere Suche, als bei XML fähigen Datenbanken, die eine rein zeichenkettenbasierte Speicherung der Daten vornehmen, ermöglicht. 
+	%\item automatische Indizierung von Inhalten beherscht eXist --> Vorteil gegenüber anderen nativen XML-DBs
+	\item Indizes:
+	\item[] Deren Verwendung bewirkt ebenfalls schnellere Suchvorgänge. Dabei erzeugt eXist bereits einige wichtige Indizes,welche in der Regel auch ausreichen um vor allem XPath und XQuery zu beschleunigen. Es können aber noch weitere Indizes in den Konfigurationsdateien zu jeder Collection vom Nutzer definiert werden.
+	\item Transaktionssicherheit:
+	\item[] eXist ist in der Lage nach einem Absturz, alle vollständig beendeten Transaktionen wiederherzustellen und alle nicht abgeschlossenen Transaktionen zurückzusetzen.
+\end{enumerate}
+\subsection{Alternativen}
+Nicht nur eXist, sondern auch andere Systeme eignen sich für den Umgang mit XML-Dokumenten. Im folgenden möchten wir deshalb Alternativen vorstellen und begründen, warum wir uns gegen diese entschieden haben.
