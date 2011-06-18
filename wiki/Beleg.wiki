@@ -8,4 +8,4 @@
 ||KML.tex||Analysierte Technologien/KML||Martin||
 ||Tomcat.tex||Entwicklungsumgebung/Tomcat||Martin||
 ||IntelliJ.tex||Entwicklungsumgebung/IntelliJ||Jeder||
-||Googlecode.tex||Entwicklungsumgebung/Googlecode||-||
+||Googlecode.tex||Entwicklungsumgebung/Googlecode||Rico||
