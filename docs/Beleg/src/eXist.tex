@@ -1,22 +1,5 @@
 \section{eXist}
 \label{JumpeXist}
-%eXist ist einfach und unkompliziert --> Daten hochladen, Ausführen von Abfragen --> keine Einbindung zusätzlicher Frameworks für DB-Zugriff!!!
-%Schnell eingerichtet, einfaches Prinzip.
-%Schnelle Abfragen.
-%Relationale DB-Systeme bestechen durch referentielle Integrität, gut durchdachtes Konzept, Jahrelanger Praxiseinsatz. Doch aufwänfige Transformationen machen die VErwendung unhandlich, oder nur bestimmtes Format der XML-Dateien zulässig für universelle TRansformation, physische Struktur der XML-Dokumente wird zerstört (Kommentare auch, aber das macht uns nichts aus) --> physische Struktur schon wichtig, da z.B. Reihenfolge der Bilder in DB wichtig --> bereits sortiert, nach Zeitpunkt des Eintragens, Alben auch
-%Ein zentraler Bestandteil unseres Fotoarchivs ist die Datenbank. Hier werden alle wichtigen Informationen zu Nutzern, Bildern und Alben gespeichert.
-%Bei der Auswahl einer passenden Datenbank zur Verwaltung von XML-Dateien, gibt es zunächst, wie unter \url{http://dbs.uni-leipzig.de/files/projekte/XML/paper/XMLDB\_IAOforum.pdf} nachzulesen ist, 2 große Kategorien. Zum Einen gibt es klassische relationale Datenbanksysteme, die mit einer XML-Erweiterung ausgestattet sind. Das heißt, sie sind in der Lage, XML-Dokumente in ihre interne Datenstruktur und umgekehrt zu transformieren. Da diese Systeme nicht vorrangig für die Speicherung von XML-Dokumenten konzipiert wurden, ergeben sich aus ihrem Einsatz verschiedene Nachteile: (Siehe: \url{http://wwwlgis.informatik.uni-kl.de/archiv/wwwdvs.informatik.uni-kl.de/courses/seminar/WS0203/folien5.pdf} und \url{http://www.markwiesemann.eu/download/proseminar-folien.pdf})
-%\begin{itemize}
-%	\item Die XML-Dokumente müssen ein bestimmtes Format besitzen
-%	\item Verlust von physikalischer Struktur und Kommentaren
-%	\item aufwändige Transformation der Daten
-%\end{itemize}
-%Das heißt, relationale Datenbanksysteme sind für unseren Anwendungsfall eher ungeeignet.
-%\begin{enumerate}
-%	\item Native XML-Datenbanken
-%	\item XML-enabled Datenbanken
-%\end{enumerate}
-%Bei XML-enabled Datenbanken handelt es sich um klassische realationale Datenbanksysteme, die ein Mapping der Daten ins XML-Format erlauben. Man spricht auch von einem datenorientiertem Ansatz.
 Ein zentraler Bestandteil unseres Fotoarchivs ist die Datenbank. Hier werden alle wichtigen Informationen zu Nutzern, Bildern und Alben gespeichert.
 Da wir XML-Dokumente verarbeiten, liegt es nahe, eine native XML-Datenbank zum Speichern der Daten zu verwenden. Dabei haben wir uns für eXist entschieden, was wir im Folgenden begründen wollen.
 \subsection{Warum kein relationales Datenbankmanagementsystem?}
@@ -24,13 +7,14 @@ Relationale Datenbanken basieren auf einem gut durchdachtem Konzept, das sich ja
 \begin{enumerate}
 	\item Referentielle Integrität:
 	\item[] In nativen XML-Datenbanken kann dieser Punkt leider nicht garantiert werden. Hier muss von Hand sichergestellt werden, dass alle Referenzen auf ein gelöschtes Objekt ebenfalls gelöscht werden. Da unser Datenmodell aber überschaubar ist, stellt dieser Punkt kein großes Problem dar.
-	%\item automatische Indizierung von Inhalten beherscht eXist --> Vorteil gegenüber anderen nativen XML-DBs
 	\item Sequenzen zur Vergabe eindeutiger Primary Keys:
 	\item[] Gerade bei einem Multinutzersystem ist dieser Punkt klar von Vorteil. Bei der Verwendung nativer XML-Datenbanken, muss dieses Problem in der Regel auf eine andere Art und Weise gelöst werden. Näheres dazu unter \autoref{JumpDatenbank}.
 \end{enumerate}
-Da relationale Datenbanken aber nicht primär für die Speicherung von XML-Dateien geeignet sind, müssen die, vom unserem XML-basierten Fotoarchiv, verwendeten Dokumente zunächst transformiert werden, um diese in der Datenbank zu speichern. Das kann schnell sehr ineffizient werden, wenn die Dateien immer größer werden.\\ Eine Möglichkeit wäre noch, die Dateien einfach als reine Zeichenketten in der Datenbank zu hinterlegen. Doch auch dieser Ansatz ist sehr ineffizient, da das Durchsuchen der Dateien nach bestimmten Informationen so viel zu lange dauert. Zwar gibt es auch relationale Datenbanken mit einer speziellen Erweiterung für XML-Dateien wie Oracle oder MS-SQL, doch sind diese in der Regel schlicht und einfach zu mächtig, also sehr groß und dadurch in der Anwendung vergleichsweise kompliziert.
+\todo{Links anpassen}
+Da relationale Datenbanken aber nicht primär für die Speicherung von XML-Dateien geeignet sind, müssen die, vom unserem XML-basierten Fotoarchiv, verwendeten Dokumente zunächst transformiert werden, um diese in der Datenbank zu speichern. Möglichkeiten dazu sind hier beschrieben: \url{http://www.urz.uni-heidelberg.de/imperia/md/content/urz/programme/db_und_xml.pdf}. Das kann aber schnell sehr ineffizient werden, wenn die Dateien immer größer werden oder es können nur Dateien mit einem bestimmten Aufbau verwendet werden.\\
+Eine Möglichkeit wäre noch, die Dateien einfach als reine Zeichenketten in der Datenbank zu hinterlegen. Doch auch dieser Ansatz ist sehr ineffizient, da das Durchsuchen der Dateien nach bestimmten Informationen so viel zu lange dauert. Zwar gibt es auch relationale Datenbanken mit einer speziellen Erweiterung für XML-Dateien wie Oracle oder MS-SQL, doch sind diese in der Regel schlicht und einfach zu mächtig, also sehr groß und dadurch in der Anwendung vergleichsweise kompliziert.
 \subsection{Native XML-Datenbanken}
-Aus den oben genannten Gründen, haben wir uns also entschieden, eine native XML-Datenbank zu verwenden, die folgende Eingenschaften besitzt:
+Aus den oben genannten Gründen, haben wir uns also entschieden, eine native XML-Datenbank zu verwenden, die folgende Eigenschaften besitzt:
 \begin{enumerate}
 	\item Geringe Größe:
 	\item[] Da wir auf unserem Testserver nur begrenzten Speicherplatz zur Verfügung haben und dieser größtenteils für die Bilder genutzt werden soll, darf die Datenbank nicht zu viel Platz belegen.
@@ -44,20 +28,27 @@ Zudem sollte die Datenbank einige wichtige Eigenschaften relationaler Datenbanks
 \begin{enumerate}
 	\item Effiziente und strukturierte Speicherung:
 	\item[] Viele native XML-Datenbanken, verwenden einen modellbasierten Ansatz zur Speicherung der Daten, was eine schnellere und effizientere Suche, als bei XML fähigen Datenbanken, die eine rein zeichenkettenbasierte Speicherung der Daten vornehmen, ermöglicht. 
-	%\item automatische Indizierung von Inhalten beherscht eXist --> Vorteil gegenüber anderen nativen XML-DBs
 	\item Indizes:
 	\item[] Deren Verwendung bewirkt ebenfalls schnellere Suchvorgänge. eXist zum Beispiel, erzeugt bereits einige wichtige Indizes,welche in der Regel auch ausreichen um vor allem XPath und XQuery zu beschleunigen. Es können aber noch weitere Indizes in den Konfigurationsdateien zu jeder Collection vom Nutzer definiert werden.
 	\item Transaktionssicherheit:
 	\item[] Die Datenbank sollte in der Lage sein nach einem Absturz, alle vollständig beendeten Transaktionen wiederherzustellen und alle nicht abgeschlossenen Transaktionen zurückzusetzen.
 \end{enumerate}
-eXist erfüllt alle diese Vorraussetzungen und tatsächlich gibt es kaum weitere native XML-Datenbanksysteme, die als Alternative in Frage kämen. Wir haben diesbezüglich nur 3 weitere Systeme gefunden, welche im Folgenden kurz mit eXist verglichen werden sollen.
-\begin{tabular}{|c|c|p{5cm}|c|}
+eXist erfüllt alle diese Vorraussetzungen und tatsächlich gibt es kaum weitere native XML-Datenbanksysteme, die als Alternative in Frage kämen (vgl. \url{http://dbs.uni-leipzig.de/files/projekte/XML/paper/XMLDB_IAOforum.pdf}). Wir haben diesbezüglich nur 3 weitere Systeme gefunden, welche im Folgenden kurz mit eXist verglichen werden sollen.\\\todo{Footnotes reparieren...}
+
+\begin{tabular}{|c|c|p{4cm}|c|}
+	\hline
 	\textbf{Entwickler} & \textbf{Datenbank} & \textbf{Besonderheiten} & \textbf{Aktuelle Version} \\
-	Wolfgang Meier (Privat) & eXist & komplett kostenlos (Open Source), ständige Updates, große Community & 
-\end{tabular}
-\begin{itemize}
-	\item Xindice - Apache
-	\item xDB - EMC
-	\item Tamino - Software AG
-\end{itemize}
-Dabei ist eXist aber das einzige System, das komplett kostenlos zur Verfügung steht und ständig weiterentwickelt wird.  Zudem ist es durch die inzwischen sehr große Community sehr einfach, auftretende Probleme schnell zu klären ohne sich durch lange Dokumentationen kämpfen zu müssen.
+	\hline
+	\hline
+	Wolfgang Meier & eXist\footnote{\url{http://www.exist-db.org/documentation.html}} & Open Source, ständige Updates, große Community, beherrscht XQuery, gut dokumentiert & 1.4 (23.12.2010) \\
+	\hline
+	Apache & Xindice\footnote{\url{http://xml.apache.org/xindice/index.html}} & kostenlos verfügbar unter der Apache License & 1.2m1 (01.12.2007) \\
+	\hline
+	EMC & xDB\footnote{\url{https://community.emc.com/docs/DOC-3155}} & beherrscht XQuery, gut dokumentiert, wird immer noch weiterentwickelt, benötigt Registrierung  & 10.1.0 (21.07.2010) \\
+	\hline
+	Software AG & Tamino\footnote{\url{http://www.softwareag.com/de/products/wm/tamino/}} & beherrscht XQuery, gut dokumentiert, benötigt Registrierung, 3 Versionen (eine kostenfreie) & 4.4.1 (unbekannt) \\
+	\hline
+\end{tabular}\\
+
+Dabei ist eXist das einzige System, das komplett kostenlos zur Verfügung steht und ständig weiterentwickelt wird.  Zudem ist es durch die inzwischen sehr große Community sehr einfach, auftretende Probleme schnell zu klären ohne sich durch lange Dokumentationen kämpfen zu müssen. Insgesamt erscheint eXist von allen auch am übersichtlichsten. Somit ist es das System, welches am besten für unsere Anwendung geeignet ist.
+%TODO Footnotes in Tabelle reparieren...
