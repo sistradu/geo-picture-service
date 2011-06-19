@@ -36,6 +36,13 @@ pdftex
 	\addcontentsline{tdo}{todo}{\protect{#1}}    
 	\marginpar{\textbf{\textcolor{red}{#1}}}
 	}
+
+\newcommand{\GPicS}{
+	\emph{GP}ic\emph{S}
+}
+\newcommand{\GPicSLogo}{
+	\includegraphics[height=\heightof{X}]{img/GPicS_Logo_Neu.PNG}
+}
 \makeatletter \newcommand \listoftodos{\section*{Todo Liste} \@starttoc{tdo}}  \newcommand\l@todo[2]    {\par\noindent \textit{#2}, \parbox{10cm}{#1}\par} 
 
 
@@ -92,7 +99,7 @@ colorlinks = {false},
 pdfborder = 0 0 0
 }
 \urlstyle{same}
-\title{GPicS}
+\title{\GPicS}
 \subtitle{Entwicklung eines XML basierten Fotoarchiv}
 \author{Rico Scholz\\IIAm10 \\ Fachbereich Informatik \\
 Hochschule Zittau / Görlitz
