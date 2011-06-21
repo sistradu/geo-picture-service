@@ -1,2 +1,61 @@
 \section{Anforderungsanalyse}
 \label{JumpAnforderungsanalyse}
+Basierend auf der Aufgabenstellung, sollen nun, die kongreten Anforderungen formuliert werden. Dabei wird unterschieden zwischen funktionalen und nicht-funktionalen Anforderungen und Anforderungen des Anwendungsbereiches.
+\subsection{Funktionale Anforderungen}
+Funktionale Anforderungen beschreiben Funktionen, die im fertigen System vorhanden sein sollten. Zusätzlich kann unterschieden werden, ob eine Anforderung zu 100\% umgesetzt werden soll oder nur teilweise, bzw. nur wenn der zeitliche Rahmen es zulässt.\\
+Die Anforderungen an unser System wurden dabei wie folgt formuliert:
+\begin{itemize}
+	\item Einfache Nutzerverwaltung:
+	\item[] Das System muss eine einfache Nutzerverwaltung implementieren. Dabei soll zwischen Gast, Uploader und Admin unterschieden werden, welche folgende Rechte besitzen:\\
+	
+	\begin{tabular}{|p{5cm}||c|c|c|}
+		\hline
+		 & \textbf{Gast} & \textbf{Uploader} & \textbf{Admin} \\
+		 \hline
+		 \hline
+		 \textbf{Öffentliche Bilder ansehen} & Ja & Ja & Ja \\
+		 \hline
+		 \textbf{Private Bilder ansehen} & Nur mit Passwort & Ja & Ja \\
+		 \hline
+		 \textbf{Bilder verwalten} & Nein & Ja & Ja \\
+		 \hline
+		 \textbf{Benutzer löschen} & Nein & Nein & Ja \\
+		 \hline
+	\end{tabular}
+
+	\item Organisation der Fotos:
+	\item[] Angemeldete Benutzer können Alben erstellen, zu denen sie mehrere Bilder hochladen können. Die Alben können auch nachträglich noch bearbeitet werden und Bilder hinzugefügt oder gelöscht werden.
+	\item Erweiterung der Bilddaten mit Informationen:
+	\item[] Aus hochgeladenen Bildern sollen automatisch Metadaten, wie Zeit der Aufnahme und GPS-Informationen ausgelesen werden. Zusätzlich kann der Nutzer zu jedem Bild Kommentare hinzufügen und auch die ausgelesenen Daten nachträglich bearbeiten oder hinzufügen, falls diese nicht ausgelesen werden konnten. Zusätzlich kann der Nutzer Bilder öffentlich machen, damit jeder sie betrachten kann.
+	\item Anzeige von Bildern/Alben:
+	\item[] Alle sichtbaren Bilder zu einem Album können direkt als Slideshow oder alternativ auf einer Google-Maps Karte mit integrierten Thumbnails angezeigt werden.
+	\item Löschen von Alben:
+	\item[] Der Admin des Fotoarchivs, kann Alben löschen, wenn die Inhalte gegen die Nutzungsbedingungen verstoßen.
+	\item Löschen von Nutzern:
+	\item[] Der Admin kann ebenfalls ganze Nutzer löschen.
+\end{itemize}
+\subsection{Optionale Anforderungen}
+\begin{itemize}
+	\item Umkreissuche von Bildern:
+	\item[] Wenn sich ein Betrachter für eine Region besonders interessiert, so kann er sich alle sichtbaren Bilder im Umkreis eines angegebenen Punktes auf der Karte anzeigen lassen, auch über mehrere Alben und Nutzer.
+	\item Routenplaner von Bild zu Bild:
+	\item[] Bei einer lange Distanz zwischen 2 Bildern, sollen Cloud-Services von Google genutze werden, um sich die optimale Route zwischen diesen Bildern berechnen zu lassen.
+	\item Entfernung zwischen 2 Fotos:
+	\item[] Auch hierfür können Cloud-Services genutzt werden um entweder die Luftlinienentfernung, oder die Länge der optmialen Route zwischen 2 Fotos anzugeben.
+\end{itemize}
+\subsection{Nicht-Funktionale Anforderungen}
+Zu den nicht-funktionalen Anforderungen zählen alle Anforderungen, die die grundlegende Funktionalität des Systems nicht beeinflussen.\\
+Für unser System sind das die folgenden:
+\begin{itemize}
+	\item Datensicherheit:
+	\item[] Die vom Nutzer eingegebenen Daten müssen sicher gespeichert werden, so dass diese nicht von dritten ausgelesen werden können. Das betrifft vor allem, die vom Nutzer hochgeladenen Bilder, welche als Privat gekennzeichnet wurden.
+	\item Passwortsicherheit:
+	\item[] Das Passwort eines Nutzers soll bereits verschlüsselt übertragen werden, damit auch beim Abhören des Datenverkehrs, dieses nicht rekonstruiert werden kann.
+	\item Usability:
+	\item[] Das System soll über eine ansprechende Oberfläche leicht zu bedienen sein. Der Nutzer muss zu jedem Zeitpunkt alle ihm möglichen Aktionen schnell und problemlos finden können.
+	\item Mehrbenutzerfähigkeit:
+	\item[] Auf einem System können sich mehrere Nutzer anmelden und gleichzeitig ihre Bilder verwalten ohne, dass Probleme durch Nebenläufige Prozesse auftreten.
+\end{itemize}
+%\subsection{Anforderungen des Anwendungsbereiches}
+%Anforderungen des Anwendungsbereiches charakterisieren Spezialitäten des %Anwendungsbereiches
+%??? Linux, wenig Arbeitsspeicher und kleine Festplatte, Nutzerverwaltung %DB-basiert
