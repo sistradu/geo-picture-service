@@ -7,8 +7,8 @@
 ||Aufgabenstellung.tex||Problem/Aufgabenstellung||Rico|| ||
 ||Anforderungsanalyse.tex||Anforderungsanalyse||Markus|| 50% ||
 ||Drupal.tex||Drupal||Martin|| ||
-||PrimefacesTechnologien.tex||Technologien/Primefaces||Stefan|| ||
-||JSF.tex||Technologien/JSF||Stefan|| ||
+||PrimefacesTechnologien.tex||Technologien/Primefaces||Stefan|| 85% ||
+||JSF.tex||Technologien/JSF||Stefan|| 85% ||
 ||eXist.tex||Technologien/eXist||Markus|| 95% ||
 ||Yaml.tex||Technologien/Yaml||Martin|| ||
 ||Systementwurf.tex||Systementwurf||Markus|| 20% ||
@@ -22,7 +22,7 @@
 ||Zusammenfassung.tex||Zusammenfassung||Jeder|| ||
 ||Fazit.tex||Fazit||Jeder|| ||
 ||Kameraausgabeformate.tex||Analysierte Technologien/Metadatenextraktion/Kameraausgabeformate||Markus|| 5% ||
-||Exif.tex||Analysierte Technologien/Metadatenextraktion/Exif||Stefan|| ||
+||Exif.tex||Analysierte Technologien/Metadatenextraktion/Exif||Stefan|| 50% ||
 ||Webservices.tex||Analysierte Technologien/Webservices|| - || ||
 ||KML.tex||Analysierte Technologien/KML||Martin|| ||
 ||Tomcat.tex||Entwicklungsumgebung/Tomcat||Martin|| ||
