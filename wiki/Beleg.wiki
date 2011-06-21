@@ -21,6 +21,7 @@
 ||Projektaufteilung.tex||Aufteilung des Projekts||Jeder|| ||
 ||Zusammenfassung.tex||Zusammenfassung||Jeder|| ||
 ||Fazit.tex||Fazit||Jeder|| ||
+||Kameraausgabeformate.tex||Analysierte Technologien/Metadatenextraktion/Kameraausgabeformate||Markus|| 5% ||
 ||Exif.tex||Analysierte Technologien/Metadatenextraktion/Exif||Stefan|| ||
 ||Webservices.tex||Analysierte Technologien/Webservices|| - || ||
 ||KML.tex||Analysierte Technologien/KML||Martin|| ||
