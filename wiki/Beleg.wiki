@@ -25,6 +25,6 @@
 ||Exif.tex||Analysierte Technologien/Metadatenextraktion/Exif||Stefan|| 50% ||
 ||Webservices.tex||Analysierte Technologien/Webservices|| - || ||
 ||KML.tex||Analysierte Technologien/KML||Martin|| ||
-||Tomcat.tex||Entwicklungsumgebung/Tomcat||Martin|| ||
+||Tomcat.tex||Entwicklungsumgebung/Tomcat||Rico|| ||
 ||IntelliJ.tex||Entwicklungsumgebung/IntelliJ||Jeder|| ||
 ||Googlecode.tex||Entwicklungsumgebung/Googlecode||Rico|| ||
