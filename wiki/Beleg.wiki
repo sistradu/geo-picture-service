@@ -1,8 +1,26 @@
 #summary One-sentence summary of this page.
 
-= Restliche Belegaufteilung =
+= Belegaufteilung =
 
-|| *Datei* || *Abschnitt* || *Bearbeiter* ||
+|| *Datei* || *Kapitel/Abschnitt* || *Bearbeiter* ||
+||Einleitung.tex||Einleitung||Rico||
+||Aufgabenstellung.tex||Problem/Aufgabenstellung||Rico||
+||Anforderungsanalyse.tex||Anforderungsanalyse||Markus||
+||Drupal.tex||Drupal||Martin||
+||PrimefacesTechnologien.tex||Technologien/Primefaces||Stefan||
+||JSF.tex||Technologien/JSF||Stefan||
+||eXist.tex||Technologien/eXist||Markus||
+||Yaml.tex||Technologien/Yaml||Martin||
+||Systementwurf.tex||Systementwurf||Markus||
+||Datenbank.tex||Implementation/Datenbank||Markus||
+||Applikation.tex||Implementation/Applikation||Jeder||
+||Validatoren.tex||Implementation/Validatoren||Martin||
+||PrimefacesImplementation.tex||Implementation/Primefaces||Stefan||
+||Benutzeroberflaeche.tex||Implementation/Benutzeroberfläche||Martin/Stefan||
+||Tests.tex||Tests||Jeder||
+||Projektaufteilung.tex||Aufteilung des Projekts||Jeder||
+||Zusammenfassung.tex||Zusammenfassung||Jeder||
+||Fazit.tex||Fazit||Jeder||
 ||Exif.tex||Analysierte Technologien/Metadatenextraktion/Exif||Stefan||
 ||Webservices.tex||Analysierte Technologien/Webservices|| - ||
 ||KML.tex||Analysierte Technologien/KML||Martin||
