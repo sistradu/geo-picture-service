@@ -5,7 +5,7 @@
 || *Datei* || *Kapitel/Abschnitt* || *Bearbeiter* || *Abgeschlossen* ||
 ||Einleitung.tex||Einleitung||Rico|| ||
 ||Aufgabenstellung.tex||Problem/Aufgabenstellung||Rico|| ||
-||Anforderungsanalyse.tex||Anforderungsanalyse||Markus|| 50% ||
+||Anforderungsanalyse.tex||Anforderungsanalyse||Markus|| 90% ||
 ||Drupal.tex||Drupal||Martin|| ||
 ||PrimefacesTechnologien.tex||Technologien/Primefaces||Stefan|| 85% ||
 ||JSF.tex||Technologien/JSF||Stefan|| 85% ||
