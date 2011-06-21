@@ -51,4 +51,56 @@ eXist erfüllt alle diese Vorraussetzungen und tatsächlich gibt es kaum weitere n
 \end{tabular}\\
 
 Dabei ist eXist das einzige System, das komplett kostenlos zur Verfügung steht und ständig weiterentwickelt wird.  Zudem ist es durch die inzwischen sehr große Community sehr einfach, auftretende Probleme schnell zu klären ohne sich durch lange Dokumentationen kämpfen zu müssen. Insgesamt erscheint eXist von allen auch am übersichtlichsten. Somit ist es das System, welches am besten für unsere Anwendung geeignet ist.
-%TODO Footnotes in Tabelle reparieren...
+\subsection{Installation}
+Um eXist nun zu installieren werden mehrere Möglichkeiten angeboten:
+\begin{itemize}
+	\item Embedded:
+	\item[] Hierbei wird die Datenbank im Grunde als Java-Bibliothek behandelt und läuft damit in der selben JVM wie unsere Applikation. Vorteilig ist, dass keine Netzwerkverbindung zur Datenbank aufgebaut werden muss. Ein großer Nachteil dabei ist aber, dass Applikation und Datenbank nicht getrennt lauffähig sind.
+	\item Standalone:
+	\item[] Hier läuft die Datenbank in einer eigenen JVM ohne in einen Webserver eingebunden zu sein. Die Datenbank läuft dadurch zwar getrennt von der Applikation, aber es stehen nicht alle Funktionalitäten zur Verfügung. So ist eine bequeme Verwaltung der Datenbank über den eXist-Admin-Client nicht möglich, wodurch es nicht möglich ist,aufgetretene Fehler die die Datenbank betreffen, schnell zu beheben.
+	\item Als Servlet-Context:
+	\item[] Hier läuft die Datenbank als Teil einer Webapplikation und wird mit dieser deployed. Standartmäßig wird dazu ein Jetty als Servlet-Engine mitgeliefert. Es ist zwar laut Entwickler nicht schwierig, eXist auch auf einem anderen Server zu deployen, aber es wird empfohlen keine andere Servlet-Engine zu nutzen, falls es nicht zwingend erforderlich ist. Begründet wird das dadurch, dass Jetty klein, effizient und stabil ist und eXist vorwiegend darauf getestet wurde. Diese Lösung ist zwar, durch andere auf dem Server laufenden Prozesse, ein wenig ineffizienter, als die Standalone-Variante, dennoch haben wir uns dafür entschieden, da uns hier sämtliche Zugriffs- und Administrationsmöglichkeiten zur Verfügung stehen.
+\end{itemize}
+\subsection{Abfrage der Daten}
+Nach der Installation, ging es darum sich zu entscheiden, welche Art der Zugriffsmethode wir verwenden wollen um auf die Daten in der Datenbank auszulesen und diese zu modifizeren.Auch hier bietet eXist mehrere Möglichkeiten an:
+\begin{itemize}
+	\item Java-Admin Client:
+	\item[] Wie bereits erwähnt kann dieser Client verwendet werden um schnell und effektiv aufgetretene Fehler in der Datenbank zu beheben. So können bequem Collections angelegt werden, die ungefähr wie Tabellen in einer relationalen Datenbank fungieren. Innerhalb dieser Collections können dann ein oder mehrere XML-Dateien gespeichert werden. Auch das Hochladen von Dateien ist sehr einfach und unkompliziert. Auch können mit dem Admin-Client sehr einfach die Zugriffsrechte auf Collections oder einzelne Dateien geändert werden. Das ist wichtig, damit die gespeicherten Informationen, später nicht von dritten ausgelesen werden können. Für den Zugriff aus der Applikation heraus benötigen wir aber eine andere Lösung.
+	\item XML:DB API:
+	\item[] Eine Möglichkeit ist es, die XML:DB API zu verwenden. Diese API stellt ein Interface für XML-Datenbanken zur Verfügung. Die eXist Implementierung von XML:DB orientiert sich dabei Xindice von Apache. Ein Vorteil dieser Methode ist die gute Dokumentation, womit anhand von Beispielen auch schnell erste Erfolge erzielt werden können. Nachteilig ist, dass zur Verwendung zunächst das dazugehörige Framework eingebunden werden muss.
+	\item XML-RCP API:
+	\item[] eXist stellt ebenfalls eine XML-RPC API bereit, damit der Zugriff auf die Datenbank möglichst Programmiersprachenunabhängig ist. Auch hier wird eine sehr gute Dokumentation mit gut erklärten Beispielen bereitgestellt. Allerdings ist auch hier die Einbindung weiterer Bibliotheken in unser Projekt nötig.
+	\item REST-style API:
+	\item[] Die unserer Meinung nach beste Möglichkeit um auf die Datenbank zuzugreifen, bietet sich über simple HTTP-Requests. Dafür ist nicht viel Quellcode erforderlich, es müssen keine großen Bibliotheken eingebunden werden und mit der Möglichkeit Stored XQuerys aufzurufen, können alle benötigten Abfragen direkt in der Datenbank hinterlegt werden, was nochmals den Implementationsaufwand auf Clientseite reduziert. Darum haben wir uns auch für diese Variante entschieden.
+\end{itemize}
+\subsection{One BIG vs. Many small}
+\label{JumpDBOneBIGManysmall}
+Eine interessante Fragestellung die sich für den Aufbau der Datenbank ergab war, ob Operationen auf einer großen Datei mit vielen Einträgen oder auf vielen kleinen Dateien mit jeweils wenig Einträgen schneller sind.\\
+Da unser System für mehrere Nutzer geeignet sein sollte, war uns besonders wichtig zu testen, ob die Datenbank mit sehr vielen Einträgen überhaupt umgehen kann und welche Art der Speicherung der Daten vorteilhafter ist. Dazu haben wir zunächst die möglichen Ausmaße der Daten ermittelt, wobei wir von etwa 10 Benutzern mit durchschnittlich 20 Alben mit jeweils 50 Bildern ausgegangen sind. Klar wird, dass der Schwachpunkt hier bei den insgesamt $10 * 20 * 50 = 10000$ Bildern liegt. Bei diesen Ausmaßen ist es auch nicht mehr vorteilhaft, die Fotos ebenfalls in der Datenbank zu speichern. Da die Datenbank versucht, Daten und vor allem Indizes im Arbeitsspeicher zu Cachen, würde dieser so bei sehr großen Fotos schnell voll werden. Würde die JVM damit mehr Speicher benötigen, als ihr zugewiesen wurde (Der Standartwert liegt bei 512 MB), dann würde die komplette Datenbank abstürzen. Es gibt zwar Mechanismen, die das verhindern sollen, dennoch wird auf der offiziellen Webseite darauf hingewiesen, dass es zu drastischen Performance-Einbrüchen kommen kann, wenn mehrere 100 MB an XML-Dateien verwaltet werden sollen. (\url{http://demo.exist-db.org/exist/tuning.xml}) Da die Bilder unserer Kamera jeweils etwa 4MB groß sind, ist dieser Punkt schnell erreicht. Bei 10000 Bildern entspräche das etwa 39GB.\\
+Nun blieb noch zu ermitteln, ob jetzt eine große oder mehrere kleine Dateien sinnvoller sind. Dazu haben wir uns Dateien mit einigen Testdaten generiert. \todo{Testdatengenerator integrieren} Darunter eine große Datei mit insgesamt 10000 Einträgen (One BIG) und 500 kleine Dateien mit jeweils 20 Einträgen (Many small). Auf diesen Dateien haben wir mehrere Abfragen ausgeführt und die ermittelten Resultate in der folgenden Tabelle zusammengefasst.
+
+\begin{table}
+	\begin{tabular}{|l|c|c|}
+		\hline
+		& \textbf{One BIG} & \textbf{Many small} \\
+		\hline
+		\textbf{Einträge pro Datei} & 10000 & 20 \\
+		\hline
+		\textbf{Anzahl Dateien} & 1 & 500 \\
+		\hline
+		\textbf{Dateigröße} & 1,5 MB & 3 KB \\
+		\hline
+		\textbf{Auslesen aller Einträge} & 7 sec & 6 sec \\
+		\hline
+		\textbf{Aulsen aller mit Cache} & 3 sec & 3 sec \\
+		\hline
+		\textbf{Suchen eines bestimmten Eintrags} & < 1 sec & < 1 sec \\
+		\hline
+		\textbf{Suchen mehrerer Einträge} & 3 sec & 2 sec\\
+		\hline
+	\end{tabular}
+	\caption{One BIG vs. Many small}
+	\label{JumpTableOneBIGManysmall}
+\end{table}
+
+Dabei ist erkennbar, dass die Menge der Dateien und deren Größe kaum Einfluss auf die Geschwindigkeit der Abfragen hat. Der Grund dafür sind die Indizes, die eXist automatisch erzeugt, dadurch können unabhängig von der Dateigröße, schnell bestimmte Einträge gefunden werden ohne immer wieder einen kompletten Scan durchzuführen. Nach der ersten Abfrage aller Daten, werden zudem die Dateien im Cache der Datenbank gehalten, womit künftige Suchanfragen nochmals beschleunigt werden. Das funktioniert bei unserem System auch bei 10000 Einträgen problemlos, da wir ja die Fotos nicht in der Datenbank speichern. Da die Dateien dennoch irgendwo im Dateisystem gespeichert werden müssen, haben wir uns für die Variante mit jeweils einer großen Datei entschieden, da dies weniger Verwaltungsaufwand bedeutet, vor allem da die kleinen Dateien mit 3KB sogar noch unter der Blockgröße aktueller Dateisysteme liegen und somit insgesamt mehr Speicher belegen als notwendig.
