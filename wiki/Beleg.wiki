@@ -6,17 +6,17 @@
 ||Einleitung.tex||Einleitung||Rico|| 100% ||
 ||Aufgabenstellung.tex||Problem/Aufgabenstellung||Rico|| ||
 ||Anforderungsanalyse.tex||Anforderungsanalyse||Markus|| 90% ||
-||Drupal.tex||Drupal||Martin|| ||
+||Drupal.tex||Drupal||Martin|| 95% ||
 ||PrimefacesTechnologien.tex||Technologien/Primefaces||Stefan|| 95% ||
 ||JSF.tex||Technologien/JSF||Stefan|| 95% ||
 ||eXist.tex||Technologien/eXist||Markus|| 95% ||
-||Yaml.tex||Technologien/Yaml||Martin|| ||
+||Yaml.tex||Technologien/Yaml||Martin|| 95% ||
 ||Systementwurf.tex||Systementwurf||Markus|| 20% ||
 ||Datenbank.tex||Implementation/Datenbank||Markus|| 0% ||
 ||Applikation.tex||Implementation/Applikation||Jeder|| ||
-||Validatoren.tex||Implementation/Validatoren||Martin|| ||
+||Validatoren.tex||Implementation/Validatoren||Martin/Markus|| 50% ||
 ||PrimefacesImplementation.tex||Implementation/Primefaces||Stefan|| 0% ||
-||Benutzeroberflaeche.tex||Implementation/Benutzeroberfläche||Martin|| ||
+||Benutzeroberflaeche.tex||Implementation/Benutzeroberfläche||Martin|| 95% ||
 ||Tests.tex||Tests||Jeder|| ||
 ||Projektaufteilung.tex||Aufteilung des Projekts||Jeder|| ||
 ||Zusammenfassung.tex||Zusammenfassung||Jeder|| ||
@@ -24,7 +24,7 @@
 ||Kameraausgabeformate.tex||Analysierte Technologien/Metadatenextraktion/Kameraausgabeformate||Markus|| 5% ||
 ||Exif.tex||Analysierte Technologien/Metadatenextraktion/Exif||Stefan|| 50% ||
 ||Webservices.tex||Analysierte Technologien/Webservices|| - || ||
-||KML.tex||Analysierte Technologien/KML||Martin|| ||
+||KML.tex||Analysierte Technologien/KML||Martin|| 99% ||
 ||Tomcat.tex||Entwicklungsumgebung/Tomcat||Rico|| ||
 ||IntelliJ.tex||Entwicklungsumgebung/IntelliJ||Jeder|| ||
 ||Googlecode.tex||Entwicklungsumgebung/Googlecode||Rico|| 95% ||
