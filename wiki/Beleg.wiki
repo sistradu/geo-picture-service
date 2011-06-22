@@ -3,7 +3,7 @@
 = Belegaufteilung =
 
 || *Datei* || *Kapitel/Abschnitt* || *Bearbeiter* || *Abgeschlossen* ||
-||Einleitung.tex||Einleitung||Rico|| ||
+||Einleitung.tex||Einleitung||Rico|| 100% ||
 ||Aufgabenstellung.tex||Problem/Aufgabenstellung||Rico|| ||
 ||Anforderungsanalyse.tex||Anforderungsanalyse||Markus|| 90% ||
 ||Drupal.tex||Drupal||Martin|| ||
