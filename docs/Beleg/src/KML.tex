@@ -1,2 +1,28 @@
 \section{KML}
 \label{JumpKML}
+Die Keyhole Markup Language, kurz KML,  ist eine Auszeuchnungssprache, die von Google.Inc entwickelt wurde um Geodaten für die Client-Komponenten der Programme Google Earth und Google Maps zu beschreiben. KML ist ein Standard des Open Geospatial Consortium und aktuell in der Version 2.2 verfügbar.
+\\
+Es gibt zwei Formate in der ein KML-File vorliegen kann. Zum einen das .kml-Format und das .kmz-Format. Bei dem -kmz-Format handelt es sich um die gezippte Version eines .kml-Files. 
+\\
+Über den Inhalt und Aufbau eines KML-Dokumentes sollte man folgendes wissen. Es kann Geodaten im Vektor- und Rasterformat enthalten, wobei Vektorobjekte wie Punkte, Linien, lineare Ringe, Polygone oder COLLADA-Modelle als Placemark-Elemente und Luft- und Satellitenbilder als GroundOverlay-Elemente modelliert werden. Placemark-Elemente können zusätzlich zu den Geodaten auch noch andere Daten wie Name, Beschreibung, Betrachtungswinkel und -höhe, sowie einen Zeitstempel und noch vieles mehr enthalten. Hier ein Beispiel eines Placemark-Elementes eines KML-Dokuments:
+\begin{lstlisting}[caption=KML-Dokument]{Name}
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document>
+  <Placemark>
+    <name>Görlitz</name>
+    <description>Hochschule Zittau/Görlitz</description>
+    <Point>
+      <coordinates>51.149044,14.997729</coordinates>
+    </Point>
+  </Placemark>
+</Document>
+</kml>
+\end{lstlisting}
+Der Unterschied bei GroundOverlay-Elementen ist der, dass dort ein Koordinatenausschnitt zur Georeferenzierung der Rasterdaten angegeben werden muss, statt der Geometrie.
+\\
+Hat man ein solches KML-File erstellt bzw. vorliegen und möchte dieses Veröffentlichen, so gibt es dafür verschiedene Varianten. Um ein KML-File mit dem Programm Google Earth zu nutzen reicht es aus, dass sich die KML- oder KMZ-datei irgendwo auf dem Rechner befindet, mit dem man die Applikation nutzt. Bei Google Maps ist die Sache schon etwas komplizierter. Dort gibt es nur die Möglichkeit, sein KML- bzw. KMZ-File auf einen Webserver oder den von Google dafür vorgesehenen Server zu laden. Damit es dann aber auch mit Google Maps genutzt werden kann, muss auf der Seite "http://www.google.de/addurl/?continue=/addurl" ein Formular ausgefüllt werden, wo man die URL auf der sich das Dokument befindet angibt. Seit neuestem ist Google Maps auch in der Lage das KML-Dokument zu nutzen wenn man einfach in das Google Maps Suchfeld die URL eingibt, wo sich das KML- bzw. KMZ-File befindet.
+\\
+FAZIT Warum nicht genutzt wird - Überarbeiten!!!
+
+KML-Files werden in diesem Projekt nicht genutzt werden, da es bereits von Primefaces eine Komponente gibt, mit der sich ebenfalls die Dinge von KML umsetzten lassen. 

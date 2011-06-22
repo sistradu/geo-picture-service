@@ -1,8 +1,8 @@
-\section{Benutzeroberflï¿½che}
+\section{Benutzeroberfläche}
 \label{JumpBenutzeroberflaeche}
 %TODO Anpassen, Facelets rein
-Die BenutzeroberflÃ¤che besteht aus drei Komponenten, HTML, YAML und Facelets. Als GrundgerÃ¼st nutzen wir eine HTML-Seite die folgende Struktur besitzt. 
-\begin{lstlisting}[caption=HTML-GrundgerÃ¼st]{Name}
+Die Benutzeroberfläche besteht aus drei Komponenten, HTML, YAML und Facelets. Als Grundgerüst nutzen wir eine HTML-Seite die folgende Struktur besitzt. 
+\begin{lstlisting}[caption=HTML-Grundgerüst]{Name}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
@@ -17,9 +17,9 @@ Die BenutzeroberflÃ¤che besteht aus drei Komponenten, HTML, YAML und Facelets. A
 \end{lstlisting}
 Dieser kurze Auszug zeigt nicht dem kompletten Quellcode aber die wichtigsten Grundelemente.
 //
-Grundelemente etwas erklÃ¤ren
+Grundelemente etwas erklären
 //
-Zudem kommt bei uns die View-Handler-Technologie Facelets zum Einsatz, welche eine Alternative zum JavaServer Faces(JSF) Framework bildet. Mit ihr ist es mÃ¶glich eine Seite als Layout zu definieren und diese immer mit dem aktuell anzuzeigenden Content zu fÃ¼llen. Facelets verfÃ¼gt Ã¼ber component-aliasing, was dafÃ¼r sorgt, dass normale HTML-Tags statt der Tags fÃ¼r UI-Komponenten genutzt werden kÃ¶nnen. Um eine Verbindung zu den jeweiligen UI-Komponenten herzustellen reicht es aus das alias-Attribut jsfc im Tag anzugeben. Hier ein kleines Beispiel:
+Zudem kommt bei uns die View-Handler-Technologie Facelets zum Einsatz, welche eine Alternative zum JavaServer Faces(JSF) Framework bildet. Mit ihr ist es möglich eine Seite als Layout zu definieren und diese immer mit dem aktuell anzuzeigenden Content zu füllen. Facelets verfügt über component-aliasing, was dafür sorgt, dass normale HTML-Tags statt der Tags für UI-Komponenten genutzt werden können. Um eine Verbindung zu den jeweiligen UI-Komponenten herzustellen reicht es aus das alias-Attribut jsfc im Tag anzugeben. Hier ein kleines Beispiel:
 \begin{lstlisting}[caption=Facelets HTML-Tag]{Name}
 <html   xmlns:ui="http://java.sun.com/jsf/facelets" xml:lang="en" lang="en">
 <body>
@@ -27,7 +27,7 @@ Zudem kommt bei uns die View-Handler-Technologie Facelets zum Einsatz, welche ei
 </body>
 </html>
 \end{lstlisting}
-Wie im Beispiel zu sehen ist, wird im Body ein HTML-Tag mit dem Namen "content" eingefÃ¼gt. Dieses muss im weiter Verlauf nur immer mit dem jeweiligen Inhalt versorgt werden. Dies passiert wie folgt.
+Wie im Beispiel zu sehen ist, wird im Body ein HTML-Tag mit dem Namen "content" eingefügt. Dieses muss im weiter Verlauf nur immer mit dem jeweiligen Inhalt versorgt werden. Dies passiert wie folgt.
 \begin{lstlisting}[caption=Facelets HTML-Tag]{Name}
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -41,15 +41,15 @@ Wie im Beispiel zu sehen ist, wird im Body ein HTML-Tag mit dem Namen "content" 
                 xmlns:p="http://primefaces.prime.com.tr/ui">
 
     <ui:define name="content">
-    	 Hier wÃ¼rde jetzt der Content der jeweiligen Seite definiert werden
+    	 Hier würde jetzt der Content der jeweiligen Seite definiert werden
     </ui:define>
 
 </ui:composition>
 \end{lstlisting}
-Man erstellt eine neue XHTML-Seite und legt auf dieser Seite im UI-Tag "composition" mittels der Zuweisung "template="layout.xhtml"" das Layout was genutzt werden soll fest. In diesem Fall die "layout.xhtml". Der eigentliche Inhalt fÃ¼r den UI-Tag "content" legt man mit Hilfe des Tags "<ui:define name="content"" fest. \\
-Das hat den Vorteil das man sich nicht auf jeder Seite damit beschÃ¤ftigen muss, wo soll der Tag spÃ¤ter angezeigt werden, sondern man definiert ihn nur und er wird immer an der Stelle, wo er im Template festgelegt ist angezeigt.\\
+Man erstellt eine neue XHTML-Seite und legt auf dieser Seite im UI-Tag "composition" mittels der Zuweisung "template="layout.xhtml"" das Layout was genutzt werden soll fest. In diesem Fall die "layout.xhtml". Der eigentliche Inhalt für den UI-Tag "content" legt man mit Hilfe des Tags "<ui:define name="content"" fest. \\
+Das hat den Vorteil das man sich nicht auf jeder Seite damit beschäftigen muss, wo soll der Tag später angezeigt werden, sondern man definiert ihn nur und er wird immer an der Stelle, wo er im Template festgelegt ist angezeigt.\\
 \\
-Wie nun das HTML-Layout gestaltet ist wird mittels CSS durch das YAML-Framework festgelegt, welches wir bis auf ein paar kleine Ã„nderungen in Sachen Hintergrundgrafik fast ungeÃ¤ndert nutzen. Es bietet durch mehrere CSS-Style-Sheets den Vorteil in allen gÃ¤ngigen Browsern gut dargestellt werden zu kÃ¶nnen. Es enthÃ¤lt speziel fÃ¼r den Internet-Explorer angepasste Sytle-Sheets, da dieser mit den Ã¼blichen CSS-Befehlen nicht zurecht kommt bzw. diese immer etwas anders umsetzt. Damit ist zum Beispiel gemeint, das ein deutlicher Unterschied zwischen Firefox und Internet-Explorer besteht wenn man einen Abstand mit 10px definiert. Das kann zu deutlichen Unterschieden fÃ¼hren, welche aber durch YAML bereits abgefangen werden. Zudem kÃ¼mmert sich YAML auch um die weiteren browserspezifischen Bugs, was den Vorteil hat, dass sich der Programmierer nicht noch mit jeden Browser beschÃ¤ftigen muss, sondern eine LÃ¶sung fÃ¼r alle Browser implementieren kann.
+Wie nun das HTML-Layout gestaltet ist wird mittels CSS durch das YAML-Framework festgelegt, welches wir bis auf ein paar kleine Änderungen in Sachen Hintergrundgrafik fast ungeändert nutzen. Es bietet durch mehrere CSS-Style-Sheets den Vorteil in allen gängigen Browsern gut dargestellt werden zu können. Es enthält speziel für den Internet-Explorer angepasste Sytle-Sheets, da dieser mit den üblichen CSS-Befehlen nicht zurecht kommt bzw. diese immer etwas anders umsetzt. Damit ist zum Beispiel gemeint, das ein deutlicher Unterschied zwischen Firefox und Internet-Explorer besteht wenn man einen Abstand mit 10px definiert. Das kann zu deutlichen Unterschieden führen, welche aber durch YAML bereits abgefangen werden. Zudem kümmert sich YAML auch um die weiteren browserspezifischen Bugs, was den Vorteil hat, dass sich der Programmierer nicht noch mit jeden Browser beschäftigen muss, sondern eine Lösung für alle Browser implementieren kann.
 
 
 

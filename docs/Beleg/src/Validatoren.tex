@@ -1,22 +1,22 @@
 \section{Validatoren}
 \label{JumpValidatoren}
-Oft haben Applikationen mit fehlerhaften Eingaben zu kÃ¤mpfen, die der Nutzer nicht einmal bewusst tÃ¤tigt. Um daraus bedingten Fehlfunktionen und einem reibunglosen Ablauf zu garantieren, gibt es die MÃ¶glichkeit sogenannte Validatoren zu benutzen.
-Sie sind dafÃ¼r da, eine Eingabe auf eine bestimmte Art von Muster bzw. Standard zu Ã¼berprÃ¼fen. Da das Ganze aber automatisch bei jeder Eingabe ablaufen soll, kann dabei nur auf syntaktische Korrektheit geprÃ¼ft werden. \\
+Oft haben Applikationen mit fehlerhaften Eingaben zu kämpfen, die der Nutzer nicht einmal bewusst tätigt. Um daraus bedingten Fehlfunktionen und einem reibunglosen Ablauf zu garantieren, gibt es die Möglichkeit sogenannte Validatoren zu benutzen.
+Sie sind dafür da, eine Eingabe auf eine bestimmte Art von Muster bzw. Standard zu Überprüfen. Da das Ganze aber automatisch bei jeder Eingabe ablaufen soll, kann dabei nur auf syntaktische Korrektheit geprüft werden. \\
 
-Um einen Validator in JSF nutzen zu kÃ¶nnen muss er in der faces-config.xml bekannt gemacht werden. Das sieht wie folgt aus.
+Um einen Validator in JSF nutzen zu können muss er in der faces-config.xml bekannt gemacht werden. Das sieht wie folgt aus.
 \begin{lstlisting}[caption=Einbinden eines Validators ind die faces-config.xml]{Name}
 <validator>
    <validator-id>EmailValidator</validator-id>
    <validator-class>de.hszigr.gpics.validation.EmailValidator</validator-class>
 </validator>
 \end{lstlisting}
-Alle Validatoren, die genutzt werden sollen, mÃ¼ssen sich in dem Tag "validator" der faces-config befinden. Jeder Validator muss Ã¼ber eine eindeutige ID verfÃ¼gen und der Klassenname muss auch hinterlegt werden. \\
+Alle Validatoren, die genutzt werden sollen, müssen sich in dem Tag "validator" der faces-config befinden. Jeder Validator muss über eine eindeutige ID verfügen und der Klassenname muss auch hinterlegt werden. \\
 Das allein reicht noch nicht aus damit der Validator auch aktiv wird. An den Stellen, wo die Eingabe validiert werden soll, muss er noch der jeweiligen Komponente zugewiesen werden. Das geschieht so:
 \begin{lstlisting}[caption=Zuweisung eines Validators einer Komponente]{Name}
 <h:inputText id="createUserMail" value="#{userController.email}" required="true" requiredMessage="#{msg.forgotEmail}">
   <f:validator validatorId="EmailValidator"/>
 </h:inputText>
 \end{lstlisting}
-Wie hier zu sehen ist, wird der Email-Validator einem Input-Textfeld zugewiesen. Das "f:" am Anfang des Tags ist das alias fÃ¼r jsf-core.
+Wie hier zu sehen ist, wird der Email-Validator einem Input-Textfeld zugewiesen. Das "f:" am Anfang des Tags ist das alias für jsf-core.
 
 
