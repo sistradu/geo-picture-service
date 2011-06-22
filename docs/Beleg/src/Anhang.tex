@@ -201,6 +201,42 @@ public String sendPasswortEmail() {
         return "index";
     }
 \end{lstlisting}
+
+\begin{lstlisting}[caption=Methode zur Behandlung des FileUploadEvents, label=lstHandleFileUpload, language=Java]
+public void handleFileUpload(FileUploadEvent event) {
+        UploadedFile file = event.getFile();
+
+        try {
+            UserController uc = (UserController) GPicSUtil.getBean("userController");
+            String username = uc.getNutzerNamen();
+            FileOutputStream out = null;
+            if(!isNewAlbum){
+                out = new FileOutputStream(uploadDir + albumName + "_" + username + "_" + file.getFileName());
+            }else{
+                out = new FileOutputStream(uploadDir + username + "_" + file.getFileName());
+            }
+//            FileOutputStream
+            out.write(file.getContents());
+            out.flush();
+            out.close();
+            if(!isNewAlbum){
+                updateBilderListe(uploadDir + albumName + "_" + username + "_" + file.getFileName());
+            }else{
+                updateBilderListe(uploadDir + username + "_" + file.getFileName());
+            }
+
+            if (!isNewAlbum) {
+                //TODO aufruf von ladeAlbum probieren
+                AlbumControllerDBUtil util = new AlbumControllerDBUtil();
+                setBilder(util.ladeBilderAusDB(albumID));
+//            FacesContext.getCurrentInstance().getExternalContext().redirect("createAlbum.xhtml");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        GPicSUtil.createFacesMessageForID("uploader", file.getFileName() + " erfolgreich hochgeladen.", false);
+    }
+\end{lstlisting}
 %	\label{pageValidationCall}
 %	\includepdf[landscape, turn=true, pages=-, fitpaper=true]{img/Validation_Call.pdf}
 	

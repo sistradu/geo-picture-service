@@ -15,11 +15,11 @@ Wie bereits weiter oben erwähnt, werden EMails zur Verifizierung bzw. Zum Zurück
 \label{subsubsec:CreateEditAlbumController}
 Hinter diesem eigentümlichen Namen befindet sich der Controller zum Erstellen und Bearbeiten von Alben. Es liegt auf der Hand, dass sich eine Webseite zum Erstellen und zum Bearbeiten eines Albums nicht sehr unterscheiden. Daher bietet es sich an für beide Aufgaben eine Webseite mit einem Controller zu erstellen. Die wenigen Dinge die sich auf der Webseite unterscheiden werden wieder mit einem "`rendered"'-Attribut versehen. Im Controller gibt es eine Boolean-Variable "`isNewAlbum"' mit der festgestellt werden kann ob ein neues Album erstellt oder bearbeitet wird.\\
 \\
-Bei der Erstellung eines neuen Albums werden natürlich auch Bilder hinzugefügt. Das Hochladen der Bilder erfolgt über eine Primafaces-Komponente die auf Seite \pageref{subsec:FileUpload} im Abschnitt \autoref{subsec:FileUpload} beschrieben wird. Diese Komponente braucht einen FileU
-
-%Wir haben uns dazu entschieden das Bild im Dateisystem abzuspeichern und in der Datenbank lediglich den Pfad abzuspeichern. Der Grund dafür ist, dass sonst bei der Speicherung in der Datenbank die Bilder erst aufwendig encodiert werden müssten. Sobald dann später die Bilder aus der Datenbank geholt werden, müsste man außerdem wieder die Daten zu einem JPEG-Bild konvertieren. Diesen Mehraufwand konnten wir durch die Speicherung im Dateisystem umgehen. Außerdem gibt es mit unserem Verfahren weniger Probleme wenn mehrere Bilder hochgeladen werden.\\
-%\\
-%Das Upload-Verzeichnis an sich liegt irgendwo im Dateisystem. Die einfachste Möglichkeit wäre zwar der web-Ordner der Applikation gewesen, aber dort wäre die Bilder bei jedem Neudeploy gelöscht worden. Aus diesem Grund gibt es ein extra Verzeichnis wo alle Bilder abgespeichert werden.
+Bei der Erstellung eines neuen Albums werden natürlich auch Bilder hinzugefügt. Das Hochladen der Bilder erfolgt über eine Primafaces-Komponente die auf Seite \pageref{subsec:FileUpload} im Abschnitt \autoref{subsec:FileUpload} beschrieben wird. Diese Komponente braucht eine Methode, die das von der Komponente ausgelöste FileUploadEvent entgegen nimmt und verarbeitet. Den Code der Methode findet man im Anhang auf Seite \pageref{lstHandleFileUpload} im Listing \autoref{lstHandleFileUpload}.\\
+\\
+Wir haben uns dazu entschieden das Bild im Dateisystem abzuspeichern und in der Datenbank lediglich den Pfad abzuspeichern. Der Grund dafür ist, dass sonst bei der Speicherung in der Datenbank die Bilder erst aufwendig encodiert werden müssten. Sobald dann später die Bilder aus der Datenbank geholt werden, müsste man außerdem wieder die Daten zu einem JPEG-Bild konvertieren. Diesen Mehraufwand konnten wir durch die Speicherung im Dateisystem umgehen. Außerdem gibt es mit unserem Verfahren weniger Probleme wenn mehrere Bilder auf einmal hochgeladen werden. Das Upload-Verzeichnis an sich liegt irgendwo im Dateisystem. Die einfachste Möglichkeit wäre zwar der web-Ordner der Applikation gewesen, aber dort wäre die Bilder bei jedem Neudeploy gelöscht worden. Aus diesem Grund gibt es ein extra Verzeichnis wo alle Bilder abgespeichert werden.\\
+\\
+%TODO getImage beschreiben.
 \subsection{Scopes}
 \subsection{Beanzugriff}
 \subsection{MessageProperties}
