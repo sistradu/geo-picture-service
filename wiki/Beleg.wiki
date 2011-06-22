@@ -27,4 +27,4 @@
 ||KML.tex||Analysierte Technologien/KML||Martin|| ||
 ||Tomcat.tex||Entwicklungsumgebung/Tomcat||Rico|| ||
 ||IntelliJ.tex||Entwicklungsumgebung/IntelliJ||Jeder|| ||
-||Googlecode.tex||Entwicklungsumgebung/Googlecode||Rico|| ||
+||Googlecode.tex||Entwicklungsumgebung/Googlecode||Rico|| 95% ||
