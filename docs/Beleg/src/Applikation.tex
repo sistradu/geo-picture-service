@@ -5,13 +5,7 @@
 \subsection{Scopes}
 \subsection{Beanzugriff}
 \subsection{MessageProperties}
-\subsection{KML}
-\subsection{File-Upload}
-Für das Hochladen der Bilder wird im Projekt die File-Upload Komponente von PrimeFaces verwendet. Dadurch konnte diese Anforderung relativ schnell umgesetzt werden. Zu Beginn traten allerdings einige Probleme auf. So benötigt diese Komponente eine Reihe von Biblotheken damit der Upload funktioniert. Dies wurde allerdings weder auf der PrimeFaces-Webseite noch in dem PDF erwähnt. Letztendlich musste eine Recherche im Internet gemacht werden, wo dann in einem Forum erwähnt wurde, welche Bibliotheken benötigt werden.\\
-\\
-Ansonsten ist die Verwendung der Komponente ziemlich einfach. Es ist sogar möglich die Schaltflächen umzubenennen. Diese Möglichkeit wurde natürlich genutzt. Sobald man ein Bild hochlädt, wird ein FileUploadEvent ausgelöst. Mit dem entsprechenden Event-Objekt kann man auf die Daten zugreifen. Wir haben uns dazu entschieden das Bild im Dateisystem abzuspeichern und in der Datenbank lediglich den Pfad abzuspeichern. Der Grund dafür ist, dass sonst bei der Speicherung in der Datenbank die Bilder erst aufwendig encodiert werden müssten. Sobald dann später die Bilder aus der Datenbank geholt werden, müsste man außerdem wieder die Daten zu einem JPEG-Bild konvertieren. Diesen Mehraufwand konnten wir durch die Speicherung im Dateisystem umgehen. Außerdem gibt es mit unserem Verfahren weniger Probleme wenn mehrere Bilder hochgeladen werden.\\
-\\
-Das Upload-Verzeichnis an sich liegt irgendwo im Dateisystem. Die einfachste Möglichkeit wäre zwar der web-Ordner der Applikation gewesen, aber dort wäre die Bilder bei jedem Neudeploy gelöscht worden. Aus diesem Grund gibt es ein extra Verzeichnis wo alle Bilder abgespeichert werden.
+
 \subsection{EMail}
 Für die Benutzerkontoerstellung und das Zusenden eines neuen Passworts haben wir in unserem Projekt die Möglichkeit vorgesehen EMails zu versenden. Da der EMail-Versand zwingend ein EMail-Account erfordert, haben wir einen Mailserver eingerichtet, womit diese EMails verschickt werden konnten. Allerdings haben wir relative schnell Probleme festgestellt. So funktionierte das Schicken der Mails nur an die Hochschul-EMail-Adresse. Bei anderen Mail-Anbietern kamen keine EMails an. Sie wurden noch nicht einmal im Spam Ordner angezeigt. Der Grund hierfür liegt wahrscheinlich darin, dass die anderen Mail-Anbieter unsere Adresse nicht als vertrauenswürdig einstuften.\\
 \\
