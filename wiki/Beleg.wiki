@@ -3,7 +3,7 @@
 = Belegaufteilung =
 
 || *Datei* || *Kapitel/Abschnitt* || *Bearbeiter* || *Abgeschlossen* ||
-||Einleitung.tex||Einleitung||Rico|| 100% ||
+||Einleitung.tex||Einleitung||Rico|| 99% ||
 ||Aufgabenstellung.tex||Problem/Aufgabenstellung||Rico|| ||
 ||Anforderungsanalyse.tex||Anforderungsanalyse||Markus|| 90% ||
 ||Drupal.tex||Drupal||Martin|| 95% ||
@@ -25,6 +25,7 @@
 ||Exif.tex||Analysierte Technologien/Metadatenextraktion/Exif||Stefan|| 50% ||
 ||Webservices.tex||Analysierte Technologien/Webservices|| - || ||
 ||KML.tex||Analysierte Technologien/KML||Martin|| 99% ||
-||Tomcat.tex||Entwicklungsumgebung/Tomcat||Rico|| ||
+||Tomcat.tex||Entwicklungsumgebung/Tomcat||Rico|| 99% ||
+||Hudson.tex||Entwicklungsumgebung/Hudson||Rico|| 99% ||
 ||IntelliJ.tex||Entwicklungsumgebung/IntelliJ||Jeder|| ||
-||Googlecode.tex||Entwicklungsumgebung/Googlecode||Rico|| 95% ||
+||Googlecode.tex||Entwicklungsumgebung/Googlecode||Rico|| 99% ||
