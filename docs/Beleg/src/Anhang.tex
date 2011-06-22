@@ -119,6 +119,88 @@ public class MockAlbumConnector implements IAlbumConnector {
   ...
 }
 \end{lstlisting}
+
+\begin{lstlisting}[caption=Methode zur Erzeugung eines zufällligen Passworts, label=lstRandomPasswort, language=Java]
+public String erzeugeZufallsPasswort(int length) {
+        String allowedChars = "0123456789abcdefghijklmnopqrstuvwxyz";
+        Random rand = new Random();
+        int max = allowedChars.length();
+        StringBuffer buffer = new StringBuffer();
+        for (int i = 0; i < length; i++) {
+            int value = rand.nextInt(max);
+            buffer.append(allowedChars.charAt(value));
+        }
+        return buffer.toString();
+    }
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Methode für die MD5-Verschlüsselung, label=lstEncryptPasswort, language=Java]
+public String encryptWithMD5(String passwort){
+        StringBuffer hexString = new StringBuffer();
+        try {
+            MessageDigest md = MessageDigest.getInstance("md5");
+            byte[] digest = md.digest(passwort.getBytes());
+            for (int i = 0; i < digest.length; i++) {
+                hexString.append(Integer.toHexString(0xFF & digest[i]));
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        return hexString.toString();
+    }
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Methode für den Mailversand, label=lstMailversand, language=Java]
+public String sendPasswortEmail() {
+        try {
+            String tempPasswort = new PasswortUtil().erzeugeZufallsPasswort(16);
+
+            Document doc = conn.getNutzerByName(nutzerNamen);
+            getNutzerIDAndEmail(doc);
+
+            Properties props = new Properties();
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.host", "mail.gmx.de");
+            props.put("mail.smtp.socketFactory.port", "465");
+            props.put("mail.smtp.socketFactory.class",
+                    "javax.net.ssl.SSLSocketFactory");
+            props.put("mail.smtp.port", 465);
+            props.setProperty("mail.smtp.ssl.trust", "mail.gmx.de");
+            Authenticator aut = new Authenticator() {
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication("gpics@gmx.de", "gpics4XML");
+                }
+            };
+            Session session = Session.getInstance(props, aut);
+            MessagePropertiesBean msgPB = new MessagePropertiesBean();
+            Message mail = new MimeMessage(session);
+            mail.setFrom(new InternetAddress("gpics@gmx.de"));
+            mail.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(email));
+            mail.setSubject(msgPB.getPropertiesMessage("mailSubject"));
+            mail.setText(msgPB.getPropertiesMessage("mailPart1") + tempPasswort +
+                    msgPB.getPropertiesMessage("mailPart2"));
+            Transport.send(mail);
+            System.out.println("Done");
+            setPasswort(tempPasswort);
+            conn.updateNutzer(nutzerID, nutzerNamen, passwort, email);
+        } catch (NullPointerException e) {
+            System.err.println(e.getMessage());  //Fängt NullPointerabException ab, die bei Unit-Tests auftritt, weil dort der FacesContext null ist.
+        } catch (Exception e) {
+            e.printStackTrace();
+            GPicSUtil.createFacesMessageForID("sendPWMask", e.getMessage(), true);
+            return "sendPW";
+        }
+        try {
+            MessagePropertiesBean mPB = new MessagePropertiesBean();
+            GPicSUtil.createFacesMessageForID("infoMessages", mPB.getPropertiesMessage("sendMailSuccess"), false);
+        } catch (NullPointerException e) {
+            System.err.println(e.getMessage()); //Fängt NullPointerabException ab, die bei Unit-Tests auftritt, weil dort der FacesContext null ist.
+        }
+        return "index";
+    }
+\end{lstlisting}
 %	\label{pageValidationCall}
 %	\includepdf[landscape, turn=true, pages=-, fitpaper=true]{img/Validation_Call.pdf}
 	
