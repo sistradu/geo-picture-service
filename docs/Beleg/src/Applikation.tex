@@ -13,6 +13,98 @@ Wie bereits weiter oben erwähnt, werden EMails zur Verifizierung bzw. Zum Zurück
 \subsection{Scopes}
 \subsection{Beanzugriff}
 \subsection{MessageProperties}
+\subsection{MessageProperties}
+Bei der Entwicklung einer Webapplikation ist ein wichtiges Thema was man vorher planen sollte die Internationalisierung. Weiß man von Anfang an, dass es die Applikation nur in einer Sprache geben soll, kann man die Nachrichten bzw. Texte fest hinein schreiben. Weiß man das aber zu Beginn noch nicht genau, oder möchte die Applikation in mehreren Sprachen veröffentlichen, so sollte man die JSF-Komponente message bundle verwenden. Das sorgt dafür, dass die Zeichenketten der Nachrichten unabhängig von der Applikation gespeichert werden und schnell einfacher ausgetauscht werden können, oder schon in mehreren Sprachen dort vorliegen. Um zu entscheiden welche der Sprachversionen genutzt werden soll kann man sich des Lokalisierungscodes eine JSF-Anwendung bei der Ausführung bedienen. Dieser Lokalisierungscode besteht aus zwei Teilen, dem Code der Sprache und die Festlegung eines Stattes in der die Applikation laufen soll. Welche Codes die Applikation unterstützt kann in der faces-config.xml festgelegt werden.
+\begin{lstlisting}[caption=faces-config.xml Lokalisierungscode]{Name}
+<locale-config>
+            <default-locale>de</default-locale>
+            <!--<supported-locale>de</supported-locale>-->
+</locale-config>
+\end{lstlisting}
+Dort kann ein Standardwert festgelegt werden mit dem Tag "'<default-locale>"' und die weiteren Lokalisierungen, die unterstützt werden. In dieser Applikation wird lediglich die Lokalisierung für Deutschland unterstützt.
+Des weiteren muss man festlegen, wo die Applikation die Nachrichten bzw. Texte finden kann. Das passiert ebenfalls in der faces-config.xml durch das "'<message-bundle>"' Tag.
+\begin{lstlisting}[caption=faces-config.xml message bundle]
+<message-bundle>bundle.message</message-bundle>
+\end{lstlisting}
+In diesem Fall das Package bundle und dort die Datei "'message.properties"'. \\
+\\
+Die Texte der Applikation werden dann wie folgt in die "'message.properties"' eingetragen:
+\begin{lstlisting}[caption=message.properties]
+home = Startseite
+ungueltigerBenutzerName = Der Benutzername ist ungültig!
+welcometext = Herzlich Willkommen auf GPicS!
+\end{lstlisting}
+Das sind natürlich nicht alle Nachrichten, sondern nur eine sehr kleine Auswahl um das Prinzip zu verdeutlichen.\\
+\\
+Um nun in einem XHTML-File auf die Nachrichten zuzugreifen, wurde in der faces-config.xml der Pfad sowie eine Variable festgelegt:
+\begin{lstlisting}[caption=message.properties XHMTL-Variable]
+<resource-bundle>
+    <base-name>/bundle/message</base-name>
+    <var>msg</var>
+</resource-bundle>
+\end{lstlisting}
+Der Text wird dann wie folge aufgerufen:
+\begin{lstlisting}[caption=message.properties Aufruf mit XHMTL-Variable]
+<h:outputLabel value="#{msg.bildname} "/>
+\end{lstlisting}
+Mit diesem Aufruf wird folgende Zeile der "'message.properties"' aufgerufen:
+\begin{lstlisting}[caption=message.properties XHMTL-Variable Teil 2]
+bildname = Name
+\end{lstlisting}
+Somit wird das Label den Namen "'Name"' bekommen.\\
+\\
+Will man in einem Controller auf die "'message-properties"' zugreifen, geht das wie folgt.
+Die jeweiligen Nachrichten werden dann durch folgende Methode an der jeweiligen Stelle der Applikation aus der "'message.properties"' geladen:
+\begin{lstlisting}[caption=message.properties Aufruf aus Controller]
+MessagePropertiesBean msgPB = new MessagePropertiesBean();
+String pfad = msgPB.getPropertiesMessage("defaultPicturePath");
+\end{lstlisting}
+
+Dafür wird die die Methode "'getPropertiesMessage()"'  der Klasse MessagesPropertiesBean aus dem Package util genutzt.
+
+\begin{lstlisting}[caption=message.properties Aufruf aus Controller Teil 2]
+public String getPropertiesMessage(String key) {
+
+		FacesContext context = FacesContext.getCurrentInstance();
+
+		String text = GPicSUtil.getMessageResourceString(context.getApplication()
+                .getMessageBundle(), key, null, context.getViewRoot()
+                .getLocale());
+
+return text;
+	}
+\end{lstlisting}
+
+Der Methode wird ein String übergeben, der wiederum einer weiteren Methode der Klasse GPicSUtil übergeben wird.
+
+\begin{lstlisting}[caption=message.properties Aufruf aus Controller Teil 3]
+public static String getMessageResourceString(
+    String bundleName,
+    String key,
+    Object params[],
+    Locale locale){
+
+        String text = null;
+
+        ResourceBundle bundle =
+                ResourceBundle.getBundle(bundleName, locale,
+                                        getCurrentClassLoader(params));
+
+        try{
+            text = bundle.getString(key);
+        } catch(MissingResourceException e){
+            text = "?? key " + key + " not found ??";
+        }
+
+        if(params != null){
+            MessageFormat mf = new MessageFormat(text, locale);
+            text = mf.format(params, new StringBuffer(), null).toString();
+        }
+
+    return text;
+}
+
+Diese Methode durchsucht dann das "'message-properties"'-File und gibt den Text zurück, soweit er gefunden wird.
 
 \subsection{EMail}
 Für die Benutzerkontoerstellung und das Zusenden eines neuen Passworts haben wir in unserem Projekt die Möglichkeit vorgesehen EMails zu versenden. Da der EMail-Versand zwingend ein EMail-Account erfordert, haben wir einen Mailserver eingerichtet, womit diese EMails verschickt werden konnten. Allerdings haben wir relative schnell Probleme festgestellt. So funktionierte das Schicken der Mails nur an die Hochschul-EMail-Adresse. Bei anderen Mail-Anbietern kamen keine EMails an. Sie wurden noch nicht einmal im Spam Ordner angezeigt. Der Grund hierfür liegt wahrscheinlich darin, dass die anderen Mail-Anbieter unsere Adresse nicht als vertrauenswürdig einstuften.\\
