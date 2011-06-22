@@ -1,6 +1,7 @@
 \section{Primefaces}
 \label{JumpPrimefacesImplementation}
 \subsection{FileUpload}
+\label{subsec:FileUpload}
 Für das Hochladen der Bilder wird im Projekt die File-Upload Komponente von PrimeFaces verwendet. Dadurch konnte diese Anforderung relativ schnell umgesetzt werden. Zu Beginn traten allerdings einige Probleme auf. So benötigt diese Komponente eine Reihe von Biblotheken damit der Upload funktioniert. Dies wurde allerdings weder auf der PrimeFaces-Webseite noch in der PDF-Dokumentation erwähnt. Letztendlich musste eine Recherche im Internet gemacht werden, wo dann in einem Forum erwähnt wurde, dass die Bibliotheken "`commons-logging"', "`commons-io"' und "`commons-fileupload"' benötigt werden. Diese sind alle Projekte der Apache Foundation und somit trat bei der Verwendung auch keine lizenzrechtlichen Probleme auf.\\
 \\
 Grundvoraussetzung für die Verwendung der Fileupload-Komponente ist, dass einige zusätzliche Filter in die web.xml eingetragen werden. Welche Filter einzubinden sind, findet man in der PDF-Dokumentation von Primefaces.
@@ -34,10 +35,7 @@ Es ist sogar möglich die Schaltflächen umzubenennen. Diese Möglichkeit wurde nat
     %}
 %\end{lstlisting}
 %TODO Referenz einfügen
-Die genaue Implementation des FileUploadEvents wird noch im Abschitt ?????????????????????? beschrieben.
-%Wir haben uns dazu entschieden das Bild im Dateisystem abzuspeichern und in der Datenbank lediglich den Pfad abzuspeichern. Der Grund dafür ist, dass sonst bei der Speicherung in der Datenbank die Bilder erst aufwendig encodiert werden müssten. Sobald dann später die Bilder aus der Datenbank geholt werden, müsste man außerdem wieder die Daten zu einem JPEG-Bild konvertieren. Diesen Mehraufwand konnten wir durch die Speicherung im Dateisystem umgehen. Außerdem gibt es mit unserem Verfahren weniger Probleme wenn mehrere Bilder hochgeladen werden.\\
-%\\
-%Das Upload-Verzeichnis an sich liegt irgendwo im Dateisystem. Die einfachste Möglichkeit wäre zwar der web-Ordner der Applikation gewesen, aber dort wäre die Bilder bei jedem Neudeploy gelöscht worden. Aus diesem Grund gibt es ein extra Verzeichnis wo alle Bilder abgespeichert werden.
+Die genaue Implementation des FileUploadEvents wird noch im Abschitt \autoref{subsubsec:CreateEditAlbumController} beschrieben.
 
 \subsection{GMap}
 Primefaces bietet noch weitere nützliche Komponenten. So wird bereits eine Komponente zum Anzeigen einer GMap-Karte bereitgestellt. Um diese einzubinden muss nur der in Listing \autoref{lstGMap} zu sehende Code in die Webseite eingebunden werden.
@@ -86,7 +84,7 @@ Sobald Bilder hochgeladen werden möchte der Benutzer gwöhnlich eine Übersicht ha
                     <p:panel header="#{b.name}" style="text-align:center">
                         <h:panelGrid columns="1" style="width:100%">
 ....
-												</h:panelGrid>
+</h:panelGrid>
                     </p:panel>
                 </p:column>
             </p:dataGrid>

@@ -10,9 +10,18 @@ Das Anlegen eines neuen Benutzkontos läuft wie folgt ab. Der Benutzer wählt eine
 Beim Umgang mit Benutzerdaten gibt es immer auch Anforderungen an die Sicherheit. So soll es vermieden werden, dass Passwörter unverschlüsselt gespeichert werden. Unter Beachtung dieses Hinweises werden die Passwörter deswegen verschlüssselt gespeichert. Als Verschlüsselungsmethode wird der Hash-Algorithmus MD5 verwendet. Sobald ein Passwort von der View an den Controller übergeben wird, erfolgt die Verschlüsselung bereits im Setter für die Passwortvariable. Auf diese Weise wird verhindert, dass irgendwo in der Anwendung ein unverschlüsseltes Passwort zur Verfügung steht. Um nun festzustellen ob das vom Benutzer eingegebene Passwort das Richtige ist, wird das bei der Eingabe verschlüsselte Passwort mit dem Passwort aus der Datenbank verglichen. Sobald diese beiden Passwörter übereinstimmen erfolgt die Anmeldung. Die Methode, die das Verschlüsseln bewerkstelligt findet man wieder im Anhang im Listing \autoref{lstEncryptPasswort} auf Seite \pageref{lstEncryptPasswort}.\\
 \\
 Wie bereits weiter oben erwähnt, werden EMails zur Verifizierung bzw. Zum Zurücksetzen des Passworts verschickt. Dafür wird die JavaMailAPI von Oracle verwendet. Aus dieser API werden allerdings nur die "`mailapi.jar"' und die "`smtp.jar"' verwendet, da die anderen jar-Dateien wie z.B "`imap.jar"' nicht benötigt werden. Die JavaMailAPI bietet Methoden an, damit der Inhalt der EMail und Verbindungseigenschaften zum Server gesetzt werden können. So kann z.B. eingestellt werden, dass die Verbindung zum Server über SSL hergestellt werden soll. Im Listing \autoref{lstMailversand} auf Seite \pageref{lstMailversand} im Anhang findet man die Methode, mit der die EMails versendet werden.
+
+\subsubsection{CreateEditAlbumController}
+\label{subsubsec:CreateEditAlbumController}
+Hinter diesem eigentümlichen Namen befindet sich der Controller zum Erstellen und Bearbeiten von Alben. Es liegt auf der Hand, dass sich eine Webseite zum Erstellen und zum Bearbeiten eines Albums nicht sehr unterscheiden. Daher bietet es sich an für beide Aufgaben eine Webseite mit einem Controller zu erstellen. Die wenigen Dinge die sich auf der Webseite unterscheiden werden wieder mit einem "`rendered"'-Attribut versehen. Im Controller gibt es eine Boolean-Variable "`isNewAlbum"' mit der festgestellt werden kann ob ein neues Album erstellt oder bearbeitet wird.\\
+\\
+Bei der Erstellung eines neuen Albums werden natürlich auch Bilder hinzugefügt. Das Hochladen der Bilder erfolgt über eine Primafaces-Komponente die auf Seite \pageref{subsec:FileUpload} im Abschnitt \autoref{subsec:FileUpload} beschrieben wird. Diese Komponente braucht einen FileU
+
+%Wir haben uns dazu entschieden das Bild im Dateisystem abzuspeichern und in der Datenbank lediglich den Pfad abzuspeichern. Der Grund dafür ist, dass sonst bei der Speicherung in der Datenbank die Bilder erst aufwendig encodiert werden müssten. Sobald dann später die Bilder aus der Datenbank geholt werden, müsste man außerdem wieder die Daten zu einem JPEG-Bild konvertieren. Diesen Mehraufwand konnten wir durch die Speicherung im Dateisystem umgehen. Außerdem gibt es mit unserem Verfahren weniger Probleme wenn mehrere Bilder hochgeladen werden.\\
+%\\
+%Das Upload-Verzeichnis an sich liegt irgendwo im Dateisystem. Die einfachste Möglichkeit wäre zwar der web-Ordner der Applikation gewesen, aber dort wäre die Bilder bei jedem Neudeploy gelöscht worden. Aus diesem Grund gibt es ein extra Verzeichnis wo alle Bilder abgespeichert werden.
 \subsection{Scopes}
 \subsection{Beanzugriff}
-\subsection{MessageProperties}
 \subsection{MessageProperties}
 Bei der Entwicklung einer Webapplikation ist ein wichtiges Thema was man vorher planen sollte die Internationalisierung. Weiß man von Anfang an, dass es die Applikation nur in einer Sprache geben soll, kann man die Nachrichten bzw. Texte fest hinein schreiben. Weiß man das aber zu Beginn noch nicht genau, oder möchte die Applikation in mehreren Sprachen veröffentlichen, so sollte man die JSF-Komponente message bundle verwenden. Das sorgt dafür, dass die Zeichenketten der Nachrichten unabhängig von der Applikation gespeichert werden und schnell einfacher ausgetauscht werden können, oder schon in mehreren Sprachen dort vorliegen. Um zu entscheiden welche der Sprachversionen genutzt werden soll kann man sich des Lokalisierungscodes eine JSF-Anwendung bei der Ausführung bedienen. Dieser Lokalisierungscode besteht aus zwei Teilen, dem Code der Sprache und die Festlegung eines Stattes in der die Applikation laufen soll. Welche Codes die Applikation unterstützt kann in der faces-config.xml festgelegt werden.
 \begin{lstlisting}[caption=faces-config.xml Lokalisierungscode]{Name}
@@ -103,9 +112,8 @@ public static String getMessageResourceString(
 
     return text;
 }
-
+\end{lstlisting}
 Diese Methode durchsucht dann das "'message-properties"'-File und gibt den Text zurück, soweit er gefunden wird.
-
 \subsection{EMail}
 Für die Benutzerkontoerstellung und das Zusenden eines neuen Passworts haben wir in unserem Projekt die Möglichkeit vorgesehen EMails zu versenden. Da der EMail-Versand zwingend ein EMail-Account erfordert, haben wir einen Mailserver eingerichtet, womit diese EMails verschickt werden konnten. Allerdings haben wir relative schnell Probleme festgestellt. So funktionierte das Schicken der Mails nur an die Hochschul-EMail-Adresse. Bei anderen Mail-Anbietern kamen keine EMails an. Sie wurden noch nicht einmal im Spam Ordner angezeigt. Der Grund hierfür liegt wahrscheinlich darin, dass die anderen Mail-Anbieter unsere Adresse nicht als vertrauenswürdig einstuften.\\
 \\
