@@ -15,7 +15,7 @@
 ||Datenbank.tex||Implementation/Datenbank||Markus|| 0% ||
 ||Applikation.tex||Implementation/Applikation||Jeder|| ||
 ||Validatoren.tex||Implementation/Validatoren||Martin|| ||
-||PrimefacesImplementation.tex||Implementation/Primefaces||Stefan|| ||
+||PrimefacesImplementation.tex||Implementation/Primefaces||Stefan|| 0% ||
 ||Benutzeroberflaeche.tex||Implementation/Benutzeroberfläche||Martin|| ||
 ||Tests.tex||Tests||Jeder|| ||
 ||Projektaufteilung.tex||Aufteilung des Projekts||Jeder|| ||
