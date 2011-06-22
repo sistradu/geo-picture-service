@@ -52,7 +52,7 @@ Auf der beiliegenden CD befinden sich folgende \textit{Dateien} und \textbf{Ordn
 \end{lstlisting}
 \begin{lstlisting}[caption=Die Klasse MockAlbumConnector,label=JumpListingMockAlbumConnector]
 public class MockAlbumConnector implements IAlbumConnector {
-  //Mehrere HashMaps um den Implementierungsaufwand in Grenzen zu Halten
+  //Durch Mehrere HashMaps kann schnell und einfach auf bestimmte Alben zugegriffen werden
   private final HashMap<Integer, Document> albenIDMap;
   private final HashMap<String, Document> albenNameMap;
   private final HashMap<Integer, Document> albenNutzerIDMap;
@@ -77,40 +77,9 @@ public class MockAlbumConnector implements IAlbumConnector {
     } catch (NoSuchAlgorithmException e) {
       e.printStackTrace();
     }
+    //Erstellen eines neuen Documents für ein Album
     this.addAlbum("Görlitz", password, "Bilder über die Stadt Görlitz.", 0);
     ...
-  }
-  //Methode um ein Album den Testdaten hinzuzufügen
-  private void addAlbum(String name, String password, String description, int nutzerID){
-    this.id++;
-    try {
-      DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-      Document doc = factory.newDocumentBuilder().newDocument();
-      Element idElem = doc.createElement("id");
-      Element nameElem = doc.createElement("name");
-      Element passwordElem = doc.createElement("password");
-      Element descriptionElem = doc.createElement("description");
-      Element nutzerElem = doc.createElement("nutzer");
-      idElem.setTextContent(""+this.id);
-      nameElem.setTextContent(name);
-      passwordElem.setTextContent(password);
-      descriptionElem.setTextContent(description);
-      nutzerElem.setTextContent("" + nutzerID);
-      Node albumNode = doc.createElement("album");
-      albumNode.appendChild(idElem);
-      albumNode.appendChild(nameElem);
-      albumNode.appendChild(passwordElem);
-      albumNode.appendChild(descriptionElem);
-      albumNode.appendChild(nutzerElem);
-      doc.appendChild(albumNode);
-      this.albenIDMap.put(this.id, doc);
-      this.albenNameMap.put(name, doc);
-      this.albenNutzerIDMap.put(nutzerID + this.id, doc);
-      this.albenDescriptionMap.put(description, doc);
-    } catch (ParserConfigurationException e) {
-      System.out.println("Fehler beim Erstellen des Albums " + name + ".");
-      e.printStackTrace();
-    }
   }
   ...
   public Document getAlbumByID(int id) throws ConnectException, IllegalArgumentException {
@@ -121,7 +90,7 @@ public class MockAlbumConnector implements IAlbumConnector {
   }
   ...
   public Document getAllAlben() throws ConnectException {
-    try {
+    	...
       DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
       Document doc = factory.newDocumentBuilder().newDocument();
       Node albenNode = doc.createElement("alben");
@@ -130,16 +99,12 @@ public class MockAlbumConnector implements IAlbumConnector {
       }
       doc.appendChild(albenNode);
       return doc;
-    } catch (ParserConfigurationException e) {
-      System.out.println("Fehler beim Erstellen des Dokuments für alle Alben.");
-      e.printStackTrace();
-    }
-    return null;
+      ...
   }
 
-  //Ähnlich wie alle Alben, nur mit Prüfung, ob das Album dem angegebenen Nutzer gehört
+  //Liefert nur bestimmte Alben
   public Document getAlbenForNutzer(int nutzerID) throws ConnectException, IllegalArgumentException {
-    try {
+    	...
       DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
       Document doc = factory.newDocumentBuilder().newDocument();
       Node albenNode = doc.createElement("alben");
@@ -149,11 +114,7 @@ public class MockAlbumConnector implements IAlbumConnector {
       }
       doc.appendChild(albenNode);
       return doc;
-    } catch (ParserConfigurationException e) {
-      System.out.println("Fehler beim Erstellen des Dokuments für alle Alben.");
-      e.printStackTrace();
-    }
-    return null;
+      ...
   }
   ...
 }

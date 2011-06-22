@@ -10,8 +10,7 @@ Relationale Datenbanken basieren auf einem gut durchdachtem Konzept, das sich ja
 	\item Sequenzen zur Vergabe eindeutiger Primary Keys:
 	\item[] Gerade bei einem Multinutzersystem ist dieser Punkt klar von Vorteil. Bei der Verwendung nativer XML-Datenbanken, muss dieses Problem in der Regel auf eine andere Art und Weise gelöst werden. Näheres dazu unter \autoref{JumpDatenbank}.
 \end{enumerate}
-\todo{Links anpassen}
-Da relationale Datenbanken aber nicht primär für die Speicherung von XML-Dateien geeignet sind, müssen die, vom unserem XML-basierten Fotoarchiv, verwendeten Dokumente zunächst transformiert werden, um diese in der Datenbank zu speichern. Möglichkeiten dazu sind hier beschrieben: \url{http://www.urz.uni-heidelberg.de/imperia/md/content/urz/programme/db_und_xml.pdf}. Das kann aber schnell sehr ineffizient werden, wenn die Dateien immer größer werden oder es können nur Dateien mit einem bestimmten Aufbau verwendet werden.\\
+Da relationale Datenbanken aber nicht primär für die Speicherung von XML-Dateien geeignet sind, müssen die, vom unserem XML-basierten Fotoarchiv, verwendeten Dokumente zunächst transformiert werden, um diese in der Datenbank zu speichern. Möglichkeiten dazu sind beschrieben unter \cite{Kle01}. Das kann aber schnell sehr ineffizient werden, wenn die Dateien immer größer werden oder es können nur Dateien mit einem bestimmten Aufbau verwendet werden.\\
 Eine Möglichkeit wäre noch, die Dateien einfach als reine Zeichenketten in der Datenbank zu hinterlegen. Doch auch dieser Ansatz ist sehr ineffizient, da das Durchsuchen der Dateien nach bestimmten Informationen so viel zu lange dauert. Zwar gibt es auch relationale Datenbanken mit einer speziellen Erweiterung für XML-Dateien wie Oracle oder MS-SQL, doch sind diese in der Regel schlicht und einfach zu mächtig, also sehr groß und dadurch in der Anwendung vergleichsweise kompliziert.
 \subsection{Native XML-Datenbanken}
 Aus den oben genannten Gründen, haben wir uns also entschieden, eine native XML-Datenbank zu verwenden, die folgende Eigenschaften besitzt:
@@ -33,26 +32,36 @@ Zudem sollte die Datenbank einige wichtige Eigenschaften relationaler Datenbanks
 	\item Transaktionssicherheit:
 	\item[] Die Datenbank sollte in der Lage sein nach einem Absturz, alle vollständig beendeten Transaktionen wiederherzustellen und alle nicht abgeschlossenen Transaktionen zurückzusetzen.
 \end{enumerate}
-eXist erfüllt alle diese Vorraussetzungen und tatsächlich gibt es kaum weitere native XML-Datenbanksysteme, die als Alternative in Frage kämen (vgl. \url{http://dbs.uni-leipzig.de/files/projekte/XML/paper/XMLDB_IAOforum.pdf}). Wir haben diesbezüglich nur 3 weitere Systeme gefunden, welche im Folgenden kurz mit eXist verglichen werden sollen.\\\todo{Footnotes reparieren...}
-
-\begin{tabular}{|c|c|p{4cm}|c|}
-	\hline
-	\textbf{Entwickler} & \textbf{Datenbank} & \textbf{Besonderheiten} & \textbf{Aktuelle Version} \\
-	\hline
-	\hline
-	Wolfgang Meier & eXist\footnote{\url{http://www.exist-db.org/documentation.html}} & Open Source, ständige Updates, große Community, beherrscht XQuery, gut dokumentiert & 1.4 (23.12.2010) \\
-	\hline
-	Apache & Xindice\footnote{\url{http://xml.apache.org/xindice/index.html}} & kostenlos verfügbar unter der Apache License & 1.2m1 (01.12.2007) \\
-	\hline
-	EMC & xDB\footnote{\url{https://community.emc.com/docs/DOC-3155}} & beherrscht XQuery, gut dokumentiert, wird immer noch weiterentwickelt, benötigt Registrierung  & 10.1.0 (21.07.2010) \\
-	\hline
-	Software AG & Tamino\footnote{\url{http://www.softwareag.com/de/products/wm/tamino/}} & beherrscht XQuery, gut dokumentiert, benötigt Registrierung, 3 Versionen (eine kostenfreie) & 4.4.1 (unbekannt) \\
-	\hline
-\end{tabular}\\
+eXist erfüllt alle diese Vorraussetzungen und tatsächlich gibt es kaum weitere native XML-Datenbanksysteme, die als Alternative in Frage kämen (vgl. \cite{BR02}). Wir haben diesbezüglich nur 3 weitere Systeme gefunden, welche im Folgenden kurz mit eXist verglichen werden sollen.\\
+%Footnotes müssen manuell gesetzt werden, da diese in einer Gleitumgebung wie Tabellen nicht funktionieren
+\footnotetext[1]{\url{http://www.exist-db.org/documentation.html}}    
+\footnotetext[2]{\url{http://xml.apache.org/xindice/index.html}}   
+\footnotetext[3]{\url{https://community.emc.com/docs/DOC-3155}}   
+\footnotetext[4]{\url{http://www.softwareag.com/de/products/wm/tamino/}}
+\begin{table}
+\begin{center}
+	\begin{tabular}{|c|c|p{4cm}|c|}
+		\hline
+		\textbf{Entwickler} & \textbf{Datenbank} & \textbf{Besonderheiten} & \textbf{Aktuelle Version} \\
+		\hline
+		\hline
+		Wolfgang Meier & eXist\footnote{} & Open Source, ständige Updates, große Community, beherrscht XQuery, gut dokumentiert & 1.4 (23.12.2010) \\
+		\hline
+		Apache & Xindice\footnote{} & kostenlos verfügbar unter der Apache License & 1.2m1 (01.12.2007) \\
+		\hline
+		EMC & xDB\footnote{} & beherrscht XQuery, gut dokumentiert, wird immer noch weiterentwickelt, benötigt Registrierung  & 10.1.0 (21.07.2010) \\
+		\hline
+		Software AG & Tamino\footnote{} & beherrscht XQuery, gut dokumentiert, benötigt Registrierung, 3 Versionen (eine kostenfreie) & 4.4.1 (unbekannt) \\
+		\hline
+	\end{tabular}\\
+	\caption{Vergleich nativer XML-DB Systeme}
+	\label{JumpXMLDBCompare}
+\end{center}
+\end{table}
 
 Dabei ist eXist das einzige System, das komplett kostenlos zur Verfügung steht und ständig weiterentwickelt wird.  Zudem ist es durch die inzwischen sehr große Community sehr einfach, auftretende Probleme schnell zu klären ohne sich durch lange Dokumentationen kämpfen zu müssen. Insgesamt erscheint eXist von allen auch am übersichtlichsten. Somit ist es das System, welches am besten für unsere Anwendung geeignet ist.
 \subsection{Installation}
-Um eXist nun zu installieren werden mehrere Möglichkeiten angeboten:
+Um eXist nun zu installieren werden mehrere Möglichkeiten angeboten (vgl. \cite{MO10}):
 \begin{itemize}
 	\item Embedded:
 	\item[] Hierbei wird die Datenbank im Grunde als Java-Bibliothek behandelt und läuft damit in der selben JVM wie unsere Applikation. Vorteilig ist, dass keine Netzwerkverbindung zur Datenbank aufgebaut werden muss. Ein großer Nachteil dabei ist aber, dass Applikation und Datenbank nicht getrennt lauffähig sind.
@@ -62,7 +71,7 @@ Um eXist nun zu installieren werden mehrere Möglichkeiten angeboten:
 	\item[] Hier läuft die Datenbank als Teil einer Webapplikation und wird mit dieser deployed. Standartmäßig wird dazu ein Jetty als Servlet-Engine mitgeliefert. Es ist zwar laut Entwickler nicht schwierig, eXist auch auf einem anderen Server zu deployen, aber es wird empfohlen keine andere Servlet-Engine zu nutzen, falls es nicht zwingend erforderlich ist. Begründet wird das dadurch, dass Jetty klein, effizient und stabil ist und eXist vorwiegend darauf getestet wurde. Diese Lösung ist zwar, durch andere auf dem Server laufenden Prozesse, ein wenig ineffizienter, als die Standalone-Variante, dennoch haben wir uns dafür entschieden, da uns hier sämtliche Zugriffs- und Administrationsmöglichkeiten zur Verfügung stehen.
 \end{itemize}
 \subsection{Abfrage der Daten}
-Nach der Installation, ging es darum sich zu entscheiden, welche Art der Zugriffsmethode wir verwenden wollen um auf die Daten in der Datenbank auszulesen und diese zu modifizeren.Auch hier bietet eXist mehrere Möglichkeiten an:
+Nach der Installation, ging es darum sich zu entscheiden, welche Art der Zugriffsmethode wir verwenden wollen um auf die Daten in der Datenbank auszulesen und diese zu modifizeren.Auch hier bietet eXist mehrere Möglichkeiten an (vgl. \cite{Mei09Dev}):
 \begin{itemize}
 	\item Java-Admin Client:
 	\item[] Wie bereits erwähnt kann dieser Client verwendet werden um schnell und effektiv aufgetretene Fehler in der Datenbank zu beheben. So können bequem Collections angelegt werden, die ungefähr wie Tabellen in einer relationalen Datenbank fungieren. Innerhalb dieser Collections können dann ein oder mehrere XML-Dateien gespeichert werden. Auch das Hochladen von Dateien ist sehr einfach und unkompliziert. Auch können mit dem Admin-Client sehr einfach die Zugriffsrechte auf Collections oder einzelne Dateien geändert werden. Das ist wichtig, damit die gespeicherten Informationen, später nicht von dritten ausgelesen werden können. Für den Zugriff aus der Applikation heraus benötigen wir aber eine andere Lösung.
@@ -76,31 +85,33 @@ Nach der Installation, ging es darum sich zu entscheiden, welche Art der Zugriff
 \subsection{One BIG vs. Many small}
 \label{JumpDBOneBIGManysmall}
 Eine interessante Fragestellung die sich für den Aufbau der Datenbank ergab war, ob Operationen auf einer großen Datei mit vielen Einträgen oder auf vielen kleinen Dateien mit jeweils wenig Einträgen schneller sind.\\
-Da unser System für mehrere Nutzer geeignet sein sollte, war uns besonders wichtig zu testen, ob die Datenbank mit sehr vielen Einträgen überhaupt umgehen kann und welche Art der Speicherung der Daten vorteilhafter ist. Dazu haben wir zunächst die möglichen Ausmaße der Daten ermittelt, wobei wir von etwa 10 Benutzern mit durchschnittlich 20 Alben mit jeweils 50 Bildern ausgegangen sind. Klar wird, dass der Schwachpunkt hier bei den insgesamt $10 * 20 * 50 = 10000$ Bildern liegt. Bei diesen Ausmaßen ist es auch nicht mehr vorteilhaft, die Fotos ebenfalls in der Datenbank zu speichern. Da die Datenbank versucht, Daten und vor allem Indizes im Arbeitsspeicher zu Cachen, würde dieser so bei sehr großen Fotos schnell voll werden. Würde die JVM damit mehr Speicher benötigen, als ihr zugewiesen wurde (Der Standartwert liegt bei 512 MB), dann würde die komplette Datenbank abstürzen. Es gibt zwar Mechanismen, die das verhindern sollen, dennoch wird auf der offiziellen Webseite darauf hingewiesen, dass es zu drastischen Performance-Einbrüchen kommen kann, wenn mehrere 100 MB an XML-Dateien verwaltet werden sollen. (\url{http://demo.exist-db.org/exist/tuning.xml}) Da die Bilder unserer Kamera jeweils etwa 4MB groß sind, ist dieser Punkt schnell erreicht. Bei 10000 Bildern entspräche das etwa 39GB.\\
-Nun blieb noch zu ermitteln, ob jetzt eine große oder mehrere kleine Dateien sinnvoller sind. Dazu haben wir uns Dateien mit einigen Testdaten generiert. \todo{Testdatengenerator integrieren} Darunter eine große Datei mit insgesamt 10000 Einträgen (One BIG) und 500 kleine Dateien mit jeweils 20 Einträgen (Many small). Auf diesen Dateien haben wir mehrere Abfragen ausgeführt und die ermittelten Resultate in der folgenden Tabelle zusammengefasst.
+Da unser System für mehrere Nutzer geeignet sein sollte, war uns besonders wichtig zu testen, ob die Datenbank mit sehr vielen Einträgen überhaupt umgehen kann und welche Art der Speicherung der Daten vorteilhafter ist. Dazu haben wir zunächst die möglichen Ausmaße der Daten ermittelt, wobei wir von etwa 10 Benutzern mit durchschnittlich 20 Alben mit jeweils 50 Bildern ausgegangen sind. Klar wird, dass der Schwachpunkt hier bei den insgesamt $10 * 20 * 50 = 10000$ Bildern liegt. Bei diesen Ausmaßen ist es auch nicht mehr vorteilhaft, die Fotos ebenfalls in der Datenbank zu speichern. Da die Datenbank versucht, Daten und vor allem Indizes im Arbeitsspeicher zu Cachen, würde dieser so bei sehr großen Fotos schnell voll werden. Würde die JVM damit mehr Speicher benötigen, als ihr zugewiesen wurde (Der Standartwert liegt bei 512 MB), dann würde die komplette Datenbank abstürzen. Es gibt zwar Mechanismen, die das verhindern sollen, dennoch wird auf der offiziellen Webseite darauf hingewiesen, dass es zu drastischen Performance-Einbrüchen kommen kann, wenn mehrere 100 MB an XML-Dateien verwaltet werden sollen (siehe: \cite{Mei09}). Da die Bilder unserer Kamera jeweils etwa 4MB groß sind, ist dieser Punkt schnell erreicht. Bei 10000 Bildern entspräche das etwa 39GB.\\
+Nun blieb noch zu ermitteln, ob jetzt eine große oder mehrere kleine Dateien sinnvoller sind. Dazu haben wir uns Dateien mit einigen Testdaten generiert. Darunter eine große Datei mit insgesamt 10000 Einträgen (One BIG) und 500 kleine Dateien mit jeweils 20 Einträgen (Many small). Auf diesen Dateien haben wir mehrere Abfragen ausgeführt und die ermittelten Resultate in der folgenden Tabelle zusammengefasst.
 
 \begin{table}
-	\begin{tabular}{|l|c|c|}
-		\hline
-		& \textbf{One BIG} & \textbf{Many small} \\
-		\hline
-		\textbf{Einträge pro Datei} & 10000 & 20 \\
-		\hline
-		\textbf{Anzahl Dateien} & 1 & 500 \\
-		\hline
-		\textbf{Dateigröße} & 1,5 MB & 3 KB \\
-		\hline
-		\textbf{Auslesen aller Einträge} & 7 sec & 6 sec \\
-		\hline
-		\textbf{Aulsen aller mit Cache} & 3 sec & 3 sec \\
-		\hline
-		\textbf{Suchen eines bestimmten Eintrags} & < 1 sec & < 1 sec \\
-		\hline
-		\textbf{Suchen mehrerer Einträge} & 3 sec & 2 sec\\
-		\hline
-	\end{tabular}
-	\caption{One BIG vs. Many small}
-	\label{JumpTableOneBIGManysmall}
+	\begin{center}
+		\begin{tabular}{|l|c|c|}
+			\hline
+			& \textbf{One BIG} & \textbf{Many small} \\
+			\hline
+			\textbf{Einträge pro Datei} & 10000 & 20 \\
+			\hline
+			\textbf{Anzahl Dateien} & 1 & 500 \\
+			\hline
+			\textbf{Dateigröße} & 1,5 MB & 3 KB \\
+			\hline
+			\textbf{Auslesen aller Einträge} & 7 sec & 6 sec \\
+			\hline
+			\textbf{Aulsen aller mit Cache} & 3 sec & 3 sec \\
+			\hline
+			\textbf{Suchen eines bestimmten Eintrags} & < 1 sec & < 1 sec \\
+			\hline
+			\textbf{Suchen mehrerer Einträge} & 3 sec & 2 sec\\
+			\hline
+		\end{tabular}
+		\caption{One BIG vs. Many small}
+		\label{JumpTableOneBIGManysmall}
+	\end{center}
 \end{table}
 
 Dabei ist erkennbar, dass die Menge der Dateien und deren Größe kaum Einfluss auf die Geschwindigkeit der Abfragen hat. Der Grund dafür sind die Indizes, die eXist automatisch erzeugt, dadurch können unabhängig von der Dateigröße, schnell bestimmte Einträge gefunden werden ohne immer wieder einen kompletten Scan durchzuführen. Nach der ersten Abfrage aller Daten, werden zudem die Dateien im Cache der Datenbank gehalten, womit künftige Suchanfragen nochmals beschleunigt werden. Das funktioniert bei unserem System auch bei 10000 Einträgen problemlos, da wir ja die Fotos nicht in der Datenbank speichern. Da die Dateien dennoch irgendwo im Dateisystem gespeichert werden müssen, haben wir uns für die Variante mit jeweils einer großen Datei entschieden, da dies weniger Verwaltungsaufwand bedeutet, vor allem da die kleinen Dateien mit 3KB sogar noch unter der Blockgröße aktueller Dateisysteme liegen und somit insgesamt mehr Speicher belegen als notwendig.
