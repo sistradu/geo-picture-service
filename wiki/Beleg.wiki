@@ -7,8 +7,8 @@
 ||Aufgabenstellung.tex||Problem/Aufgabenstellung||Rico|| ||
 ||Anforderungsanalyse.tex||Anforderungsanalyse||Markus|| 90% ||
 ||Drupal.tex||Drupal||Martin|| ||
-||PrimefacesTechnologien.tex||Technologien/Primefaces||Stefan|| 85% ||
-||JSF.tex||Technologien/JSF||Stefan|| 85% ||
+||PrimefacesTechnologien.tex||Technologien/Primefaces||Stefan|| 95% ||
+||JSF.tex||Technologien/JSF||Stefan|| 95% ||
 ||eXist.tex||Technologien/eXist||Markus|| 95% ||
 ||Yaml.tex||Technologien/Yaml||Martin|| ||
 ||Systementwurf.tex||Systementwurf||Markus|| 20% ||
