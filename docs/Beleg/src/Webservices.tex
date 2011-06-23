@@ -1,2 +1,17 @@
 \section{Webservices}
 \label{JumpWebservices}
+Eine Anforderung die gestellt wurde, war die Untersuchung welche Webservices in Verbindung mit GoogleMaps angeboten werden. Eine Recherche ergab, dass folgende Webservices zu Verfügung gestellt werden: Google Geocoding API, Google Direction API, Goolge Elevation API und Google Places API. Alle diese Webservices können mittels GET-Requests angesprochen werden. Außerdem ist noch möglich über GoogleMaps Koordinaten abzufragen. Dies geschieht ebenfalls über ein GET-Request. Sämtliche Webservices liefern je nach Wunsch die Daten im JSON- oder im XML-Format. Bei der Abfrage der Koordinaten über GoogleMaps bekommt man bei dem Ausgabeformat XML die Daten in KML. Um die Koordinaten abzufragen reicht es aus einen Ortsnamen oder eine Adresse anzugeben. Im Folgenden Listing ist eine Beispiel Anfrage an GoogleMaps zu sehen.
+\begin{lstlisting}[caption=Suchanfrage an GoogleMaps]
+http://maps.google.de/maps/geo?q=goerlitz,%20Obermarkt,%2017&output=xml
+\end{lstlisting}
+Im Anhang auf Seite \pageref{lstGoogelMaps} im Listing \autoref{lstGoogelMaps} ist die Antwort auf diese Anfrage zu sehen.\\
+\\
+Eine Alternative zur direkten Anfrage bei GoogleMaps ist die Google Geocoding API. Mit dieser API kann man außerdem noch zu einer gegebenen Koordinate den zugehörigen Ort herausfinden. Allerdings ist die Antwort, wenn XML ausgewählt wurde, hier kein KML sondern ein anderes Format mit dem Namen "`GeoCodeResponse"'.
+\begin{lstlisting}[caption=Suchanfrage Google Geocoding API]
+http://maps.google.com/maps/api/geocode/xml?latlng=51.1552,14.986154&sensor=false
+\end{lstlisting}
+Eine ebenfalls sehr nützliche API ist die Google Direction API. Mit dieser kann man sich Routen von einem zu einem anderen Ort berechnen lassen. Dabei kann man unterscheiden ob die Route für ein Fahrzeug, für Fahrradfahrer oder für ein Fußgänger ist. Als Antwort erhält man ein DirectionResponse. Das besondere dabei ist, dass für jede Abzweigung die Koordinaten mitgeliefert werden, so dass in eine Karte die entsprechenden Linien eingezeichnet werden können.
+\begin{lstlisting}[caption=Suchanfrage Google Direction API]
+http://maps.google.com/maps/api/directions/xml?origin=51.149594,14.998664&destination=51.155187,14.986122&sensor=false
+\end{lstlisting}
+Die Google Elevation API liefert Höhendaten von einem Ort und die Google Places API liefert allgemeine Informationen. Bei beiden APIs gibt es von Google einige Beschränkungen. So muss für die Google Places API eine Maps-Client-ID erzeugt werden und die Ergebnisse der Elevation API dürfen nur im Zusammenhang mit Google Karten verwendet werden.

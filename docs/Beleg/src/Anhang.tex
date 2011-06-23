@@ -334,6 +334,26 @@ public StreamedContent getImage() {
         return defaultImage;
     }
 \end{lstlisting}
+
+\subsection{Antwort von Webservice}
+\begin{lstlisting}[caption=Antwort einer GoogleMaps Anfrage, label=lstGoogelMaps, language=XML]
+<kml xmlns="http://earth.google.com/kml/2.0"><Response>
+  <name>goerlitz, Obermarkt, 17</name>
+  <Status>
+    <code>200</code>
+    <request>geocode</request>
+  </Status>
+  <Placemark id="p1">
+    <address>Obermarkt 17, 02826 Görlitz, Deutschland</address>
+    <AddressDetails Accuracy="8" xmlns="urn:oasis:names:tc:ciq:xsdschema:xAL:2.0"><Country><CountryNameCode>DE</CountryNameCode><CountryName>Germany</CountryName><AdministrativeArea><AdministrativeAreaName>Saxony</AdministrativeAreaName><SubAdministrativeArea><SubAdministrativeAreaName>Görlitz</SubAdministrativeAreaName><Locality><LocalityName>Görlitz</LocalityName><DependentLocality><DependentLocalityName>Görlitz</DependentLocalityName><Thoroughfare><ThoroughfareName>Obermarkt 17</ThoroughfareName></Thoroughfare><PostalCode><PostalCodeNumber>02826</PostalCodeNumber></PostalCode></DependentLocality></Locality></SubAdministrativeArea></AdministrativeArea></Country></AddressDetails>
+    <ExtendedData>
+      <LatLonBox north="51.1583676" south="51.1520724" east="14.9892076" west="14.9829124" />
+    </ExtendedData>
+    <Point><coordinates>14.9860600,51.1552200,0</coordinates></Point>
+  </Placemark>
+</Response></kml>
+
+\end{lstlisting}
 %	\label{pageValidationCall}
 %	\includepdf[landscape, turn=true, pages=-, fitpaper=true]{img/Validation_Call.pdf}
 	
