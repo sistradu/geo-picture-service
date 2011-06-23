@@ -11,7 +11,7 @@
 ||JSF.tex||Technologien/JSF||Stefan|| 95% ||
 ||eXist.tex||Technologien/eXist||Markus|| 95% ||
 ||Yaml.tex||Technologien/Yaml||Martin|| 99% ||
-||Systementwurf.tex||Systementwurf||Markus|| 50% ||
+||Systementwurf.tex||Systementwurf||Markus, Martin|| 50% ||
 ||Datenbank.tex||Implementation/Datenbank||Markus|| 99% ||
 ||Applikation.tex||Implementation/Applikation||Jeder|| R = 99%, S=99% ||
 ||Validatoren.tex||Implementation/Validatoren||Martin/Markus|| MS= 99% ||
