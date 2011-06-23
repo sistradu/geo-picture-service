@@ -12,7 +12,7 @@
 ||eXist.tex||Technologien/eXist||Markus|| 95% ||
 ||Yaml.tex||Technologien/Yaml||Martin|| 95% ||
 ||Systementwurf.tex||Systementwurf||Markus|| 50% ||
-||Datenbank.tex||Implementation/Datenbank||Markus|| 0% ||
+||Datenbank.tex||Implementation/Datenbank||Markus|| 99% ||
 ||Applikation.tex||Implementation/Applikation||Jeder|| R = 99%, S=99% ||
 ||Validatoren.tex||Implementation/Validatoren||Martin/Markus|| 50% ||
 ||PrimefacesImplementation.tex||Implementation/Primefaces||Stefan|| 99% ||
