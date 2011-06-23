@@ -22,7 +22,7 @@
 ||Zusammenfassung.tex||Zusammenfassung||Jeder|| ||
 ||Fazit.tex||Fazit||Jeder|| ||
 ||Kameraausgabeformate.tex||Analysierte Technologien/Metadatenextraktion/Kameraausgabeformate||Markus|| 5% ||
-||Exif.tex||Analysierte Technologien/Metadatenextraktion/Exif||Stefan|| 50% ||
+||Exif.tex||Analysierte Technologien/Metadatenextraktion/Exif||Stefan|| 95% ||
 ||Webservices.tex||Analysierte Technologien/Webservices|| - || ||
 ||KML.tex||Analysierte Technologien/KML||Martin|| 99% ||
 ||Tomcat.tex||Entwicklungsumgebung/Tomcat||Rico|| 99% ||
