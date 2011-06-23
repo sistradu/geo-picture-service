@@ -1,3 +1,17 @@
 \chapter{Tests}
 \label{JumpTests}
 %TODO Aufteilen in Unterabschnitte
+\section{UserControllerTest}
+Um nach Änderungen sicher zu sein das die Klasse noch richtig funktioniert müssen Tests durchgeführt werden. Aus diesem Grund wurden beim UserController die Methoden sendPasswortEmail, Login, Logout, erzeugeBenutzer, setPasswort und updateBenutzer getestet. Dabei soll vor allem überprüft werden, ob auch wirklich im Controller die Attribute richtig gesetzt werden. So wird zum Beispiel in der Methode testSendPasswortEmail nicht überprüft, ob eine EMail versendet wird, sondern ob ein neues zufälliges Passwort generiert wurde.\\
+\\
+Leider treten bei den meisten Tests Fehler auf. Das liegt hauptsächlich daran, dass aus einem Controller heraus Nachrichten auf der Webseite gesetzt werden sollen. Dazu wird der FacesContext verwendet. Dieser ist allerdings bei einem Test stets null. Daher sind wirklich sinnvolle Tests nicht mehr möglich. Ein Framework was bei diesem Punkt Abhilfe schaffen könnte wäre JSFUnit. Für eine Evaluierung dieses Frameworks war aber keine Zeit mehr sodass es in diesem Projekt nicht eingesetzt wird.
+
+\section{ImageDataExtractorTest und CoordinateCalculatorTest}
+Für die Extrahierung der Geo-Daten aus den Bildern ist auch ein Test erstellt worden. Damit sollte sichergestellt werden, dass die GPS-Koordinaten richtig aus einem Bild geholt werden. Die Erzeugung eines Thumbnails aus dem Bild mit dem Framework "`Metadata Extractor"' wurde ebenfalls überprüft. Dazu ist auf dem Server auch ein Testbild mit Geoinformationen bereitgestellt worden, so dass der Build-Server die Test ordentlich durchführen kann.\\
+\\
+Der CoordinateCalculatorTest überprüft ob die Umrechnung der Koordinaten von z.B. N 51''8'55.8, E 14''59'55.985 in das von Google gewünschte Dezimalformat\\ (z.B.: 51.148833333333336, 14.998884722222222) richtig arbeitet.\\
+\\
+\section{GPicSUtilTest und PasswortUtilTest}
+In der Klasse GPicSUtil werden einige Hilfsmethoden bereitgestellt, die an mehreren Stellen bei den Controllern benötigt werden. Es wurde hier besonders die Methode getStreamedContent überprüft. Diese soll von ein Bild von der Festplatte holen und es als StreamedContent zurückgeben. Nach einem Aufruf der Methode darf also das zurückgegebene StreamedContent-Objekt nicht null sein. Sollte dies nicht der Fall sein, ist der Test erfolgreich durchgelaufen.\\
+\\
+Die Klasse PasswortUtil stellt zwei Methoden zur Verfügung. Eine soll ein Passwort mit MD5 verschlüsseln und die zweite ein zufälliges Passwort erzeugen. Für den Verschlüsselungstest wurde ein Wort ausgewählt, wo der MD5-Hash schon bekannt ist. Dann wurde dieses Wort an die Methode übergeben und der Rückgabewert mit dem bekannten MD5-Hash verglichen. Der Test ist erfolgreich, wenn die beiden Werte gleich sind. Für den zweiten Test wird die Methode zum Erzeugen von Zufallspasswörtern zweimal aufgerufen und anschließend die beiden Rückgabewerte miteinander verglichen. Diese beiden Werte dürfen nicht gleich sein. Sollte dies dennoch der Fall sein schlägt der Test fehl.
