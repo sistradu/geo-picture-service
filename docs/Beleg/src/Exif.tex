@@ -1,5 +1,7 @@
-\subsection{Exif}
-\label{JumpExif}
+%\subsection{Exif}
+%\label{JumpExif}
+\section{Exif-Metadatenextraktion}
+\label{JumpMetadatenextraktion}
 Für die Darstellung der Bilder in einer GoogleMaps-Karte sind natürlich die GPS-Koordinaten zwingend erforderlich. Wollte man früher GPS-Koordinaten mit einem Bild in Verbindung bringen musste man am Ort der Aufnahme zusätzlich noch ein GPS-Empfänger verfügbar haben und sich die Koordinaten notieren. Inzwischen gibt es aber Kameras, die die Koordinaten als Metadaten zu einem Bild mit abspeichern. Die in diesem Projekt verwendete Kamera speichert die Bilder im JPEG-Format. Bei JPEG gibt es die Möglichkeit, Metadaten mittels einem Exif-Datenblock abzuspeichern. Auf diese Weise kann man auf die GPS-Daten zugreifen.\\
 \\
 Um nun mittels eines Programms die Daten zu extrahieren gibt es zwei Möglichkeiten. Die erste ist ein selbst entwickeltes Framework, mit denen man die Daten abgreift. Dabei muss eine ausführlich Analyse des Bild-Formats durchgeführt werden. Aufgrund der knappen Zeit und unter der Beachtung der Aufgabenstellung, dass ein Fotoarchiv und nicht ein Framework zum extrahieren von Exif-Daten entwickelt werden sollte, haben wir die zweite Möglichkeit gewählt. Dies war die Verwendung eines bestehenden Frameworks. Um solche Frameworks zu finden bietet sich immer eine Internetrecherche an. Diese ergab, das mittels des Frameworks "`Metadata-Extractor"' die Anforderungen an ein solches Framework erfüllt wurden. Anhand des Quickstart-Guides ist zu erkennen, dass eine Verwendung obendrein relativ einfach ist.\\
