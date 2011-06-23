@@ -38,7 +38,7 @@ Für die Nutzung der Google-Maps-Komponente wird eine Bean benötigt. Diese hat di
 \subsection{Beanzugriff}
 \subsection{MessageProperties}
 Bei der Entwicklung einer Webapplikation ist ein wichtiges Thema was man vorher planen sollte die Internationalisierung. Weiß man von Anfang an, dass es die Applikation nur in einer Sprache geben soll, kann man die Nachrichten bzw. Texte fest hinein schreiben. Weiß man das aber zu Beginn noch nicht genau, oder möchte die Applikation in mehreren Sprachen veröffentlichen, so sollte man die JSF-Komponente message bundle verwenden. Das sorgt dafür, dass die Zeichenketten der Nachrichten unabhängig von der Applikation gespeichert werden und schnell einfacher ausgetauscht werden können, oder schon in mehreren Sprachen dort vorliegen. Um zu entscheiden welche der Sprachversionen genutzt werden soll kann man sich des Lokalisierungscodes eine JSF-Anwendung bei der Ausführung bedienen. Dieser Lokalisierungscode besteht aus zwei Teilen, dem Code der Sprache und die Festlegung eines Stattes in der die Applikation laufen soll. Welche Codes die Applikation unterstützt kann in der faces-config.xml festgelegt werden.
-\begin{lstlisting}[caption=faces-config.xml Lokalisierungscode]{Name}
+\begin{lstlisting}[caption=Lokalisierungscode in der faces-config.xml]{Name}
 <locale-config>
             <default-locale>de</default-locale>
             <!--<supported-locale>de</supported-locale>-->
@@ -46,13 +46,13 @@ Bei der Entwicklung einer Webapplikation ist ein wichtiges Thema was man vorher 
 \end{lstlisting}
 Dort kann ein Standardwert festgelegt werden mit dem Tag "'<default-locale>"' und die weiteren Lokalisierungen, die unterstützt werden. In dieser Applikation wird lediglich die Lokalisierung für Deutschland unterstützt.
 Des weiteren muss man festlegen, wo die Applikation die Nachrichten bzw. Texte finden kann. Das passiert ebenfalls in der faces-config.xml durch das "'<message-bundle>"' Tag.
-\begin{lstlisting}[caption=faces-config.xml message bundle]
+\begin{lstlisting}[caption=Tag message bundle faces-config.xml ]
 <message-bundle>bundle.message</message-bundle>
 \end{lstlisting}
 In diesem Fall das Package bundle und dort die Datei "'message.properties"'. \\
 \\
 Die Texte der Applikation werden dann wie folgt in die "'message.properties"' eingetragen:
-\begin{lstlisting}[caption=message.properties]
+\begin{lstlisting}[caption=Inhalt der message.properties]
 home = Startseite
 ungueltigerBenutzerName = Der Benutzername ist ungültig!
 welcometext = Herzlich Willkommen auf GPicS!
@@ -60,14 +60,14 @@ welcometext = Herzlich Willkommen auf GPicS!
 Das sind natürlich nicht alle Nachrichten, sondern nur eine sehr kleine Auswahl um das Prinzip zu verdeutlichen.\\
 \\
 Um nun in einem XHTML-File auf die Nachrichten zuzugreifen, wurde in der faces-config.xml der Pfad sowie eine Variable festgelegt:
-\begin{lstlisting}[caption=message.properties XHMTL-Variable]
+\begin{lstlisting}[caption=Einbinden von message.properties mit XHMTL-Variable]
 <resource-bundle>
     <base-name>/bundle/message</base-name>
     <var>msg</var>
 </resource-bundle>
 \end{lstlisting}
 Der Text wird dann wie folge aufgerufen:
-\begin{lstlisting}[caption=message.properties Aufruf mit XHMTL-Variable]
+\begin{lstlisting}[caption=Aufruf von message.properties mit XHMTL-Variable]
 <h:outputLabel value="#{msg.bildname} "/>
 \end{lstlisting}
 Mit diesem Aufruf wird folgende Zeile der "'message.properties"' aufgerufen:
@@ -85,7 +85,7 @@ String pfad = msgPB.getPropertiesMessage("defaultPicturePath");
 
 Dafür wird die die Methode "'getPropertiesMessage()"'  der Klasse MessagesPropertiesBean aus dem Package util genutzt.
 
-\begin{lstlisting}[caption=message.properties Aufruf aus Controller Teil 2]
+\begin{lstlisting}[caption=Aufruf von message.properties aus dem Controller Teil 2]
 public String getPropertiesMessage(String key) {
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -100,7 +100,7 @@ return text;
 
 Der Methode wird ein String übergeben, der wiederum einer weiteren Methode der Klasse GPicSUtil übergeben wird.
 
-\begin{lstlisting}[caption=message.properties Aufruf aus Controller Teil 3]
+\begin{lstlisting}[caption=Aufruf von message.properties aus dem Controller Teil 3]
 public static String getMessageResourceString(
     String bundleName,
     String key,
