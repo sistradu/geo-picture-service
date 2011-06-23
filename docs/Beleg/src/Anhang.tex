@@ -12,10 +12,14 @@ Auf der beiliegenden CD befinden sich folgende \textit{Dateien} und \textbf{Ordn
 	\end{itemize}
 \end{itemize}
 
+\input{UseCases}
+
 \section{UML-Diagramme}
 \label{secAnhang}
 
 \section{Listings}
+
+\subsection{XML-Dokumente}
 
 \begin{lstlisting}[caption=Beispiel für einen Eintrag in der nutzers.xhtml,label=JumpListingNutzerXML,language=XML]
 <nutzer>
@@ -50,6 +54,9 @@ Auf der beiliegenden CD befinden sich folgende \textit{Dateien} und \textbf{Ordn
     </position>
 </bild>
 \end{lstlisting}
+
+\subsection{Java-Code}
+
 \begin{lstlisting}[caption=Die Klasse MockAlbumConnector,label=JumpListingMockAlbumConnector]
 public class MockAlbumConnector implements IAlbumConnector {
   //Durch Mehrere HashMaps kann schnell und einfach auf bestimmte Alben zugegriffen werden
@@ -117,6 +124,36 @@ public class MockAlbumConnector implements IAlbumConnector {
       ...
   }
   ...
+}
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Erweiterung der Klasse Authenticator,label=JumpListingAuthenticator]
+public class ExistAuthentificator extends Authenticator {
+    protected PasswordAuthentication getPasswordAuthentication(){
+        String promptString = getRequestingPrompt();
+        String hostname = getRequestingHost();
+        InetAddress ipaddr = getRequestingSite();
+        int port = getRequestingPort();
+        String username = USERNAME;
+        String password = PASSWORD;
+        return new PasswordAuthentication(username, password.toCharArray());
+    }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Umsetzung des Singleton-Patterns für die Klasse DBConnector,label=JumpDBZugriffSingleton]
+private DBConnector(){
+  this.location = "http://193.174.103.76:8088/exist/rest/db/";
+}
+...
+private static DBConnector INSTANCE = new DBConnector();
+
+public static DBConnector getInstance(){
+  return DBConnector.INSTANCE;
+}
+...
+public synchronized Document executeGetRequest(...){
+...
 }
 \end{lstlisting}
 

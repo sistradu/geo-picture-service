@@ -6,7 +6,7 @@
 				\hline
 				\textbf{Name} & Nutzer-Login \\
 				\hline
-				\textbf{Umfang} & Login \\
+				\textbf{Umfang} & Nutzer \\
 				\hline
 				\textbf{Ebene} & Startseite \\
 				\hline
@@ -36,7 +36,7 @@
 				\hline
 				\textbf{Name} & Nutzer löschen \\
 				\hline
-				\textbf{Umfang} & Nutzer Löschen \\
+				\textbf{Umfang} & Nutzer \\
 				\hline
 				\textbf{Ebene} & Admin-Page \\
 				\hline
@@ -64,7 +64,7 @@
 				\hline
 				\textbf{Name} & Album anlegen \\
 				\hline
-				\textbf{Umfang} & Album anlegen \\
+				\textbf{Umfang} & Album \\
 				\hline
 				\textbf{Ebene} & Nutzer-Frontend \\
 				\hline
@@ -78,10 +78,38 @@
 				\hline
 				\textbf{Standard-Szenario} & \begin{enumerate} \item Nutzer klickt auf 'Neues Album'. \item Nutzer trägt Albuminformationen ein. \item Nutzer klickt auf OK. \item Das neue Album wird angezeigt. \end{enumerate} \\
 				\hline
-				\textbf{Erweiterungen} & \begin{enumerate} \item[2a] Nutzer lädt zusätzlich Bilder für das Album hoch \item[3a] Ein Album mit demselben Namen existiert bereits. \end{enumerate} \textit{Bei 3a: Wiederhole 2 bis Albumname noch nicht vorhanden.} \\
+				\textbf{Erweiterungen} & \begin{enumerate} \item[2a] Nutzer lädt zusätzlich Bilder für das Album hoch (\nameref{JumpUsecaseBildHochladen}) \item[3a] Ein Album mit demselben Namen existiert bereits. \end{enumerate} \textit{Bei 3a: Wiederhole 2 bis Albumname noch nicht vorhanden.} \\
 				\hline
 			\end{tabular}
 		\caption{Usecase : Album anlegen}
 		\label{JumpUsecaseAlbumAnlegen}
+	\end{center}
+\end{table}
+
+\begin{table}
+	\begin{center}
+			\begin{tabular}{|p{3.5cm}|p{9cm}|}
+				\hline
+				\textbf{Name} & Album bearbeiten \\
+				\hline
+				\textbf{Umfang} & Album \\
+				\hline
+				\textbf{Ebene} & Nutzer-Frontend \\
+				\hline
+				\textbf{Primär-Actor} & Nutzer \\
+				\hline
+				\textbf{Stakeholder und Interessen} & Nutzer: möchte Album bearbeiten \\
+				\hline
+				\textbf{Vorbedingungen} & Nutzer ist angemeldet. \\
+				\hline
+				\textbf{Nachbedingungen} & Das Album wurde geändert. \\
+				\hline
+				\textbf{Standard-Szenario} & \begin{enumerate} \item Nutzer klickt auf das Album \item Nutzer klickt auf 'Bearbeiten'. \item Nutzer trägt neue Albuminformationen ein. \item Nutzer klickt auf OK. \item Das bearbeitete Album wird angezeigt. \end{enumerate} \\
+				\hline
+				\textbf{Erweiterungen} & \begin{enumerate} \item[3a] Nutzer lädt zusätzlich Bilder für das Album hoch. (\nameref{JumpUsecaseBildHochladen}) \item[3b] Nutzer löscht bereits vorhandene Bilder (\nameref{JumpUsecaseBildLöschen}) \item[4a] Ein Album mit demselben Namen existiert bereits. \end{enumerate} \textit{Bei 4a: Wiederhole 3 bis Albumname noch nicht vorhanden.} \\
+				\hline
+			\end{tabular}
+		\caption{Usecase : Album bearbeiten}
+		\label{JumpUsecaseAlbumBearbeiten}
 	\end{center}
 \end{table}

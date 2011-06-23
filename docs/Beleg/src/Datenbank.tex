@@ -28,19 +28,6 @@ Ein Beispiel einer solchen Mockklasse, in dem Fall der MockAlbumConnector, ist i
 %\begin{figwindow}[1, r, \includegraphics[width=0.35\textwidth]{img/Zugriffrechteverwaltung-eXist.png}, {Sperrung von Zugriffsrechten in eXist %\label{JumpFigureZugriffsrechteeXist}}]
 Die Datensicherheit zu gewährleisten funkioniert unter eXist sehr einfach. Durch die einfache Zugriffsrechteverwaltung für Collections und einzelnen Dateien, können diese für öffentliche Nutzer schnell und einfach gesperrt werden. Nun muss aber noch der Applikation vor einer Anfrage mitgeteilt werden, wie sich diese zu authentifizieren hat. Sonst würde diese sich als Gast anmelden und somit keine Zugriffsrechte besitzen. Das kann einfach umgesetzt werden, indem die Klasse java.net.Authenticator erweitert wird, dargestellt in \autoref{JumpListingAuthenticator}.
 %\end{figwindow}
-\begin{lstlisting}[caption=Erweiterung der Klasse Authenticator,label=JumpListingAuthenticator]
-public class ExistAuthentificator extends Authenticator {
-    protected PasswordAuthentication getPasswordAuthentication(){
-        String promptString = getRequestingPrompt();
-        String hostname = getRequestingHost();
-        InetAddress ipaddr = getRequestingSite();
-        int port = getRequestingPort();
-        String username = USERNAME;
-        String password = PASSWORD;
-        return new PasswordAuthentication(username, password.toCharArray());
-    }
-}
-\end{lstlisting}
 Vor einer Anfrage muss nun einfach der Authenticator gesetzt werden:
 \begin{lstlisting}
 Authenticator.setDefault(new ExistAuthentificator());
@@ -48,7 +35,7 @@ Authenticator.setDefault(new ExistAuthentificator());
 Damit kann das System problemlos auf die Datenbank zugreifen, während nicht authorisierte Nutzer dazu nicht in der Lage sind.
 \subsection{Stored XQueries}
 \label{JumpXQueries}
-Der Großteil der Funktionalität, zum Schreiben, Auslesen, Ändern und Löschen von Daten übernimmt die Datenbank. Dazu werden Stored XQUeries verwendet, die einfach per HTTP-GET aufgerufen werden müssen. Zurückgegeben werden dann entweder die gewünschten Elemente, eventuell aufgetretene Fehler oder auch nichts, bei einer Update- oder Delete-Methode, die erfolgreich gewesen ist. Der Aufbau einer Datei ist dabei immer recht ähnlich. Im Folgenden soll dieser Anhand der Funktion updateBild gezeigt werden.\\
+Der Großteil der Funktionalität, zum Schreiben, Auslesen, Ändern und Löschen von Daten übernimmt die Datenbank. Dazu werden Stored XQUeries verwendet, die einfach als .xql-Dateien in der Datenbank gespeichert werden und per HTTP-GET aufgerufen werden müssen. Zurückgegeben werden dann entweder die gewünschten Elemente, eventuell aufgetretene Fehler oder auch nichts, bei einer Update- oder Delete-Methode, die erfolgreich gewesen ist. Der Aufbau einer Datei ist dabei immer recht ähnlich. Im Folgenden soll dieser Anhand der Funktion updateBild gezeigt werden.\\
 Zunächst müssen alle Parameter, die über die URL mitgegeben werden, ausgelesen werden. Das erledigt folgende Zeile für einen Parameter:
 \begin{lstlisting}[language=XML,caption=Auslesen von Parametern aus der URL,label=JumpXQueryParamsRead]
 let $id:= request:get-parameter("id",0)
@@ -63,11 +50,9 @@ let $new-bild:=
 <bild>
   <id>{$id}</id>
   <name>{$name}</name>
-  <description>{$description}</description>
   ...
   {$bilder//bild[id=$id]//album}
   <location>
-    <longitude>{$longitude}</longitude>
     ...
   </location>
 </bild>
@@ -100,6 +85,49 @@ Wenn alle Vorraussetzungen erfüllt sind, kann im Anschluss die eigentliche Funkt
 \begin{lstlisting}[language=XML,caption=Update eines Bildes,label=JumpXQueryFinalUpdateBild]
 (update replace $bilder//bild[id=$id] with $new-bild)
 \end{lstlisting}
+Die Abfragen nach bestimmten Elementen bereiten dabei auch keine Schwierigkeiten. So können, wie im folgenden Beispiel, Methoden beliebig kombiniert werden, um komplexere Abfragen zu realisieren. Hier sollen alle Alben gefunden werden, die im Namen einen bestimmten Text enthalten. Dabei soll die Abfrage nicht Case-Sensitiv sein:
+\begin{lstlisting}[language=XML,caption=Abfrage aller Alben mit bestimmtem Namen,label=JumpXQueryAlbenWithNameContaining]
+let $collection := collection('/db/alben')//album[contains(upper-case(name), upper-case($name))]
+\end{lstlisting}
 \subsection{Zugriff auf die Datenbank}
-
+Im vorherigen Abschnitt wurde gezeigt, dass Abfrage mit Stored XQueries sehr einfach implementiert und bereitgestellt werden können. Der Aufruf muss nun nur noch über ein einfaches HTTP-GET erfolgen. Diese Funktionalität wird im DBConnector in der Methode executeGetRequest implementiert. Der DBConnector kennt die Adresse der Datenbank und benötigt zum Ausführen nur noch den Pfad zur auszuführenden .xql-Datei und die zu übergebenden Parameter.\\
+Diese Angaben werden von der aufrufenden Methode zusammengestellt. Dabei muss jede Methode den Pfad zur aufzurufenden Datei selber kennen. Außerdem müssen die Parameter vorher in ein einheitliches Format gebracht werden. Dazu wird eine HashMap verwendet, da die Anzahl der Parameter variabel ist. In dieser Map werden dann Parametername als Key und Parameterwert als Value verwendet. Im Folgenden wird ein Beispielaufruf für die Erzeugung eines Nutzers angegeben:
+\begin{lstlisting}[caption=Übergabe der Paramter an den DBConnector,label=JumpDBZugriffParameter]
+Map<String,String> params = new HashMap<String,String>();
+params.put("name", name);
+params.put("password", password);
+params.put("email", email);
+...
+Document doc = DBConnector.getInstance().executeGetRequest("queries/createAlbum.xql", params, 0);
+\end{lstlisting}
+Mit diesen Angaben wird dann die URL zusammengesetzt. Dabei werden auch die zu übergebenden Parameter im UTF-8 Format codiert, damit auch Sonderzeichen oder Umlaute wie ä,ö,ü fehlerfrei übertragen werden:
+\begin{lstlisting}[caption=Zusammensetzen der URL für ein HTTP-GET,label=JumpDBZugriffURL]
+String paramString = "";
+boolean firstSet = false;
+for(Map.Entry<String,String> entry : params.entrySet()){
+  if(entry.getValue() != null && !entry.getValue().isEmpty()){
+    if(firstSet){
+      paramString += "&" + entry.getKey() + "=" + URLEncoder.encode(entry.getValue(), "UTF-8");
+    }else{
+      paramString += "?" + entry.getKey() + "=" + URLEncoder.encode(entry.getValue(), "UTF-8");
+      firstSet = true;
+    }
+  }
+}
+URL url = new URL(this.location + file + paramString);
+\end{lstlisting}
+Im Anschluss muss nur noch das zurückgegebene Dokument geparst werden:
+\begin{lstlisting}[caption=Parsen des Documents,label=JumpDBZugriffDocument]
+DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+DocumentBuilder db = dbf.newDocumentBuilder();
+doc = db.parse(url.openStream());
+\end{lstlisting}
+Eventuelle dabei auftretende Exceptions werden gekapselt und nach oben geworfen. Je nach geworfener Exception entscheidet dann die aufrufende Methode, wie diese zu behandeln ist. In der Regel werden die Exceptions dabei gleich an die Controller weitergerreicht, damit dem Nutzer eine entsprechende Fehlermeldung ausgegeben werden kann. Natürlich kann auch ein Fehler, angegeben durch einen $<$error$>$ Tag im XML-Dokument, zurückgegeben werden. In diesem Fall wird in der Regel durch die aufrufende Methode ebenfalls eine Exception erzeugt, und zum aufrufenden Controller geworfen:
+\begin{lstlisting}[caption=Auswerten des error-Tags,label=JumpDBZugriffErrorTag]
+if(doc.getElementsByTagName("error").getLength()>0){
+  throw new IllegalArgumentException(doc.getElementsByTagName("message").item(0).getTextContent());
+}
+\end{lstlisting}
+Tritt kein Fehler auf, so kann in den meisten Fällen gleich das erhaltene Dokument zurückgegeben werden oder bei einem Insert, die aus dem Dokument ausgelesene ID.
 \subsection{Verhinderung gleichzeitiger Zugriffe}
+Der letzte Punkt der noch sichergestellt werden musste, war die Verhinderung gleichzeitiger Zugriffe. Beim Eintragen neuer Elemente muss sichergestellt werden, dass nicht 2 Elemente die selbe ID erhalten. Da es in eXist keine Sequenzen gibt zum automatischen, synchronisierten Erzeugen neuer IDs, wird einfach die größte gefundene ID + 1 verwendet. Werden nun etwa 2 Bilder zur selben Zeit eingetragen, so kann es dadurch aber passieren, dass beide die selbe ID erhalten, da beide Anfragen von unterschiedlichen Threads abgearbeitet werden. Um das zu verhindern, wird im DBConnector die Anzahl der gleichzeitigen Requests auf 1 reduziert. Dazu wird das Singleton-Pattern verwendet (siehe \autoref{JumpDBZugriffSingleton}). Der Konstruktor des DBConnectors ist privat und innerhalb der Klasse wird dieser nur ein einziges mal aufgerufen um eine statische Instanz zu Erzeugen. Dadurch wird sichergestellt, dass alle DB-Anfragen über diese eine Instanz abgearbeitet werden. Zusätzlich wird die Methode executeGetRequest synchronisiert um zu gewährleisten, dass nur eine Anfrage zur selben Zeit ausgeführt wird.
