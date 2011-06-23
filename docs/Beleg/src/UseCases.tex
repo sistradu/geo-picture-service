@@ -1,0 +1,87 @@
+\section{Usecases}
+\label{JumpUseCases}
+\begin{table}
+	\begin{center}
+			\begin{tabular}{|p{3.5cm}|p{9cm}|}
+				\hline
+				\textbf{Name} & Nutzer-Login \\
+				\hline
+				\textbf{Umfang} & Login \\
+				\hline
+				\textbf{Ebene} & Startseite \\
+				\hline
+				\textbf{Primär-Actor} & Nutzer \\
+				\hline
+				\textbf{Stakeholder und Interessen} & Nutzer: möchte sich einloggen \\
+				\hline
+				\textbf{Vorbedingungen} & Nutzer besitzt ein Konto \\
+				\hline
+				\textbf{Nachbedingungen} & Nutzer ist angemeldet \\
+				\hline
+				\textbf{Standard-Szenario} & \begin{enumerate} \item Nutzer trägt Daten in Login-Felder ein. \item Nutzer klickt auf OK. \item Nutzerspezifische Optionen werden angezeigt. \end{enumerate} \\
+				\hline
+				\textbf{Erweiterungen} & \begin{enumerate} \item[2a] Login-Daten sind falsch eingegeben. \end{enumerate} \textit{Wiederhole 1. - 2. bis erfolgreicher Login.} \\
+				\hline
+				\textbf{Spezielle Anforderungen} & Passwort wird verschlüsselt übertragen \\
+				\hline
+			\end{tabular}
+		\caption{Usecase : Nutzerlogin}
+		\label{JumpUsecaseNutzerlogin}
+	\end{center}
+\end{table}
+
+\begin{table}
+	\begin{center}
+			\begin{tabular}{|p{3.5cm}|p{9cm}|}
+				\hline
+				\textbf{Name} & Nutzer löschen \\
+				\hline
+				\textbf{Umfang} & Nutzer Löschen \\
+				\hline
+				\textbf{Ebene} & Admin-Page \\
+				\hline
+				\textbf{Primär-Actor} & Admin \\
+				\hline
+				\textbf{Stakeholder und Interessen} & \begin{itemize} \item Admin: möchte/soll Nutzer aus System entfernen \item Nutzer: möchte/soll entfernt werden \end{itemize} \\
+				\hline
+				\textbf{Vorbedingungen} & \begin{itemize} \item Nutzer besitzt ein Konto \item Admin ist angemeldet \end{itemize} \\
+				\hline
+				\textbf{Nachbedingungen} & Nutzerkonto ist gelöscht \\
+				\hline
+				\textbf{Standard-Szenario} & \begin{enumerate} \item Admin ruft Nutzeradministration auf. \item Admin wählt für den Nutzer die Option Löschen. \item Nutzer wird nicht mehr in Liste angezeigt. \end{enumerate} \\
+				\hline
+				\textbf{Erweiterungen} & keine \\
+				\hline
+			\end{tabular}
+		\caption{Usecase : Nutzer löschen}
+		\label{JumpUsecaseNutzerLoeschen}
+	\end{center}
+\end{table}
+
+\begin{table}
+	\begin{center}
+			\begin{tabular}{|p{3.5cm}|p{9cm}|}
+				\hline
+				\textbf{Name} & Album anlegen \\
+				\hline
+				\textbf{Umfang} & Album anlegen \\
+				\hline
+				\textbf{Ebene} & Nutzer-Frontend \\
+				\hline
+				\textbf{Primär-Actor} & Nutzer \\
+				\hline
+				\textbf{Stakeholder und Interessen} & Nutzer: möchte ein neues Album anlegen \\
+				\hline
+				\textbf{Vorbedingungen} & Nutzer ist angemeldet. \\
+				\hline
+				\textbf{Nachbedingungen} & Ein neues Album wurde angelegt. \\
+				\hline
+				\textbf{Standard-Szenario} & \begin{enumerate} \item Nutzer klickt auf 'Neues Album'. \item Nutzer trägt Albuminformationen ein. \item Nutzer klickt auf OK. \item Das neue Album wird angezeigt. \end{enumerate} \\
+				\hline
+				\textbf{Erweiterungen} & \begin{enumerate} \item[2a] Nutzer lädt zusätzlich Bilder für das Album hoch \item[3a] Ein Album mit demselben Namen existiert bereits. \end{enumerate} \textit{Bei 3a: Wiederhole 2 bis Albumname noch nicht vorhanden.} \\
+				\hline
+			\end{tabular}
+		\caption{Usecase : Album anlegen}
+		\label{JumpUsecaseAlbumAnlegen}
+	\end{center}
+\end{table}

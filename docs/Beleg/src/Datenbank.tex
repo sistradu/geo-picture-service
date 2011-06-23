@@ -24,6 +24,7 @@ Da die Datenbank noch nicht zu Beginn der Implementierungsphase komplett einsatz
 Wird nun eine solche Klasse erzeugt, werden die Testdaten automatisch generiert und können genutzt werden. Später kann die jeweilige Mockklasse einfach mit der 'echten' Implementierung ausgetauscht werden. 
 Ein Beispiel einer solchen Mockklasse, in dem Fall der MockAlbumConnector, ist im Anhang unter \autoref{JumpListingMockAlbumConnector} angegeben. Der Einfachheit halber werden nur die wichtigsten Methoden dargestellt.
 \subsection{Datensicherheit}
+\label{JumpDatensicherheit}
 %\begin{figwindow}[1, r, \includegraphics[width=0.35\textwidth]{img/Zugriffrechteverwaltung-eXist.png}, {Sperrung von Zugriffsrechten in eXist %\label{JumpFigureZugriffsrechteeXist}}]
 Die Datensicherheit zu gewährleisten funkioniert unter eXist sehr einfach. Durch die einfache Zugriffsrechteverwaltung für Collections und einzelnen Dateien, können diese für öffentliche Nutzer schnell und einfach gesperrt werden. Nun muss aber noch der Applikation vor einer Anfrage mitgeteilt werden, wie sich diese zu authentifizieren hat. Sonst würde diese sich als Gast anmelden und somit keine Zugriffsrechte besitzen. Das kann einfach umgesetzt werden, indem die Klasse java.net.Authenticator erweitert wird, dargestellt in \autoref{JumpListingAuthenticator}.
 %\end{figwindow}
@@ -46,6 +47,7 @@ Authenticator.setDefault(new ExistAuthentificator());
 \end{lstlisting}
 Damit kann das System problemlos auf die Datenbank zugreifen, während nicht authorisierte Nutzer dazu nicht in der Lage sind.
 \subsection{Stored XQueries}
+\label{JumpXQueries}
 Der Großteil der Funktionalität, zum Schreiben, Auslesen, Ändern und Löschen von Daten übernimmt die Datenbank. Dazu werden Stored XQUeries verwendet, die einfach per HTTP-GET aufgerufen werden müssen. Zurückgegeben werden dann entweder die gewünschten Elemente, eventuell aufgetretene Fehler oder auch nichts, bei einer Update- oder Delete-Methode, die erfolgreich gewesen ist. Der Aufbau einer Datei ist dabei immer recht ähnlich. Im Folgenden soll dieser Anhand der Funktion updateBild gezeigt werden.\\
 Zunächst müssen alle Parameter, die über die URL mitgegeben werden, ausgelesen werden. Das erledigt folgende Zeile für einen Parameter:
 \begin{lstlisting}[language=XML,caption=Auslesen von Parametern aus der URL,label=JumpXQueryParamsRead]
