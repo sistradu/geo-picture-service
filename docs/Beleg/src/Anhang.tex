@@ -120,6 +120,32 @@ public class MockAlbumConnector implements IAlbumConnector {
 }
 \end{lstlisting}
 
+\begin{lstlisting}[caption=Methode zum Erstellen der Marker, label=lstMakeMarker, language=Java]
+    public void makeMarker() {
+        simpleModel = new DefaultMapModel();
+        AlbumController ac = (AlbumController) GPicSUtil.getBean("albumController");
+        bilder = ac.getBilder();
+        Polyline polyline = new Polyline();
+        for (int i = 0; i < ac.getBilder().size(); i++){
+            Bild bild = bilder.get(i);
+
+            LatLng coord = new LatLng(Double.parseDouble(bild.getLatitude()), Double.parseDouble(bild.getLongitude()));
+
+            polyline.getPaths().add(coord);
+
+            Marker m  = new Marker(coord, bild.getName(), bild.getPath());
+
+            simpleModel.addOverlay(m);
+        }
+
+        polyline.setStrokeWeight(5);
+        polyline.setStrokeColor("#FF9900");
+        polyline.setStrokeOpacity(0.7);
+
+        simpleModel.addOverlay(polyline);
+    }
+\end{lstlisting}
+
 \begin{lstlisting}[caption=Methode zur Erzeugung eines zufällligen Passworts, label=lstRandomPasswort, language=Java]
 public String erzeugeZufallsPasswort(int length) {
         String allowedChars = "0123456789abcdefghijklmnopqrstuvwxyz";

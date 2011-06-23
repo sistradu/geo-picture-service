@@ -38,6 +38,7 @@ Es ist sogar möglich die Schaltflächen umzubenennen. Diese Möglichkeit wurde nat
 Die genaue Implementation des FileUploadEvents wird noch im Abschitt \autoref{subsubsec:CreateEditAlbumController} beschrieben.
 
 \subsection{GMap}
+\label{GMap}
 Primefaces bietet noch weitere nützliche Komponenten. So wird bereits eine Komponente zum Anzeigen einer GMap-Karte bereitgestellt. Um diese einzubinden muss nur der in Listing \autoref{lstGMap} zu sehende Code in die Webseite eingebunden werden.
 \begin{lstlisting}[caption=GMap-Tag, label=lstGMap]
 <p:gmap center="#{albumController.bilder[0].latitude}, #{albumController.bilder[0].longitude}" zoom="13" type="HYBRID" style="width:600px;height:400px"
