@@ -4,7 +4,7 @@
 
 || *Datei* || *Kapitel/Abschnitt* || *Bearbeiter* || *Abgeschlossen* ||
 ||Einleitung.tex||Einleitung||Rico|| 99% ||
-||Aufgabenstellung.tex||Problem/Aufgabenstellung||Rico|| ||
+||Aufgabenstellung.tex||Problem/Aufgabenstellung||Rico|| 99% ||
 ||Anforderungsanalyse.tex||Anforderungsanalyse||Markus,Martin|| 99% ||
 ||Drupal.tex||Drupal||Martin|| 99% ||
 ||PrimefacesTechnologien.tex||Technologien/Primefaces||Stefan|| 99% ||
