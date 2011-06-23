@@ -5,23 +5,22 @@
 || *Datei* || *Kapitel/Abschnitt* || *Bearbeiter* || *Abgeschlossen* ||
 ||Einleitung.tex||Einleitung||Rico|| 99% ||
 ||Aufgabenstellung.tex||Problem/Aufgabenstellung||Rico|| ||
-||Anforderungsanalyse.tex||Anforderungsanalyse||Markus|| 70% ||
+||Anforderungsanalyse.tex||Anforderungsanalyse||Markus,Martin|| 99% ||
 ||Drupal.tex||Drupal||Martin|| 99% ||
 ||PrimefacesTechnologien.tex||Technologien/Primefaces||Stefan|| 99% ||
 ||JSF.tex||Technologien/JSF||Stefan|| 99% ||
-||eXist.tex||Technologien/eXist||Markus|| 95% ||
+||eXist.tex||Technologien/eXist||Markus|| 99% ||
 ||Yaml.tex||Technologien/Yaml||Martin|| 99% ||
-||Systementwurf.tex||Systementwurf||Markus, Martin|| 50% ||
+||Systementwurf.tex||Systementwurf||Markus, Martin|| 70% ||
 ||Datenbank.tex||Implementation/Datenbank||Markus|| 99% ||
 ||Applikation.tex||Implementation/Applikation||Jeder|| R = 99%, S=99% ||
-||Validatoren.tex||Implementation/Validatoren||Martin/Markus|| MS= 99% ||
+||Validatoren.tex||Implementation/Validatoren||Martin/Markus|| MS= 99% MU=99% ||
 ||PrimefacesImplementation.tex||Implementation/Primefaces||Stefan|| 99% ||
 ||Benutzeroberflaeche.tex||Implementation/Benutzeroberfläche||Martin|| 95% ||
-||Tests.tex||Tests||Jeder|| S=99% ||
+||Tests.tex||Tests||Jeder|| S=99% MU=99% ||
 ||Projektaufteilung.tex||Aufteilung des Projekts||Jeder|| ||
 ||Zusammenfassung.tex||Zusammenfassung||Jeder|| ||
 ||Fazit.tex||Fazit||Jeder|| ||
-||Kameraausgabeformate.tex||Analysierte Technologien/Metadatenextraktion/Kameraausgabeformate||Markus|| 5% ||
 ||Exif.tex||Analysierte Technologien/Metadatenextraktion/Exif||Stefan|| 99% ||
 ||Webservices.tex||Analysierte Technologien/Webservices|| Stefan || 99% ||
 ||KML.tex||Analysierte Technologien/KML||Martin|| 99% ||
