@@ -263,6 +263,40 @@ public void handleFileUpload(FileUploadEvent event) {
         GPicSUtil.createFacesMessageForID("uploader", file.getFileName() + " erfolgreich hochgeladen.", false);
     }
 \end{lstlisting}
+
+\begin{lstlisting}[caption=Parameterübergabe von einer Webseite an den Controller, label=lstFParam, language=XML]
+<p:dataGrid id="cgrid" var="b" value="#{createEditAlbumController.bilder}" columns="3" rows="12" paginator="false" effect="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="9,12,15">
+....
+                            <p:graphicImage value="#{createEditAlbumController.image}" width="20%"
+                                            height="20%">
+                                <f:param name="name" value="#{b.name}"/>
+                            </p:graphicImage>
+....
+            </p:dataGrid>
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Methode zum Laden der Bilder, label=lstGetImage, language=Java]
+public StreamedContent getImage() {
+        StreamedContent defaultImage = null;
+        try {
+            defaultImage = GPicSUtil.getStreamContent(uploadDir + "/gpics.jpg");
+            String name = FacesContext.getCurrentInstance()
+                    .getExternalContext().getRequestParameterMap().get("name");
+            if (name != null && !bilder.isEmpty()) {
+                StreamedContent content = null;
+                for (Bild b : bilder) {
+                    if (b.getName().equals(name)) {
+                        content = b.getContent();
+                    }
+                }
+                return content;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        return defaultImage;
+    }
+\end{lstlisting}
 %	\label{pageValidationCall}
 %	\includepdf[landscape, turn=true, pages=-, fitpaper=true]{img/Validation_Call.pdf}
 	

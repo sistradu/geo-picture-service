@@ -57,18 +57,18 @@ Für das Anzeigen der Bilder in der GMap-Karte gibt es verschiedene Möglichkeiten
                         <h:outputText value="#{mapBean.beschreibung}"/>
                     </p:gmapInfoWindow>
 \end{lstlisting}
-Das Hinzufügen der Marker und was bei einem Klick auf einem Marker passiert, muss in der dazu gehörigen ManagedBean erfolgen. Dies wird in Abschnitt ???????????? noch erläutert.\\
+Das Hinzufügen der Marker und was bei einem Klick auf einem Marker passiert, muss in der dazu gehörigen ManagedBean erfolgen. Dies wird in Abschnitt \autoref{subsubsec:MapBean} noch erläutert.\\
 \\
 Eine andere Möglichkeit wäre, die Bilder direkt in der GMap anzuzeigen. In einem Wegwerfprojekt, das durchgeführt wurde um Primefaces genauer kennen zu lernen, wurde festgestellt, dass dies möglich ist. Dazu müssten die Marker nicht mehr das Bild des Markers anzeigen sondern das gewünschte Bild. Es wurde allerdings festgestellt, dass dies nur mit Bildern gehen würde, die im Web-Ordner des Tomcats zur Verfügung stehen. Dazu müsste der Pfad bekannt sein. Mit dynamisch gestreamten Bildern von der Festplatte war das Ersetzen des Marker-Bildes nicht möglich. Außerdem stellte sich bei diesem Versuch heraus, dass ein Anzeigen der Bilder direkt in der Map zu viel von der eigentlichen Karte verdeckt. Daher wird die erste Möglichkeit in diesem Projekt verwendet.
 
-\subsection{Gallery}
+\subsection{Galleria}
 Bei einem Fotoarchiv muss man natürlich auch die Möglichkeit haben sich die Fotos anzeigen zu lassen und dies nicht nur in einer kleinen Karte von Google anzuzeigen. Dafür sind verschiedene Möglichkeiten von Slideshows bei Primefaces vorgesehen. Es wurden einige Möglichkeiten ausprobiert. So wurde z.B. versucht die Slideshow mit dem LightBox-Tag zu verwirklichen. Allerdings stellte sich heraus, dass diese Komponente nur Bilder statische Bilder, also Bilder mit einem festen Pfad im Web-Ordner, anzeigen kann. Da nur dynamisch gestreamte Bilder verwendet werden, war diese Komponente in diesem Projekt nicht zu verwenden. Als Alternative dazu gibt es die Gallery-Komponente, die seit Primefaces Version 2 verfügbar ist. Dafür muss in die Seite folgender Code eingebaut werden.
 \begin{lstlisting}[caption=Gallery-Komponente, label=lstGallery]
  <p:galleria id="images" effect="fade" effectSpeed="1000">
 ...
 <p:galleria>
 \end{lstlisting}
-Damit die Bilder dynamisch angezeigt werden, muss noch im Controller eine Methode implementiert werden. Dies wird in Abschnitt ???????????????????? beschrieben.
+Damit die Bilder dynamisch angezeigt werden, muss noch im Controller eine Methode implementiert werden. Dies wird in Abschnitt \autoref{subsubsec:AlbumController} beschrieben.
 
 \subsection{Calendar}
 Für jedes Bild sollte möglich sein, den Zeitstempel der Aufnahme manuell zu ändern. Dies könnte durch eine manuelle Eingabe des Datums über ein Textfeld geschsehen. Da dabei aber unbedingt eine Überprüfung der Eingabe erfolgen muss und weil diese Lösung nicht sehr professionell aussieht, wird eine vorgefertige Komponente von Primefaces dafür verwendet.
@@ -90,7 +90,7 @@ Sobald Bilder hochgeladen werden möchte der Benutzer gwöhnlich eine Übersicht ha
                 </p:column>
             </p:dataGrid>
 \end{lstlisting}
-Für jedes Bild muss innerhalb des DataGrid noch ein PanelGrid hinzugefügt werden. Innerhalb des PanelGrids werden dann die Bilder mittel GraphicImage angezeigt. Damit immer die richtigen Bilder geladen werden, muss man im Controller noch eine entsprechende Methode bereitstellen. Dies wird in Abschnitt ??????????????????? auf Seite ????????????????????? erläutert.
+Für jedes Bild muss innerhalb des DataGrid noch ein PanelGrid hinzugefügt werden. Innerhalb des PanelGrids werden dann die Bilder mittel GraphicImage angezeigt. Damit immer die richtigen Bilder geladen werden, muss man im Controller noch eine entsprechende Methode bereitstellen. Dies wird in Abschnitt \autoref{subsubsec:CreateEditAlbumController} auf Seite \pageref{subsubsec:CreateEditAlbumController} erläutert.
 
 \subsection{Dialog}
 An einigen Stellen ist es in einem Projekt immer notwendig, den Benutzer noch einmal gesondert auf einen bestimmten Punkt hinzuweisen. In diesem Projekt ist das beim Löschen eines Bildes notwendig. Dort soll dem Benutzer noch einmal eine Warnmeldung ausgegeben werden. Primefaces stellt dafür die Dialog-Komponente zur Verfügung.
