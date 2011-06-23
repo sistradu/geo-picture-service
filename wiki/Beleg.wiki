@@ -6,15 +6,15 @@
 ||Einleitung.tex||Einleitung||Rico|| 99% ||
 ||Aufgabenstellung.tex||Problem/Aufgabenstellung||Rico|| ||
 ||Anforderungsanalyse.tex||Anforderungsanalyse||Markus|| 70% ||
-||Drupal.tex||Drupal||Martin|| 95% ||
+||Drupal.tex||Drupal||Martin|| 99% ||
 ||PrimefacesTechnologien.tex||Technologien/Primefaces||Stefan|| 95% ||
 ||JSF.tex||Technologien/JSF||Stefan|| 95% ||
 ||eXist.tex||Technologien/eXist||Markus|| 95% ||
-||Yaml.tex||Technologien/Yaml||Martin|| 95% ||
+||Yaml.tex||Technologien/Yaml||Martin|| 99% ||
 ||Systementwurf.tex||Systementwurf||Markus|| 50% ||
 ||Datenbank.tex||Implementation/Datenbank||Markus|| 99% ||
 ||Applikation.tex||Implementation/Applikation||Jeder|| R = 99%, S=99% ||
-||Validatoren.tex||Implementation/Validatoren||Martin/Markus|| 50% ||
+||Validatoren.tex||Implementation/Validatoren||Martin/Markus|| MS= 99% ||
 ||PrimefacesImplementation.tex||Implementation/Primefaces||Stefan|| 99% ||
 ||Benutzeroberflaeche.tex||Implementation/Benutzeroberfläche||Martin|| 95% ||
 ||Tests.tex||Tests||Jeder|| S=99% ||
@@ -27,6 +27,6 @@
 ||KML.tex||Analysierte Technologien/KML||Martin|| 99% ||
 ||Tomcat.tex||Entwicklungsumgebung/Tomcat||Rico|| 99% ||
 ||Hudson.tex||Entwicklungsumgebung/Hudson||Rico|| 99% ||
-||IntelliJ.tex||Entwicklungsumgebung/IntelliJ||Jeder|| ||
+||IntelliJ.tex||Entwicklungsumgebung/IntelliJ||Martin|| 99% ||
 ||Googlecode.tex||Entwicklungsumgebung/Googlecode||Rico|| 99% ||
 ||PrimefacesEval.tex||Evaluierung Primefaces||Rico||  ||
