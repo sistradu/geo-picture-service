@@ -5,13 +5,13 @@
 || *Datei* || *Kapitel/Abschnitt* || *Bearbeiter* || *Abgeschlossen* ||
 ||Einleitung.tex||Einleitung||Rico|| 99% ||
 ||Aufgabenstellung.tex||Problem/Aufgabenstellung||Rico|| ||
-||Anforderungsanalyse.tex||Anforderungsanalyse||Markus|| 90% ||
+||Anforderungsanalyse.tex||Anforderungsanalyse||Markus|| 70% ||
 ||Drupal.tex||Drupal||Martin|| 95% ||
 ||PrimefacesTechnologien.tex||Technologien/Primefaces||Stefan|| 95% ||
 ||JSF.tex||Technologien/JSF||Stefan|| 95% ||
 ||eXist.tex||Technologien/eXist||Markus|| 95% ||
 ||Yaml.tex||Technologien/Yaml||Martin|| 95% ||
-||Systementwurf.tex||Systementwurf||Markus|| 20% ||
+||Systementwurf.tex||Systementwurf||Markus|| 50% ||
 ||Datenbank.tex||Implementation/Datenbank||Markus|| 0% ||
 ||Applikation.tex||Implementation/Applikation||Jeder|| R = 99%, S=99% ||
 ||Validatoren.tex||Implementation/Validatoren||Martin/Markus|| 50% ||
