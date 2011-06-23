@@ -1,8 +1,8 @@
 \section{Datenbank}
 \label{JumpDatenbank}
 \subsection{Aufbau der Datenbank}
-Der wir nur 3 Klassen besitzen, fiel auch der Aufbau der Datenbank entsprechend einfach aus. Zunächst wurde für jede Klasse eine neue Collection angelegt, was etwas einer Tabelle in einer relationalen Datenbank oder einem Ordner in einem Dateisystem entspricht. In diesen Collections können nun ein, oder mehrere XML-Files gespeichert werden. Wie wir in \autoref{JumpDBOneBIGManysmall} begründet haben, speichern wir hier nur jeweils eine Datei.
-Zusätzlich wurde noch eine Collection angelegt für unsere Stored XQuerys. In dieser sind mehrere .xql-Dateien hinterlegt, für alle Abfragen, die durchgeführt werden müssen:
+Bei insgesamt nur 3 Datenhaltungs-Klassen, fiel auch der Aufbau der Datenbank entsprechend einfach aus. Zunächst wurde für jede Klasse eine neue Collection angelegt, was etwa einer Tabelle in einer relationalen Datenbank oder einem Ordner in einem Dateisystem entspricht. In diesen Collections können nun ein, oder mehrere XML-Files gespeichert werden. Wie in \autoref{JumpDBOneBIGManysmall} begründet wurde, wird hier nur jeweils eine Datei gespeichert.
+Zusätzlich wurde noch eine Collection angelegt für sämtliche Stored XQuerys. In dieser sind mehrere .xql-Dateien hinterlegt, für alle Abfragen, die durchgeführt werden müssen:
 \begin{itemize}
 	\item exist/rest/db/
 	\begin{itemize}
@@ -25,7 +25,7 @@ Wird nun eine solche Klasse erzeugt, werden die Testdaten automatisch generiert 
 Ein Beispiel einer solchen Mockklasse, in dem Fall der MockAlbumConnector, ist im Anhang unter \autoref{JumpListingMockAlbumConnector} angegeben. Der Einfachheit halber werden nur die wichtigsten Methoden dargestellt.
 \subsection{Datensicherheit}
 %\begin{figwindow}[1, r, \includegraphics[width=0.35\textwidth]{img/Zugriffrechteverwaltung-eXist.png}, {Sperrung von Zugriffsrechten in eXist %\label{JumpFigureZugriffsrechteeXist}}]
-Die Datensicherheit zu gewährleisten funkioniert unter eXist sehr einfach. Durch die einfache Zugriffsrechteverwaltung für Collections und einzelnen Dateien, können diese für öffentliche Nutzer schnell und einfach gesperrt werden. Nun müssen wir aber noch unserer Applikation vor einer Anfrage mitteilen, wie sich diese zu authentifizieren hat. Sonst würde diese sich als Gast anmelden und somit keine Zugriffsrechte besitzen. Das kann einfach umgesetzt werden, indem wir die Klasse java.net.Authenticator erweitern, dargestellt in \autoref{JumpListingAuthenticator}.
+Die Datensicherheit zu gewährleisten funkioniert unter eXist sehr einfach. Durch die einfache Zugriffsrechteverwaltung für Collections und einzelnen Dateien, können diese für öffentliche Nutzer schnell und einfach gesperrt werden. Nun muss aber noch der Applikation vor einer Anfrage mitgeteilt werden, wie sich diese zu authentifizieren hat. Sonst würde diese sich als Gast anmelden und somit keine Zugriffsrechte besitzen. Das kann einfach umgesetzt werden, indem die Klasse java.net.Authenticator erweitert wird, dargestellt in \autoref{JumpListingAuthenticator}.
 %\end{figwindow}
 \begin{lstlisting}[caption=Erweiterung der Klasse Authenticator,label=JumpListingAuthenticator]
 public class ExistAuthentificator extends Authenticator {
@@ -44,9 +44,60 @@ Vor einer Anfrage muss nun einfach der Authenticator gesetzt werden:
 \begin{lstlisting}
 Authenticator.setDefault(new ExistAuthentificator());
 \end{lstlisting}
-Damit kann unser System problemlos auf die Datenbank zugreifen, während nicht authorisierte Nutzer dazu nicht in der Lage sind.
+Damit kann das System problemlos auf die Datenbank zugreifen, während nicht authorisierte Nutzer dazu nicht in der Lage sind.
 \subsection{Stored XQueries}
-
+Der Großteil der Funktionalität, zum Schreiben, Auslesen, Ändern und Löschen von Daten übernimmt die Datenbank. Dazu werden Stored XQUeries verwendet, die einfach per HTTP-GET aufgerufen werden müssen. Zurückgegeben werden dann entweder die gewünschten Elemente, eventuell aufgetretene Fehler oder auch nichts, bei einer Update- oder Delete-Methode, die erfolgreich gewesen ist. Der Aufbau einer Datei ist dabei immer recht ähnlich. Im Folgenden soll dieser Anhand der Funktion updateBild gezeigt werden.\\
+Zunächst müssen alle Parameter, die über die URL mitgegeben werden, ausgelesen werden. Das erledigt folgende Zeile für einen Parameter:
+\begin{lstlisting}[language=XML,caption=Auslesen von Parametern aus der URL,label=JumpXQueryParamsRead]
+let $id:= request:get-parameter("id",0)
+\end{lstlisting}
+\$id ist dabei eine Variable, der der entsprechende Wert zugewiesen werden soll. Das erfolgt über den Methodenaufruf request:get-parameter. Diese Methode erwartet als ersten Eingabeparameter den Namen des URL-Parameters und als zweiten Parameter, einen Alternativwert für die Variable. Das ist bei Update-Methoden besonders sinnvoll. Hier ist nicht gefordert, dass alle Parameter übergeben werden, doch im Anschluss wird das komplette Element, also das komplette Bild überschrieben. Also muss als Alternativwert immer der entsprechende Wert des vorhandenen Elementes verwendet werden. Dazu wird natürlich die ID benötigt:
+\begin{lstlisting}[language=XML,caption=Sinnvolle Festlegung des Alternativwertes,label=JumpXQueryParamsAlternativ]
+let $name:= request:get-parameter("name",$bilder//bild[id=$id]//name/text())
+\end{lstlisting}
+Im Anschluss wird das neue Element, welches das alte überschreiben soll erzeugt und einer Variable zugewiesen. Wie man sehen kann, kann das Album eines Bildes dabei nicht geändert werden:
+\begin{lstlisting}[language=XML,caption=Erzeugen eines neuen Elements,label=JumpXQueryCreateElem]
+let $new-bild:=
+<bild>
+  <id>{$id}</id>
+  <name>{$name}</name>
+  <description>{$description}</description>
+  ...
+  {$bilder//bild[id=$id]//album}
+  <location>
+    <longitude>{$longitude}</longitude>
+    ...
+  </location>
+</bild>
+\end{lstlisting}
+Wie man sehen konnte spielt aber die ID dabei eine wichtige Rolle. Wurde diese nicht übergeben, so darf natürlich nicht einfach das Bild mit der ID 0 überschrieben werden. Die Prüfung, ob ein bestimmter Parameter übergeben wurde, erfolgt dabei innerhalb des return Statements um in diesem Fall, eine passende Fehlermeldung zurückgeben zu können:
+\begin{lstlisting}[language=XML,caption=Prüfen ob ein Parameter übergeben wurde,label=JumpXQueryParamsGetCheck]
+if (not($id))
+ then (
+   <error>
+     <message>Es wurde keine ID angegeben.</message>
+   </error>)
+\end{lstlisting}
+Zudem können hier noch weitere Prüfungen vorgenommen werden, z.B. ob ein Bild mit der angegebenen ID überhaupt existiert oder ob der neue Name des Bildes in dem Album schon vorhanden ist:
+\begin{lstlisting}[language=XML,caption=Weitere Prüfungen,label=JumpXQueryParamsCheckOther]
+if(count($bilder//bild[id=$id])=0)
+  then(
+    <error>
+      <message>Ein Bild mit der id {$id} existiert nicht!</message>
+    </error>
+  )
+  else(
+    if(count($bilder//bild[id!=$id][album=$bilder//bild[id=$id]//album][name=$name])>0)
+      then(
+        <error>
+          <message>Ein Bild mit dem angegebenen Namen existiert bereits in diesem Album!</message>
+        </error>
+      )
+\end{lstlisting}
+Wenn alle Vorraussetzungen erfüllt sind, kann im Anschluss die eigentliche Funktionalität ausgeführt werden. Im Falle eines Updates wird dabei nichts zurückgegeben, sondern einfach die entsprechende Methode ausgeführt:
+\begin{lstlisting}[language=XML,caption=Update eines Bildes,label=JumpXQueryFinalUpdateBild]
+(update replace $bilder//bild[id=$id] with $new-bild)
+\end{lstlisting}
 \subsection{Zugriff auf die Datenbank}
 
 \subsection{Verhinderung gleichzeitiger Zugriffe}
