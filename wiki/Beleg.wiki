@@ -29,3 +29,4 @@
 ||Hudson.tex||Entwicklungsumgebung/Hudson||Rico|| 99% ||
 ||IntelliJ.tex||Entwicklungsumgebung/IntelliJ||Jeder|| ||
 ||Googlecode.tex||Entwicklungsumgebung/Googlecode||Rico|| 99% ||
+||PrimefacesEval.tex||Evaluierung Primefaces||Rico||  ||
