@@ -1,5 +1,36 @@
 \section{Usecases}
 \label{JumpUseCases}
+
+\begin{table}
+	\begin{center}
+			\begin{tabular}{|p{3.5cm}|p{9cm}|}
+				\hline
+				\textbf{Name} & Nutzer anlegen \\
+				\hline
+				\textbf{Umfang} & Nutzer \\
+				\hline
+				\textbf{Ebene} & Startseite \\
+				\hline
+				\textbf{Primär-Actor} & Nutzer \\
+				\hline
+				\textbf{Stakeholder und Interessen} & Nutzer: möchte sich anmelden/registrieren \\
+				\hline
+				\textbf{Vorbedingungen} & Nutzer besitzt kein Konto \\
+				\hline
+				\textbf{Nachbedingungen} & Nutzer besitzt ein Konto \\
+				\hline
+				\textbf{Standard-Szenario} & \begin{enumerate} \item Nutzer geht auf 'Neuen Benutzer anlegen' \item Nutzer trägt Benutzernamen und E-Mail Adresse ein \end{enumerate} \\
+				\hline
+				\textbf{Erweiterungen} & \begin{enumerate} \item[2a] Benutzername existiert schon. \end{enumerate} \textit{Wiederhole 2. bis erfolgreiche Anmeldung.} \\
+				\hline
+				\textbf{Spezielle Anforderungen} & Passwort wird generiert und per E-Mail zugesendet. \\
+				\hline
+			\end{tabular}
+		\caption{Usecase : Nutzer anlegen}
+		\label{JumpUsecaseNutzeranlegen}
+	\end{center}
+\end{table}
+
 \begin{table}
 	\begin{center}
 			\begin{tabular}{|p{3.5cm}|p{9cm}|}
@@ -86,8 +117,7 @@
 	\end{center}
 \end{table}
 
-\begin{table}
-	\begin{center}
+\begin{center}
 			\begin{tabular}{|p{3.5cm}|p{9cm}|}
 				\hline
 				\textbf{Name} & Album bearbeiten \\
@@ -113,3 +143,117 @@
 		\label{JumpUsecaseAlbumBearbeiten}
 	\end{center}
 \end{table}
+
+\begin{table}
+	\begin{center}
+			\begin{tabular}{|p{3.5cm}|p{9cm}|}
+				\hline
+				\textbf{Name} & Bild hochladen \\
+				\hline
+				\textbf{Umfang} & Album \\
+				\hline
+				\textbf{Ebene} & Nutzer-Frontend \\
+				\hline
+				\textbf{Primär-Actor} & Nutzer \\
+				\hline
+				\textbf{Stakeholder und Interessen} & Nutzer: möchte Bild hochladen \\
+				\hline
+				\textbf{Vorbedingungen} & Nutzer ist angemeldet. \\
+				\hline
+				\textbf{Nachbedingungen} & Das Bild wurden hochgeladen. \\
+				\hline
+				\textbf{Standard-Szenario} & \begin{enumerate} \item Nutzer klickt auf 'Album bearbeiten' des jeweiligen Albums \item Nutzer klickt auf 'Durchsuchen' \item Nutzer wählt Bild aus. \item Nutzer klickt auf OK. \item Nutzer klickt auf 'Alle Hochladen'. \item Nutzer klickt auf 'speichern'. \end{enumerate} \\
+				\hline
+				\textbf{Erweiterungen} &   \\
+				\hline
+			\end{tabular}
+		\caption{Usecase : Bild hochladen}
+		\label{JumpUsecaseBildhochladen}
+	\end{center}
+\end{table}
+
+\begin{table}
+	\begin{center}
+			\begin{tabular}{|p{3.5cm}|p{9cm}|}
+				\hline
+				\textbf{Name} & Bild bearbeiten \\
+				\hline
+				\textbf{Umfang} & Album \\
+				\hline
+				\textbf{Ebene} & Nutzer-Frontend \\
+				\hline
+				\textbf{Primär-Actor} & Nutzer \\
+				\hline
+				\textbf{Stakeholder und Interessen} & Nutzer: möchte Bildinformationen ändern \\
+				\hline
+				\textbf{Vorbedingungen} & Nutzer ist angemeldet. \\
+				\hline
+				\textbf{Nachbedingungen} & Die Bildinformationen wurden geändert. \\
+				\hline
+				\textbf{Standard-Szenario} & \begin{enumerate} \item Nutzer klickt auf 'Album bearbeiten' des jeweiligen Albums \item Nutzer klickt auf 'bearbeiten' beim jeweiligen Bild \item Nutzer ändert Bildinformationen. \item Nutzer klickt auf 'speichern'. \item  \end{enumerate} \\
+				\hline
+				\textbf{Erweiterungen} &   \\
+				\hline
+			\end{tabular}
+		\caption{Usecase : Bild bearbeiten}
+		\label{JumpUsecaseBildbearbeiten}
+	\end{center}
+\end{table}
+
+\begin{table}
+	\begin{center}
+			\begin{tabular}{|p{3.5cm}|p{9cm}|}
+				\hline
+				\textbf{Name} & Bild löschen \\
+				\hline
+				\textbf{Umfang} & Album \\
+				\hline
+				\textbf{Ebene} & Nutzer-Frontend \\
+				\hline
+				\textbf{Primär-Actor} & Nutzer \\
+				\hline
+				\textbf{Stakeholder und Interessen} & Nutzer: möchte Bild löschen \\
+				\hline
+				\textbf{Vorbedingungen} & Nutzer ist angemeldet. \\
+				\hline
+				\textbf{Nachbedingungen} & Das Bild wurden gelöscht. \\
+				\hline
+				\textbf{Standard-Szenario} & \begin{enumerate} \item Nutzer klickt bei dem gewünschten Bild auf 'löschen' unter Album bearbeiten  \item Nutzer bestätigt Nachfrage mit 'Ja'. \item Nutzer klickt auf 'speichern'. \end{enumerate} \\
+				\hline
+				\textbf{Erweiterungen} &   \\
+				\hline
+			\end{tabular}
+		\caption{Usecase : Bild löschen}
+		\label{JumpUsecaseBildloeschen}
+	\end{center}
+\end{table}
+
+\begin{table}
+	\begin{center}
+			\begin{tabular}{|p{3.5cm}|p{9cm}|}
+				\hline
+				\textbf{Name} & Album anzeigen \\
+				\hline
+				\textbf{Umfang} & Album \\
+				\hline
+				\textbf{Ebene} & Nutzer-Frontend \\
+				\hline
+				\textbf{Primär-Actor} & Nutzer \\
+				\hline
+				\textbf{Stakeholder und Interessen} & Nutzer: möchte Album ansehen \\
+				\hline
+				\textbf{Vorbedingungen} & Nutzer ist angemeldet. \\
+				\hline
+				\textbf{Nachbedingungen} & Das Album wird angezeigt. \\
+				\hline
+				\textbf{Standard-Szenario} & \begin{enumerate} \item Nutzer klickt auf 'Albumübersicht'  \item Nutzer wählt Album aus.  \end{enumerate} \\
+				\hline
+				\textbf{Erweiterungen} &   \\
+				\hline
+			\end{tabular}
+		\caption{Usecase : Album anzeigen}
+		\label{JumpUsecaseAlbumanzeigen}
+	\end{center}
+\end{table}
+
+
