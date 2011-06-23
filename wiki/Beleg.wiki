@@ -13,9 +13,9 @@
 ||Yaml.tex||Technologien/Yaml||Martin|| 95% ||
 ||Systementwurf.tex||Systementwurf||Markus|| 20% ||
 ||Datenbank.tex||Implementation/Datenbank||Markus|| 0% ||
-||Applikation.tex||Implementation/Applikation||Jeder|| R = 99% ||
+||Applikation.tex||Implementation/Applikation||Jeder|| R = 99%, S=99% ||
 ||Validatoren.tex||Implementation/Validatoren||Martin/Markus|| 50% ||
-||PrimefacesImplementation.tex||Implementation/Primefaces||Stefan|| 95% ||
+||PrimefacesImplementation.tex||Implementation/Primefaces||Stefan|| 99% ||
 ||Benutzeroberflaeche.tex||Implementation/Benutzeroberfläche||Martin|| 95% ||
 ||Tests.tex||Tests||Jeder|| ||
 ||Projektaufteilung.tex||Aufteilung des Projekts||Jeder|| ||
