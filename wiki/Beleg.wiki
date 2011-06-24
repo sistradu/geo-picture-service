@@ -15,12 +15,12 @@
 ||Systementwurf.tex||Systementwurf||Markus, Martin|| 70% ||
 ||Datenbank.tex||Implementation/Datenbank||Markus|| 99% ||
 ||Applikation.tex||Implementation/Applikation||Jeder|| R = 99%, S=99% ||
-||Validatoren.tex||Implementation/Validatoren||Martin/Markus|| MS= 99% MU=99% ||
-||PrimefacesImplementation.tex||Implementation/Primefaces||Stefan|| 99% ||
-||Benutzeroberflaeche.tex||Implementation/Benutzeroberfläche||Martin|| 95% ||
+||Validatoren.tex||Implementation/Validatoren||Martin/Markus|| MS= 100% MU=100% ||
+||PrimefacesImplementation.tex||Implementation/Primefaces||Stefan|| 100% ||
+||Benutzeroberflaeche.tex||Implementation/Benutzeroberfläche||Martin|| 100% ||
 ||Tests.tex||Tests||Jeder|| S=99% MU=99% ||
-||Projektaufteilung.tex||Aufteilung des Projekts||Jeder|| ||
-||Zusammenfassung.tex||Zusammenfassung||Jeder|| 99% ||
+||Projektaufteilung.tex||Aufteilung des Projekts||Jeder|| 100% ||
+||Zusammenfassung.tex||Zusammenfassung||Jeder|| 100% ||
 ||Exif.tex||Analysierte Technologien/Metadatenextraktion/Exif||Stefan|| 99% ||
 ||Webservices.tex||Analysierte Technologien/Webservices|| Stefan || 99% ||
 ||KML.tex||Analysierte Technologien/KML||Martin|| 99% ||
