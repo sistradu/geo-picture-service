@@ -3,6 +3,7 @@
 = Belegaufteilung =
 
 || *Datei* || *Kapitel/Abschnitt* || *Bearbeiter* || *Abgeschlossen* ||
+||Abstract.tex||Abstract||Jeder|| 99% ||
 ||Einleitung.tex||Einleitung||Rico|| 99% ||
 ||Aufgabenstellung.tex||Problem/Aufgabenstellung||Rico|| 99% ||
 ||Anforderungsanalyse.tex||Anforderungsanalyse||Markus,Martin|| 99% ||
@@ -19,7 +20,7 @@
 ||Benutzeroberflaeche.tex||Implementation/Benutzeroberfläche||Martin|| 95% ||
 ||Tests.tex||Tests||Jeder|| S=99% MU=99% ||
 ||Projektaufteilung.tex||Aufteilung des Projekts||Jeder|| ||
-||Zusammenfassung.tex||Zusammenfassung||Jeder|| ||
+||Zusammenfassung.tex||Zusammenfassung||Jeder|| 99% ||
 ||Exif.tex||Analysierte Technologien/Metadatenextraktion/Exif||Stefan|| 99% ||
 ||Webservices.tex||Analysierte Technologien/Webservices|| Stefan || 99% ||
 ||KML.tex||Analysierte Technologien/KML||Martin|| 99% ||
