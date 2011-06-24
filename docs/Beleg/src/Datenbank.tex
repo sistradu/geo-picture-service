@@ -1,8 +1,8 @@
 \section{Datenbank}
 \label{JumpDatenbank}
 \subsection{Aufbau der Datenbank}
-Bei insgesamt nur 3 Datenhaltungs-Klassen, fiel auch der Aufbau der Datenbank entsprechend einfach aus. Zunächst wurde für jede Klasse eine neue Collection angelegt, was etwa einer Tabelle in einer relationalen Datenbank oder einem Ordner in einem Dateisystem entspricht. In diesen Collections können nun ein, oder mehrere XML-Files gespeichert werden. Wie in \autoref{JumpDBOneBIGManysmall} begründet wurde, wird hier nur jeweils eine Datei gespeichert.
-Zusätzlich wurde noch eine Collection angelegt für sämtliche Stored XQuerys. In dieser sind mehrere .xql-Dateien hinterlegt, für alle Abfragen, die durchgeführt werden müssen:
+Bei insgesamt nur 3 Datenhaltungs-Klassen, fiel auch der Aufbau der Datenbank entsprechend einfach aus. Zunächst wurde für jede Klasse eine neue Collection angelegt, was etwa einer Tabelle in einer relationalen Datenbank oder einem Ordner in einem Dateisystem entspricht. In diesen Collections können nun ein, oder mehrere XML-Dateien gespeichert werden. Wie in \autoref{JumpDBOneBIGManysmall} begründet wurde, wird hier nur jeweils eine Datei gespeichert.
+Zusätzlich wurde noch eine Collection angelegt für sämtliche Stored XQueries. In dieser sind mehrere .xql-Dateien hinterlegt, für alle Abfragen, die durchgeführt werden müssen:
 \begin{itemize}
 	\item exist/rest/db/
 	\begin{itemize}
@@ -20,7 +20,7 @@ Zusätzlich wurde noch eine Collection angelegt für sämtliche Stored XQuerys. In 
 \end{itemize}
 Für den Aufbau der einzelnen XML-Dateien sind im Anhang Beispiele unter \autoref{JumpListingNutzerXML}, \autoref{JumpListingAlbumXML} und \autoref{JumpListingBildXML} zu finden.
 \subsection{Mockklassen}
-Da die Datenbank noch nicht zu Beginn der Implementierungsphase komplett einsatzfähig war, musste eine Zwischenlösung her, damit bereits einfache Funktionalitäten getestet werden konnten. Die Idee war es Mockklassen zu verwenden. Dazu wurden zunächst Interfaces für alle sogenannten Konnektor-Klassen angelegt. Die Mockklassen zu den einzelnen Interfaces implementieren bereits einen großen Teil dieser Funktionen, ohne dabei im Hintergrund mit der Datenbank zu kommunizieren. Demnach bieten die Mockklassen auch nur eine eingeschränkte Funktionalität, wie die Rückgabe eines Benutzers zu einer ID oder die Suche nach bestimmten Alben, basierend auf einer Menge von Testdaten. Eintragen, Löschen oder Modifizieren dieser Daten ist mit den Mockklassen dabei nicht möglich.\\
+Da die Datenbank noch nicht zu Beginn der Implementierungsphase komplett einsatzfähig war, musste eine Zwischenlösung her, damit bereits einfache Funktionalitäten getestet werden konnten. Die Idee war es Mockklassen zu verwenden. Dazu wurden zunächst Interfaces für alle sogenannten Connector-Klassen angelegt. Die Mockklassen zu den einzelnen Interfaces implementieren bereits einen großen Teil dieser Funktionen, ohne dabei im Hintergrund mit der Datenbank zu kommunizieren. Demnach bieten die Mockklassen auch nur eine eingeschränkte Funktionalität, wie die Rückgabe eines Benutzers zu einer ID oder die Suche nach bestimmten Alben, basierend auf einer Menge von Testdaten. Eintragen, Löschen oder Modifizieren dieser Daten ist mit den Mockklassen dabei nicht möglich.\\
 Wird nun eine solche Klasse erzeugt, werden die Testdaten automatisch generiert und können genutzt werden. Später kann die jeweilige Mockklasse einfach mit der 'echten' Implementierung ausgetauscht werden. 
 Ein Beispiel einer solchen Mockklasse, in dem Fall der MockAlbumConnector, ist im Anhang unter \autoref{JumpListingMockAlbumConnector} angegeben. Der Einfachheit halber werden nur die wichtigsten Methoden dargestellt.
 \subsection{Datensicherheit}
@@ -32,10 +32,10 @@ Vor einer Anfrage muss nun einfach der Authenticator gesetzt werden:
 \begin{lstlisting}
 Authenticator.setDefault(new ExistAuthentificator());
 \end{lstlisting}
-Damit kann das System problemlos auf die Datenbank zugreifen, während nicht authorisierte Nutzer dazu nicht in der Lage sind.
+Damit kann das System problemlos auf die Datenbank zugreifen, während nicht autorisierte Nutzer dazu nicht in der Lage sind.
 \subsection{Stored XQueries}
 \label{JumpXQueries}
-Der Großteil der Funktionalität, zum Schreiben, Auslesen, Ändern und Löschen von Daten übernimmt die Datenbank. Dazu werden Stored XQUeries verwendet, die einfach als .xql-Dateien in der Datenbank gespeichert werden und per HTTP-GET aufgerufen werden müssen. Zurückgegeben werden dann entweder die gewünschten Elemente, eventuell aufgetretene Fehler oder auch nichts, bei einer Update- oder Delete-Methode, die erfolgreich gewesen ist. Der Aufbau einer Datei ist dabei immer recht ähnlich. Im Folgenden soll dieser Anhand der Funktion updateBild gezeigt werden.\\
+Den Großteil der Funktionalität, zum Schreiben, Auslesen, Ändern und Löschen von Daten übernimmt die Datenbank. Dazu werden Stored XQueries verwendet, die einfach als .xql-Dateien in der Datenbank gespeichert werden und per HTTP-GET aufgerufen werden müssen. Zurückgegeben werden dann entweder die gewünschten Elemente, eventuell aufgetretene Fehler oder auch nichts, bei einer Update- oder Delete-Methode, die erfolgreich gewesen ist. Der Aufbau einer Datei ist dabei immer recht ähnlich. Im Folgenden soll dieser Anhand der Funktion updateBild gezeigt werden.\\
 Zunächst müssen alle Parameter, die über die URL mitgegeben werden, ausgelesen werden. Das erledigt folgende Zeile für einen Parameter:
 \begin{lstlisting}[language=XML,caption=Auslesen von Parametern aus der URL,label=JumpXQueryParamsRead]
 let $id:= request:get-parameter("id",0)
@@ -44,7 +44,7 @@ let $id:= request:get-parameter("id",0)
 \begin{lstlisting}[language=XML,caption=Sinnvolle Festlegung des Alternativwertes,label=JumpXQueryParamsAlternativ]
 let $name:= request:get-parameter("name",$bilder//bild[id=$id]//name/text())
 \end{lstlisting}
-Im Anschluss wird das neue Element, welches das alte überschreiben soll erzeugt und einer Variable zugewiesen. Wie man sehen kann, kann das Album eines Bildes dabei nicht geändert werden:
+Im Anschluss wird das neue Element, welches das alte überschreiben soll erzeugt und einer Variable zugewiesen. Wichtig ist dabei, dass das Album eines Bildes dabei nicht geändert werden kann:
 \begin{lstlisting}[language=XML,caption=Erzeugen eines neuen Elements,label=JumpXQueryCreateElem]
 let $new-bild:=
 <bild>
@@ -90,8 +90,8 @@ Die Abfragen nach bestimmten Elementen bereiten dabei auch keine Schwierigkeiten
 let $collection := collection('/db/alben')//album[contains(upper-case(name), upper-case($name))]
 \end{lstlisting}
 \subsection{Zugriff auf die Datenbank}
-Im vorherigen Abschnitt wurde gezeigt, dass Abfrage mit Stored XQueries sehr einfach implementiert und bereitgestellt werden können. Der Aufruf muss nun nur noch über ein einfaches HTTP-GET erfolgen. Diese Funktionalität wird im DBConnector in der Methode executeGetRequest implementiert. Der DBConnector kennt die Adresse der Datenbank und benötigt zum Ausführen nur noch den Pfad zur auszuführenden .xql-Datei und die zu übergebenden Parameter.\\
-Diese Angaben werden von der aufrufenden Methode zusammengestellt. Dabei muss jede Methode den Pfad zur aufzurufenden Datei selber kennen. Außerdem müssen die Parameter vorher in ein einheitliches Format gebracht werden. Dazu wird eine HashMap verwendet, da die Anzahl der Parameter variabel ist. In dieser Map werden dann Parametername als Key und Parameterwert als Value verwendet. Im Folgenden wird ein Beispielaufruf für die Erzeugung eines Nutzers angegeben:
+Im vorherigen Abschnitt wurde gezeigt, dass Abfragen mit Stored XQueries sehr einfach implementiert und bereitgestellt werden können. Der Aufruf muss nun nur noch über ein einfaches HTTP-GET erfolgen. Diese Funktionalität wird im DBConnector in der Methode executeGetRequest implementiert. Der DBConnector kennt die Adresse der Datenbank und benötigt zum Ausführen nur noch den Pfad zur auszuführenden .xql-Datei und die zu übergebenden Parameter.\\
+Diese Angaben werden von der aufrufenden Methode zusammengestellt. Dabei muss jede Methode den Pfad zur aufzurufenden Datei selber kennen. Außerdem müssen die Parameter vorher in ein einheitliches Format gebracht werden. Dazu wird eine HashMap verwendet, da die Anzahl der Parameter variabel ist. In dieser Map werden dann Parametername als Schlüssel und Parameterwert als Wert verwendet. Im Folgenden wird ein Beispielaufruf für die Erzeugung eines Nutzers angegeben:
 \begin{lstlisting}[caption=Übergabe der Paramter an den DBConnector,label=JumpDBZugriffParameter]
 Map<String,String> params = new HashMap<String,String>();
 params.put("name", name);
@@ -100,7 +100,7 @@ params.put("email", email);
 ...
 Document doc = DBConnector.getInstance().executeGetRequest("queries/createAlbum.xql", params, 0);
 \end{lstlisting}
-Mit diesen Angaben wird dann die URL zusammengesetzt. Dabei werden auch die zu übergebenden Parameter im UTF-8 Format codiert, damit auch Sonderzeichen oder Umlaute wie ä,ö,ü fehlerfrei übertragen werden:
+Mit diesen Angaben wird dann die URL zusammengesetzt. Dabei werden auch die zu übergebenden Parameter im UTF-8 Format codiert, damit auch Sonderzeichen oder Umlaute wie ä, ö, ü fehlerfrei übertragen werden:
 \begin{lstlisting}[caption=Zusammensetzen der URL für ein HTTP-GET,label=JumpDBZugriffURL]
 String paramString = "";
 boolean firstSet = false;
@@ -130,4 +130,5 @@ if(doc.getElementsByTagName("error").getLength()>0){
 \end{lstlisting}
 Tritt kein Fehler auf, so kann in den meisten Fällen gleich das erhaltene Dokument zurückgegeben werden oder bei einem Insert, die aus dem Dokument ausgelesene ID.
 \subsection{Verhinderung gleichzeitiger Zugriffe}
+\label{JumpDBZugriffe}
 Der letzte Punkt der noch sichergestellt werden musste, war die Verhinderung gleichzeitiger Zugriffe. Beim Eintragen neuer Elemente muss sichergestellt werden, dass nicht 2 Elemente die selbe ID erhalten. Da es in eXist keine Sequenzen gibt zum automatischen, synchronisierten Erzeugen neuer IDs, wird einfach die größte gefundene ID + 1 verwendet. Werden nun etwa 2 Bilder zur selben Zeit eingetragen, so kann es dadurch aber passieren, dass beide die selbe ID erhalten, da beide Anfragen von unterschiedlichen Threads abgearbeitet werden. Um das zu verhindern, wird im DBConnector die Anzahl der gleichzeitigen Requests auf 1 reduziert. Dazu wird das Singleton-Pattern verwendet (siehe \autoref{JumpDBZugriffSingleton}). Der Konstruktor des DBConnectors ist privat und innerhalb der Klasse wird dieser nur ein einziges mal aufgerufen um eine statische Instanz zu Erzeugen. Dadurch wird sichergestellt, dass alle DB-Anfragen über diese eine Instanz abgearbeitet werden. Zusätzlich wird die Methode executeGetRequest synchronisiert um zu gewährleisten, dass nur eine Anfrage zur selben Zeit ausgeführt wird.

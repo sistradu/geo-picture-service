@@ -3,24 +3,24 @@
 Ein zentraler Bestandteil des Fotoarchivs ist die Datenbank. Hier werden alle wichtigen Informationen zu Nutzern, Bildern und Alben gespeichert.
 Da XML-Dokumente verarbeitet werden, liegt es nahe, eine native XML-Datenbank zum Speichern der Daten zu verwenden. In diesem Projekt wird eXist verwendet, was im Folgenden begründet werden soll.
 \subsection{Warum kein relationales Datenbankmanagementsystem?}
-Relationale Datenbanken basieren auf einem gut durchdachtem Konzept, das sich jahrelang bewährt hat und bieten wichtige Vorzüge, die man bei einer nativen XML-Datenbank wie eXist nicht vorfindet:
+Relationale Datenbanken basieren auf einem gut durchdachten Konzept, das sich jahrelang bewährt hat und bieten wichtige Vorzüge, die man bei einer nativen XML-Datenbank wie eXist nicht vorfindet:
 \begin{enumerate}
 	\item Referentielle Integrität:
 	\item[] In nativen XML-Datenbanken kann dieser Punkt leider nicht garantiert werden. Hier muss von Hand sichergestellt werden, dass alle Referenzen auf ein gelöschtes Objekt ebenfalls gelöscht werden. Da das Datenmodell aber überschaubar ist, stellt dieser Punkt kein großes Problem dar.
 	\item Sequenzen zur Vergabe eindeutiger Primary Keys:
-	\item[] Gerade bei einem Multinutzersystem ist dieser Punkt klar von Vorteil. Bei der Verwendung nativer XML-Datenbanken, muss dieses Problem in der Regel auf eine andere Art und Weise gelöst werden. Näheres dazu unter \autoref{JumpXQueries}.
+	\item[] Gerade bei einem Multinutzersystem ist dieser Punkt klar von Vorteil. Bei der Verwendung nativer XML-Datenbanken, muss dieses Problem in der Regel auf eine andere Art und Weise gelöst werden. Näheres dazu unter \autoref{JumpDBZugriffe}.
 \end{enumerate}
-Da relationale Datenbanken aber nicht primär für die Speicherung von XML-Dateien geeignet sind, müssen die, vom einem XML-basierten Fotoarchiv, verwendeten Dokumente zunächst transformiert werden, um diese in der Datenbank zu speichern. Möglichkeiten dazu sind beschrieben unter \cite{Kle01}. Das kann aber schnell sehr ineffizient werden, wenn die Dateien immer größer werden oder es können nur Dateien mit einem bestimmten Aufbau verwendet werden.\\
+Da relationale Datenbanken aber nicht primär für die Speicherung von XML-Dateien geeignet sind, müssen die, von einem XML-basierten Fotoarchiv verwendeten Dokumente, zunächst transformiert werden, um diese in der Datenbank zu speichern. Möglichkeiten dazu sind beschrieben unter \cite{Kle01}. Das kann aber schnell sehr ineffizient werden, wenn die Dateien immer größer werden oder es können nur Dateien mit einem bestimmten Aufbau verwendet werden.\\
 Eine Möglichkeit wäre noch, die Dateien einfach als reine Zeichenketten in der Datenbank zu hinterlegen. Doch auch dieser Ansatz ist sehr ineffizient, da das Durchsuchen der Dateien nach bestimmten Informationen so viel zu lange dauert. Zwar gibt es auch relationale Datenbanken mit einer speziellen Erweiterung für XML-Dateien wie Oracle oder MS-SQL, doch sind diese in der Regel schlicht und einfach zu mächtig, also sehr groß und dadurch in der Anwendung vergleichsweise kompliziert.
 \subsection{Native XML-Datenbanken}
-Aus den oben genannten Fakten, begründet sich die Entscheidung, eine native XML-Datenbank zu verwenden. Diese sollte folgende Eigenschaften besitzen:
+Aus den oben genannten Fakten begründet sich die Entscheidung, eine native XML-Datenbank zu verwenden. Diese sollte folgende Eigenschaften besitzen:
 \begin{enumerate}
 	\item Geringe Größe:
 	\item[] Auf dem verwendeten Testserver steht nur begrenzt Speicherplatz zur Verfügung wobei dieser auch größtenteils für die Bilder genutzt werden soll. Somit darf die Datenbank nicht zu viel Platz belegen.
 	\item Schnelle Installation und Einrichtung:
 	\item[] Die Datenbank stellt ein wichtiges Kernelement des Systems dar und sollte demnach so früh wie möglich einsatzfähig sein, um erste lauffähige Versionen des Fotoarchivs ausgiebig testen zu können.
 	\item Möglichst einfaches Auslesen und Verwalten der Daten:
-	\item[] Auch dieser Punkt ist wichtig, damit die Datenbank so früh wie möglich einsatzfähig ist. Zudem muss es möglich sein, eventuelle Fehler schnell beheben zu können, wie durch das manuelle Löschen eines fehlerhaften Eintrags aus einer Datei.
+	\item[] Auch dieser Punkt ist wichtig, damit die Datenbank so früh wie möglich einsatzfähig ist. Zudem muss es möglich sein, eventuelle Fehler schnell beheben zu können, z.B. durch das manuelle Löschen eines fehlerhaften Eintrags aus einer Datei.
 	\item Kostenfrei
 \end{enumerate}
 Zudem sollte die Datenbank einige wichtige Eigenschaften relationaler Datenbanksysteme beherrschen, unter anderem:
@@ -28,16 +28,12 @@ Zudem sollte die Datenbank einige wichtige Eigenschaften relationaler Datenbanks
 	\item Effiziente und strukturierte Speicherung:
 	\item[] Viele native XML-Datenbanken, verwenden einen modellbasierten Ansatz zur Speicherung der Daten, was eine schnellere und effizientere Suche, als bei XML fähigen Datenbanken, die eine rein zeichenkettenbasierte Speicherung der Daten vornehmen, ermöglicht. 
 	\item Indizes:
-	\item[] Deren Verwendung bewirkt ebenfalls schnellere Suchvorgänge. eXist zum Beispiel, erzeugt bereits einige wichtige Indizes,welche in der Regel auch ausreichen um vor allem XPath und XQuery zu beschleunigen. Es können aber noch weitere Indizes in den Konfigurationsdateien zu jeder Collection vom Nutzer definiert werden.
+	\item[] Deren Verwendung bewirkt ebenfalls schnellere Suchvorgänge. eXist zum Beispiel, erzeugt bereits einige wichtige Indizes, welche in der Regel auch ausreichen um vor allem XPath und XQuery zu beschleunigen. Es können aber noch weitere Indizes in den Konfigurationsdateien zu jeder Collection vom Nutzer definiert werden.
 	\item Transaktionssicherheit:
 	\item[] Die Datenbank sollte in der Lage sein nach einem Absturz, alle vollständig beendeten Transaktionen wiederherzustellen und alle nicht abgeschlossenen Transaktionen zurückzusetzen.
 \end{enumerate}
-eXist erfüllt alle diese Vorraussetzungen und tatsächlich gibt es kaum weitere native XML-Datenbanksysteme, die als Alternative in Frage kämen (vgl. \cite{BR02}). Im Folgenden sollen hier kurz 3 weitere Systeme, die noch näher betrachtet wurden, mit eXist verglichen werden.\\
+eXist erfüllt alle diese Vorraussetzungen und tatsächlich gibt es kaum weitere native XML-Datenbanksysteme, die als Alternative in Frage kämen (vgl. \cite{BR02}). Im \autoref{JumpXMLDBCompare} werden kurz 3 weitere Systeme, die noch näher betrachtet wurden, mit eXist verglichen.\\
 %Footnotes müssen manuell gesetzt werden, da diese in einer Gleitumgebung wie Tabellen nicht funktionieren
-\footnotetext[1]{\url{http://www.exist-db.org/documentation.html}}    
-\footnotetext[2]{\url{http://xml.apache.org/xindice/index.html}}   
-\footnotetext[3]{\url{https://community.emc.com/docs/DOC-3155}}   
-\footnotetext[4]{\url{http://www.softwareag.com/de/products/wm/tamino/}}
 \begin{table}
 \begin{center}
 	\begin{tabular}{|c|c|p{4cm}|c|}
@@ -58,7 +54,10 @@ eXist erfüllt alle diese Vorraussetzungen und tatsächlich gibt es kaum weitere n
 	\label{JumpXMLDBCompare}
 \end{center}
 \end{table}
-
+\footnotetext[1]{\url{http://www.exist-db.org/documentation.html}}    
+\footnotetext[2]{\url{http://xml.apache.org/xindice/index.html}}   
+\footnotetext[3]{\url{https://community.emc.com/docs/DOC-3155}}   
+\footnotetext[4]{\url{http://www.softwareag.com/de/products/wm/tamino/}}
 Dabei ist eXist das einzige System, das komplett kostenlos zur Verfügung steht und ständig weiterentwickelt wird.  Zudem ist es durch die inzwischen sehr große Community sehr einfach, auftretende Probleme schnell zu klären ohne sich durch lange Dokumentationen kämpfen zu müssen. Insgesamt erscheint eXist von allen auch am übersichtlichsten. Somit ist es das System, welches am besten für diese Anwendung geeignet ist.
 \subsection{Installation}
 Um eXist nun zu installieren werden mehrere Möglichkeiten angeboten (vgl. \cite{MO10}):
@@ -71,12 +70,12 @@ Um eXist nun zu installieren werden mehrere Möglichkeiten angeboten (vgl. \cite{
 	\item[] Hier läuft die Datenbank als Teil einer Webapplikation und wird mit dieser deployed. Standartmäßig wird dazu ein Jetty als Servlet-Engine mitgeliefert. Es ist zwar laut Entwickler nicht schwierig, eXist auch auf einem anderen Server zu deployen, aber es wird empfohlen keine andere Servlet-Engine zu nutzen, falls es nicht zwingend erforderlich ist. Begründet wird das dadurch, dass Jetty klein, effizient und stabil ist und eXist vorwiegend darauf getestet wurde. Diese Lösung ist zwar, durch andere auf dem Server laufenden Prozesse, ein wenig ineffizienter, als die Standalone-Variante, dennoch wird diese verwendet, da hier sämtliche Zugriffs- und Administrationsmöglichkeiten zur Verfügung stehen.
 \end{itemize}
 \subsection{Abfrage der Daten}
-Nach der Installation, ging es darum sich zu entscheiden, welche Art der Zugriffsmethode verwendet werden soll um die Daten in der Datenbank auszulesen und diese zu modifizeren. Auch hier bietet eXist mehrere Möglichkeiten an (vgl. \cite{Mei09Dev}):
+Nach der Installation ging es darum sich zu entscheiden, welche Art der Zugriffsmethode verwendet werden soll, um die Daten in der Datenbank auszulesen und diese zu modifizeren. Auch hier bietet eXist mehrere Möglichkeiten an (vgl. \cite{Mei09Dev}):
 \begin{itemize}
 	\item Java-Admin Client:
-	\item[] Dieser Client kann verwendet werden um schnell und effektiv aufgetretene Fehler in der Datenbank zu beheben. So können bequem Collections angelegt werden, die ungefähr wie Tabellen in einer relationalen Datenbank fungieren. Innerhalb dieser Collections können dann ein oder mehrere XML-Dateien gespeichert werden. Auch das Hochladen von Dateien ist sehr einfach und unkompliziert. Auch können mit dem Admin-Client sehr einfach die Zugriffsrechte auf Collections oder einzelne Dateien geändert werden. Das ist wichtig, damit die gespeicherten Informationen, später nicht von dritten ausgelesen werden können. Für den Zugriff aus der Applikation heraus benötigen wir aber eine andere Lösung, beschrieben unter \autoref{JumpDatensicherheit}.
+	\item[] Dieser Client kann verwendet werden um schnell und effektiv aufgetretene Fehler in der Datenbank zu beheben. So können bequem Collections angelegt werden, die ungefähr wie Tabellen in einer relationalen Datenbank fungieren. Innerhalb dieser Collections können dann ein oder mehrere XML-Dateien gespeichert werden. Auch das Hochladen von Dateien ist sehr einfach und unkompliziert. Auch können mit dem Admin-Client sehr einfach die Zugriffsrechte auf Collections oder einzelne Dateien geändert werden. Das ist wichtig, damit die gespeicherten Informationen, später nicht von dritten ausgelesen werden können. Für den Zugriff aus der Applikation heraus, benötigen wir aber eine andere Lösung.
 	\item XML:DB API:
-	\item[] Eine Möglichkeit ist es, die XML:DB API zu verwenden. Diese API stellt ein Interface für XML-Datenbanken zur Verfügung. Die eXist Implementierung von XML:DB orientiert sich dabei Xindice von Apache. Ein Vorteil dieser Methode ist die gute Dokumentation, womit anhand von Beispielen auch schnell erste Erfolge erzielt werden können. Nachteilig ist, dass zur Verwendung zunächst das dazugehörige Framework eingebunden werden muss.
+	\item[] Eine Möglichkeit ist es, die XML:DB API zu verwenden. Diese API stellt ein Interface für XML-Datenbanken zur Verfügung. Die eXist Implementierung von XML:DB orientiert sich dabei an Xindice von Apache. Ein Vorteil dieser Methode ist die gute Dokumentation, womit anhand von Beispielen auch schnell erste Erfolge erzielt werden können. Nachteilig ist, dass zur Verwendung zunächst das dazugehörige Framework eingebunden werden muss.
 	\item XML-RCP API:
 	\item[] eXist stellt ebenfalls eine XML-RPC API bereit, damit der Zugriff auf die Datenbank möglichst Programmiersprachenunabhängig ist. Auch hier wird eine sehr gute Dokumentation mit gut erklärten Beispielen bereitgestellt. Allerdings ist auch hier die Einbindung weiterer Bibliotheken in unser Projekt nötig.
 	\item REST-style API:
@@ -102,9 +101,9 @@ Nun blieb noch zu ermitteln, ob jetzt eine große oder mehrere kleine Dateien sin
 			\hline
 			\textbf{Auslesen aller Einträge} & 7 sec & 6 sec \\
 			\hline
-			\textbf{Aulsen aller mit Cache} & 3 sec & 3 sec \\
+			\textbf{Aulesen aller mit Cache} & 3 sec & 3 sec \\
 			\hline
-			\textbf{Suchen eines bestimmten Eintrags} & < 1 sec & < 1 sec \\
+			\textbf{Suchen eines bestimmten Eintrages} & < 1 sec & < 1 sec \\
 			\hline
 			\textbf{Suchen mehrerer Einträge} & 3 sec & 2 sec\\
 			\hline
@@ -113,5 +112,4 @@ Nun blieb noch zu ermitteln, ob jetzt eine große oder mehrere kleine Dateien sin
 		\label{JumpTableOneBIGManysmall}
 	\end{center}
 \end{table}
-
-Dabei ist erkennbar, dass die Menge der Dateien und deren Größe kaum Einfluss auf die Geschwindigkeit der Abfragen hat. Der Grund dafür sind die Indizes, die eXist automatisch erzeugt, dadurch können unabhängig von der Dateigröße, schnell bestimmte Einträge gefunden werden ohne immer wieder einen kompletten Scan durchzuführen. Nach der ersten Abfrage aller Daten, werden zudem die Dateien im Cache der Datenbank gehalten, womit künftige Suchanfragen nochmals beschleunigt werden. Das funktioniert bei diesem System auch bei 10000 Einträgen problemlos, da wir ja die Fotos nicht in der Datenbank speichern. Trotzdem müssen die Dateien noch irgendwo im Dateisystem gespeichert werden. Darum wurde die Variante mit jeweils einer großen Datei gewählt, da dies weniger Verwaltungsaufwand bedeutet, vor allem da die kleinen Dateien mit 3KB sogar noch unter der Blockgröße aktueller Dateisysteme liegen und somit insgesamt mehr Speicher belegen als notwendig.
+Dabei ist erkennbar, dass die Menge der Dateien und deren Größe kaum Einfluss auf die Geschwindigkeit der Abfragen hat. Der Grund dafür sind die Indizes, die eXist automatisch erzeugt. Dadurch können unabhängig von der Dateigröße, schnell bestimmte Einträge gefunden werden, ohne immer wieder einen kompletten Scan durchzuführen. Nach der ersten Abfrage aller Daten, werden zudem die Dateien im Cache der Datenbank gehalten, womit künftige Suchanfragen nochmals beschleunigt werden. Das funktioniert bei diesem System auch bei 10000 Einträgen problemlos, da wir ja die Fotos nicht in der Datenbank speichern. Trotzdem müssen die Dateien noch irgendwo im Dateisystem gespeichert werden. Darum wurde die Variante mit jeweils einer großen Datei gewählt, da dies weniger Verwaltungsaufwand bedeutet, vor allem da die kleinen Dateien mit 3KB sogar noch unter der Blockgröße aktueller Dateisysteme liegen und somit insgesamt mehr Speicher belegen als notwendig.

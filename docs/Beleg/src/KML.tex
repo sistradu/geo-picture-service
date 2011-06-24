@@ -1,8 +1,8 @@
 \section{KML}
 \label{JumpKML}
-Die Keyhole Markup Language, kurz KML,  ist eine Auszeichnungssprache, die von Google.Inc entwickelt wurde um Geodaten für die Client-Komponenten der Programme Google Earth und Google Maps zu beschreiben. KML ist ein Standard des Open Geospatial Consortium und aktuell in der Version 2.2 verfügbar.
+Die Keyhole Markup Language, kurz KML,  ist eine Auszeichnungssprache, die von Google.Inc entwickelt wurde um Geodaten für die Client-Komponenten der Programme Google Earth und Google Maps zu beschreiben. KML ist ein Standard des Open Geospatial Consortium und aktuell in der Version 2.2 verfügbar.\\
 \\
-Es gibt zwei Formate in der ein KML-File vorliegen kann. Zum einen das .kml-Format und das .kmz-Format. Bei dem KMZ-Format handelt es sich um die gezippte Version eines oder mehrerer KML-Files. 
+Es gibt zwei Formate in der eine KML-Datei vorliegen kann. Zum einen das .kml-Format und das .kmz-Format. Bei dem KMZ-Format handelt es sich um die gezippte Version einer oder mehrerer KML-Dateien. 
 \\
 Über den Inhalt und Aufbau eines KML-Dokumentes sollte man folgendes wissen. Es kann Geodaten im Vektor- und Rasterformat enthalten, wobei Vektorobjekte wie Punkte, Linien, lineare Ringe, Polygone oder COLLADA-Modelle als Placemark-Elemente und Luft- und Satellitenbilder als GroundOverlay-Elemente modelliert werden. Placemark-Elemente können zusätzlich zu den Geodaten auch noch andere Daten wie Name, Beschreibung, Betrachtungswinkel und -höhe, sowie einen Zeitstempel und noch vieles mehr enthalten. Hier ein Beispiel eines Placemark-Elementes eines KML-Dokuments:
 \begin{lstlisting}[caption=KML-Dokument]{Name}
@@ -19,9 +19,9 @@ Es gibt zwei Formate in der ein KML-File vorliegen kann. Zum einen das .kml-Form
 </Document>
 </kml>
 \end{lstlisting}
-Der Unterschied bei GroundOverlay-Elementen ist der, dass dort ein Koordinatenausschnitt zur Georeferenzierung der Rasterdaten angegeben werden muss, statt der Geometrie.
+Der Unterschied bei GroundOverlay-Elementen ist der, dass dort ein Koordinatenausschnitt zur Georeferenzierung der Rasterdaten angegeben werden muss, statt der Geometrie.\\
 \\
-Hat man ein solches KML-File erstellt bzw. vorliegen und möchte dieses Veröffentlichen, so gibt es dafür verschiedene Varianten. Um ein KML-File mit dem Programm Google Earth zu nutzen reicht es aus, dass sich die KML- oder KMZ-datei irgendwo auf dem Rechner befindet, mit dem man die Applikation nutzt. Bei Google Maps ist die Sache schon etwas komplizierter. Dort gibt es nur die Möglichkeit, sein KML- bzw. KMZ-File auf einen Webserver oder den von Google dafür vorgesehenen Server zu laden. Damit es dann aber auch mit Google Maps genutzt werden kann, muss auf der Seite "'http://www.google.de/addurl/?continue=/addurl"' ein Formular ausgefüllt werden, wo man die URL auf der sich das Dokument befindet angibt. Seit neuestem ist Google Maps auch in der Lage das KML-Dokument zu nutzen wenn man einfach in das Google Maps Suchfeld die URL eingibt, wo sich das KML- bzw. KMZ-File befindet.
+Hat man eine solche KML-Datei erstellt bzw. vorliegen und möchte dieses Veröffentlichen, so gibt es dafür verschiedene Varianten. Um eine KML-Datei mit dem Programm Google Earth zu nutzen reicht es aus, dass sich die KML- oder KMZ-Datei irgendwo auf dem Rechner befindet, mit dem man die Applikation nutzt. Bei Google Maps ist die Sache schon etwas komplizierter. Dort gibt es nur die Möglichkeit, seine KML- bzw. KMZ-Datei auf einen Webserver oder den von Google dafür vorgesehenen Server zu laden. Damit es dann aber auch mit Google Maps genutzt werden kann, muss auf der Seite "'http://www.google.de/addurl/?continue=/addurl"' ein Formular ausgefüllt werden, wo man die URL auf der sich das Dokument befindet angibt. Seit neuestem ist Google Maps auch in der Lage, das KML-Dokument zu nutzen wenn man einfach in das Google Maps Suchfeld die URL eingibt, wo sich die KML- bzw. KMZ-Datei befindet.\\
 \\
-KML-Files werden in diesem Projekt nicht genutzt werden, da sich die gleichen Dinge auch mit der Primeface Komponente GMap umsetzen lassen.
-So brauchen wir nicht immer neue KML-Files erstellen bzw. ältere ändern, sobald ein neues Bild hochgeladen oder die Sichtbarkeit geändert wird.
+KML-Dateien werden in diesem Projekt nicht genutzt werden, da sich die gleichen Dinge auch mit der Primeface Komponente GMap umsetzen lassen.
+So braucht man nicht immer neue KML-Dateien erstellen bzw. ältere ändern, sobald ein neues Bild hochgeladen oder die Sichtbarkeit geändert wird.
