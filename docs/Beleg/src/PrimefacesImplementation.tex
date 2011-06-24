@@ -1,11 +1,11 @@
 \section{Primefaces}
 \label{JumpPrimefacesImplementation}
-\subsection{FileUpload}
+\subsection{File-Upload}
 \label{subsec:FileUpload}
-Für das Hochladen der Bilder wird im Projekt die File-Upload Komponente von PrimeFaces verwendet. Dadurch konnte diese Anforderung relativ schnell umgesetzt werden. Zu Beginn traten allerdings einige Probleme auf. So benötigt diese Komponente eine Reihe von Biblotheken damit der Upload funktioniert. Dies wurde allerdings weder auf der PrimeFaces-Webseite noch in der PDF-Dokumentation erwähnt. Letztendlich musste eine Recherche im Internet gemacht werden, wo dann in einem Forum erwähnt wurde, dass die Bibliotheken "`commons-logging"', "`commons-io"' und "`commons-fileupload"' benötigt werden. Diese sind alle Projekte der Apache Foundation und somit trat bei der Verwendung auch keine lizenzrechtlichen Probleme auf.\\
+Für das Hochladen der Bilder wird im Projekt die File-Upload-Komponente von Primefaces verwendet. Dadurch konnte diese Anforderung relativ schnell umgesetzt werden. Zu Beginn traten allerdings einige Probleme auf. So benötigt diese Komponente eine Reihe von Bibliotheken damit der Upload funktioniert. Dies wurde allerdings weder auf der Primefaces-Webseite noch in der PDF-Dokumentation erwähnt. Letztendlich musste eine Recherche im Internet gemacht werden, wo dann in einem Forum erwähnt wurde, dass die Bibliotheken "`commons-logging"', "`commons-io"' und "`commons-fileupload"' benötigt werden. Diese sind alle Projekte der Apache Foundation und somit trat bei der Verwendung auch keine lizenzrechtlichen Probleme auf.\\
 \\
-Grundvoraussetzung für die Verwendung der Fileupload-Komponente ist, dass einige zusätzliche Filter in die web.xml eingetragen werden. Welche Filter einzubinden sind, findet man in der PDF-Dokumentation von Primefaces.
-\begin{lstlisting}[caption=Fileupload-Filter, label=lstFielUploadFilter]
+Grundvoraussetzung für die Verwendung der File-Upload-Komponente ist, dass einige zusätzliche Filter in die web.xml eingetragen werden. Welche Filter einzubinden sind, findet man in der PDF-Dokumentation von Primefaces.
+\begin{lstlisting}[caption=File-Upload-Filter, label=lstFielUploadFilter]
 <filter>
         <filter-name>PrimeFaces FileUpload Filter</filter-name>
         <filter-class>
@@ -18,10 +18,10 @@ Grundvoraussetzung für die Verwendung der Fileupload-Komponente ist, dass einige
     </filter-mapping>
 \end{lstlisting}
 Ansonsten ist die Verwendung der Komponente ziemlich einfach. Als erstes muss die Komponente in eine HTML-Seite eingebunden werden.
-\begin{lstlisting}[caption=Fileupload-Komponente einbinden, label=lstFileupload]
+\begin{lstlisting}[caption=File-Upload-Komponente einbinden, label=lstFileupload]
 <p:fileUpload widgetVar="uploader" customUI="true" label="#{msg.uploadImage}" description="*.jpg;*.JPG" allowTypes="*.jpg;*.JPG" fileUploadListener="#{createEditAlbumController.handleFileUpload}" multiple="true" id="fileUploader" update="messages, cgrid"/>
 \end{lstlisting}
-Es ist sogar möglich die Schaltflächen umzubenennen. Diese Möglichkeit wurde natürlich genutzt. Wie in dem Listing \autoref{lstFileupload} zu sehen ist, wurden die Beschriftungen allerdings nicht fest reingeschrieben sondern mit einem Eintrag in der Message.properties verknüpft. Außerdem wurden nur Dateien für den Upload zugelassen, die die Endung "`.jpg"' bzw. "`.JPG"' haben. Sobald man ein Bild hochlädt, wird ein FileUploadEvent ausgelöst. Mit dem entsprechenden Event-Objekt kann man auf die Daten zugreifen. 
+Es ist sogar möglich die Schaltflächen umzubenennen. Diese Möglichkeit wurde natürlich genutzt. Wie in dem \autoref{lstFileupload} zu sehen ist, wurden die Beschriftungen allerdings nicht fest reingeschrieben sondern mit einem Eintrag in der Message.properties verknüpft. Außerdem wurden nur Dateien für den Upload zugelassen, die die Endung "`.jpg"' bzw. "`.JPG"' haben. Sobald man ein Bild hochlädt, wird ein FileUploadEvent ausgelöst. Mit dem entsprechenden Event-Objekt kann man auf die Daten zugreifen. 
 %\begin{lstlisting}[caption=FileUploadEvent]
 %public void handleFileUpload(FileUploadEvent event) {
         %UploadedFile file = event.getFile();
@@ -35,11 +35,11 @@ Es ist sogar möglich die Schaltflächen umzubenennen. Diese Möglichkeit wurde nat
     %}
 %\end{lstlisting}
 %TODO Referenz einfügen
-Die genaue Implementation des FileUploadEvents wird noch im Abschitt \autoref{subsubsec:CreateEditAlbumController} beschrieben.
+Die genaue Implementation des FileUploadEvents wird noch im Abschnitt \ref{subsubsec:CreateEditAlbumController} beschrieben.
 
 \subsection{GMap}
 \label{GMap}
-Primefaces bietet noch weitere nützliche Komponenten. So wird bereits eine Komponente zum Anzeigen einer GMap-Karte bereitgestellt. Um diese einzubinden muss nur der in Listing \autoref{lstGMap} zu sehende Code in die Webseite eingebunden werden.
+Primefaces bietet noch weitere nützliche Komponenten. So wird bereits eine Komponente zum Anzeigen einer GMap-Karte bereitgestellt. Um diese einzubinden muss nur der in \autoref{lstGMap} zu sehende Code in die Webseite eingebunden werden.
 \begin{lstlisting}[caption=GMap-Tag, label=lstGMap]
 <p:gmap center="#{albumController.bilder[0].latitude}, #{albumController.bilder[0].longitude}" zoom="13" type="HYBRID" style="width:600px;height:400px"
                     model="#{mapBean.simpleModel}" overlaySelectListener="#{mapBean.onMarkerSelect}">
@@ -49,7 +49,7 @@ Voraussetzung für die Verwendung des GMap-Tags ist allerdings der folgende JavaS
 \begin{lstlisting}[caption=Einbinden der GoogleMaps-API]
 <script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
 \end{lstlisting}
-Für das Anzeigen der Bilder in der GMap-Karte gibt es verschiedene Möglichkeiten. So wird bereits in dem Showcase auf der Primefaces-Webseite vorgeschlagen für jedes Bild ein Marker zu verwenden und bei einem Klick auf den Marker eine Sprechblase mit dem Bild anzuzeigen. Dafür muss zwischen den öffnenden und den schließenden GMap-Tag der Inhalt des Listings \autoref{lstInfoWindow} eingetragen werden.
+Für das Anzeigen der Bilder in der GMap-Karte gibt es verschiedene Möglichkeiten. So wird bereits in dem Showcase auf der Primefaces-Webseite vorgeschlagen, für jedes Bild ein Marker zu verwenden und bei einem Klick auf den Marker eine Sprechblase mit dem Bild anzuzeigen. Dafür muss zwischen den öffnenden und den schließenden GMap-Tag der Inhalt des \autoref{lstInfoWindow} eingetragen werden.
 \begin{lstlisting}[caption=GMap-InfoWindow, label=lstInfoWindow]
 <p:gmapInfoWindow>
                         <p:graphicImage value="#{mapBean.image}" width="200" height="150"/>
@@ -57,28 +57,28 @@ Für das Anzeigen der Bilder in der GMap-Karte gibt es verschiedene Möglichkeiten
                         <h:outputText value="#{mapBean.beschreibung}"/>
                     </p:gmapInfoWindow>
 \end{lstlisting}
-Das Hinzufügen der Marker und was bei einem Klick auf einem Marker passiert, muss in der dazu gehörigen ManagedBean erfolgen. Dies wird in Abschnitt \autoref{subsubsec:MapBean} noch erläutert.\\
+Das Hinzufügen der Marker und was bei einem Klick auf einem Marker passiert, muss in der dazu gehörigen ManagedBean erfolgen. Dies wird in Abschnitt \ref{subsubsec:MapBean} noch erläutert.\\
 \\
 Eine andere Möglichkeit wäre, die Bilder direkt in der GMap anzuzeigen. In einem Wegwerfprojekt, das durchgeführt wurde um Primefaces genauer kennen zu lernen, wurde festgestellt, dass dies möglich ist. Dazu müssten die Marker nicht mehr das Bild des Markers anzeigen sondern das gewünschte Bild. Es wurde allerdings festgestellt, dass dies nur mit Bildern gehen würde, die im Web-Ordner des Tomcats zur Verfügung stehen. Dazu müsste der Pfad bekannt sein. Mit dynamisch gestreamten Bildern von der Festplatte war das Ersetzen des Marker-Bildes nicht möglich. Außerdem stellte sich bei diesem Versuch heraus, dass ein Anzeigen der Bilder direkt in der Map zu viel von der eigentlichen Karte verdeckt. Daher wird die erste Möglichkeit in diesem Projekt verwendet.
 
 \subsection{Galleria}
-Bei einem Fotoarchiv muss man natürlich auch die Möglichkeit haben sich die Fotos anzeigen zu lassen und dies nicht nur in einer kleinen Karte von Google anzuzeigen. Dafür sind verschiedene Möglichkeiten von Slideshows bei Primefaces vorgesehen. Es wurden einige Möglichkeiten ausprobiert. So wurde z.B. versucht die Slideshow mit dem LightBox-Tag zu verwirklichen. Allerdings stellte sich heraus, dass diese Komponente nur Bilder statische Bilder, also Bilder mit einem festen Pfad im Web-Ordner, anzeigen kann. Da nur dynamisch gestreamte Bilder verwendet werden, war diese Komponente in diesem Projekt nicht zu verwenden. Als Alternative dazu gibt es die Gallery-Komponente, die seit Primefaces Version 2 verfügbar ist. Dafür muss in die Seite folgender Code eingebaut werden.
-\begin{lstlisting}[caption=Gallery-Komponente, label=lstGallery]
+Bei einem Fotoarchiv muss man natürlich auch die Möglichkeit haben sich die Fotos anzeigen zu lassen und dies nicht nur in einer kleinen Karte von Google. Dafür sind verschiedene Möglichkeiten von Slideshows bei Primefaces vorgesehen. Es wurden einige Möglichkeiten ausprobiert. So wurde z.B. versucht die Slideshow mit dem LightBox-Tag zu verwirklichen. Allerdings stellte sich heraus, dass diese Komponente nur statische Bilder, also Bilder mit einem festen Pfad im Web-Ordner, anzeigen kann. Da nur dynamisch gestreamte Bilder verwendet werden, war diese Komponente in diesem Projekt nicht zu verwenden. Als Alternative dazu gibt es die Galleria-Komponente, die seit Primefaces Version 2 verfügbar ist. Dafür muss in die Seite folgender Code eingebaut werden.
+\begin{lstlisting}[caption=Galleria-Komponente, label=lstGallery]
  <p:galleria id="images" effect="fade" effectSpeed="1000">
 ...
 <p:galleria>
 \end{lstlisting}
-Damit die Bilder dynamisch angezeigt werden, muss noch im Controller eine Methode implementiert werden. Dies wird in Abschnitt \autoref{subsubsec:AlbumController} beschrieben.
+Damit die Bilder dynamisch angezeigt werden, muss noch im Controller eine Methode implementiert werden. Dies wird in Abschnitt \ref{subsubsec:AlbumController} beschrieben.
 
 \subsection{Calendar}
-Für jedes Bild sollte möglich sein, den Zeitstempel der Aufnahme manuell zu ändern. Dies könnte durch eine manuelle Eingabe des Datums über ein Textfeld geschsehen. Da dabei aber unbedingt eine Überprüfung der Eingabe erfolgen muss und weil diese Lösung nicht sehr professionell aussieht, wird eine vorgefertige Komponente von Primefaces dafür verwendet.
+Für jedes Bild sollte es möglich sein, den Zeitstempel der Aufnahme manuell zu ändern. Dies könnte durch eine manuelle Eingabe des Datums über ein Textfeld geschehen. Da dabei aber unbedingt eine Überprüfung der Eingabe erfolgen muss und weil diese Lösung nicht sehr professionell aussieht, wird eine vorgefertige Komponente von Primefaces dafür verwendet.
 \begin{lstlisting}[caption=Calender-Komponente, label=lstCalender]
 <p:calendar value="#{bildController.timestamp}" pattern="dd.MM.yyyy" showOn="button"/>
 \end{lstlisting}
 Leider ist es bei Version 2 von Primefaces nicht möglich die Uhrzeit mit einzugeben. Dieser Missstand wird aber in Version 3 von Primefaces behoben.
 
 \subsection{DataGrid}
-Sobald Bilder hochgeladen werden möchte der Benutzer gwöhnlich eine Übersicht haben, welche Dateien bereits hochgeladen sind. Primefaces bietet unter anderem dafür die DataGrid-Komponente an.
+Sobald Bilder hochgeladen werden, möchte der Benutzer gewöhnlich eine Übersicht haben, welche Dateien bereits hochgeladen sind. Primefaces bietet unter anderem dafür die DataGrid-Komponente an.
 \begin{lstlisting}[caption=DataGrid-Komponente, label=lstDataGrid]
 <p:dataGrid id="cgrid" var="b" value="#{createEditAlbumController.bilder}" columns="3" rows="12" paginator="false" effect="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="9,12,15">
                 <p:column>
@@ -90,7 +90,7 @@ Sobald Bilder hochgeladen werden möchte der Benutzer gwöhnlich eine Übersicht ha
                 </p:column>
             </p:dataGrid>
 \end{lstlisting}
-Für jedes Bild muss innerhalb des DataGrid noch ein PanelGrid hinzugefügt werden. Innerhalb des PanelGrids werden dann die Bilder mittel GraphicImage angezeigt. Damit immer die richtigen Bilder geladen werden, muss man im Controller noch eine entsprechende Methode bereitstellen. Dies wird in Abschnitt \autoref{subsubsec:CreateEditAlbumController} auf Seite \pageref{subsubsec:CreateEditAlbumController} erläutert.
+Für jedes Bild muss innerhalb des DataGrid noch ein PanelGrid hinzugefügt werden. Innerhalb des PanelGrids werden dann die Bilder mittels GraphicImage angezeigt. Damit immer die richtigen Bilder geladen werden, muss man im Controller noch eine entsprechende Methode bereitstellen. Dies wird in Abschnitt \ref{subsubsec:CreateEditAlbumController} auf Seite \pageref{subsubsec:CreateEditAlbumController} erläutert.
 
 \subsection{Dialog}
 An einigen Stellen ist es in einem Projekt immer notwendig, den Benutzer noch einmal gesondert auf einen bestimmten Punkt hinzuweisen. In diesem Projekt ist das beim Löschen eines Bildes notwendig. Dort soll dem Benutzer noch einmal eine Warnmeldung ausgegeben werden. Primefaces stellt dafür die Dialog-Komponente zur Verfügung.
@@ -100,4 +100,4 @@ An einigen Stellen ist es in einem Projekt immer notwendig, den Benutzer noch ei
   ....
   </p:dialog>
 \end{lstlisting}
-Innerhalb des Dialog-Tags wird der Inhalt des Dialog-Fensters definiert. Der Dialog wird mittels eines JavaScript-Aufrufs angezeigt. Der Name des Dialog-Fensters wird im Dialog-Tag mittels des Attributs "`widgetVar"' festgelegt.
+Innerhalb des Dialog-Tags wird der Inhalt des Dialog-Fensters definiert. Der Dialog wird mittels eines JavaScript-Aufrufs angezeigt. Der Name des Dialog-Fensters wird im Dialog-Tag mittels des Attributes "`widgetVar"' festgelegt.

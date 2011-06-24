@@ -1,9 +1,10 @@
 \section{Validatoren}
 \label{JumpValidatoren}
-Oft haben Applikationen mit fehlerhaften Eingaben zu kämpfen, die der Nutzer nicht einmal bewusst tätigt. Um daraus bedingten Fehlfunktionen und einem reibunglosen Ablauf zu garantieren, gibt es die Möglichkeit sogenannte Validatoren zu benutzen.
+\subsection{Allgemeines}
+Oft haben Applikationen mit fehlerhaften Eingaben zu kämpfen, die der Nutzer nicht einmal bewusst tätigt. Um einen reibunglosen Ablauf zu garantieren, gibt es die Möglichkeit, sogenannte Validatoren zu benutzen.
 Sie sind dafür da, eine Eingabe auf eine bestimmte Art von Muster bzw. Standard zu Überprüfen. Da das Ganze aber automatisch bei jeder Eingabe ablaufen soll, kann dabei nur auf syntaktische Korrektheit geprüft werden. \\
 \subsection{Validatoren in JSF}
-Um einen Validator in JSF nutzen zu können muss er in der faces-config.xml bekannt gemacht werden. Das sieht wie folgt aus.
+Um einen Validator in JSF nutzen zu können, muss er in der faces-config.xml bekannt gemacht werden. Das sieht wie folgt aus.
 \begin{lstlisting}[caption=Einbinden eines Validators ind die faces-config.xml]{Name}
 <validator>
    <validator-id>EmailValidator</validator-id>
@@ -11,24 +12,24 @@ Um einen Validator in JSF nutzen zu können muss er in der faces-config.xml bekan
 </validator>
 \end{lstlisting}
 Alle Validatoren, die genutzt werden sollen, müssen sich in dem Tag "'validator'" der faces-config befinden. Jeder Validator muss über eine eindeutige ID verfügen und der Klassenname muss auch hinterlegt werden. \\
-Das allein reicht noch nicht aus damit der Validator auch aktiv wird. An den Stellen, wo die Eingabe validiert werden soll, muss er noch der jeweiligen Komponente zugewiesen werden. Das geschieht so:
+Das allein reicht allerdings noch nicht aus, damit der Validator auch aktiv wird. An den Stellen, wo die Eingabe validiert werden soll, muss er noch der jeweiligen Komponente zugewiesen werden. Das geschieht so:
 \begin{lstlisting}[caption=Zuweisung eines Validators einer Komponente]{Name}
 <h:inputText id="createUserMail" value="#{userController.email}" required="true" requiredMessage="#{msg.forgotEmail}">
   <f:validator validatorId="EmailValidator"/>
 </h:inputText>
 \end{lstlisting}
-Wie hier zu sehen ist, wird der EmailValidator einem Input-Textfeld zugewiesen. Das "'f:"' am Anfang des Tags ist das alias für jsf-core.
+Wie hier zu sehen ist, wird der EmailValidator einem Input-Textfeld zugewiesen. Das "'f:"' am Anfang des Tags ist der Alias für jsf-core.
 \subsection{Reguläre Ausdrücke}
-Mit regulären Ausdrücken kann der oben beschriebene Test auf syntaktische Korrektheit durchgeführt werden. Neben dem EmailValidator werden noch 2 weitere Validatoren verwendet, der NameValidator um den Nutzernamen zu validieren und der KoordValidator um vom Nutzer eingegebene Koordinaten zu validieren. Der Aufbau dieser Klassen, dargestellt am Beispiel des NameValidators in \autoref{JumpValidatorName}, ist dabei immer gleich. Das einzige was sich ändert ist der reguläre Ausdruck in dieser Zeile:
+Mit regulären Ausdrücken kann der oben beschriebene Test auf syntaktische Korrektheit durchgeführt werden. Neben dem EmailValidator werden noch 2 weitere Validatoren verwendet, der NameValidator, um den Nutzernamen zu validieren, und der KoordValidator, um vom Nutzer eingegebene Koordinaten zu validieren. Der Aufbau dieser Klassen, dargestellt am Beispiel des NameValidators in \autoref{JumpValidatorName}, ist dabei immer gleich. Das einzige was sich ändert ist der reguläre Ausdruck in dieser Zeile:
 \begin{lstlisting}[caption=Der reguläre Ausdruck zur Validierung des Namens,label=JumpValidatorRegName]
 if(!name.matches("[\\w\\d]+") || name.matches("[\\d]+"))
 \end{lstlisting}
-Hier wird die Syntaxprüfung vorgenommen. Im Falle des Nutzernamens ist das noch ein sehr einfacher Ausdruck. Damit werden nur Nutzernamen akzeptiert die aus einer Menge von Zahlen und mindestens einem Buchstaben bestehen. 'Nutzer123' ist damit ein gültiger Name, ebenso '12hgf3Fh4'. Namen wie '1234' oder 'Nut-zer\#12+3' werden vom System aber nicht akzeptiert. Dadurch sollen Namen mit zu vielen Sonderzeichen vermieden werden.\\
-Bei Emailadressen sieht dieser Ausdruck schon komplizierter aus:
+Hier wird die Syntaxprüfung vorgenommen. Im Falle des Nutzernamens ist das noch ein sehr einfacher Ausdruck. Damit werden nur Nutzernamen akzeptiert, die aus einer Menge von Zahlen und mindestens einem Buchstaben bestehen. 'Nutzer123' ist damit ein gültiger Name, ebenso '12hgf3Fh4'. Namen wie '1234' oder 'Nut-zer\#12+3' werden vom System aber nicht akzeptiert. Dadurch sollen Namen mit zu vielen Sonderzeichen vermieden werden.\\
+Bei E-Mailadressen sieht dieser Ausdruck schon komplizierter aus:
 \begin{lstlisting}[caption=Der reguläre Ausdruck zur Validierung der Emailadresse,label=JumpValidatorRegEmail]
 "([\\w\\d]+[-\\.]{1})*[\\w\\d]+@([\\w\\d-]+\\.)+[\\w]{2,4}"
 \end{lstlisting}
-Dieser Ausdruck deckt dabei nicht alle möglichen Emailadressen ab, aber zumindest die meisten und das mit relativ geringem Aufwand. So werden vor dem \@ beliebige Kombinationen aus Buchstaben und Zahlen zugelassen. Diese können entweder durch durch genau einen Punkt oder genau einen Bindestrich getrennt werden, das aber beliebig oft. Nach dem \@ können wieder beliebige Kombinationen aus Buchstaben, Zahlen und diesmal auch beliebig vielen Bindestrichen folgen. Jedesmal getrennt durch genau einen Punkt. Die Emailadresse muss abgeschlossen werden mit einer Kombination aus mindestens 2 bis maximal 4 Buchstaben. Somit werden Adressen wie 'test@e-mail.de' oder 'a-b.c-d@ef--gh.ijkl.xyz' zugelassen, nicht aber Adressen wie '1234...@test.com' oder 'e-mail@test.account'.\\
+Dieser Ausdruck deckt dabei nicht alle möglichen E-Mailadressen ab, aber zumindest die meisten und das mit relativ geringem Aufwand. So werden vor dem \texttt{@} beliebige Kombinationen aus Buchstaben und Zahlen zugelassen. Diese können entweder durch genau einen Punkt oder genau einen Bindestrich getrennt werden, das aber beliebig oft. Nach dem \texttt{@} können wieder beliebige Kombinationen aus Buchstaben, Zahlen und diesmal auch beliebig vielen Bindestrichen folgen. Jedesmal getrennt durch genau einen Punkt. Die Emailadresse muss abgeschlossen werden mit einer Kombination aus mindestens 2 bis maximal 4 Buchstaben. Somit werden Adressen wie 'test@e-mail.de' oder 'a-b.c-d@ef--gh.ijkl.xyz' zugelassen, nicht aber Adressen wie '1234...@test.com' oder 'e-mail@test.account'.\\
 Bei den Koordinaten wurde entschieden nur die Eingabe von Koordinaten im Dezimalformat zuzulassen. Das erleichtert die Validierung auch erheblich. Der korrekte reguläre Ausdruck dafür lautet:
 \begin{lstlisting}[caption=Der reguläre Ausdruck zur Validierung der Koordinaten,label=JumpValidatorRegKoord]
 "-?[0-9]{1,3}\\.[0-9]{1,20}"
