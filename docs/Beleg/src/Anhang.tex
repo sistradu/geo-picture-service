@@ -335,6 +335,31 @@ public StreamedContent getImage() {
     }
 \end{lstlisting}
 
+\begin{lstlisting}[caption=Methode um Bean aus FacesContext zu holen, label=lstBeanzugriff, language=Java]
+public static Object getBean(String beanName){
+        FacesContext context = FacesContext.getCurrentInstance();
+        Object o =  context.getApplication()
+            .getVariableResolver().resolveVariable(context, beanName);
+        return o;
+    }
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Aufruf einer Methode einer anderen Bean, label=lstBeanzugriffAufruf, language=Java]
+...
+if (dbPasswort.equals(passwort)) {
+                eingeloggt = true;
+                getNutzerIDAndEmail(doc);
+                if (nutzerNamen.equals("Admin")) {
+                    admin = true;
+                    AdminPageController ac = (AdminPageController) GPicSUtil.getBean("adminPageController");
+                    return ac.loadPage();
+                }
+                OwnAlbumsController oac = (OwnAlbumsController) GPicSUtil.getBean("ownAlbumsController");
+                return oac.initAllAlbums();
+            }
+...
+\end{lstlisting}
+
 \subsection{Antwort von Webservice}
 \begin{lstlisting}[caption=Antwort einer GoogleMaps Anfrage, label=lstGoogelMaps, language=XML]
 <kml xmlns="http://earth.google.com/kml/2.0"><Response>
