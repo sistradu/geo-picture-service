@@ -20,7 +20,6 @@
 ||Tests.tex||Tests||Jeder|| S=99% MU=99% ||
 ||Projektaufteilung.tex||Aufteilung des Projekts||Jeder|| ||
 ||Zusammenfassung.tex||Zusammenfassung||Jeder|| ||
-||Fazit.tex||Fazit||Jeder|| ||
 ||Exif.tex||Analysierte Technologien/Metadatenextraktion/Exif||Stefan|| 99% ||
 ||Webservices.tex||Analysierte Technologien/Webservices|| Stefan || 99% ||
 ||KML.tex||Analysierte Technologien/KML||Martin|| 99% ||
