@@ -17,11 +17,27 @@ Auf der beiliegenden CD befinden sich folgende \textit{Dateien} und \textbf{Ordn
 \section{UML-Diagramme}
 \label{secAnhang}
 
+\subsection{Klassendiagramme}
+\label{JumpKlassendiagramme}
+
+\begin{figure}[h!t]
+	\begin{center}
+		\includegraphics[width=\textwidth]{img/DB-Klassen.png}
+		\caption{Das Klassendiagramm zu den Connector-Klassen}
+		\label{JumpDBKlassenDiag}
+	\end{center}
+\end{figure}
+
+\subsection{System-Sequenz-Diagramme}
+\label{JumpSSDs}
+
+\includepdf[pages=-, fitpaper=true]{img/SSDs.pdf}
+
 \section{Listings}
 
 \subsection{XML-Dokumente}
 
-\begin{lstlisting}[caption=Beispiel für einen Eintrag in der nutzers.xhtml,label=JumpListingNutzerXML,language=XML]
+\begin{lstlisting}[caption=Beispiel für einen Eintrag in der nutzers.xml,label=JumpListingNutzerXML,language=XML]
 <nutzer>
     <id>0</id>
     <name>Karl</name>
@@ -29,7 +45,7 @@ Auf der beiliegenden CD befinden sich folgende \textit{Dateien} und \textbf{Ordn
     <email>karl@web.de</email>
 </nutzer>
 \end{lstlisting}
-\begin{lstlisting}[caption=Beispiel für einen Eintrag in der alben.xhtml,label=JumpListingAlbumXML,language=XML]
+\begin{lstlisting}[caption=Beispiel für einen Eintrag in der alben.xml,label=JumpListingAlbumXML,language=XML]
 <album>
     <id>0</id>
     <name>Görlitz</name>
@@ -37,7 +53,7 @@ Auf der beiliegenden CD befinden sich folgende \textit{Dateien} und \textbf{Ordn
     <description>Bilder über die Stadt Görlitz.</description>
     <nutzer>0</nutzer>
 </album>\end{lstlisting}
-\begin{lstlisting}[caption=Beispiel für einen Eintrag in der bilder.xhtml,label=JumpListingBildXML,language=XML]
+\begin{lstlisting}[caption=Beispiel für einen Eintrag in der bilder.xml,label=JumpListingBildXML,language=XML]
 <bild>
     <id>2</id>
     <name>Vogtshof Innenhof</name>
@@ -154,6 +170,24 @@ public static DBConnector getInstance(){
 ...
 public synchronized Document executeGetRequest(...){
 ...
+}
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Die Klasse NameValidator,label=JumpValidatorName]
+public class NameValidator implements Validator {
+  MessagePropertiesBean msgPB = new MessagePropertiesBean();
+
+  public void validate(FacesContext facesContext, UIComponent uiComponent, Object o) throws ValidatorException {
+    String name = (String) o;
+    if(!name.matches("[\\w\\d]+") || name.matches("[\\d]+")) {
+      FacesMessage message = new FacesMessage();
+      message.setSeverity(FacesMessage.SEVERITY_ERROR);
+            message.setSummary(msgPB.getPropertiesMessage("ungueltigerBenutzerName"));
+                  message.setDetail(msgPB.getPropertiesMessage("ungueltigerBenutzerNamedetail"));
+      facesContext.addMessage("userForm:Name", message);
+      throw new ValidatorException(message);
+    }
+  }
 }
 \end{lstlisting}
 
