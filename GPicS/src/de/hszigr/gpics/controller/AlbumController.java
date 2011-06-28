@@ -165,7 +165,7 @@ public class AlbumController {
 
         try {
             MessagePropertiesBean msgPB = new MessagePropertiesBean();
-            String pfad = "D:/upload/gpics.jpg";// msgPB.getPropertiesMessage("defaultPicturePath");
+            String pfad = msgPB.getPropertiesMessage("defaultPicturePath");
             defaultImage = GPicSUtil.getStreamContent(pfad);
             FacesContext fc = FacesContext.getCurrentInstance();
         //    String name = fc.getExternalContext().getRequestParameterMap().get("name");
